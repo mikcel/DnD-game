@@ -5,17 +5,17 @@
 //! Default Constructor
 ItemContainer::ItemContainer()
 {
-	containerType = itemCnt::containerTypes::CHEST;
+	containerType = ContainerType::CHEST;
 	contents = vector<Item*>(0);
 
 }
 
 
-ItemContainer::ItemContainer(itemCnt::containerTypes type){
+ItemContainer::ItemContainer(ContainerType type){
 
 	containerType = type;
 	vector<Item*>vecTemp(0);
-	if (type == itemCnt::containerTypes::WORN_ITEM)
+	if (type == ContainerType::WORN_ITEM)
 	{
 		for (int i = 0; i < 7; i++){
 			vecTemp.push_back(new Item());
@@ -28,7 +28,7 @@ ItemContainer::ItemContainer(itemCnt::containerTypes type){
 //! Constructor that takes a type and a vector of items (will initialize worn items containers to size 7)
 //! @param type: enum type of container
 //! @param vectorOfItems: vector of item object pointers
-ItemContainer::ItemContainer(itemCnt::containerTypes type, vector<Item*> vectorOfItems)
+ItemContainer::ItemContainer(ContainerType type, vector<Item*> vectorOfItems)
 {
 	vector<Item*> vecTemp(0);
 	containerType = type;
@@ -38,7 +38,7 @@ ItemContainer::ItemContainer(itemCnt::containerTypes type, vector<Item*> vectorO
 		}
 	}
 	int wornItemSize = 7;
-	if (type == itemCnt::containerTypes::WORN_ITEM) {
+	if (type == ContainerType::WORN_ITEM) {
 		int sizeDiff = wornItemSize - contents.size();
 		for (; sizeDiff >0; sizeDiff--) {
 			vecTemp.push_back(new Item());
@@ -62,15 +62,15 @@ void ItemContainer::setContents(vector<Item*> newContents) {
 }
 //! method that gets the container type
 //! return: the enum type of the item container
-itemCnt::containerTypes ItemContainer::getContainerType() {
+ContainerType ItemContainer::getContainerType() {
 	return containerType;
 }
 
 //! method that sets the container type (if worn items is the new container type, it will make sure the vector is resized to 7 elements)
 //! @param type: enum type of the item container
-void ItemContainer::setContainerType(itemCnt::containerTypes type) {
+void ItemContainer::setContainerType(ContainerType type) {
 	//resize the container if new type is worn items
-	if (type == itemCnt::containerTypes::WORN_ITEM) {
+	if (type == ContainerType::WORN_ITEM) {
 		int wornItemSize = 7;
 		int sizeDiff = wornItemSize - contents.size();
 		for (; sizeDiff >0; sizeDiff--) {
@@ -91,11 +91,11 @@ vector<Item*> ItemContainer::getContents()
 //! @param item: pointer to an item object
 void ItemContainer::addItem(Item* item)
 {
-	if (this->getContainerType() == itemCnt::containerTypes::WORN_ITEM) {
+	if (this->getContainerType() == ContainerType::WORN_ITEM) {
 		return;
 	}
 	else {
-		if (item->getItemTypes() == item::itemTypes::WEAPON)
+		if (item->getItemTypes() == ItemType::WEAPON)
 		{
 			Weapon *wpn1 = (Weapon*)item;
 			contents.push_back(new Weapon(*wpn1));
@@ -114,7 +114,7 @@ void ItemContainer::removeItem(string itemName) {
 		if (contents[i]->getItemName().compare(itemName) == 0) {
 			//if it's not a worn item container, simply delete object and remove the element from the container
 			delete contents[i];
-			if (containerType != itemCnt::containerTypes::WORN_ITEM) {
+			if (containerType != ContainerType::WORN_ITEM) {
 				contents.erase(contents.begin() + i);
 			}
 			else {
@@ -135,7 +135,7 @@ Item* ItemContainer::popItem(string itemName) {
 			//assigns a new pointer to the memory cell
 			Item* returningItem = contents[i];
 			//if it's not a worn item container, simply remove the element from the container
-			if (containerType != itemCnt::containerTypes::WORN_ITEM) {
+			if (containerType != ContainerType::WORN_ITEM) {
 				contents.erase(contents.begin() + i);
 			}
 			else {
@@ -171,7 +171,7 @@ Item* ItemContainer::getItem(string itemName) {
 bool ItemContainer::equipItem(string itemName, ItemContainer* playerBackpack) {
 
 	//makes sure that the container types are what is needed
-	if (this->getContainerType() != itemCnt::containerTypes::WORN_ITEM || playerBackpack->getContainerType() != itemCnt::containerTypes::BACKPACK) {
+	if (this->getContainerType() != ContainerType::WORN_ITEM || playerBackpack->getContainerType() != ContainerType::BACKPACK) {
 		return false;
 	}
 	
@@ -179,25 +179,25 @@ bool ItemContainer::equipItem(string itemName, ItemContainer* playerBackpack) {
 	vector<Item*>::size_type  index;
 	//matching the item type to the worn items contents vector
 	switch (item->getItemTypes()) {
-		case item::itemTypes::HELMET:
+		case ItemType::HELMET:
 			index = 0;
 			break;
-		case item::itemTypes::ARMOR:
+		case ItemType::ARMOR:
 			index = 1;
 			break;
-		case item::itemTypes::SHIELD:
+		case ItemType::SHIELD:
 			index = 2;
 			break;
-		case item::itemTypes::RING:
+		case ItemType::RING:
 			index = 3;
 			break;
-		case item::itemTypes::BELT:
+		case ItemType::BELT:
 			index = 4;
 			break;
-		case item::itemTypes::BOOTS:
+		case ItemType::BOOTS:
 			index = 5;
 			break;
-		case item::itemTypes::WEAPON:
+		case ItemType::WEAPON:
 			index = 6;
 			break;
 		default:
@@ -205,7 +205,7 @@ bool ItemContainer::equipItem(string itemName, ItemContainer* playerBackpack) {
 	}
 	//switching the pointers
 	//checks if the slot is already filled if so, it will transfer the item back into the backpack
-	if (contents[index]->getItemTypes() != item::itemTypes::UNSPECIFIED) {
+	if (contents[index]->getItemTypes() != ItemType::UNSPECIFIED) {
 		playerBackpack->addItem(contents[index]);
 	}
 	contents[index] = playerBackpack->popItem(item->getItemName());
@@ -219,32 +219,32 @@ bool ItemContainer::equipItem(string itemName, ItemContainer* playerBackpack) {
 bool ItemContainer::unequipItem(string itemName, ItemContainer* playerBackpack) {
 
 	//makes sure that the container types are what is needed
-	if (this->getContainerType() != itemCnt::containerTypes::WORN_ITEM || playerBackpack->getContainerType() != itemCnt::containerTypes::BACKPACK) {
+	if (this->getContainerType() != ContainerType::WORN_ITEM || playerBackpack->getContainerType() != ContainerType::BACKPACK) {
 		return false;
 	}
 	Item* item = getItem(itemName);
 	vector<Item*>::size_type  index;
 	//matching the item type to the worn items contents vector
 	switch (item->getItemTypes()) {
-		case item::itemTypes::HELMET:
+		case ItemType::HELMET:
 			index = 0;
 			break;
-		case item::itemTypes::ARMOR:
+		case ItemType::ARMOR:
 			index = 1;
 			break;
-		case item::itemTypes::SHIELD:
+		case ItemType::SHIELD:
 			index = 2;
 			break;
-		case item::itemTypes::RING:
+		case ItemType::RING:
 			index = 3;
 			break;
-		case item::itemTypes::BELT:
+		case ItemType::BELT:
 			index = 4;
 			break;
-		case item::itemTypes::BOOTS:
+		case ItemType::BOOTS:
 			index = 5;
 			break;
-		case item::itemTypes::WEAPON:
+		case ItemType::WEAPON:
 			index = 6;
 			break;
 		default:
@@ -265,12 +265,12 @@ ostream& operator<<(ostream& stream, const ItemContainer& cont){
 
 	int countNullItem = 0;
 	for (auto i : cont.contents){
-		if (i->getItemTypes() == item::itemTypes::WEAPON)
+		if (i->getItemTypes() == ItemType::WEAPON)
 		{
 			Weapon *wpn = (Weapon*)i;
 			stream << *wpn <<endl;
 		}
-		else if(i->getItemTypes() != item::itemTypes::UNSPECIFIED){
+		else if(i->getItemTypes() != ItemType::UNSPECIFIED){
 			stream << *i;
 		}
 		else{

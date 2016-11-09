@@ -23,7 +23,7 @@ using namespace std;
 //! Default Constructor. 
 //! Sets all abilities to 3, name to "Unknown", hit dice to "1d10", level to 1 and size to Tiny.
 //! It invokes one of the parametrized constructor (see below) to initailize each data member
-Character::Character() : Character("Unknown", "1d10", 3, 3, 3, 3, 3, 3, 1, Size::TINY){
+Character::Character() : Character("Unknown", "1d10", 3, 3, 3, 3, 3, 3, 1, CharacterSize::TINY){
 
 	/*Intentionally left empty*/
 
@@ -32,9 +32,9 @@ Character::Character() : Character("Unknown", "1d10", 3, 3, 3, 3, 3, 3, 1, Size:
 //! Constructor: gets the name, the hit dice, an array of ability scores, the level and the size.
 //! It invokes the other parametrized constructor to set each variable.
 //! Note: to initialize each ability score, each of them is taken from the passed array using the enum type to index the array.
-Character::Character(string chrName, string hitDice, int chrAbilityScores[NO_ABILITY], int chrLevel, Size chrSize) :
-	Character(chrName, hitDice, chrAbilityScores[Abilities::STR], chrAbilityScores[Abilities::DEX], chrAbilityScores[Abilities::CONS] ,chrAbilityScores[Abilities::INTEL],
-	chrAbilityScores[Abilities::WISD], chrAbilityScores[Abilities::CHA], chrLevel, chrSize){
+Character::Character(string chrName, string hitDice, int chrAbilityScores[NO_ABILITY], int chrLevel, CharacterSize chrSize) :
+Character(chrName, hitDice, chrAbilityScores[(int)CharacterAbility::STR], chrAbilityScores[(int)CharacterAbility::DEX], chrAbilityScores[(int)CharacterAbility::CONS], chrAbilityScores[(int)CharacterAbility::INTEL],
+chrAbilityScores[(int)CharacterAbility::WISD], chrAbilityScores[(int)CharacterAbility::CHA], chrLevel, chrSize){
 	/*Intentionally left empty*/
 }
 
@@ -42,7 +42,7 @@ Character::Character(Character* chara) {
 	Character();
 }
 //! Constructor: passes values to the name, the hit dice, the size, the level and each ability score
-Character::Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel, Size chrSize){
+Character::Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel, CharacterSize chrSize){
 
 	//! Sets name, size, level and hit dice
 	name = chrName;
@@ -60,8 +60,8 @@ Character::Character(string chrName, string hitDice, int str, int dex, int cons,
 	calcArmorClass();
 
 	//! Initialise the two items container
-	backpack = new ItemContainer(itemCnt::containerTypes::BACKPACK);
-	currentWornItems = new ItemContainer(itemCnt::containerTypes::WORN_ITEM);
+	backpack = new ItemContainer(ContainerType::BACKPACK);
+	currentWornItems = new ItemContainer(ContainerType::WORN_ITEM);
 
 	//! Calculate the attack and damage bonuses
 	calcDamageBonus();
@@ -88,17 +88,17 @@ int Character::getLevel(){
 
 //! Accessor for the Character's Size.
 //! @return size
-Size Character::getSize(){
+CharacterSize Character::getSize(){
 	return size;
 }
 
 //! Accessor for one ability score
 //! @param ability - Of type abilities from enumerated type
 //! @return integer, the ability score passed as parameter
-int Character::getOneAbilityScore(Abilities ability){
+int Character::getOneAbilityScore(CharacterAbility ability){
 	
 	//! Get ability by using the array index (enum type) passed as parameter 
-	return abilityScores[ability]; 
+	return abilityScores[(int)ability]; 
 	
 }
 
@@ -121,12 +121,12 @@ int* Character::getAllAbilityScores(){
 }
 
 //! Accessor for one ablity modifier.
-//! @param ability - of type Abilities (enumerated) to index array of ability modifiers
+//! @param ability - of type CharacterAbility (enumerated) to index array of ability modifiers
 //! @return the ability modifer asked for (parameter)
-int Character::getOneAbilityModifier(Abilities ability){
+int Character::getOneAbilityModifier(CharacterAbility ability){
 	
 	//! Return the ability modifier by indexing the array to the ability passed (enum type)
-	return abilityModifiers[ability];
+	return abilityModifiers[(int)ability];
 	
 }
 
@@ -201,7 +201,7 @@ void Character::setLevel(int chrLevel){
 
 //! Mutator for the Character's size
 //! @param Size enumerated size as new Character's size
-void Character::setSize(Size chrSize){
+void Character::setSize(CharacterSize chrSize){
 	size = chrSize;
 }
 
@@ -209,12 +209,12 @@ void Character::setSize(Size chrSize){
 //! @param ints 6 integers for each ability
 void Character::setAbilityScores(int str, int dex, int cons, int intel, int wisd, int cha){
 	//!Set each ability score to the passed ones by indexing the array using the abilities enumerated type
-	abilityScores[Abilities::STR] = str;
-	abilityScores[Abilities::DEX] = dex;
-	abilityScores[Abilities::CONS] = cons;
-	abilityScores[Abilities::INTEL] = intel;
-	abilityScores[Abilities::WISD] = wisd;
-	abilityScores[Abilities::CHA] = cha;
+	abilityScores[(int)CharacterAbility::STR] = str;
+	abilityScores[(int)CharacterAbility::DEX] = dex;
+	abilityScores[(int)CharacterAbility::CONS] = cons;
+	abilityScores[(int)CharacterAbility::INTEL] = intel;
+	abilityScores[(int)CharacterAbility::WISD] = wisd;
+	abilityScores[(int)CharacterAbility::CHA] = cha;
 }
 
 //! Mutator for the all ability scores
@@ -244,7 +244,7 @@ void Character::setHitDice(string hitDice){
 //! @param -
 void Character::calcArmorClass(){
 	//! Formula for Armor Class: 10 + size mofifier + dexterity modifier
-	armorClass = 10 + getSizeModifier() + abilityModifiers[Abilities::DEX];
+	armorClass = 10 + getSizeModifier() + abilityModifiers[(int)CharacterAbility::DEX];
 }
 
 //! Service Method to calculate characters' damage bonus
@@ -252,15 +252,15 @@ void Character::calcArmorClass(){
 void Character::calcDamageBonus(){
 
 	//! Formula: Strength modifier + level
-	int bonus = abilityModifiers[Abilities::STR] + level;
+	int bonus = abilityModifiers[(int)CharacterAbility::STR] + level;
 
-	if (currentWornItems->getContents()[item::itemTypes::WEAPON]->getItemTypes() != item::itemTypes::UNSPECIFIED){
+	if (currentWornItems->getContents()[(int)ItemType::WEAPON]->getItemTypes() != ItemType::UNSPECIFIED){
 
-		Item *weapon = currentWornItems->getItem(currentWornItems->getContents()[item::itemTypes::WEAPON]->getItemName());
+		Item *weapon = currentWornItems->getItem(currentWornItems->getContents()[(int)ItemType::WEAPON]->getItemName());
 
 		vector<Buff> buff = weapon->getBuffs();
 		for (auto i : buff){
-			if (i.getBuffType() == buff::buffTypes::DAMAGE_BONUS)
+			if (i.getBuffType() == BuffType::DAMAGE_BONUS)
 				bonus += i.getBuffAmount();
 		}
 
@@ -286,19 +286,19 @@ void Character::calcAttackBonus(){
 	else
 		attackBonus = level;
 
-	if (currentWornItems->getContents()[item::itemTypes::WEAPON]->getItemTypes() != item::itemTypes::UNSPECIFIED){
+	if (currentWornItems->getContents()[(int)ItemType::WEAPON]->getItemTypes() != ItemType::UNSPECIFIED){
 		
-		Weapon* weapon = (Weapon*)(currentWornItems->getItem(currentWornItems->getContents()[item::itemTypes::WEAPON]->getItemName()));
+		Weapon* weapon = (Weapon*)(currentWornItems->getItem(currentWornItems->getContents()[(int)ItemType::WEAPON]->getItemName()));
 		if (weapon != NULL){
 
 			if (weapon->getRange()==1) 
-				attackBonus += abilityModifiers[Abilities::STR];
+				attackBonus += abilityModifiers[(int)CharacterAbility::STR];
 			else 
-				attackBonus += abilityModifiers[Abilities::DEX];
+				attackBonus += abilityModifiers[(int)CharacterAbility::DEX];
 
 			vector<Buff> buff = weapon->getBuffs();
 			for (auto i : buff){
-				if (i.getBuffType() == buff::buffTypes::ATTACK_BONUS)
+				if (i.getBuffType() == BuffType::ATTACK_BONUS)
 					attackBonus += i.getBuffAmount();
 			}
 
@@ -344,7 +344,7 @@ bool Character::validateNewCharacter(){
 	//! Validate if each ability score is in the range 3-18
 	for (int i = 0; i < NO_ABILITY; i++){
 		if (abilityScores[i]<3 || abilityScores[i]>18){
-			cout << "\nIncorrect " << Abilities(i) << " entered.";
+			cout << "\nIncorrect " << CharacterAbility(i) << " entered.";
 			return false;
 		}
 	}
@@ -411,13 +411,13 @@ int Character::getSizeModifier(){
 	//! Return a number determine by the d20 rules for each size
 	switch (size)
 	{
-	case Size::FINE:
+	case CharacterSize::FINE:
 		return 8;
-	case Size::TINY:
+	case CharacterSize::TINY:
 		return 2;
-	case Size::HUGE:
+	case CharacterSize::HUGE:
 		return -2;
-	case Size::COLOSSAL:
+	case CharacterSize::COLOSSAL:
 		return -8;
 	default:
 		return 0;
@@ -431,7 +431,7 @@ void Character::incrementLevel(int hitDiceNo){
 
 	//! Calculate new hit points
 	//! Take constitution modifier and add with the hit dice roll
-	currentHitPoints += abilityModifiers[Abilities::CONS] + hitDiceNo;
+	currentHitPoints += abilityModifiers[(int)CharacterAbility::CONS] + hitDiceNo;
 
 	calcAttackBonus();
 
@@ -443,7 +443,7 @@ void Character::incrementLevel(int hitDiceNo){
 bool Character::takeOffItem(Item *objItem){
 
 	if (currentWornItems->unequipItem(objItem->getItemName(), backpack)){
-		if (objItem->getItemTypes() == item::itemTypes::WEAPON){
+		if (objItem->getItemTypes() == ItemType::WEAPON){
 			calcAttackBonus();
 			calcDamageBonus();
 		}
@@ -462,12 +462,12 @@ bool Character::takeOffItem(Item *objItem){
 //! @return true - successsfully worn, false otherwise
 bool Character::wearItem(Item *objItem){
 
-	if (currentWornItems->getContents()[objItem->getItemTypes()]->getItemTypes() != item::itemTypes::UNSPECIFIED){
-		takeOffBuff(currentWornItems->getContents()[objItem->getItemTypes()]->getBuffs());
+	if (currentWornItems->getContents()[(int)objItem->getItemTypes()]->getItemTypes() != ItemType::UNSPECIFIED){
+		takeOffBuff(currentWornItems->getContents()[(int)objItem->getItemTypes()]->getBuffs());
 	}
 
 	if (currentWornItems->equipItem(objItem->getItemName(), backpack)){
-		if (objItem->getItemTypes() == item::itemTypes::WEAPON){
+		if (objItem->getItemTypes() == ItemType::WEAPON){
 			calcAttackBonus();
 			calcDamageBonus();
 		}
@@ -476,32 +476,32 @@ bool Character::wearItem(Item *objItem){
 			vector<Buff> itemBuff= objItem->getBuffs();
 			for (auto i : itemBuff){
 				switch (i.getBuffType()){
-					case buff::buffTypes::ARMOR_CLASS:{
+				case BuffType::ARMOR_CLASS:{
 						armorClass += i.getBuffAmount();
 						break;
 					}
-					case buff::buffTypes::INTELLIGENCE:{
-						abilityModifiers[chr::Abilities::INTEL] += i.getBuffAmount();
+				case BuffType::INTELLIGENCE:{
+						abilityModifiers[(int)CharacterAbility::INTEL] += i.getBuffAmount();
 						break;
 					}
-					case buff::buffTypes::WISDOM:{
-						abilityModifiers[chr::Abilities::WISD] += i.getBuffAmount();
+				case BuffType::WISDOM:{
+						abilityModifiers[(int)CharacterAbility::WISD] += i.getBuffAmount();
 						break;
 					}
-					case buff::buffTypes::STRENGTH:{
-						abilityModifiers[chr::Abilities::STR] += i.getBuffAmount();
+				case BuffType::STRENGTH:{
+						abilityModifiers[(int)CharacterAbility::STR] += i.getBuffAmount();
 						break;
 					}
-					case buff::buffTypes::CONSTITUTION:{
-						abilityModifiers[chr::Abilities::CONS] += i.getBuffAmount();
+				case BuffType::CONSTITUTION:{
+						abilityModifiers[(int)CharacterAbility::CONS] += i.getBuffAmount();
 						break;
 					}
-					case buff::buffTypes::CHARISMA:{
-						abilityModifiers[chr::Abilities::CHA] += i.getBuffAmount();
+				case BuffType::CHARISMA:{
+						abilityModifiers[(int)CharacterAbility::CHA] += i.getBuffAmount();
 						break;
 					}
-					case buff::buffTypes::DEXTERITY:{
-						abilityModifiers[chr::Abilities::DEX] += i.getBuffAmount();
+				case BuffType::DEXTERITY:{
+						abilityModifiers[(int)CharacterAbility::DEX] += i.getBuffAmount();
 						break;
 					}
 				}
@@ -553,32 +553,32 @@ void Character::incrementArmorClass(int chrAC){
 void Character::takeOffBuff(vector<Buff> itemBuff){
 	for (auto i : itemBuff){
 		switch (i.getBuffType()){
-			case buff::buffTypes::ARMOR_CLASS:{
+		case BuffType::ARMOR_CLASS:{
 				armorClass -= i.getBuffAmount();
 				break;
 			}
-			case buff::buffTypes::INTELLIGENCE:{
-				abilityModifiers[chr::Abilities::INTEL] -= i.getBuffAmount();
+		case BuffType::INTELLIGENCE:{
+				abilityModifiers[(int)CharacterAbility::INTEL] -= i.getBuffAmount();
 				break;
 			}
-			case buff::buffTypes::WISDOM:{
-				abilityModifiers[chr::Abilities::WISD] -= i.getBuffAmount();
+		case BuffType::WISDOM:{
+				abilityModifiers[(int)CharacterAbility::WISD] -= i.getBuffAmount();
 				break;
 			}
-			case buff::buffTypes::STRENGTH:{
-				abilityModifiers[chr::Abilities::STR] -= i.getBuffAmount();
+		case BuffType::STRENGTH:{
+				abilityModifiers[(int)CharacterAbility::STR] -= i.getBuffAmount();
 				break;
 			}
-			case buff::buffTypes::CONSTITUTION:{
-				abilityModifiers[chr::Abilities::CONS] -= i.getBuffAmount();
+			case BuffType::CONSTITUTION:{
+				abilityModifiers[(int)CharacterAbility::CONS] -= i.getBuffAmount();
 				break;
 			}
-			case buff::buffTypes::CHARISMA:{
-				abilityModifiers[chr::Abilities::CHA] -= i.getBuffAmount();
+			case BuffType::CHARISMA:{
+				abilityModifiers[(int)CharacterAbility::CHA] -= i.getBuffAmount();
 				break;
 			}
-			case buff::buffTypes::DEXTERITY:{
-				abilityModifiers[chr::Abilities::DEX] -= i.getBuffAmount();
+			case BuffType::DEXTERITY:{
+				abilityModifiers[(int)CharacterAbility::DEX] -= i.getBuffAmount();
 				break;
 			}
 		}
@@ -625,12 +625,12 @@ ostream& operator<<(ostream& stream, const Character& chr){
 		
 	stream << "\n\nAbility \t" << "Score\t Modifier\n";
 
-	stream << Abilities::STR << "\t" << chr.abilityScores[Abilities::STR] << "\t" << chr.abilityModifiers[Abilities::STR] << "\n" <<
-		Abilities::DEX << "\t" << chr.abilityScores[Abilities::DEX] << "\t" << chr.abilityModifiers[Abilities::DEX] << "\n" <<
-		Abilities::CONS << "\t" << chr.abilityScores[Abilities::CONS] << "\t" << chr.abilityModifiers[Abilities::CONS] << "\n" <<
-		Abilities::INTEL << "\t" << chr.abilityScores[Abilities::INTEL] << "\t" << chr.abilityModifiers[Abilities::INTEL] << "\n" <<
-		Abilities::WISD << "\t\t" << chr.abilityScores[Abilities::WISD] << "\t" << chr.abilityModifiers[Abilities::WISD] << "\n" <<
-		Abilities::CHA << "\t" << chr.abilityScores[Abilities::CHA] << "\t" << chr.abilityModifiers[Abilities::CHA] << "\n";
+	stream << CharacterAbility::STR << "\t" << chr.abilityScores[(int)CharacterAbility::STR] << "\t" << chr.abilityModifiers[(int)CharacterAbility::STR] << "\n" <<
+		CharacterAbility::DEX << "\t" << chr.abilityScores[(int)CharacterAbility::DEX] << "\t" << chr.abilityModifiers[(int)CharacterAbility::DEX] << "\n" <<
+		CharacterAbility::CONS << "\t" << chr.abilityScores[(int)CharacterAbility::CONS] << "\t" << chr.abilityModifiers[(int)CharacterAbility::CONS] << "\n" <<
+		CharacterAbility::INTEL << "\t" << chr.abilityScores[(int)CharacterAbility::INTEL] << "\t" << chr.abilityModifiers[(int)CharacterAbility::INTEL] << "\n" <<
+		CharacterAbility::WISD << "\t\t" << chr.abilityScores[(int)CharacterAbility::WISD] << "\t" << chr.abilityModifiers[(int)CharacterAbility::WISD] << "\n" <<
+		CharacterAbility::CHA << "\t" << chr.abilityScores[(int)CharacterAbility::CHA] << "\t" << chr.abilityModifiers[(int)CharacterAbility::CHA] << "\n";
 
 	stream << "\n\nCurrent Hit Points(HP): " << chr.currentHitPoints <<
 		"\nDamage Bonus: " << chr.damageBonus <<

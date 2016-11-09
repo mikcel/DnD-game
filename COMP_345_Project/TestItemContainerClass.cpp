@@ -16,8 +16,10 @@
 #include <cppunit/XmlOutputter.h>
 #include "ItemContainer.h"
 #include "Weapon.h"
+#include "Enums.h"
 using namespace CppUnit;
 using namespace std;
+
 
 //! Test Class for the ItemContainer class
 //! It must be a subclass of CppUnit::TestFixture
@@ -55,7 +57,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestItemContainerClass);//most important
 //! Test Case: the size of the container is increased by one after adding an item to it
 void TestItemContainerClass::testAddItem(void)
 {
-	Item* i1 = new Item(BELT, "Leather Belt", vector<Buff>{ Buff(CONSTITUTION, 2),  Buff(CONSTITUTION, 2)});
+	Item* i1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{ Buff(BuffType::CONSTITUTION, 2), Buff(BuffType::CONSTITUTION, 2)});
 	
 	ItemContainer* c1 = new ItemContainer();
 	c1->addItem(i1);
@@ -70,9 +72,9 @@ void TestItemContainerClass::testAddItem(void)
 void TestItemContainerClass::testGetItem(void)
 {
 	
-	Item* i1 = new Item(BELT, "Leather Belt", vector<Buff>{Buff(CONSTITUTION, 2), Buff(CONSTITUTION, 2)});
-	Weapon* i2 = new Weapon(WEAPON, "Iron Sword", vector<Buff>{ Buff(ATTACK_BONUS, 2), Buff(DAMAGE_BONUS, 2)}, 1);
-	ItemContainer* c1 = new ItemContainer(BACKPACK, vector<Item*> {i1, i2});
+	Item* i1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{Buff(BuffType::CONSTITUTION, 2), Buff(BuffType::CONSTITUTION, 2)});
+	Weapon* i2 = new Weapon(ItemType::WEAPON, "Iron Sword", vector<Buff>{ Buff(BuffType::ATTACK_BONUS, 2), Buff(BuffType::DAMAGE_BONUS, 2)}, 1);
+	ItemContainer* c1 = new ItemContainer(ContainerType::BACKPACK, vector<Item*> {i1, i2});
 	string name = c1->getItem("Iron Sword")->getItemName();
 	CPPUNIT_ASSERT(name.compare("Iron Sword") == 0);
 	delete c1;
@@ -83,14 +85,14 @@ void TestItemContainerClass::testGetItem(void)
 void TestItemContainerClass::testValidItem(void)
 {
 	Buff b1 =  Buff();
-	Buff b2 =  Buff(ATTACK_BONUS, 3);
+	Buff b2 = Buff(BuffType::ATTACK_BONUS, 3);
 
 	b1.setBuffAmount(2);
-	b1.setBuffType(DAMAGE_BONUS);
+	b1.setBuffType(BuffType::DAMAGE_BONUS);
 
 	Weapon* i1 = new Weapon();
 
-	i1->setItemType(WEAPON);
+	i1->setItemType(ItemType::WEAPON);
 	i1->setItemName("Iron Axe");
 	vector<Buff> buffs1{ b1,b2 };
 	i1->setBuffs(buffs1);
@@ -104,10 +106,10 @@ void TestItemContainerClass::testValidItem(void)
 //! Test Case: calling validateItem() on an invalid item should return true 
 void TestItemContainerClass::testInvalidItem(void)
 {
-	Buff b3 =  Buff(INTELLIGENCE, 4);
-	Buff b4 =  Buff(INTELLIGENCE, 4);
+	Buff b3 = Buff(BuffType::INTELLIGENCE, 4);
+	Buff b4 = Buff(BuffType::INTELLIGENCE, 4);
 
-	Item* i2 = new Item(ARMOR, "Ice Armor", vector<Buff>{b3, b4});
+	Item* i2 = new Item(ItemType::ARMOR, "Ice Armor", vector<Buff>{b3, b4});
 
 	CPPUNIT_ASSERT(i2->validateItem() == false);
 
@@ -118,17 +120,17 @@ void TestItemContainerClass::testInvalidItem(void)
 //! Test Case: calling equipItem() and the item should no longer be in the backpaack but rather in the worn items
 void TestItemContainerClass::testEquipItem(void) {
 	//new objects
-	Item* i1 = new Item(BELT, "Leather Belt", vector<Buff>{ Buff(CONSTITUTION, 2), Buff(CONSTITUTION, 2)});
-	Weapon* i2 = new Weapon(WEAPON, "Iron Sword", vector<Buff>{ Buff(ATTACK_BONUS, 2), Buff(DAMAGE_BONUS, 2)}, 1);
-	ItemContainer* backpack = new ItemContainer(BACKPACK, vector<Item*> {i1, i2});
-	ItemContainer* wornItems = new ItemContainer(WORN_ITEM, vector<Item*>(0));
+	Item* i1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{ Buff(BuffType::CONSTITUTION, 2), Buff(BuffType::CONSTITUTION, 2)});
+	Weapon* i2 = new Weapon(ItemType::WEAPON, "Iron Sword", vector<Buff>{ Buff(BuffType::ATTACK_BONUS, 2), Buff(BuffType::DAMAGE_BONUS, 2)}, 1);
+	ItemContainer* backpack = new ItemContainer(ContainerType::BACKPACK, vector<Item*> {i1, i2});
+	ItemContainer* wornItems = new ItemContainer(ContainerType::WORN_ITEM, vector<Item*>(0));
 	//testing that the item is in the original container
-	CPPUNIT_ASSERT(backpack->getItem("Iron Sword")->getItemTypes() == WEAPON);
+	CPPUNIT_ASSERT(backpack->getItem("Iron Sword")->getItemTypes() == ItemType::WEAPON);
 	//equip function
 	wornItems->equipItem("Iron Sword",backpack);
 	//checks to see the object has actually moved
 	CPPUNIT_ASSERT(wornItems->getItem("Iron Sword")->getItemName().compare("Iron Sword") == 0);
-	CPPUNIT_ASSERT(backpack->getItem("Iron Sword")->getItemTypes() == UNSPECIFIED);
+	CPPUNIT_ASSERT(backpack->getItem("Iron Sword")->getItemTypes() == ItemType::UNSPECIFIED);
 	delete backpack;
 	delete wornItems;
 }
@@ -137,15 +139,15 @@ void TestItemContainerClass::testEquipItem(void) {
 //! Test Case: calling unequipItem() and the item should no longer be in the worn items but rather in the backpack
 void TestItemContainerClass::testUnequipItem(void) {
 	//instantiating new objects
-	Item* i1 = new Item(BELT, "Leather Belt", vector<Buff>{ Buff(CONSTITUTION, 2), Buff(CONSTITUTION, 2)});
-	Weapon* i2 = new Weapon(WEAPON, "Iron Sword", vector<Buff>{ Buff(ATTACK_BONUS, 2), Buff(DAMAGE_BONUS, 2)}, 1);
-	ItemContainer* backpack = new ItemContainer(BACKPACK, vector<Item*> (0));
-	ItemContainer* wornItems = new ItemContainer(WORN_ITEM, vector<Item*> {i1, i2});
+	Item* i1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{ Buff(BuffType::CONSTITUTION, 2), Buff(BuffType::CONSTITUTION, 2)});
+	Weapon* i2 = new Weapon(ItemType::WEAPON, "Iron Sword", vector<Buff>{ Buff(BuffType::ATTACK_BONUS, 2), Buff(BuffType::DAMAGE_BONUS, 2)}, 1);
+	ItemContainer* backpack = new ItemContainer(ContainerType::BACKPACK, vector<Item*>(0));
+	ItemContainer* wornItems = new ItemContainer(ContainerType::WORN_ITEM, vector<Item*> {i1, i2});
 	//unequip function call
 	wornItems->unequipItem("Iron Sword", backpack);
 	//tests
 	CPPUNIT_ASSERT(backpack->getItem("Iron Sword")->getItemName().compare("Iron Sword") == 0);
-	CPPUNIT_ASSERT(wornItems->getItem("Iron Sword")->getItemTypes() == UNSPECIFIED);
+	CPPUNIT_ASSERT(wornItems->getItem("Iron Sword")->getItemTypes() == ItemType::UNSPECIFIED);
 	delete backpack;
 	delete wornItems;
 }

@@ -17,12 +17,12 @@ public:
 	//! Default Constructor
 	ItemContainer();
 
-	ItemContainer(itemCnt::containerTypes type);
+	ItemContainer(ContainerType type);
 	
 	//! Constructor that takes a type and a vector of items  (will initialize worn items containers to size 7)
 	//! @param type: enum type of container
 	//! @param vectorOfItems: vector of item object pointers
-	ItemContainer(itemCnt::containerTypes type, vector<Item*> vectorOfItems);
+	ItemContainer(ContainerType type, vector<Item*> vectorOfItems);
 	
 	//! Destructor that goes through the container and deletes the pointers of the vectorOfItem
 	~ItemContainer();
@@ -33,7 +33,7 @@ public:
 
 	//! method that gets the container type
 	//! return: the enum type of the item container
-	itemCnt::containerTypes getContainerType();
+	ContainerType getContainerType();
 
 	//! method that sets the contents of the container
 	//! @param newContents: a vector of pointers pointing to item objects
@@ -41,7 +41,7 @@ public:
 
 	//! method that sets the container type (if worn items is the new container type, it will make sure the vector is resized to 7 elements)
 	//! @param type: enum type of the item container
-	void setContainerType(itemCnt::containerTypes type);
+	void setContainerType(ContainerType type);
 
 
 	//! method that adds and item to the item container
@@ -76,7 +76,7 @@ public:
 
 	string serializeItemContainer();
 private:
-	itemCnt::containerTypes containerType;
+	ContainerType containerType;
 	vector<Item*> contents;
 
 	friend ostream& operator<<(ostream& stream, const ItemContainer& cont);
