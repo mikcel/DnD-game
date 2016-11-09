@@ -153,6 +153,7 @@
     <ClInclude Include="Element.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Fighter.h" />
+    <ClInclude Include="FolderUtils.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemContainer.h" />
     <ClInclude Include="Map.h" />
