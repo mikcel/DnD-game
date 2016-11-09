@@ -362,14 +362,14 @@ int Character::hit(int dmg){
 	int returnVal = 0;
 	int newDmg = dmg - armorClass; //! Subtract armor class because Character is protected by Armor (max. 22)
 	if (newDmg >= currentHitPoints){  //! If new Damage is more than current HP, character dies.
-		Notify();
+		notify();
 		cout << "\n" << name << " hit by " << dmg << " damage. \nNot enough to be protected by armor and above HP. Game Over for " << getName() << "\n";
 		currentHitPoints = 0;
 		returnVal = 0;
 	}
 	else if (newDmg > 0){ //! If new damage is less than current HP
 		currentHitPoints -= newDmg; //! Subtract damage from HP
-		Notify();
+		notify();
 		cout << "\n" << name << " hit by " << dmg << " damage.\n"
 			<< "Protected by AC; Total Damage: " << newDmg << "\n"
 			<< name << "'s Current Hit Points (HP): " << currentHitPoints << endl;
@@ -450,7 +450,7 @@ bool Character::takeOffItem(Item *objItem){
 		else{
 			takeOffBuff(objItem->getBuffs());
 		}
-		Notify();
+		notify();
 		return true;
 	}
 	return false;
@@ -507,7 +507,7 @@ bool Character::wearItem(Item *objItem){
 				}
 			}
 		}
-		Notify();
+		notify();
 		return true;
 	}
 	return false;
@@ -523,7 +523,7 @@ bool Character::storeItem(Item *objItem)
 
 	backpack->addItem(objItem);
 
-	Notify();
+	notify();
 	return true;
 }
 
@@ -591,7 +591,7 @@ bool Character::removeItemBack(Item *objItem){
 		return false;
 	backpack->removeItem(objItem->getItemName());
 
-	Notify();
+	notify();
 	return true;
 
 }
