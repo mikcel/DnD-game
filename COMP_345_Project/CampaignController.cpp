@@ -1,4 +1,5 @@
 #include "CampaignController.h"
+#include "FolderUtils.h"
 #include <fstream>
 
 
@@ -60,6 +61,14 @@ void CampaignController::createCampaign(){
 			mapFile.open("");
 			while (!mapFile) {
 				cout << "Enter the name of the map you would like to add to the campaign." << endl;
+				
+				cout << "Here is a list of all the existing maps:" << endl;
+				vector<string> allFiles = getAllFilesInsideFolder("SaveFiles\\Maps");
+				for (string& file : allFiles)
+				{
+					cout << file << endl;
+				}
+
 				cin >> mapEditName;
 				mapFile.open("SaveFiles/Maps/" + mapEditName + ".txt");
 

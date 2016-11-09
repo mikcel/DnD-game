@@ -147,5 +147,8 @@
     <ClInclude Include="ItemContainer.h">
       <Filter>Item</Filter>
     </ClInclude>
+    <ClInclude Include="FolderUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
