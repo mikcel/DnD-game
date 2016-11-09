@@ -144,10 +144,10 @@ string Item::serializeItem() {
 	string itemString = "";
 	itemString += itemName;
 	itemString += "\n";
-	itemString += (int)itemType;
+	itemString += to_string((int)itemType);
 	itemString += "\n";
 	for (auto b : buffs) {
-		itemString += (int)b.getBuffType();
+		itemString += to_string((int)b.getBuffType());
 		itemString += "\n";
 		itemString += to_string(b.getBuffAmount());
 		itemString += "\n";

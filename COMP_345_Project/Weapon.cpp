@@ -59,7 +59,7 @@ string Weapon::serializeItem() {
 	string itemString = "";
 	itemString += this->getItemName();
 	itemString += "\n";
-	itemString += (int)(this->getItemTypes());
+	itemString += to_string((int)(this->getItemTypes()));
 	itemString += "\n";
 	itemString += to_string(this->range);
 	itemString += "\n";
@@ -68,7 +68,7 @@ string Weapon::serializeItem() {
 	//int b = (int)a;
 
 	for (auto b : this->getBuffs()) {
-		itemString += (int)b.getBuffType();
+		itemString += to_string((int)b.getBuffType());
 		itemString += "\n";
 		itemString += to_string(b.getBuffAmount());
 		itemString += "\n";
