@@ -91,6 +91,9 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Item</Filter>
     </ClCompile>
+    <ClCompile Include="FolderUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tile.h">
