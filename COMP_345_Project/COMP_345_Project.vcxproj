@@ -135,9 +135,8 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapController.cpp" />
     <ClCompile Include="MapEditorDriver.cpp" />
-    <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="Observable.cpp" />
     <ClCompile Include="Position.cpp" />
-    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TestControllers.cpp" />
     <ClCompile Include="TestItemClass.cpp" />
     <ClCompile Include="TestItemContainerClass.cpp" />
@@ -158,9 +157,9 @@
     <ClInclude Include="ItemContainer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapController.h" />
+    <ClInclude Include="Observable.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Position.h" />
-    <ClInclude Include="Subject.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

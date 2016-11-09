@@ -4,6 +4,10 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <conio.h>
+#include <stdio.h>
+
+using namespace std;
 
 MapController::MapController()
 {
@@ -69,6 +73,7 @@ void MapController::createMap() {
 	currentMap = m;
 	editMap(true);
 }
+
 void MapController::editMap(bool creatingNewMap) {
 	if (!creatingNewMap) {
 		if (!cacheMap()) {
@@ -78,7 +83,7 @@ void MapController::editMap(bool creatingNewMap) {
 	Map* m = currentMap;
 	bool isInvalid = false;
 	cout << "LEGEND: F Floor, W Wall, X Enemy, C Chest, () Start point, [] End point" << endl;
-	cout << "Enter Q at any time to quit the application" << "\n" << endl;
+	cout << "Enter Q at any time to save and quit the map " << (creatingNewMap ? "creation" : "edition") << ".\n" << endl;
 
 	string xS, yS, eS;
 	int x, y;
@@ -102,13 +107,7 @@ void MapController::editMap(bool creatingNewMap) {
 			cin >> eS;
 			if (eS == "Q")
 			{ 
-				if (m->isValid()) {
-					saveMap();
-				}
-				else {
-					cout << "\nMap is not valid. All changes are discarded." << endl;
-				}
-				delete m;
+				quit();
 				return;
 			}
 
@@ -127,13 +126,7 @@ void MapController::editMap(bool creatingNewMap) {
 
 			if (xS == "Q")
 			{
-				if (m->isValid()) {
-					saveMap();
-				}
-				else {
-					cout << "\nMap is not valid. All changes are discarded." << endl;
-				}
-				delete m;
+				quit();
 				return;
 			}
 			stringstream(xS) >> x;
@@ -153,13 +146,7 @@ void MapController::editMap(bool creatingNewMap) {
 
 			if (yS == "Q")
 			{
-				if (m->isValid()) {
-					saveMap();
-				}
-				else {
-					cout << "\nMap is not valid. All changes are discarded." << endl;
-				}
-				delete m;
+				quit();
 				return;
 			}
 			stringstream(yS) >> y;
@@ -329,4 +316,16 @@ Map* MapController::readMapFile(string mapFileLocation, string mapName) {
 	mapFile.close();
 	cout<< tmpMap->print()<<endl;
 	return tmpMap;
+}
+
+void MapController::quit()
+{
+	if (currentMap->isValid()) {
+		saveMap();
+	}
+	else {
+		cout << "\nMap is not valid. All changes are discarded." << endl;
+	}
+	delete currentMap;
+	system("pause");
 }

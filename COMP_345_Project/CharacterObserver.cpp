@@ -14,10 +14,10 @@ CharacterObserver::CharacterObserver(){
 
 //! Parametrized constructor
 //! @param Character - pointer to character
-CharacterObserver::CharacterObserver(Character *chr){
+CharacterObserver::CharacterObserver(Character& chr){
 
-	_subject = chr; //! Assign subject
-	_subject->Attach(this); //! Atach this observer to subject
+	_subject = &chr; //! Assign subject
+	_subject->attach(*this); //! Atach this observer to subject
 	display(); //Display the character's stats
 
 }
@@ -25,7 +25,7 @@ CharacterObserver::CharacterObserver(Character *chr){
 //! Destructor
 CharacterObserver::~CharacterObserver(){
 
-	_subject->Detach(this); //! Deletes the pointer
+	_subject->detach(*this); //! Deletes the pointer
 
 }
 
