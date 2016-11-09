@@ -22,23 +22,23 @@ public:
 	Fighter(); 
 
 	//! A parametrized constructor getting name, an array containing the ability scores, the fighting style, the level and the size
-	Fighter(string chrName, int chrAbilityScores[Character::NO_ABILITY], fight::Style chrStyle, int chrLevel, chr::Size chrSize); 
+	Fighter(string chrName, int chrAbilityScores[Character::NO_ABILITY], FightStyle chrStyle, int chrLevel, CharacterSize chrSize);
 	
 	//! Another parameterized constructor, passing the name, the 6 different abilities as integer, the fighting style, the level and the size to the respective
 	//! data members both in the Fighter and Character class
-	Fighter(string chrName, int str, int dex, int cons, int intel, int wisd, int cha, fight::Style chrStyle, int chrLevel = 1, chr::Size chrSize = chr::Size::TINY);
+	Fighter(string chrName, int str, int dex, int cons, int intel, int wisd, int cha, FightStyle chrStyle, int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
 	
 	~Fighter(); //! Destructor
 
-	fight::Style getStyle(); //! Accessor for fighting style
-	void setStyle(fight::Style chrstyle); //! Mutator for the Fighter's fighting style
+	FightStyle getStyle(); //! Accessor for fighting style
+	void setStyle(FightStyle chrstyle); //! Mutator for the Fighter's fighting style
 	void incrementLevel(int hitRoll); //! Fghter's overridden method from Chracter class to increment level
 	int attack(Character &chr, int dmg); //! Method for attacking another player
 
 private:
 
 	static const string DEFAULT_HIT_DICE; //! Default hit dice for a Fighter
-	fight::Style style = fight::ARCHERY; //! Fighting style. default to archery
+	FightStyle style = FightStyle::ARCHERY; //! Fighting style. default to archery
 
 	//! Method to overload output stream operator for a Fighter
 	friend ostream& operator<<(ostream& stream, const Fighter& fighter);

@@ -2,16 +2,16 @@
 
 Chest::Chest()
 {
-	ItemContainer(itemCnt::CHEST, vector<Item*>(0));
+	ItemContainer(ContainerType::CHEST, vector<Item*>(0));
 }
 
 Chest::Chest(Chest &chest) {
 	ItemContainer* it1 = dynamic_cast<ItemContainer*> (&chest);
-	new ItemContainer(itemCnt::CHEST,it1->getContents());
+	new ItemContainer(ContainerType::CHEST, it1->getContents());
 }
 Chest::Chest(vector<Item*> vectorOfItems)
 {
-	ItemContainer(itemCnt::CHEST, vectorOfItems);
+	ItemContainer(ContainerType::CHEST, vectorOfItems);
 }
 Chest::~Chest()
 {

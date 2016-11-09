@@ -21,7 +21,6 @@
 using namespace std; 
 
 #include "Enums.h" //! Include header file for the enumerated type
-using namespace chr; //! Use the namespace for the Character's enumerated type
 
 #include "ItemContainer.h" //! Include the itemcontainer class
 #include "Subject.h" //! Include the subject class for the observer pattern
@@ -38,21 +37,21 @@ public:
 
 	//! Constructor with name, hit dice, an array of ability scores, the Character's level and size
 	//! If level and size are not passed , the level is set to 1 by default and size to tiny by default
-	Character(string chrName, string hitDice, int chrAbilityScores[NO_ABILITY], int chrLevel = 1, Size chrSize = Size::TINY); 
+	Character(string chrName, string hitDice, int chrAbilityScores[NO_ABILITY], int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
 
 	//! Constructor with name, hit dice, six variables for each ability score, level and size 
 	//! If level and size are not passed , the level is set to 1 by default and size to tiny by default
-	Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel = 1, Size chrSize = Size::TINY); 
+	Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
 	Character(Character* chara);
 	//! Destrcutor
 	virtual ~Character(); 
 
 	string getName(); //! Getter for Character's name
 	int getLevel(); //! Getter for Character's Level
-	Size getSize(); //! Getter for Character's Size
-	int getOneAbilityScore(Abilities ability); //! Getting one ability score
+	CharacterSize getSize(); //! Getter for Character's Size
+	int getOneAbilityScore(CharacterAbility ability); //! Getting one ability score
 	int* getAllAbilityScores(); //! Getter for an array of all the ability scores
-	int getOneAbilityModifier(Abilities ability); //! Getter one ability modifier
+	int getOneAbilityModifier(CharacterAbility ability); //! Getter one ability modifier
 	int* getAllAbilityModifiers(); //! Function to return a pointer to a copy of the ability modifiers array.
 	int getCurrentHitPoints(); //! Getter to get Character's HP
 	int getDamageBonus(); //! Getter to obtain damage bonus of the Character
@@ -62,7 +61,7 @@ public:
 
 	void setName(string chrName); //! Setter for the Character's name
 	void setLevel(int chrLevel); //! Setter for the Character's level
-	void setSize(Size chrSize); //! Function to set the Character's size
+	void setSize(CharacterSize chrSize); //! Function to set the Character's size
 	void setAbilityScores(int str, int dex, int cons, int intel, int wisd, int cha); //! Function to set each ability scores
 	void setAbilityScores(int chrAbilityScores[NO_ABILITY]); //! Function to set ability scores from a passed array
 	void setCurrentHitPoints(int chrHitPt); //! Setter for the Character's HP
@@ -96,7 +95,7 @@ private:
 
 	string name="Unknown"; //! Name data member. Default is "Unknown"
 	int level=1; //! Level data member. Default is 1
-	Size size=TINY; //! Character's Size set to Tiny by default
+	CharacterSize size = CharacterSize::TINY; //! Character's Size set to Tiny by default
 	int abilityScores[NO_ABILITY]; //! Array for the ability scores with 6 elements 
 	int abilityModifiers[NO_ABILITY]; //! Array for the ability modifiers containg 6 numbers
 	int currentHitPoints = DEFAULT_HP; //! Character's Hp set to default HP (10)

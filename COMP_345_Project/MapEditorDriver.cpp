@@ -61,11 +61,11 @@ int main(int argc, char* argv[])
 	//getchar();
 
 #endif // CPPTEST
-	Item* item1 = new Item(item::itemTypes::BELT, "Leather Belt", vector<Buff>{ Buff(buff::buffTypes::CONSTITUTION, 2), Buff(buff::buffTypes::CONSTITUTION, 2)});
-	Weapon* item2 = new Weapon(item::itemTypes::WEAPON, "Iron Sword", vector<Buff>{ Buff(buff::buffTypes::ATTACK_BONUS, 2), Buff(buff::buffTypes::DAMAGE_BONUS, 2)}, 1);
+	Item* item1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{ Buff(BuffType::CONSTITUTION, 2), Buff(BuffType::CONSTITUTION, 2)});
+	Weapon* item2 = new Weapon(ItemType::WEAPON, "Iron Sword", vector<Buff>{ Buff(BuffType::ATTACK_BONUS, 2), Buff(BuffType::DAMAGE_BONUS, 2)}, 1);
 	cout << item1->serializeItem()<<endl;
 
-	ItemContainer* backpack = new ItemContainer(itemCnt::containerTypes::BACKPACK, vector<Item*> {item1, item2});
+	ItemContainer* backpack = new ItemContainer(ContainerType::BACKPACK, vector<Item*> {item1, item2});
 	cout << backpack->serializeItemContainer() << endl;
 
 	delete backpack;

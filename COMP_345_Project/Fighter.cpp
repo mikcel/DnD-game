@@ -22,7 +22,7 @@ const string Fighter::DEFAULT_HIT_DICE = "1d10";
 //! Constructor: Default Constructor
 //! Sets Fighter's name to "unknown", all abilities to 3, the fighting style by default set to archery, the level and the size
 //! It invokes one of the Parametrized constructor to initialize each data member (to avoid code repetition)
-Fighter::Fighter() : Fighter("Unknown", 3, 3, 3, 3, 3, 3, fight::Style::ARCHERY, 1, chr::Size::TINY){
+Fighter::Fighter() : Fighter("Unknown", 3, 3, 3, 3, 3, 3, FightStyle::ARCHERY, 1, CharacterSize::TINY){
 	/*Intentionally left empty*/
 }
 
@@ -30,9 +30,9 @@ Fighter::Fighter() : Fighter("Unknown", 3, 3, 3, 3, 3, 3, fight::Style::ARCHERY,
 //! This constructor takes the name, an array of 6 abilities, the fighting style, the level and the Fighter's size
 //! It then calls the other parametrized constructor to passed these data to data members. It indexes the array passed
 //! to obtain each specific ability by using the enumerated type. 
-Fighter::Fighter(string chrName, int chrAbilityScores[Character::NO_ABILITY], fight::Style chrStyle, int chrLevel, chr::Size chrSize)  : Fighter(chrName, chrAbilityScores[chr::Abilities::STR], 
-	chrAbilityScores[chr::Abilities::DEX], chrAbilityScores[chr::Abilities::CONS], chrAbilityScores[chr::Abilities::INTEL], chrAbilityScores[chr::Abilities::WISD],
-	chrAbilityScores[chr::Abilities::CHA] , chrStyle, chrLevel, chrSize){
+Fighter::Fighter(string chrName, int chrAbilityScores[Character::NO_ABILITY], FightStyle chrStyle, int chrLevel, CharacterSize chrSize) : Fighter(chrName, chrAbilityScores[(int)CharacterAbility::STR],
+	chrAbilityScores[(int)CharacterAbility::DEX], chrAbilityScores[(int)CharacterAbility::CONS], chrAbilityScores[(int)CharacterAbility::INTEL], chrAbilityScores[(int)CharacterAbility::WISD],
+	chrAbilityScores[(int)CharacterAbility::CHA], chrStyle, chrLevel, chrSize){
 	/*Intentionally left empty*/
 }
 
@@ -41,14 +41,14 @@ Fighter::Fighter(string chrName, int chrAbilityScores[Character::NO_ABILITY], fi
 //! This is the only constructor that calls he super class constructor and passes the respective parameters. It passes the name and
 //! the default hit dice for the fighter. Note that the strength, the dexterity and the constitution are incremented by 1 if not 
 //! already 18 as it is a characteristics of the Fighter class in the d20 rule. Other data members are initalized as usual.
-Fighter::Fighter(string chrName, int str, int dex, int cons, int intel, int wisd, int cha, fight::Style chrStyle, int chrLevel, chr::Size chrSize)
+Fighter::Fighter(string chrName, int str, int dex, int cons, int intel, int wisd, int cha, FightStyle chrStyle, int chrLevel, CharacterSize chrSize)
 : Character(chrName, DEFAULT_HIT_DICE, (str == 18 ? str : str++), (dex == 18 ? dex : dex++), (cons == 18 ? cons : cons++), intel, wisd, cha, chrLevel, chrSize){
 
 	//! set the character's style
 	style = chrStyle;
 
 	//! Get the constituion modifier
-	int consMod = Character::getOneAbilityModifier(chr::Abilities::CONS);
+	int consMod = Character::getOneAbilityModifier(CharacterAbility::CONS);
 
 	//! Check if the constitution modifier is +ve
 	//! If true, add the constitution modifier to the HP
@@ -56,7 +56,7 @@ Fighter::Fighter(string chrName, int str, int dex, int cons, int intel, int wisd
 		Character::setCurrentHitPoints(Character::getCurrentHitPoints() + consMod);
 
 	//! If fighter's style to defense, increment the armor class
-	if (style == fight::Style::DEFENSE)
+	if (style == FightStyle::DEFENSE)
 		Character::incrementArmorClass(1);
 
 }
@@ -69,13 +69,13 @@ Fighter::~Fighter(){
 
 //! Accessor method for the fighting style
 //! @return fighter's style of enumerated type style
-fight::Style Fighter::getStyle(){
+FightStyle Fighter::getStyle(){
 	return style;
 }
 
 //! Mutator method for the fighter's style
 //! @param style - the Character's new style of enumerated type style
-void Fighter::setStyle(fight::Style chrStyle){
+void Fighter::setStyle(FightStyle chrStyle){
 	style = chrStyle;
 }
 
@@ -102,7 +102,7 @@ int Fighter::attack(Character &chr, int dmg){
 
 	//! Check style used based on the d20 rules
 	//! If style is archery or dueling, increment damage by 2
-	if (style == fight::Style::ARCHERY || style == fight::Style::DUELING){
+	if (style == FightStyle::ARCHERY || style == FightStyle::DUELING){
 		dmg += 2;
 		cout << "\nSince " << getName() << " is a fighter, new damage with fighting style is " << dmg << endl;
 	}

@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 
-int main()
+int main2()
 {
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
 	window.setFramerateLimit(60); // Sets the frame rate

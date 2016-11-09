@@ -16,7 +16,7 @@ Weapon::Weapon():Item()
 //! @param itemName: string of the name of the item
 //! @param buffs: a vector of Buff objects that adds modifiers to the item
 //! @param range: int of the range of the weapon
-Weapon::Weapon(item::itemTypes itemType, string itemName, vector<Buff> buffs, int range):Item( itemType, itemName, buffs)
+Weapon::Weapon(ItemType itemType, string itemName, vector<Buff> buffs, int range):Item( itemType, itemName, buffs)
 {
 	if (range < 1) {
 		range = 1;
@@ -48,7 +48,7 @@ void Weapon::setRange(int range) {
 //! @return : depending on the validity of the weapon object
 bool Weapon::validateWeapon() 
 {
-	if (this->getItemTypes() == item::itemTypes::WEAPON) 
+	if (this->getItemTypes() == ItemType::WEAPON) 
 	{
 		return true;
 	}
@@ -59,12 +59,16 @@ string Weapon::serializeItem() {
 	string itemString = "";
 	itemString += this->getItemName();
 	itemString += "\n";
-	itemString += to_string(this->getItemTypes());
+	itemString += (int)(this->getItemTypes());
 	itemString += "\n";
 	itemString += to_string(this->range);
 	itemString += "\n";
+
+	BuffType a = (BuffType)1;
+	//int b = (int)a;
+
 	for (auto b : this->getBuffs()) {
-		itemString += to_string(b.getBuffType());
+		itemString += (int)b.getBuffType();
 		itemString += "\n";
 		itemString += to_string(b.getBuffAmount());
 		itemString += "\n";

@@ -18,7 +18,7 @@ public:
 	//! @param itemName: string of the name of the item
 	//! @param buffs: a vector of Buff objects that adds modifiers to the item
 	//! @param range: int of the range of the weapon
-	Weapon(item::itemTypes itemType, string itemName, vector<Buff> buffs, int range);
+	Weapon(ItemType itemType, string itemName, vector<Buff> buffs, int range);
 	
 	Weapon(Weapon &wpn);
 

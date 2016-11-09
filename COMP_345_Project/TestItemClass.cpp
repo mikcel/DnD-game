@@ -41,14 +41,14 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestItemClass);//most important
 void TestItemClass::testValidItem()
 {	
 	Buff b1 = Buff();
-	Buff b2 =  Buff(ATTACK_BONUS, 3);
+	Buff b2 = Buff(BuffType::ATTACK_BONUS, 3);
 
 	b1.setBuffAmount(2);
-	b1.setBuffType(DAMAGE_BONUS);
+	b1.setBuffType(BuffType::DAMAGE_BONUS);
 
 	Weapon* i1 = new Weapon();
 
-	i1->setItemType(WEAPON);
+	i1->setItemType(ItemType::WEAPON);
 	i1->setItemName("Iron Axe");
 	i1->setBuffs(vector<Buff>{b1, b2});
 	i1->setRange(2);
@@ -62,10 +62,10 @@ void TestItemClass::testValidItem()
 //! Test Case: calling validateItem() on an invalid item should return false 
 void TestItemClass::testInvalidItem(void)
 {
-	Buff b3= Buff(INTELLIGENCE, 4);
-	Buff b4 =  Buff(STRENGTH, 4);
+	Buff b3 = Buff(BuffType::INTELLIGENCE, 4);
+	Buff b4 = Buff(BuffType::STRENGTH, 4);
 
-	Item* i2 = new Item(ARMOR, "Ice Armor", vector<Buff>{b3, b4});
+	Item* i2 = new Item(ItemType::ARMOR, "Ice Armor", vector<Buff>{b3, b4});
 
 	CPPUNIT_ASSERT(i2->validateItem() == false);
 

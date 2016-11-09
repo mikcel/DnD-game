@@ -17,156 +17,153 @@
 #include "Enums.h" //! Include the Enums header file
 
 //! Method for outputing the Character's Size
-ostream& operator<<(ostream& stream, chr::Size size){
+ostream& operator<<(ostream& stream, CharacterSize size){
 
 	string strSize; //! Variable to hold the contents to output for each size
 
 	//! A switch statement to assign a different value for each size to output.
 	switch (size)
 	{
-		case chr::Size::TINY:
-			strSize = "TINY";
-			break;
-		case chr::Size::FINE:
-			strSize = "FINE";
-			break;
-		case chr::Size::HUGE:
-			strSize = "HUGE";
-			break;
-		case chr::Size::COLOSSAL:
-			strSize = "COLOSSAL";
-			break;
+	case CharacterSize::TINY:
+		strSize = "TINY";
+		break;
+	case CharacterSize::FINE:
+		strSize = "FINE";
+		break;
+	case CharacterSize::HUGE :
+		strSize = "HUGE";
+		break;
+	case CharacterSize::COLOSSAL:
+		strSize = "COLOSSAL";
+		break;
 	}
 
 	return stream << strSize; //! Return the assigned string variable to the stream.
 }
 
 //! Method for outputting the Character's Ability
-ostream& operator<<(ostream& stream, chr::Abilities ability){
+ostream& operator<<(ostream& stream, CharacterAbility ability){
 	string strAbility; //! Variable to hold the contents to output for each ability
 
 	//! A switch statement to assign a different value for each ability to output.
 	switch (ability)
 	{
-		case chr::Abilities::STR:
-			strAbility = "STRENGTH";
-			break;
-		case chr::Abilities::DEX:
-			strAbility = "DEXTERITY";
-			break;
-		case chr::Abilities::CONS:
-			strAbility = "CONSTITUTION";
-			break;
-		case chr::Abilities::INTEL:
-			strAbility = "INTELLIGENCE";
-			break;
-		case chr::Abilities::WISD:
-			strAbility = "WISDOM";
-			break;
-		case chr::Abilities::CHA:
-			strAbility = "CHARISMA";
-			break;
+	case CharacterAbility::STR:
+		strAbility = "STRENGTH";
+		break;
+	case CharacterAbility::DEX:
+		strAbility = "DEXTERITY";
+		break;
+	case CharacterAbility::CONS:
+		strAbility = "CONSTITUTION";
+		break;
+	case CharacterAbility::INTEL:
+		strAbility = "INTELLIGENCE";
+		break;
+	case CharacterAbility::WISD:
+		strAbility = "WISDOM";
+		break;
+	case CharacterAbility::CHA:
+		strAbility = "CHARISMA";
+		break;
 	}
 
 	return stream << strAbility; //! Return the assigned string variable to the stream.
 }
 
 //! Method for outputting the Fighter's Style
-ostream& operator<<(ostream& stream, fight::Style style){
+ostream& operator<<(ostream& stream, FightStyle style){
 
 	string strStyle; //! Variable to hold the contents to output for each ability
 
 	//! A switch statement to assign a different value for each fighting style to output.
 	switch (style)
 	{
-		case fight::Style::ARCHERY:
-			strStyle = "ARCHERY";
-			break;
-		case fight::Style::DEFENSE:
-			strStyle = "DEFENSE";
-			break;
-		case fight::Style::DUELING:
-			strStyle = "DUELING";
-			break;
+	case FightStyle::ARCHERY:
+		strStyle = "ARCHERY";
+		break;
+	case FightStyle::DEFENSE:
+		strStyle = "DEFENSE";
+		break;
+	case FightStyle::DUELING:
+		strStyle = "DUELING";
+		break;
 	}
 
 	return stream << strStyle; //! Return the assigned string variable to the stream.
 }
 
-ostream& operator<<(ostream& stream, item::itemTypes type){
-
-	using namespace item;
+ostream& operator<<(ostream& stream, ItemType type){
 
 	string strType; //! Variable to hold the contents to output for each item type
 
 	//! A switch statement to assign a different value for each fighting style to output.
 	switch (type)
 	{
-		case itemTypes::ARMOR:
-			strType = "ARMOR";
-			break;
-		case itemTypes::BELT:
-			strType = "BELT";
-			break;
-		case itemTypes::BOOTS:
-			strType = "BOOTS";
-			break;
-		case itemTypes::HELMET:
-			strType = "HELMET";
-			break;
-		case itemTypes::RING:
-			strType = "RING";
-			break;
-		case itemTypes::SHIELD:
-			strType = "SHIELD";
-			break;
-		case itemTypes::UNSPECIFIED:
-			strType = "UNSPECIFIED";
-			break;
-		case itemTypes::WEAPON:
-			strType = "WEAPON";
-			break;
+	case ItemType::ARMOR:
+		strType = "ARMOR";
+		break;
+	case ItemType::BELT:
+		strType = "BELT";
+		break;
+	case ItemType::BOOTS:
+		strType = "BOOTS";
+		break;
+	case ItemType::HELMET:
+		strType = "HELMET";
+		break;
+	case ItemType::RING:
+		strType = "RING";
+		break;
+	case ItemType::SHIELD:
+		strType = "SHIELD";
+		break;
+	case ItemType::UNSPECIFIED:
+		strType = "UNSPECIFIED";
+		break;
+	case ItemType::WEAPON:
+		strType = "WEAPON";
+		break;
 	}
 
 	return stream << strType; //! Return the assigned string variable to the stream.
 
 }
 
-ostream& operator <<(ostream& stream, buff::buffTypes buffType){
+ostream& operator <<(ostream& stream, BuffType buffType){
 
-	using namespace buff;
 	string strType; //! Variable to hold the contents to output for each item type
 
 	//! A switch statement to assign a different value for each fighting style to output.
 	switch (buffType)
 	{
-		case buffTypes::INTELLIGENCE:
-			strType = "INTELLIGENCE";
-			break;
-		case buffTypes::WISDOM:
-			strType = "WISDOM";
-			break;
-		case buffTypes::ARMOR_CLASS:
-			strType = "ARMOR CLASS";
-			break;
-		case buffTypes::STRENGTH:
-			strType = "STRENGTH";
-			break;
-		case buffTypes::CHARISMA:
-			strType = "CHARISMA";
-			break;
-		case buffTypes::CONSTITUTION:
-			strType = "CONSTITUTION";
-			break;
-		case buffTypes::DEXTERITY:
-			strType = "DEXTERITY";
-			break;
-		case buffTypes::ATTACK_BONUS:
-			strType = "ATTACK BONUS";
-			break;
-		case buffTypes::DAMAGE_BONUS:
-			strType = "DAMAGE BONUS";
-			break;
+	case BuffType::INTELLIGENCE:
+		strType = "INTELLIGENCE";
+		break;
+	case BuffType::WISDOM:
+		strType = "WISDOM";
+		break;
+	case BuffType::ARMOR_CLASS:
+		strType = "ARMOR CLASS";
+		break;
+	case BuffType::STRENGTH:
+		strType = "STRENGTH";
+		break;
+	case BuffType::CHARISMA:
+		strType = "CHARISMA";
+		break;
+	case BuffType::CONSTITUTION:
+		strType = "CONSTITUTION";
+		break;
+	case BuffType::DEXTERITY:
+		strType = "DEXTERITY";
+		break;
+	case BuffType::ATTACK_BONUS:
+		strType = "ATTACK BONUS";
+		break;
+	case BuffType::DAMAGE_BONUS:
+		strType = "DAMAGE BONUS";
+		break;
 	}
 
 	return stream << strType; //! Return the assigned string variable to the stream.

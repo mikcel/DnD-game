@@ -7,13 +7,13 @@
 Buff::Buff()
 {
 	buffAmount = 0;
-	buffType = buff::buffTypes::ARMOR_CLASS;
+	buffType = BuffType::ARMOR_CLASS;
 }
 
 //! Constructor that takes type and amount of buff
 //! @param type: enum type of buff type
 //! @param amount: int of the magnitude of the buff
-Buff::Buff(buff::buffTypes buffType, int buffAmount)
+Buff::Buff(BuffType buffType, int buffAmount)
 {	
 	if (buffAmount < 1 || buffAmount>5) {
 		buffAmount = 1;
@@ -35,14 +35,14 @@ int Buff::getBuffAmount()
 
 //!method that returns the type of the buff
 //! return: enum type of the type of the buff
-buff::buffTypes Buff::getBuffType()
+BuffType Buff::getBuffType()
 {
 	return buffType;
 }
 
 //!method that sets the type of a buff
 //! @param type: enum type of buff type
-void Buff::setBuffType(buff::buffTypes buffType)
+void Buff::setBuffType(BuffType buffType)
 {
 	this->buffType = buffType;
 }
