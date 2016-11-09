@@ -43,8 +43,9 @@ void editItem() {
 //! 4. Run the test cases. 
 int main(int argc, char* argv[])
 {
-#define CPPTEST
+//#define CPPTEST
 #ifdef CPPTEST
+
 	// Get the top level suite from the registry
 	CppUnit::Test *suite = CppUnit::TestFactoryRegistry::getRegistry().makeTest();
 
@@ -63,10 +64,10 @@ int main(int argc, char* argv[])
 #endif // CPPTEST
 	Item* item1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{ Buff(BuffType::CONSTITUTION, 2), Buff(BuffType::CONSTITUTION, 2)});
 	Weapon* item2 = new Weapon(ItemType::WEAPON, "Iron Sword", vector<Buff>{ Buff(BuffType::ATTACK_BONUS, 2), Buff(BuffType::DAMAGE_BONUS, 2)}, 1);
-	cout << item1->serializeItem()<<endl;
+	//cout << item1->serializeItem()<<endl;
 
 	ItemContainer* backpack = new ItemContainer(ContainerType::BACKPACK, vector<Item*> {item1, item2});
-	cout << backpack->serializeItemContainer() << endl;
+	//cout << backpack->serializeItemContainer() << endl;
 
 	delete backpack;
 	//Driver code
