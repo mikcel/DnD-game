@@ -4,6 +4,7 @@
 #include <typeinfo>
 #include <conio.h>
 #include "MapObserver.h"
+#include "MapElementsObserver.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ int Game::run(Player* p)
 	MapObserver mo(*map);
 	map->attach(mo);
 
+	MapElementsObserver meo(map);
 
 	#define KEY_UP 72
 	#define KEY_DOWN 80
@@ -61,6 +63,7 @@ int Game::run(Player* p)
 			return 0;
 			break;
 		case KEY_T: //Toggles the view of the map elements
+			//meo.toggle();
 			break;
 
 		}
