@@ -5,8 +5,9 @@
 class MapElementsObserver : public Observer
 {
 	Map& map;
-	CConsoleLogger secondConsole;
-	virtual void update();
+	CConsoleLogger * secondConsole;
 public:
 	MapElementsObserver(Map* map);
+	virtual void update();
+	bool toggle();
 };

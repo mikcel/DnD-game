@@ -547,5 +547,5 @@ string Map::serializeMapToString()
 
 
 const Player & Map::getPlayer() const {
-	return player;
+	return *player;
 }
