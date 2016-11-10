@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Character.h"
+#include "Player.h"
 #include <typeinfo>
 #include <conio.h>
 #include "MapObserver.h"
@@ -13,16 +14,20 @@ Game::Game(Map* m)
 
 void Game::play(Character* player)
 {
-	Player * p = map->placePlayer(*player);
+	Player tempP(*player);
+	Player * p = map->placePlayer(tempP);
 
-	//Set all of our observers
-	MapObserver mo(map);
-	map->attach(mo);
+	//Let's run the game
+	run(p);
 
 }
 
 int Game::run(Player* p)
 {
+	//Set all of our observers
+	MapObserver mo(map);
+	map->attach(mo);
+
 
 	#define KEY_UP 72
 	#define KEY_DOWN 80
@@ -61,5 +66,5 @@ int Game::run(Player* p)
 
 bool Game::isGameOver()
 {
-	map->getPlayer();
+	return map->isEndPoint(map->getPlayer().getPosition());
 }
