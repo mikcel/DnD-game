@@ -129,6 +129,7 @@
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="Fighter.cpp" />
+    <ClCompile Include="FolderUtils.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemContainer.cpp" />
     <ClCompile Include="Main.cpp" />
