@@ -3,7 +3,7 @@
 
 const std::string Player::print() const
 {
-	return "P";
+	return "\xFE";
 }
 
 Player::Player(Character& newCharacter) : CharacterElement(newCharacter)

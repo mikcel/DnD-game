@@ -22,5 +22,5 @@ void MapObserver::update()
 {
 	if (system("CLS")) system("clear");
 	cout << map.print() << endl;
-	cout << "Times updated: " << ++timesUpdated << endl;
+	//cout << "Times updated: " << ++timesUpdated << endl;
 }

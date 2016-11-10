@@ -57,10 +57,12 @@ int Game::run(Player* p)
 		case KEY_RIGHT: //Move the character right
 			map->moveElement(1, 0, *p);
 			break;
-		case KEY_Q: //Quit the application
+		case 'q': //Quit the application
+		case 'Q': //Quit the application
 			return 0;
 			break;
-		case KEY_T: //Toggles the view of the map elements
+		case 'T': //Toggles the view of the map elements
+		case 't': //Toggles the view of the map elements
 			break;
 
 		}

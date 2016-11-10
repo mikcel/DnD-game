@@ -44,7 +44,7 @@ Element* Element::clone()
 */
 const string Element::print() const
 {
-	return "\xFE";
+	return "E";
 }
 
 Position Element::getPosition()
