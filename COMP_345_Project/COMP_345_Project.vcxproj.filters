@@ -100,6 +100,9 @@
     <ClCompile Include="ConsoleLogger.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="MapElementsObserver.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tile.h">
@@ -168,6 +171,9 @@
     </ClInclude>
     <ClInclude Include="ConsoleLogger.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MapElementsObserver.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
