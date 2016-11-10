@@ -105,6 +105,9 @@
     <ClCompile Include="ConsoleLogger.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="ItemUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
     <ClCompile Include="CharacterController.cpp">
       <Filter>Character</Filter>
     </ClCompile>
@@ -174,9 +177,15 @@
     <ClInclude Include="MapElementsObserver.h">
       <Filter>Map</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="ItemUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+=======
     <ClInclude Include="ConsoleLogger.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Player.h" />
+>>>>>>> 3e097fef8ce5fa7139ff9f09cd07b3f1776637ce
     <ClInclude Include="CharacterController.h">
       <Filter>Character</Filter>
     </ClInclude>

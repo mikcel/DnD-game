@@ -140,6 +140,7 @@
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemContainer.cpp" />
+    <ClCompile Include="ItemUtils.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapController.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="GameController.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemContainer.h" />
+    <ClInclude Include="ItemUtils.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapController.h" />
     <ClInclude Include="MapEditorDriver.h" />

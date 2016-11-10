@@ -21,7 +21,7 @@ public:
 	//! @param itemType: enum type of the type of item
 	//! @param itemName: string of the name of the item
 	Item(ItemType itemType,string itemName);
-	
+	Item(Item *item);
 	//! Constructor that takes a weapon item type, item name, and a vector of buff object
 	//! @param itemType: enum type of the type of item
 	//! @param itemName: string of the name of the item
@@ -62,6 +62,7 @@ public:
 	bool validateItem();
 
 	virtual string serializeItem();
+	virtual void saveItem();
 private:
 	//members of the class
 	ItemType itemType;

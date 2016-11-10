@@ -26,6 +26,7 @@
 #include "ItemContainer.h"
 #include "MapEditorDriver.h"
 #include "GameController.h"
+#include "ItemUtils.h"
 #include "CharacterController.h"
 
 using namespace std;
