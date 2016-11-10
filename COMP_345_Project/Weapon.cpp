@@ -4,6 +4,7 @@
 #pragma once
 #include "Weapon.h"
 #include "Item.h"
+#include  <fstream>
 
 //! Default Contructor
 Weapon::Weapon():Item()
@@ -76,6 +77,14 @@ string Weapon::serializeItem() {
 	return itemString;
 }
 
+void Weapon::saveItem(){
+	ofstream outItem;
+	outItem.open("saveFiles/Items/" + getItemName() + ".txt");
+	cout << serializeItem();
+	outItem << serializeItem();
+	outItem.close();
+	cout << "Weapon was saved!" << endl;
+}
 ostream& operator<<(ostream& stream, const Weapon& wpn){
 	const Item &itm = wpn;
 	return stream << itm << "\nRange: " << wpn.range << endl;

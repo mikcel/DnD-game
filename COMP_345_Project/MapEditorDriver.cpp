@@ -15,9 +15,9 @@
 //! These are classes from assignment one and are only there as place holder.
 //! Map, Position, Element, Tile classes are also from assignment 1 but were modified to work with this assignment.
 
-#include <cppunit/CompilerOutputter.h>
-#include <cppunit/extensions/TestFactoryRegistry.h>
-#include <cppunit/ui/text/TestRunner.h>
+//#include <cppunit/CompilerOutputter.h>
+//#include <cppunit/extensions/TestFactoryRegistry.h>
+//#include <cppunit/ui/text/TestRunner.h>
 #include <stdio.h>
 #include "MapController.h"
 #include "CampaignController.h"
@@ -25,16 +25,8 @@
 #include "Weapon.h"
 #include "ItemContainer.h"
 #include "Character.h"
+#include "ItemUtils.h"
 using namespace std;
-
-
-
-void editItem() {
-
-}
-
-
-
 
 //! main() function. Entry point of the program
 //! It does the following: 
@@ -44,38 +36,44 @@ void editItem() {
 //! 4. Run the test cases. 
 int main(int argc, char* argv[])
 {
-#define CPPTEST
-#ifdef CPPTEST
-	// Get the top level suite from the registry
-	CppUnit::Test *suite = CppUnit::TestFactoryRegistry::getRegistry().makeTest();
+//#define CPPTEST
+//#ifdef CPPTEST
+//	// Get the top level suite from the registry
+//	CppUnit::Test *suite = CppUnit::TestFactoryRegistry::getRegistry().makeTest();
+//
+//	// Adds the test to the list of test to run
+//	CppUnit::TextUi::TestRunner runner;
+//	runner.addTest(suite);
+//
+//	// Change the default outputter to a compiler error format outputter
+//	runner.setOutputter(new CppUnit::CompilerOutputter(&runner.result(),
+//		std::cerr));
+//	// Run the tests.
+//	bool wasSucessful = runner.run();
+//
+//	//getchar();
+//
+//#endif // CPPTEST
 
-	// Adds the test to the list of test to run
-	CppUnit::TextUi::TestRunner runner;
-	runner.addTest(suite);
+	//junk code testing
 
-	// Change the default outputter to a compiler error format outputter
-	runner.setOutputter(new CppUnit::CompilerOutputter(&runner.result(),
-		std::cerr));
-	// Run the tests.
-	bool wasSucessful = runner.run();
+	//Character* ca = new Character();
+	//Item* item1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{ Buff(BuffType::CONSTITUTION, 2)});
+	//Weapon* item2 = new Weapon(ItemType::WEAPON, "Iron Sword", vector<Buff>{ Buff(BuffType::ATTACK_BONUS, 2), Buff(BuffType::DAMAGE_BONUS, 2)}, 1);
 
-	//getchar();
+	//cout << item1->serializeItem()<<endl;
+	//ItemContainer* backpack = new ItemContainer(ContainerType::BACKPACK, vector<Item*> {item1, item2});
+	//cout << backpack->serializeItemContainer() << endl;
+	//ca->storeItem(item1);
+	//ca->storeItem(item2);
+	//delete item2;
+	//delete item1;
+	//delete backpack;
+	createItem();
 
-#endif // CPPTEST
-	Character* ca = new Character();
-	Item* item1 = new Item(item::itemTypes::BELT, "Leather Belt", vector<Buff>{ Buff(buff::buffTypes::CONSTITUTION, 2)});
-	Weapon* item2 = new Weapon(item::itemTypes::WEAPON, "Iron Sword", vector<Buff>{ Buff(buff::buffTypes::ATTACK_BONUS, 2), Buff(buff::buffTypes::DAMAGE_BONUS, 2)}, 1);
-	//ca->createItem();
-	
-	cout << item1->serializeItem()<<endl;
-	ItemContainer* backpack = new ItemContainer(itemCnt::containerTypes::BACKPACK, vector<Item*> {item1, item2});
-	cout << backpack->serializeItemContainer() << endl;
-	ca->storeItem(item1);
-	ca->storeItem(item2);
-	ca->editItem();
-	delete item2;
-	delete item1;
-	delete backpack;
+	editItem();
+
+
 	//Driver code
 	MapController* m1 = new MapController();
 	CampaignController* c1 = new CampaignController();

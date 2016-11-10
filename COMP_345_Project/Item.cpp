@@ -4,7 +4,10 @@
 #include "Item.h"
 #include "Character.h"
 #include "Weapon.h"
+#include "Enums.h"
+#include <string>
 #include <fstream>
+#include <iostream>
 //! Default constructor
 Item::Item()
 {
@@ -184,7 +187,6 @@ ostream& operator<<(ostream& stream, const Item& item){
 }
 
 
-<<<<<<< HEAD
 //! Method to add item to backpack
 //! @param Character to add item to its backpack
 static void createItem(Character &chr) {
@@ -195,11 +197,11 @@ static void createItem(Character &chr) {
 	int range = 0; //! Range of weapon
 	vector<Buff> vecBuff(0); //! Vector for buff
 
-							 //! Ask for weapon or item
+	//! Ask for weapon or item
 	cout << "\nDo you want to create an Item - 0 or a Weapon - 1? ";
 	cin >> choiceItem;
 	//! check choice
-	while (choiceItem<0 || choiceItem>1) { //!  ask to continue enter if incorrect
+	while (choiceItem < 0 || choiceItem>1) { //!  ask to continue enter if incorrect
 		cout << "\nIncorrect choice. Please choose only 0 or 1: ";
 		cin >> choiceItem;
 	}
@@ -212,7 +214,7 @@ static void createItem(Character &chr) {
 		cin.ignore();
 		getline(cin, name); //! Get name
 
-							//! output all posisible type and ask to choose
+		//! output all posisible type and ask to choose
 		cout << "Enter the Item type no. from the list provided below:\n";
 		cout << (int)ItemType::HELMET << " - " << ItemType::HELMET << "\n"
 			<< (int)ItemType::ARMOR << " - " << ItemType::ARMOR << "\n"
@@ -224,7 +226,7 @@ static void createItem(Character &chr) {
 		cout << "Enter choice: ";
 		cin >> itemType;
 		//! Continue to ask if choice is incorrectly entered
-		while (itemType<0 || itemType>6) {
+		while (itemType < 0 || itemType>6) {
 			cout << "\nIncorrect choice. Please enter again: ";
 			cin >> itemType;
 		}
@@ -246,8 +248,8 @@ static void createItem(Character &chr) {
 			cout << "Enter choice: ";
 			cin >> choiceBuff; //! Enter buff choice
 
-							   //! Check for buff choice. Ask again if incorrectly entered
-			while (choiceBuff != -1 && (choiceBuff<0 || choiceBuff>8)) {
+			//! Check for buff choice. Ask again if incorrectly entered
+			while (choiceBuff != -1 && (choiceBuff < 0 || choiceBuff>8)) {
 				cout << "\nIncorrect Input. Please enter a correct number: ";
 				cin >> choiceBuff;
 			}
@@ -292,7 +294,7 @@ static void createItem(Character &chr) {
 			cin >> choiceBuff;
 
 			//! Check for buff choice. Ask again if incorrectly entered
-			while (choiceBuff != -1 && (choiceBuff<0 || choiceBuff>8)) {
+			while (choiceBuff != -1 && (choiceBuff < 0 || choiceBuff>8)) {
 				cout << "\nIncorrect Input. Please enter a correct number: ";
 				cin >> choiceBuff;
 			}
@@ -314,7 +316,7 @@ static void createItem(Character &chr) {
 	Item newItem; //! Item variable
 	Weapon newWeapon; //! Weapon variable
 	if (choiceItem == 0) { //! If item or weapon
-						   //! Create and validate item
+		//! Create and validate item
 		newItem = Item((ItemType)itemType, name, vecBuff);
 		if (newItem.validateItem()) {
 			cout << "\nHere is the item that you want to add: \n";
@@ -358,11 +360,12 @@ static void createItem(Character &chr) {
 		else
 			chr.storeItem(&newWeapon);
 	}
+}
 
-=======
-void Item::saveItem() {
+void Item::saveItem(){
 	ofstream outItem;
 	outItem.open("saveFiles/Items/" + itemName + ".txt");
 	outItem << serializeItem();
->>>>>>> johny
+	outItem.close();
+	cout << "Item was saved!" << endl;
 }

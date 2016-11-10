@@ -1,29 +1,34 @@
 #include "ItemUtils.h"
+#include <fstream>
 #include <iostream>
 #include <vector>
 #include <string>
 #include "Item.h"
 #include "ItemContainer.h"
 #include "Character.h"
+#include "FolderUtils.h"
+#include "Enums.h"
 using namespace std;
 
 void editItem() {
 	int userChoice = -1;
 	while (true) {
-		cout << "Enter the index of the item you wish to edit.\nNote:The item must be in your character's backpack.\nEnter -1 to quit." << endl;
+		cout << "Enter the index of the item you wish to edit.\nEnter -1 to quit." << endl;
+		vector<string> ItemFileNames= getFilesInsideFolderNoExtension("SaveFiles/Items");
 		int itemIndex = 0;
-		for (auto i : backpack->getContents()) {
-			cout << itemIndex << ": " << i->getItemName() << endl;
+		for (auto i : ItemFileNames) {
+			cout << itemIndex << ": " << i << endl;
 			itemIndex++;
 		}
 		string userChoiceStr;
 		cin >> userChoiceStr;
-		try {
+		
 			userChoice = stoi(userChoiceStr);
 			if (userChoice == -1) {
 				return;
 			}
-			Item* item = backpack->getContents()[userChoice];
+			string chosenItem = ItemFileNames[userChoice];
+			Item* item = readItemFile(chosenItem);
 			cout << "Selected: " << item->getItemName() << endl;
 			cout << "What do you want to modify?" << endl;
 			cout << "0: Item Name\n1: Buff\nEnter -1 to quit." << endl;
@@ -35,26 +40,29 @@ void editItem() {
 				cin.ignore();
 				getline(cin, newItemName);
 				item->setItemName(newItemName);
+				item->saveItem();
 			}
 			else if (userChoice == 1) {
 				//buffs
-				for (auto bu : item->getBuffs()) {
-					cout << "buff type " << bu.getBuffType() << endl;
-					cout << "buff amount " << bu.getBuffAmount() << endl;
-				}
+				
 				int choiceBuff = 0;
 				int choiceAmount = 0;
 				while (true) { //! Ask for buff choice
+					cout << "Current buffs:" << endl;
+					for (auto bu : item->getBuffs()) {
+						cout << "buff type " << bu.getBuffType() << endl;
+						cout << "buff amount " << bu.getBuffAmount() << endl;
+					}
 					cout << "\nChoose the buffs for this item from the list below:\nEnter -1 to stop picking buffs.\n";
-					cout << (int)buff::buffTypes::INTELLIGENCE << " - " << buff::buffTypes::INTELLIGENCE << "\n"
-						<< (int)buff::buffTypes::WISDOM << " - " << buff::buffTypes::WISDOM << "\n"
-						<< (int)buff::buffTypes::ARMOR_CLASS << " - " << buff::buffTypes::ARMOR_CLASS << "\n"
-						<< (int)buff::buffTypes::STRENGTH << " - " << buff::buffTypes::STRENGTH << "\n"
-						<< (int)buff::buffTypes::CHARISMA << " - " << buff::buffTypes::CHARISMA << "\n"
-						<< (int)buff::buffTypes::CONSTITUTION << " - " << buff::buffTypes::CONSTITUTION << "\n"
-						<< (int)buff::buffTypes::DEXTERITY << " - " << buff::buffTypes::DEXTERITY << "\n"
-						<< (int)buff::buffTypes::ATTACK_BONUS << " - " << buff::buffTypes::ATTACK_BONUS << "\n"
-						<< (int)buff::buffTypes::DAMAGE_BONUS << " - " << buff::buffTypes::DAMAGE_BONUS << "\n"
+					cout << (int)BuffType::INTELLIGENCE << " - " << BuffType::INTELLIGENCE << "\n"
+						<< (int)BuffType::WISDOM << " - " << BuffType::WISDOM << "\n"
+						<< (int)BuffType::ARMOR_CLASS << " - " << BuffType::ARMOR_CLASS << "\n"
+						<< (int)BuffType::STRENGTH << " - " << BuffType::STRENGTH << "\n"
+						<< (int)BuffType::CHARISMA << " - " << BuffType::CHARISMA << "\n"
+						<< (int)BuffType::CONSTITUTION << " - " << BuffType::CONSTITUTION << "\n"
+						<< (int)BuffType::DEXTERITY << " - " << BuffType::DEXTERITY << "\n"
+						<< (int)BuffType::ATTACK_BONUS << " - " << BuffType::ATTACK_BONUS << "\n"
+						<< (int)BuffType::DAMAGE_BONUS << " - " << BuffType::DAMAGE_BONUS << "\n"
 						<< "-1 to stop\n" << endl;
 					cout << "Enter choice: " << endl;
 					cin >> choiceBuff;
@@ -71,31 +79,34 @@ void editItem() {
 					bool buffExist = false;
 					int buffIterator = 0;
 					for (auto b : buffs) {
-						if (b.getBuffType() == (buff::buffTypes)choiceBuff) {
+						if (b.getBuffType() == (BuffType)choiceBuff) {
 							buffExist = true;
-							cout << "FOUND BUFF" << endl;
-							//b.setBuffAmount(choiceAmount);
 							buffs[buffIterator].setBuffAmount(choiceAmount);
 							break;
 						}
 						buffIterator++;
 					}
 					if (!buffExist) {
-						buffs.push_back(Buff((buff::buffTypes)choiceBuff, choiceAmount));
+						buffs.push_back(Buff((BuffType)choiceBuff, choiceAmount));
 					}
-					cout << "SET BUFFS" << endl;
 					item->setBuffs(buffs);
 				}
-				vector<Item*> tmpBackpack = backpack->getContents();
-				tmpBackpack[userChoice] = new Item(item);
-				backpack->setContents(tmpBackpack);
-				//back pack is updated
-
-				for (auto bu : item->getBuffs()) {
-					cout << "buff type" << bu.getBuffType() << endl;
-					cout << "buff amount" << bu.getBuffAmount() << endl;
+				if (item->getItemTypes() == ItemType::WEAPON){
+					Weapon* weapon = dynamic_cast<Weapon*>(item);
+					if (!weapon->validateWeapon()){
+						cout << "Invalid Weapon!\nDiscarding changes.";
+						delete weapon;
+						return;
+					}
 				}
-
+				else{
+					if (!item->validateItem()){
+						cout << "Invalid Weapon!\nDiscarding changes.";
+						delete item;
+						return;
+					}
+				}
+				item->saveItem();
 			}
 			else if (userChoice == -1) {
 				return;
@@ -114,11 +125,7 @@ void editItem() {
 			else if (userChoice == -1) {
 				return;
 			}
-		}//end of try
-		catch (...) {
-			cout << "Invalid input.\nExiting" << endl;
-			return;
-		}
+		
 
 
 	}
@@ -128,7 +135,7 @@ void editItem() {
 
 void createItem() {
 	string name = ""; //! Item name
-	int itemType = item::itemTypes::UNSPECIFIED; //! item type
+	int itemType = (int)ItemType::UNSPECIFIED; //! item type
 	int choiceItem = 0; //! Item or weapon
 	int range = 0; //! Range of weapon
 	vector<Buff> vecBuff(0); //! Vector for buff
@@ -152,13 +159,13 @@ void createItem() {
 
 							//! output all posisible type and ask to choose
 		cout << "Enter the Item type no. from the list provided below:\n";
-		cout << (int)item::itemTypes::HELMET << " - " << item::itemTypes::HELMET << "\n"
-			<< (int)item::itemTypes::ARMOR << " - " << item::itemTypes::ARMOR << "\n"
-			<< (int)item::itemTypes::SHIELD << " - " << item::itemTypes::SHIELD << "\n"
-			<< (int)item::itemTypes::RING << " - " << item::itemTypes::RING << "\n"
-			<< (int)item::itemTypes::BELT << " - " << item::itemTypes::BELT << "\n"
-			<< (int)item::itemTypes::BOOTS << " - " << item::itemTypes::BOOTS << "\n"
-			<< (int)item::itemTypes::WEAPON << " - " << item::itemTypes::WEAPON << "\n";
+		cout << (int)ItemType::HELMET << " - " << ItemType::HELMET << "\n"
+			<< (int)ItemType::ARMOR << " - " << ItemType::ARMOR << "\n"
+			<< (int)ItemType::SHIELD << " - " << ItemType::SHIELD << "\n"
+			<< (int)ItemType::RING << " - " << ItemType::RING << "\n"
+			<< (int)ItemType::BELT << " - " << ItemType::BELT << "\n"
+			<< (int)ItemType::BOOTS << " - " << ItemType::BOOTS << "\n"
+			<< (int)ItemType::WEAPON << " - " << ItemType::WEAPON << "\n";
 		cout << "Enter choice: ";
 		cin >> itemType;
 		//! Continue to ask if choice is incorrectly entered
@@ -171,15 +178,15 @@ void createItem() {
 		while (choiceBuff != -1) { //! While player wants to continue add buff
 			cout << "\nChoose the buffs for this item from the list below: \n";
 			//! Display all possible buffs
-			cout << (int)buff::buffTypes::INTELLIGENCE << " - " << buff::buffTypes::INTELLIGENCE << "\n"
-				<< (int)buff::buffTypes::WISDOM << " - " << buff::buffTypes::WISDOM << "\n"
-				<< (int)buff::buffTypes::ARMOR_CLASS << " - " << buff::buffTypes::ARMOR_CLASS << "\n"
-				<< (int)buff::buffTypes::STRENGTH << " - " << buff::buffTypes::STRENGTH << "\n"
-				<< (int)buff::buffTypes::CHARISMA << " - " << buff::buffTypes::CHARISMA << "\n"
-				<< (int)buff::buffTypes::CONSTITUTION << " - " << buff::buffTypes::CONSTITUTION << "\n"
-				<< (int)buff::buffTypes::DEXTERITY << " - " << buff::buffTypes::DEXTERITY << "\n"
-				<< (int)buff::buffTypes::ATTACK_BONUS << " - " << buff::buffTypes::ATTACK_BONUS << "\n"
-				<< (int)buff::buffTypes::DAMAGE_BONUS << " - " << buff::buffTypes::DAMAGE_BONUS << "\n"
+			cout << (int)BuffType::INTELLIGENCE << " - " << BuffType::INTELLIGENCE << "\n"
+				<< (int)BuffType::WISDOM << " - " << BuffType::WISDOM << "\n"
+				<< (int)BuffType::ARMOR_CLASS << " - " << BuffType::ARMOR_CLASS << "\n"
+				<< (int)BuffType::STRENGTH << " - " << BuffType::STRENGTH << "\n"
+				<< (int)BuffType::CHARISMA << " - " << BuffType::CHARISMA << "\n"
+				<< (int)BuffType::CONSTITUTION << " - " << BuffType::CONSTITUTION << "\n"
+				<< (int)BuffType::DEXTERITY << " - " << BuffType::DEXTERITY << "\n"
+				<< (int)BuffType::ATTACK_BONUS << " - " << BuffType::ATTACK_BONUS << "\n"
+				<< (int)BuffType::DAMAGE_BONUS << " - " << BuffType::DAMAGE_BONUS << "\n"
 				<< "-1 to stop\n";
 			cout << "Enter choice: ";
 			cin >> choiceBuff; //! Enter buff choice
@@ -198,7 +205,7 @@ void createItem() {
 				cin.ignore();
 				cin >> amount;
 				//! Put in vector for buff
-				vecBuff.push_back(Buff((buff::buffTypes)choiceBuff, amount));
+				vecBuff.push_back(Buff((BuffType)choiceBuff, amount));
 			}
 
 		}
@@ -216,15 +223,15 @@ void createItem() {
 		int choiceBuff = 0;
 		while (choiceBuff != -1) { //! Ask for buff choice
 			cout << "\nChoose the buffs for this weapon from the list below: \n";
-			cout << (int)buff::buffTypes::INTELLIGENCE << " - " << buff::buffTypes::INTELLIGENCE << "\n"
-				<< (int)buff::buffTypes::WISDOM << " - " << buff::buffTypes::WISDOM << "\n"
-				<< (int)buff::buffTypes::ARMOR_CLASS << " - " << buff::buffTypes::ARMOR_CLASS << "\n"
-				<< (int)buff::buffTypes::STRENGTH << " - " << buff::buffTypes::STRENGTH << "\n"
-				<< (int)buff::buffTypes::CHARISMA << " - " << buff::buffTypes::CHARISMA << "\n"
-				<< (int)buff::buffTypes::CONSTITUTION << " - " << buff::buffTypes::CONSTITUTION << "\n"
-				<< (int)buff::buffTypes::DEXTERITY << " - " << buff::buffTypes::DEXTERITY << "\n"
-				<< (int)buff::buffTypes::ATTACK_BONUS << " - " << buff::buffTypes::ATTACK_BONUS << "\n"
-				<< (int)buff::buffTypes::DAMAGE_BONUS << " - " << buff::buffTypes::DAMAGE_BONUS << "\n"
+			cout << (int)BuffType::INTELLIGENCE << " - " << BuffType::INTELLIGENCE << "\n"
+				<< (int)BuffType::WISDOM << " - " << BuffType::WISDOM << "\n"
+				<< (int)BuffType::ARMOR_CLASS << " - " << BuffType::ARMOR_CLASS << "\n"
+				<< (int)BuffType::STRENGTH << " - " << BuffType::STRENGTH << "\n"
+				<< (int)BuffType::CHARISMA << " - " << BuffType::CHARISMA << "\n"
+				<< (int)BuffType::CONSTITUTION << " - " << BuffType::CONSTITUTION << "\n"
+				<< (int)BuffType::DEXTERITY << " - " << BuffType::DEXTERITY << "\n"
+				<< (int)BuffType::ATTACK_BONUS << " - " << BuffType::ATTACK_BONUS << "\n"
+				<< (int)BuffType::DAMAGE_BONUS << " - " << BuffType::DAMAGE_BONUS << "\n"
 				<< "-1 to stop\n";
 			cout << "Enter choice: ";
 			cin >> choiceBuff;
@@ -243,7 +250,7 @@ void createItem() {
 				cin.ignore();
 				cin >> amount;
 				//! Put in vector for buff
-				vecBuff.push_back(Buff((buff::buffTypes)choiceBuff, amount));
+				vecBuff.push_back(Buff((BuffType)choiceBuff, amount));
 			}
 
 		}
@@ -253,7 +260,7 @@ void createItem() {
 	Weapon newWeapon; //! Weapon variable
 	if (choiceItem == 0) { //! If item or weapon
 						   //! Create and validate item
-		newItem = Item((item::itemTypes)itemType, name, vecBuff);
+		newItem = Item((ItemType)itemType, name, vecBuff);
 		if (newItem.validateItem()) {
 			cout << "\nHere is the item that you want to add: \n";
 			cout << newItem;
@@ -266,7 +273,7 @@ void createItem() {
 	}
 	else {
 		//! Create and validae weapon
-		newWeapon = Weapon(item::itemTypes::WEAPON, name, vecBuff, range);
+		newWeapon = Weapon(ItemType::WEAPON, name, vecBuff, range);
 		if (newWeapon.validateWeapon()) {
 			cout << "\nHere is the weapon that you want to add: \n";
 			cout << newWeapon;
@@ -280,7 +287,7 @@ void createItem() {
 
 	//! Ask for user confirmation to add in bakcpack
 	string contAns = "";
-	cout << "\nDo you want to add the item to the backpack? (Y/N)\nEntering N will discard all unsaved data.";
+	cout << "\nDo you want to save this item? (Y/N)\nEntering N will discard all unsaved data.";
 	cin >> contAns;
 
 	//! Check input
@@ -292,13 +299,60 @@ void createItem() {
 	//! If wan to continue, then store in backpack
 	if (contAns == "Y") {
 		if (choiceItem == 0) {
-			storeItem(&newItem);
 			newItem.saveItem();
 		}
 		else {
-			storeItem(&newWeapon);
-			newItem.saveItem();
+			newWeapon.saveItem();
 		}
 	}
 
+}
+
+Item* readItemFile(string itemName){
+	ifstream itemFile;
+	itemFile.open("SaveFiles/Items/" + itemName + ".txt");
+	
+	Item* item = new Item();
+	Weapon* weapon = nullptr;
+	string readLine;
+	getline(itemFile, readLine);
+	item->setItemName(readLine);
+	getline(itemFile, readLine);
+
+	item->setItemType((ItemType)stoi(readLine));
+	if (item->getItemTypes() == ItemType::WEAPON){
+		weapon = dynamic_cast<Weapon*>(item);
+		getline(itemFile, readLine);
+		weapon->setRange(stoi(readLine));
+
+	}
+	bool isBuffType = true;
+	vector<Buff> tmpBuffs(0);
+	BuffType tmpBuffType;
+	while (!itemFile.eof()){
+		if (isBuffType){
+			getline(itemFile, readLine);
+			if (readLine == "" || readLine == "\n"){
+				break;
+			}
+			tmpBuffType = (BuffType)stoi(readLine);
+		}
+		else{
+			getline(itemFile, readLine);
+			if (readLine == "" || readLine == "\n"){
+				break;
+			}
+			tmpBuffs.push_back(Buff(tmpBuffType, stoi(readLine)));
+		}
+		isBuffType = !isBuffType;
+	}
+	
+	if (weapon != nullptr){
+		weapon->setBuffs(tmpBuffs);
+		return weapon;
+	}
+	else{
+		item->setBuffs(tmpBuffs);
+		return item;
+	}
 }

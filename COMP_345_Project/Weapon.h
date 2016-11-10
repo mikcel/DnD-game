@@ -37,6 +37,7 @@ public:
 	bool validateWeapon(); 
 
 	virtual string serializeItem();
+	virtual void saveItem();
 private:
 	int range;
 	friend ostream& operator<<(ostream& stream, const Weapon& weapon);
