@@ -105,6 +105,9 @@
     <ClCompile Include="ConsoleLogger.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterController.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tile.h">
@@ -174,5 +177,8 @@
     <ClInclude Include="ConsoleLogger.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="CharacterController.h">
+      <Filter>Character</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

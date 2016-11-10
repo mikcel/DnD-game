@@ -125,6 +125,7 @@ void CharacterController::createCharacter(){
 				cout << "Enter your Fighter Style from the list below:\n";
 				//! Displays all the fighting style possible
 				displayFighterStyle();
+				cout << "Please choose: ";
 				cin >> fightStyle; //! Get fighting style if fighter
 			}
 
@@ -146,7 +147,7 @@ void CharacterController::createCharacter(){
 			}
 			else if (choice == 2 && (fightStyle<0 || fightStyle>2)){
 				while (fightStyle<0 || fightStyle>2){ //! if fighting style is still not good ask again
-					cout << "\nIncorrect Fighting Style entered. Please enter style again from the list below: ";
+					cout << "\nIncorrect Fighting Style entered. Please enter style again from the list below: \n";
 					displayFighterStyle();
 					cin >> fightStyle;
 				}
@@ -323,23 +324,25 @@ void CharacterController::createCharacter(){
 
 void CharacterController::editCharacter(){
 
-	if (currentCharacter == NULL){
+	if (currentCharacter==NULL){
 		cout << "No Character has yet been created.\n";
+		system("pause");
 		return;
 	}
 
-	cout << "Please choose from the following:\n"
-		<< "1 - Save Character\n"
-		<< "2 - Edit Name\n"
-		<< "3 - Edit Level\n"
-		<< "4 - Edit Size\n"
-		<< "5 - Return\n";
-	cout << "Please choose: ";
 	int menuChoice = 0;
 
-	while (menuChoice<1 || menuChoice>5){
+	while (menuChoice!=5){
 
+		cout << "Please choose from the following:\n"
+			<< "1 - Save Character\n"
+			<< "2 - Edit Name\n"
+			<< "3 - Edit Level\n"
+			<< "4 - Edit Size\n"
+			<< "5 - Return\n";
+		cout << "Please choose: ";
 		cin >> menuChoice;
+		system("cls");
 		switch (menuChoice){
 			case 1:
 				saveCharacter();
@@ -350,7 +353,8 @@ void CharacterController::editCharacter(){
 					  cout << "Please enter the new Character name: ";
 					  cin >> newName;
 					  currentCharacter->setName(newName);
-					  cout << "Name set.";
+					  cout << "Name set.\n";
+					  cout << *currentCharacter;
 					  break;
 			}
 			case 3:
@@ -376,6 +380,7 @@ void CharacterController::editCharacter(){
 					  break;
 			}
 			case 4:{
+		
 					   int size = -1;
 					   cout << "Please enter the new Character Size by selecting from the list below: ";
 					   displayCharacterSize();
@@ -395,13 +400,19 @@ void CharacterController::editCharacter(){
 					   else{
 						   cout << "Size not changed.";
 					   }
+					   
 					   break;
 			}
 			case 5:
 				break;
 			default:
-				cout << "Incorrect Menu choice. Try Again: ";
+				cout << "Incorrect Menu choice. Try Again. ";
+				
 				break;			
+		}
+		if (menuChoice != 5){
+			system("pause");
+			system("cls");
 		}
 
 	}
@@ -410,22 +421,38 @@ void CharacterController::editCharacter(){
 
 void CharacterController::saveCharacter(){
 
-	if (currentCharacter == NULL)
-	{
-		cout << "There is no Character to save.\n";
-		return;
-	}
-
 	cout << "Saving the character...\n";
 
-	vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Character");
+	vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Characters/");
 
-	if (find(chrFiles.begin(), chrFiles.end(), currentCharacter->getName()) != chrFiles.end()){
+	bool foundFile = false;
+	for (auto i : chrFiles){
+		if (i == currentCharacter->getName()){
+			foundFile = true;
+			break;
+		}
+	}
+
+	if (chrFiles.size() ==0 || !foundFile){
 		currentCharacter->saveCharacter();
 		cout << "Saved Successfully!\n";
 	}
 	else{
-		cout << "Error Saving Character. A file with the same name already exists. change the character name and save again.\n"''
+		string choiceOverw = "";
+		cout << "A file with the same name already exists. Do you want to overwrite it? (Y/N) ";
+		cin >> choiceOverw;
+		while (choiceOverw != "Y" && choiceOverw != "N"){
+			cout << "Incorrect choice. Please enter again: ";
+			cin >> choiceOverw;
+		}
+		if (choiceOverw == "Y")
+		{
+			currentCharacter->saveCharacter();
+			cout << "Overwritten Successfully!\n";
+		}
+		else{
+			cout << "File not overwritten.\n";
+		}
 	}
 
 }

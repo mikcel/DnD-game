@@ -31,7 +31,7 @@ public:
 
 private:
 
-	Character *currentCharacter;
+	Character *currentCharacter = NULL;
 
 	void displayCharacterSize();
 

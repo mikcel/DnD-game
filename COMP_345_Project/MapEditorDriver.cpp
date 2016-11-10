@@ -26,6 +26,7 @@
 #include "ItemContainer.h"
 #include "MapEditorDriver.h"
 #include "GameController.h"
+#include "CharacterController.h"
 
 using namespace std;
 
@@ -68,7 +69,7 @@ int main(int argc, char* argv[])
 	MapController* m1 = new MapController();
 	CampaignController* c1 = new CampaignController();
 	GameController* g1 = new GameController();
-
+	CharacterController* chr = new CharacterController();
 
 
 
@@ -76,7 +77,7 @@ int main(int argc, char* argv[])
 	while (true) {
 		cout << "Enter the index of option you want to do:" << endl;
 
-		cout << "0: To quit\n1: To create a new campaign\n2: To edit a campaign\n3: To create a new map\n4: To edit a map" << endl;
+		cout << "0: To quit\n1: To create a new campaign\n2: To edit a campaign\n3: To create a new map\n4: To edit a map\n5: To create a character\n6: To edit the character" << endl;
 
 		cin >> userOptionStr;
 		int userOption;
@@ -113,6 +114,12 @@ int main(int argc, char* argv[])
 				break;
 			case 4:
 				m1->editMap(false);
+				break;
+			case 5:
+				chr->createCharacter();
+				break;
+			case 6:
+				chr->editCharacter();
 				break;
 			case 10:
 				g1->play();
