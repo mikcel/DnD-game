@@ -7,6 +7,7 @@
 #include "Chest.h"
 #include "Character.h"
 #include  "Map.h"
+#include "CharacterElement.h"
 
 using namespace std;
 /**
@@ -429,11 +430,11 @@ bool Map::validationRecursive(int x, int y, bool** explorationArray) const
 * @param newPlayer Reference to the player character
 * @return Pointer to the actual player character. nullptr if the player was not successfully placed
 */
-Element* Map::placePlayer(Element& newPlayer)
+Element* Map::placePlayer(Player& newPlayer)
 {
 	if (isValid())
 	{
-		Element& copy = *newPlayer.clone();
+		Player copy(newPlayer);
 		copy.position.x = startPoint.x;
 		copy.position.y = startPoint.y;
 		player = &copy;
@@ -524,7 +525,7 @@ string Map::serializeMapToString()
 				serialMap += "wall\n";
 				somethingToWrite = true;
 			}
-			else if (dynamic_cast<Character*>(mapArr[i][j].getElement())) {
+			else if (dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())) {
 				serialMap += "enemy\n";
 				somethingToWrite = true;
 			}
@@ -542,4 +543,9 @@ string Map::serializeMapToString()
 		}
 	}
 	return serialMap;
+}
+
+
+const Player & Map::getPlayer() const {
+	return player;
 }

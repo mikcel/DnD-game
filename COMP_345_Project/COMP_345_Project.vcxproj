@@ -129,6 +129,7 @@
     <ClCompile Include="CampaignController.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterController.cpp" />
+    <ClCompile Include="CharacterElement.cpp" />
     <ClCompile Include="CharacterObserver.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="ConsoleLogger.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="FolderUtils.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemContainer.cpp" />
@@ -163,6 +165,7 @@
     <ClInclude Include="CampaignController.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterController.h" />
+    <ClInclude Include="CharacterElement.h" />
     <ClInclude Include="CharacterObserver.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="ConsoleLogger.h" />
@@ -172,6 +175,7 @@
     <ClInclude Include="Fighter.h" />
     <ClInclude Include="FolderUtils.h" />
     <ClInclude Include="GameController.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemContainer.h" />
     <ClInclude Include="ItemUtils.h" />

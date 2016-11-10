@@ -100,15 +100,20 @@
     <ClCompile Include="MapElementsObserver.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleLogger.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="ConsoleLogger.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="ItemUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="CharacterController.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterController.cpp" />
+    <ClCompile Include="CharacterElement.cpp">
       <Filter>Character</Filter>
     </ClCompile>
   </ItemGroup>
@@ -183,6 +188,13 @@
     <ClInclude Include="ConsoleLogger.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterController.h" />
+    <ClInclude Include="CharacterElement.h">
+      <Filter>Character</Filter>
+    </ClInclude>
     <ClInclude Include="CharacterController.h">
       <Filter>Character</Filter>
     </ClInclude>

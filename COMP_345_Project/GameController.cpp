@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "FolderUtils.h"
 #include "MapController.h"
+#include "Game.h"
 
 using namespace std;
 
@@ -21,8 +22,6 @@ void GameController::play()
 	//displayMapElementsConsole();
 	//We are ready to launch the game
 	//launchGame();
-
-	//displayMapElementsConsole();
 
 	if (map != nullptr) {
 		delete map;
@@ -87,4 +86,11 @@ void GameController::selectCampaign()
 	}
 
 	cout << "The map " << mapName << " was succefully loaded." << endl << endl;
+}
+
+void GameController::launchGame()
+{
+	Game g = Game(map);
+	g.play(character);
+
 }

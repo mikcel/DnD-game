@@ -18,6 +18,7 @@
 #include "CampaignController.h"
 #include "Chest.h"
 #include "Character.h"
+#include "CharacterElement.h"
 using namespace CppUnit;
 using namespace std;
 
@@ -54,7 +55,9 @@ void TestControllers::testMapSavingLoading(void)
 	map1->setStartPoint(0, 0);
 	map1->setEndPoint(5, 5);
 	map1->setElementAt(3, 2, Chest());
-	map1->setElementAt(4, 2, Character());
+	Character e;
+	CharacterElement characterElement(e);
+	map1->setElementAt(4, 2, characterElement);
 	mapController->setCurrentMap(map1);
 	mapController->saveMap();
 	Map* mapReadFormFile = readMapFile("SaveFiles/Maps/TestMap.txt", "TestMap");

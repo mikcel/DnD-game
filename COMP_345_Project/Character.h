@@ -26,7 +26,7 @@ using namespace std;
 #include "Observable.h" //! Include the subject class for the observer pattern
 #include "Element.h"
 //! Class that implements the Character
-class Character: public Element{
+class Character{
 public:
 	
 	//! Constant for the No. of abilities (scores & modifiers) (mainly use for array size)

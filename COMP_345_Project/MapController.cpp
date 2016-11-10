@@ -2,6 +2,7 @@
 #include "Character.h"
 #include "Chest.h"
 #include "FolderUtils.h"
+#include "CharacterElement.h"
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -175,10 +176,10 @@ void MapController::editMap(bool creatingNewMap) {
 			success = m->setTileType(x, y, TileType::WALL);
 		}
 		else if (eS == "X") //Enemy
-		{
-			Character * e = new Character();
-			success = m->setElementAt(x, y, *e);
-			delete e;
+		{			
+			Character e;
+			CharacterElement characterElement(e);
+			success = m->setElementAt(x, y, characterElement);
 		}
 		else if (eS == "C") //Chest
 		{
@@ -315,7 +316,9 @@ Map* readMapFile(string mapFileLocation, string mapName) {
 			tmpX = stoi(fileLine);
 			getline(mapFile, fileLine);
 			tmpY = stoi(fileLine);
-			tmpMap->setElementAt(tmpX, tmpY, Character());
+			Character e;
+			CharacterElement characterElement(e);
+			tmpMap->setElementAt(tmpX, tmpY, characterElement);
 		}
 		else if (fileLine == "chest") {
 			//cout << "FOUND chest" << endl;
