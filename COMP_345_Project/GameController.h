@@ -1,0 +1,20 @@
+//! @file 
+//! @brief Header file for the Position class  
+//!
+#pragma once
+#include "Campaign.h"
+#include "Character.h"
+
+//! Represents a position with a x and y and an initialization state. A non initialized position counts as if the element didn't have a position.
+class GameController
+{
+public:
+	GameController(); //
+	void play();
+private:
+	void selectCharacter();
+	void selectCampaign();
+	void displayMapElementsConsole();
+	Map * map;
+	Character * character;
+};

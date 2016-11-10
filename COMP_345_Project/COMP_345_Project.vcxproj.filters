@@ -20,6 +20,9 @@
     <Filter Include="Drivers">
       <UniqueIdentifier>{6003d5eb-1c99-4fb7-bd10-3e0a12aff340}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{6610c2f8-29fe-4fd2-9823-f12fc1a7e7e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Element.cpp">
@@ -55,14 +58,8 @@
     <ClCompile Include="CampaignController.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Observer.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Chest.cpp">
       <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Subject.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="TestItemClass.cpp">
       <Filter>Drivers</Filter>
@@ -93,6 +90,12 @@
     </ClCompile>
     <ClCompile Include="FolderUtils.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObserver.cpp" />
+    <ClCompile Include="MapTest.cpp" />
+    <ClCompile Include="Observable.cpp" />
+    <ClCompile Include="GameController.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,9 +135,6 @@
     <ClInclude Include="Chest.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Subject.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Item</Filter>
     </ClInclude>
@@ -152,6 +152,13 @@
     </ClInclude>
     <ClInclude Include="FolderUtils.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MapEditorDriver.h" />
+    <ClInclude Include="MapObserver.h" />
+    <ClInclude Include="MapTest.h" />
+    <ClInclude Include="Observable.h" />
+    <ClInclude Include="GameController.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -25,6 +25,7 @@
 #include "Weapon.h"
 #include "ItemContainer.h"
 #include "MapEditorDriver.h"
+#include "GameController.h"
 
 using namespace std;
 
@@ -66,6 +67,7 @@ int main(int argc, char* argv[])
 	//Driver code
 	MapController* m1 = new MapController();
 	CampaignController* c1 = new CampaignController();
+	GameController* g1 = new GameController();
 
 
 
@@ -94,9 +96,9 @@ int main(int argc, char* argv[])
 			return 0;
 			break;
 		}
-		else if(userOption > NBR_OPTIONS){
-			cout << "Enter a valid input." << endl;
-		}
+		//else if(userOption > NBR_OPTIONS){
+		//	cout << "Enter a valid input." << endl;
+		//}
 		else {
 			flushConsole();
 			switch (userOption) {
@@ -111,6 +113,9 @@ int main(int argc, char* argv[])
 				break;
 			case 4:
 				m1->editMap(false);
+				break;
+			case 10:
+				g1->play();
 				break;
 			}
 			flushConsole();
