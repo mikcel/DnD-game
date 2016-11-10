@@ -65,6 +65,7 @@ int Game::run(Player* p)
 			break;
 		case 'T': //Toggles the view of the map elements
 		case 't': //Toggles the view of the map elements
+			meo.toggle();
 			break;
 
 		}

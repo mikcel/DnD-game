@@ -91,41 +91,30 @@
     <ClCompile Include="FolderUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="MapObserver.cpp" />
+    <ClCompile Include="MapTest.cpp" />
+    <ClCompile Include="Observable.cpp" />
     <ClCompile Include="GameController.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="MapElementsObserver.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleLogger.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterController.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterElement.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="ConsoleLogger.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="ItemUtils.cpp">
-      <Filter>Map</Filter>
+      <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="MapObserver.cpp">
-      <Filter>Map</Filter>
+    <ClCompile Include="CharacterController.cpp" />
+    <ClCompile Include="CharacterElement.cpp">
+      <Filter>Character</Filter>
     </ClCompile>
-    <ClCompile Include="MapTest.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Observable.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Map</Filter>
+    <ClCompile Include="Dice.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,44 +172,31 @@
     <ClInclude Include="FolderUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="MapEditorDriver.h" />
+    <ClInclude Include="MapObserver.h" />
+    <ClInclude Include="MapTest.h" />
+    <ClInclude Include="Observable.h" />
     <ClInclude Include="GameController.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="MapElementsObserver.h">
       <Filter>Map</Filter>
     </ClInclude>
+    <ClInclude Include="ItemUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleLogger.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Game.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterController.h">
-      <Filter>Map</Filter>
-    </ClInclude>
+    <ClInclude Include="CharacterController.h" />
     <ClInclude Include="CharacterElement.h">
-      <Filter>Map</Filter>
+      <Filter>Character</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleLogger.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemUtils.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="MapEditorDriver.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="MapObserver.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="MapTest.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Observable.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Map</Filter>
+    <ClInclude Include="Dice.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
