@@ -73,7 +73,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)\cppunit-1.12.1\include;$(SolutionDir)\SFML-2.4.0_VS2013\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -95,7 +95,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)\cppunit-1.12.1\include;$(SolutionDir)\SFML-2.4.0_VS2013\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -126,7 +126,9 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterObserver.cpp" />
     <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="ConsoleLogger.cpp" />
     <ClCompile Include="Element.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="FolderUtils.cpp" />
@@ -140,6 +142,7 @@
     <ClCompile Include="MapObserver.cpp" />
     <ClCompile Include="MapTest.cpp" />
     <ClCompile Include="Observable.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="TestControllers.cpp" />
     <ClCompile Include="TestItemClass.cpp" />
@@ -154,7 +157,9 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterObserver.h" />
     <ClInclude Include="Chest.h" />
+    <ClInclude Include="ConsoleLogger.h" />
     <ClInclude Include="Element.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Fighter.h" />
     <ClInclude Include="FolderUtils.h" />
@@ -168,6 +173,7 @@
     <ClInclude Include="MapTest.h" />
     <ClInclude Include="Observable.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Weapon.h" />
