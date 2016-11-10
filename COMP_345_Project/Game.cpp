@@ -36,7 +36,9 @@ int Game::run(Player* p)
 	#define KEY_T 114
 	#define KEY_Q 113
 
+	//Initial display of the map
 	mo.update();
+
 	int c = 0;
 	while (!isGameOver())
 	{
