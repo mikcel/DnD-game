@@ -31,14 +31,14 @@ void MapTest::setUp()
 {
 
 	map = new Map(5,5,"");
-	map->setTileType(0, 2, Type::WALL);
-	map->setTileType(1, 2, Type::WALL);
-	map->setTileType(2, 2, Type::WALL);
-	map->setTileType(3, 2, Type::WALL);
+	map->setTileType(0, 2, TileType::WALL);
+	map->setTileType(1, 2, TileType::WALL);
+	map->setTileType(2, 2, TileType::WALL);
+	map->setTileType(3, 2, TileType::WALL);
 	
-	map->setTileType(0, 1, Type::WALL);
-	map->setTileType(1, 1, Type::WALL);
-	map->setTileType(1, 0, Type::WALL);
+	map->setTileType(0, 1, TileType::WALL);
+	map->setTileType(1, 1, TileType::WALL);
+	map->setTileType(1, 0, TileType::WALL);
 
 }
 
@@ -68,7 +68,7 @@ void MapTest::testMapCellContainsElement()
 void MapTest::testMapCellContainsWall()
 {
 	// context: fill a cell
-	map->setTileType(1, 1, Type::WALL);
+	map->setTileType(1, 1, TileType::WALL);
 	//test: isFree() should return true after the cell having been set to a wall
 	CPPUNIT_ASSERT(true == map->isFree(1, 1));
 	//test: isTraversible() should return false after the cell having been set to a wall
@@ -117,7 +117,7 @@ void MapTest::testInvalidPathNoExit()
 //! Tested item: Map::isValid()
 void MapTest::testInvalidPathEntryOnWall()
 {
-	map->setTileType(1, 1, Type::WALL);
+	map->setTileType(1, 1, TileType::WALL);
 	map->setStartPoint(1, 1);
 	map->setEndPoint(4, 4);
 	CPPUNIT_ASSERT(!map->isValid());
@@ -128,7 +128,7 @@ void MapTest::testInvalidPathEntryOnWall()
 //! Tested item: Map::isValid()
 void MapTest::testInvalidPathExitOnWall()
 {
-	map->setTileType(1, 1, Type::WALL);
+	map->setTileType(1, 1, TileType::WALL);
 	map->setStartPoint(4, 4);
 	map->setEndPoint(1, 1);
 	CPPUNIT_ASSERT(!map->isValid());
@@ -142,7 +142,7 @@ void MapTest::testInvalidPath()
 	map->setStartPoint(2, 0);
 	map->setEndPoint(0, 4);
 
-	map->setTileType(4, 2, Type::WALL); //We block off the only passage
+	map->setTileType(4, 2, TileType::WALL); //We block off the only passage
 	CPPUNIT_ASSERT(!map->isValid());
 }
 
@@ -221,16 +221,16 @@ void MapTest::testMoveElementOob()
 void MapTest::testSetTileDestroysElement()
 {
 	Element e;
-	map->setTileType(0, 0, Type::FLOOR);
-	CPPUNIT_ASSERT(map->getTileAt(0, 0).getType() == Type::FLOOR);
+	map->setTileType(0, 0, TileType::FLOOR);
+	CPPUNIT_ASSERT(map->getTileAt(0, 0).getType() == TileType::FLOOR);
 
 	map->setElementAt(0, 0, e);
-	CPPUNIT_ASSERT(map->getTileAt(0, 0).getType() == Type::FLOOR);
+	CPPUNIT_ASSERT(map->getTileAt(0, 0).getType() == TileType::FLOOR);
 	CPPUNIT_ASSERT((map->getCharacters()).back() == map->getElementAt(0, 0));
 	CPPUNIT_ASSERT((map->getCharacters()).size() == 1);
 
-	map->setTileType(0, 0, Type::WALL);
-	CPPUNIT_ASSERT(map->getTileAt(0, 0).getType() == Type::WALL);
+	map->setTileType(0, 0, TileType::WALL);
+	CPPUNIT_ASSERT(map->getTileAt(0, 0).getType() == TileType::WALL);
 	CPPUNIT_ASSERT(map->getElementAt(0, 0) == nullptr);
 	CPPUNIT_ASSERT((map->getCharacters()).size() == 0);
 }
@@ -314,7 +314,7 @@ void MapTest::testObserverModificationCallUpdate()
 	map->unsetEndPoint();
 	CPPUNIT_ASSERT(mot.timesInvoked == 4);
 
-	map->setTileType(2, 3, Type::WALL);
+	map->setTileType(2, 3, TileType::WALL);
 	CPPUNIT_ASSERT(mot.timesInvoked == 5);
 	
 	Element e;
