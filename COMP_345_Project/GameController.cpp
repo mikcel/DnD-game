@@ -22,11 +22,12 @@ void GameController::play()
 	//We let the user select his campaign
 	selectCampaign();
 
-
-	displayMapElementsConsole();
+	mapElementsObserver = new MapElementsObserver(map);
+	//displayMapElementsConsole();
 
 	if (map != nullptr) {
 		delete map;
+		delete mapElementsObserver;
 		map = nullptr;
 	}
 
