@@ -10,6 +10,7 @@
 #include "Enums.h"
 using namespace std;
 
+//! Free Function to edit an Item File
 void editItem() {
 	int userChoice = -1;
 	while (true) {
@@ -132,7 +133,7 @@ void editItem() {
 
 }
 
-
+//! Free function to create a new item
 void createItem() {
 	string name = ""; //! Item name
 	int itemType = (int)ItemType::UNSPECIFIED; //! item type
@@ -308,6 +309,8 @@ void createItem() {
 
 }
 
+//! Free function that reads an item file
+//! return: pointer to the newly read item
 Item* readItemFile(string itemName){
 	ifstream itemFile;
 	itemFile.open("SaveFiles/Items/" + itemName + ".txt");
