@@ -631,6 +631,11 @@ void CharacterController::saveCharacter(){
 Character* readCharacterFile(string charFileLocation, string charName){
 
 	ifstream inStream("SaveFiles/Characters/" + charName + ".txt", ios::in);
+
+	if (!inStream){
+		return nullptr;
+	}
+
 	Character * tempCharacter = nullptr;
 
 	string chrType = "";
@@ -702,8 +707,6 @@ void CharacterController::displayFighterStyle(){
 
 
 void CharacterController::addItem(){
-
-
 
 		vector<string> filesInFolder = getFilesInsideFolderNoExtension("SaveFiles/Items");
 
