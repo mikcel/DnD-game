@@ -91,6 +91,9 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Item</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterController.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tile.h">
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="FolderUtils.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterController.h">
+      <Filter>Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

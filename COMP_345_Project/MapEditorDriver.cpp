@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include "MapController.h"
 #include "CampaignController.h"
+#include "CharacterController.h"
 #include "Item.h"
 #include "Weapon.h"
 #include "ItemContainer.h"
@@ -73,7 +74,7 @@ int main(int argc, char* argv[])
 	//Driver code
 	MapController* m1 = new MapController();
 	CampaignController* c1 = new CampaignController();
-
+	CharacterController* chr = new CharacterController();
 
 
 
@@ -81,7 +82,7 @@ int main(int argc, char* argv[])
 	while (true) {
 		cout << "Enter the index of option you want to do:" << endl;
 
-		cout << "0: To quit\n1: To create a new campaign\n2: To edit a campaign\n3: To create a new map\n4: To edit a map" << endl;
+		cout << "0: To quit\n1: To create a new campaign\n2: To edit a campaign\n3: To create a new map\n4: To edit a map\n5: To create a Character" << endl;
 
 		cin >> userOptionStr;
 		int userOption;
@@ -97,6 +98,7 @@ int main(int argc, char* argv[])
 		case 0:
 			delete m1;
 			delete c1;
+			delete chr;
 			return 0;
 			break;
 		case 1:
@@ -110,6 +112,9 @@ int main(int argc, char* argv[])
 			break;
 		case 4:
 			m1->editMap(false);
+			break;
+		case 5:
+			chr->createCharacter();
 			break;
 		default:
 			cout << "Enter a valid input." << endl;
