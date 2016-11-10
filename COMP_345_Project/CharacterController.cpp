@@ -241,49 +241,6 @@ void CharacterController::createCharacter(){
 			}
 		}
 
-		bool flagCorrectChoice = false;
-		string itemChoice = "";
-		cout << "Do you want to add items to your backpack? (Y/N) ";
-		while (!flagCorrectChoice){
-			cin >> itemChoice;
-			if (itemChoice == "Y" || itemChoice == "N")
-				flagCorrectChoice = true;
-			else
-			{
-				cout << "Incorrect choice. Please enter Y or N: ";
-			}
-		}
-
-		if (itemChoice == "Y"){
-
-			vector<string> filesInFolder = getFilesInsideFolderNoExtension("SaveFiles/Items");
-			
-			if (filesInFolder.size() != 0){
-				cout << "The items template file available are:\n";
-				for (auto i : filesInFolder){
-					cout << i << "\n";
-				}
-				string itemFileName = "";
-				bool itemFileFound = false;
-				cout << "\nPlease enter the Item file name: ";
-				while (!itemFileFound && itemFileName!="-1"){
-					cin >> itemFileName;
-					if (find(filesInFolder.begin(), filesInFolder.end(), itemFileName) != filesInFolder.end()){
-						/*read item from file*/
-						itemFileFound = true;
-					}
-					else{
-						cout << "File not found. Please try again (-1 to stop): ";
-					}
-				}
-
-			}
-			else{
-				cout << "There are no items files available. Please create items and then edit the character to add the items.\n";
-				cin.ignore();
-				system("pause");
-			}
-		}
 
 
 		if (choice == 1){
@@ -294,11 +251,7 @@ void CharacterController::createCharacter(){
 				cout << "Incorrect Character. Character will not be saved";
 				system("pause");
 				currentCharacter = NULL;
-			}
-			else{
-				cout << "Character Created!\nThe Stats are:\n" << *currentCharacter;
-				saveCharacter();
-
+				return;
 			}
 		}
 		else{
@@ -306,19 +259,75 @@ void CharacterController::createCharacter(){
 			currentCharacter = new Fighter(name, arrAbilityScores, (FightStyle)fightStyle, level, (CharacterSize)size);
 			if (!currentCharacter->validateNewCharacter()){ //! Validate{
 				//! If incorrect Fighter end program
-				cout << "Incorrect Fighter.  Character will not be saved"<< *currentCharacter;
+				cout << "Incorrect Fighter.  Character will not be saved";
 				system("pause");
 				currentCharacter = NULL;
-			}
-			else{
-				cout << "Fighter Created!\nThe stats are:\n" << *currentCharacter;
-				saveCharacter();
+				return;
 			}
 		}
-
-		system("pause");
 	}
 
+	bool flagCorrectChoice = false;
+	string itemChoice = "";
+	cout << "Do you want to add items to your backpack? (Y/N) ";
+	while (!flagCorrectChoice){
+		cin >> itemChoice;
+		if (itemChoice == "Y" || itemChoice == "N")
+			flagCorrectChoice = true;
+		else
+		{
+			cout << "Incorrect choice. Please enter Y or N: ";
+		}
+	}
+
+	if (itemChoice == "Y"){
+
+		vector<string> filesInFolder = getFilesInsideFolderNoExtension("SaveFiles/Items");
+
+		if (filesInFolder.size()==0){
+			cout << "There are no items files available. Please create items and then edit the character to add the items.\n";
+			cin.ignore();
+			system("pause");
+		}
+		else{
+			Item* itmPoint = NULL;
+			int itemID = 0;
+
+			while (itemID!=-1){
+
+				cout << "The item template files available are:\n";
+				for (int i = 0; i < filesInFolder.size();i++){
+					cout << i << " - " << filesInFolder[i] << "\n";
+				}
+
+				cout << "\nPlease enter the Item file name (-1 to stop adding): ";
+				cin >> itemID;
+
+				if (itemID>=0 && itemID<filesInFolder.size()){
+					itmPoint= readItemFile(filesInFolder[itemID]);
+					currentCharacter->storeItem(itmPoint);
+					cout << "Item Added.\n";
+					filesInFolder.erase(filesInFolder.begin()+itemID);
+				}
+				else if (itemID!=-1){
+					cout << "Incorrect No. Please try again (-1 to stop): ";
+				}
+
+			}
+
+			delete itmPoint;
+			
+		}
+	}
+
+	if (choice == 1){
+		cout << "Character Created!\nThe Stats are:\n" << *currentCharacter;
+	}
+	else{
+		cout << "Fighter Created!\nThe Stats are:\n" << *currentCharacter;
+	}
+
+	saveCharacter();
 
 }
 
@@ -479,6 +488,23 @@ void CharacterController::readCharacterFile(string charName, string charFileLoca
 		currentCharacter = new Character(name, hitDice, abilityScr, level, (CharacterSize)stoi(strSize));
 	else
 		currentCharacter = new Fighter(name, abilityScr, (FightStyle)fightStyle, level, (CharacterSize)stoi(strSize));
+
+	string itemName;
+	inStream >> itemName; 
+	inStream.ignore();
+	if (itemName == "backpack")
+		getline(inStream, itemName);
+
+	Item *itmPoint = NULL;
+	while (itemName!="wornItems"){
+
+		itmPoint = readItemFile(itemName);
+		currentCharacter->storeItem(itmPoint);
+		getline(inStream, itemName);
+
+	}
+
+	delete itmPoint;
 
 	inStream.close();
 

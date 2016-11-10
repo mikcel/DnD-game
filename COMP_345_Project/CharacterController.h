@@ -2,6 +2,7 @@
 #include "Character.h"
 #include "Fighter.h"
 #include "FolderUtils.h"
+#include "ItemUtils.h"
 #include <iostream>
 #include <fstream>
 #include <algorithm>
