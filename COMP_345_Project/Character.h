@@ -48,7 +48,7 @@ public:
 	//! Destrcutor
 	virtual ~Character(); 
 
-	string getName(); //! Getter for Character's name
+	string getName() const; //! Getter for Character's name
 	int getLevel(); //! Getter for Character's Level
 	CharacterSize getSize(); //! Getter for Character's Size
 	int getOneAbilityScore(CharacterAbility ability); //! Getting one ability score

@@ -11,4 +11,5 @@ private:
 	Map* map;
 	bool isGameOver();
 	int run(Player*);
+	void perfomEndGame();
 };

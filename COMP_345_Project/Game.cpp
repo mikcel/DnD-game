@@ -19,7 +19,7 @@ void Game::play(Character* player)
 
 	//Let's run the game
 	run(p);
-
+	perfomEndGame();
 }
 
 int Game::run(Player* p)
@@ -33,8 +33,6 @@ int Game::run(Player* p)
 	#define KEY_DOWN 80
 	#define KEY_LEFT 75
 	#define KEY_RIGHT 77
-	#define KEY_T 114
-	#define KEY_Q 113
 
 	//Initial display of the map
 	mo.update();
@@ -72,4 +70,18 @@ int Game::run(Player* p)
 bool Game::isGameOver()
 {
 	return map->isEndPoint(map->getPlayer().getPosition());
+}
+
+void Game::perfomEndGame()
+{
+	const Character& currentChar = map->getPlayer().getCharacter();
+	cout << "CONGRATULATIONS!!! YOU FINISHED THE REACH THE EXIT ALIVE!!!" << endl;
+	cout << "IT'S TIME FOR " << currentChar.getName() << endl << " TO GO UP A LEVEL!!!" << endl;
+
+	//currentChar.incrementLevel();
+
+	cout << currentChar;
+
+	cout << "press any key.." << endl;
+	cin.ignore(); // Wait for any key
 }

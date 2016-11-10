@@ -16,4 +16,5 @@ public:
 private:
 	const Map& map; //! Reference to the observed map
 	long long timesUpdated; //! Amount of times the update() function was called
+	void printMap(); //! Amount of times the update() function was called
 };

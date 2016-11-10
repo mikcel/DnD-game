@@ -97,7 +97,7 @@ Character::~Character(){
 
 //! Accessor for the Character's name. 
 //! @return name
-string Character::getName(){
+string Character::getName() const{
 	return name;
 }
 
