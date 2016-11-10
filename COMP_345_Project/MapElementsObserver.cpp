@@ -5,4 +5,14 @@
 MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap)
 {
 	secondConsole.Create("Elements Information");
+
+	/*for (Element& )
+	{
+
+	}*/
+}
+
+void MapElementsObserver::update()
+{
+	
 }

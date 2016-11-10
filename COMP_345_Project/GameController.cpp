@@ -20,9 +20,9 @@ void GameController::play()
 	mapElementsObserver = new MapElementsObserver(map);
 	//displayMapElementsConsole();
 	//We are ready to launch the game
-	launchGame();
+	//launchGame();
 
-	displayMapElementsConsole();
+	//displayMapElementsConsole();
 
 	if (map != nullptr) {
 		delete map;
@@ -50,7 +50,7 @@ void GameController::selectCharacter()
 
 		cout << endl << "Enter the name of the character you want to play as: ";
 		cin >> characterName;
-		character = readCharacterFile("SaveFiles/Maps/" + characterName + ".txt", characterName);
+		//character = readCharacterFile("SaveFiles/Maps/" + characterName + ".txt", characterName);
 
 		if (character == nullptr)
 		{
