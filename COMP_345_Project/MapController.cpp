@@ -30,9 +30,10 @@ Map* MapController::getCurrentMap() {
 	return currentMap;
 }
 
-void MapController::setCurrentMap(Map* newMap) {
+void MapController::setCurrentMap(Map& newMap) {
 	currentMap = new Map(newMap);
 }
+
 void MapController::createMap() {
 	//string widthS, heightS;
 	int width, height;

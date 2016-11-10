@@ -25,7 +25,7 @@ void Game::play(Character* player)
 int Game::run(Player* p)
 {
 	//Set all of our observers
-	MapObserver mo(map);
+	MapObserver mo(*map);
 	map->attach(mo);
 
 
@@ -36,6 +36,7 @@ int Game::run(Player* p)
 	#define KEY_T 114
 	#define KEY_Q 113
 
+	mo.update();
 	int c = 0;
 	while (!isGameOver())
 	{

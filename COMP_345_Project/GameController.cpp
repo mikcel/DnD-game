@@ -93,5 +93,4 @@ void GameController::launchGame()
 {
 	Game g = Game(map);
 	g.play(character);
-
 }
