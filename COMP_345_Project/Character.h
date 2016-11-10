@@ -42,7 +42,9 @@ public:
 	//! Constructor with name, hit dice, six variables for each ability score, level and size 
 	//! If level and size are not passed , the level is set to 1 by default and size to tiny by default
 	Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
-	Character(Character* chara);
+	
+	Character(Character &copyChar);
+	
 	//! Destrcutor
 	virtual ~Character(); 
 
@@ -85,10 +87,8 @@ public:
 	vector<Item*> getBackpackContents();
 	vector<Item*> getCurrentWornItems();
 
-	bool saveCharacter();
-	static Character loadCharacter();
-	void createItem();
-	void editItem();
+	virtual void saveCharacter();
+
 private:
 
 	//! Default Constant value for the HP 

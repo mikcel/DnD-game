@@ -28,6 +28,8 @@ public:
 	//! @param buffs: a vector of Buff objects that adds modifiers to the item
 	Item(ItemType itemType, string itemName, vector<Buff> buffs);
 	
+	Item(Item &itm);
+
 	//! Destructor, nothing to specify, no heap memory used in the constructor.
 	~Item();
 

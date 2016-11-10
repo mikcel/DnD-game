@@ -38,8 +38,29 @@ chrAbilityScores[(int)CharacterAbility::WISD], chrAbilityScores[(int)CharacterAb
 	/*Intentionally left empty*/
 }
 
-Character::Character(Character* chara) {
-	Character();
+Character::Character(Character &copyChar) {
+	this->name = copyChar.name;
+	this->level = copyChar.level;
+	this->size = copyChar.size;
+	this->hitDice = copyChar.hitDice;
+
+	for (int i = 0; i < NO_ABILITY; i++){
+		abilityScores[i] = copyChar.abilityScores[i];
+	}
+
+	//! Call the method to generate the each ability modifiers
+	generateAbilityModifiers();
+
+	//! Invokes the method to calculate the armor class
+	calcArmorClass();
+
+	//! Initialise the two items container
+	backpack = new ItemContainer(*copyChar.backpack);
+	currentWornItems = new ItemContainer(*copyChar.currentWornItems);
+
+	//! Calculate the attack and damage bonuses
+	calcDamageBonus();
+	calcAttackBonus();
 }
 //! Constructor: passes values to the name, the hit dice, the size, the level and each ability score
 Character::Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel, CharacterSize chrSize){
@@ -596,13 +617,29 @@ bool Character::removeItemBack(Item *objItem){
 
 }
 
-bool Character::saveCharacter(){
+void Character::saveCharacter(){
 	
 
-
-
+	ofstream outStream("SaveFiles/Characters/" + name + ".dat", ios::out | ios::binary);
 	
-	return true;
+	outStream << "character\n" << name << "\n" << hitDice << "\n" << to_string(level) << "\n" << to_string((int)size) << "\n0\n";
+
+	for (int i = 0; i < NO_ABILITY; i++){
+		outStream << to_string(abilityScores[i]) << "\n";
+	}
+
+	outStream << "backpack\n";
+	for (auto i : backpack->getContents()){
+		outStream << i->getItemName() << "\n";
+	}
+
+	outStream << "wornItem\n";
+	for (auto i : currentWornItems->getContents()){
+		outStream << i->getItemName() << "\n";
+	}
+	
+	outStream.close();
+
 }
 
 //! Method that overloads the output stream operator in order to give a specific output for each character object

@@ -41,6 +41,16 @@ Item::Item(ItemType itemType,string itemName, vector<Buff> buffs) {
 	this->buffs = buffs;
 }
 
+Item::Item(Item &itm){
+	this->itemName = itm.itemName;
+	this->itemType = itm.itemType;
+	vector<Buff> copyVec(0);
+	for (auto i : itm.buffs){
+		copyVec.push_back(i);
+	}
+	this->buffs = copyVec;
+}
+
 //! Destructor, nothing to specify, no heap memory used in the constructor.
 Item::~Item()
 {

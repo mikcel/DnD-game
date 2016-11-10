@@ -47,6 +47,16 @@ ItemContainer::ItemContainer(ContainerType type, vector<Item*> vectorOfItems)
 	contents = vecTemp;
 }
 
+ItemContainer::ItemContainer(ItemContainer &copyCont)
+{
+	this->containerType = copyCont.containerType;
+	vector<Item*> copyVector(0);
+	for (auto i : copyCont.contents){
+		copyVector.push_back(new Item(*i));
+	}
+	this->contents = copyVector;
+}
+
 //! Destructor that goes through the container and deletes the pointers of the vectorOfItem
 ItemContainer::~ItemContainer()
 {

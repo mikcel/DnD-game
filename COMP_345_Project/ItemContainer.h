@@ -24,6 +24,8 @@ public:
 	//! @param vectorOfItems: vector of item object pointers
 	ItemContainer(ContainerType type, vector<Item*> vectorOfItems);
 	
+	ItemContainer(ItemContainer &copyCont);
+
 	//! Destructor that goes through the container and deletes the pointers of the vectorOfItem
 	~ItemContainer();
 	
