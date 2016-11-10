@@ -4,7 +4,7 @@
 
 MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap)
 {
-	
+	secondConsole = nullptr;
 	///secondConsole.CConsoleLoggers Information");
 
 	for (Element* element : map.getElements())
@@ -27,6 +27,8 @@ bool MapElementsObserver::toggle()
 		return true;
 	}
 
+	secondConsole->Close();
 	delete secondConsole;
+	secondConsole = nullptr;
 	return false;
 }

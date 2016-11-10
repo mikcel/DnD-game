@@ -133,6 +133,7 @@
     <ClCompile Include="CharacterObserver.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="ConsoleLogger.cpp" />
+    <ClCompile Include="Dice.cpp" />
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enums.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="CharacterObserver.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="ConsoleLogger.h" />
+    <ClInclude Include="Dice.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enums.h" />
