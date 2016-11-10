@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
 	GameController* g1 = new GameController();
 	CharacterController* chr = new CharacterController();
 
-
+	editItem();
 
 	string userOptionStr;
 	while (true) {
