@@ -97,6 +97,9 @@
     <ClCompile Include="GameController.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="MapElementsObserver.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tile.h">
@@ -159,6 +162,9 @@
     <ClInclude Include="Observable.h" />
     <ClInclude Include="GameController.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MapElementsObserver.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
