@@ -52,7 +52,10 @@ ItemContainer::ItemContainer(ItemContainer &copyCont)
 	this->containerType = copyCont.containerType;
 	vector<Item*> copyVector(0);
 	for (auto i : copyCont.contents){
-		copyVector.push_back(new Item(*i));
+		if (i->getItemTypes()==ItemType::WEAPON)
+			copyVector.push_back(new Weapon(*(dynamic_cast<Weapon*>(i))));
+		else
+			copyVector.push_back(new Item(*i));
 	}
 	this->contents = copyVector;
 }

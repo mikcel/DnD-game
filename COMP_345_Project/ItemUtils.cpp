@@ -330,7 +330,6 @@ Item* readItemFile(string itemName){
 	if (item->getItemTypes() == ItemType::WEAPON){
 
 		getline(itemFile, readLine);
-
 		weapon->setRange(stoi(readLine));
 
 	}
