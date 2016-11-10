@@ -17,6 +17,8 @@ void GameController::play()
 	//We let the user select his campaign
 	selectCampaign();
 
+	mapElementsObserver = new MapElementsObserver(map);
+	//displayMapElementsConsole();
 	//We are ready to launch the game
 	launchGame();
 
@@ -24,6 +26,7 @@ void GameController::play()
 
 	if (map != nullptr) {
 		delete map;
+		delete mapElementsObserver;
 		map = nullptr;
 	}
 
