@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "FolderUtils.h"
 #include "MapController.h"
+#include "CharacterController.h"
 #include "Game.h"
 
 using namespace std;
@@ -19,9 +20,9 @@ void GameController::play()
 	selectCampaign();
 
 	mapElementsObserver = new MapElementsObserver(map);
-	//displayMapElementsConsole();
+
 	//We are ready to launch the game
-	//launchGame();
+	launchGame();
 
 	if (map != nullptr) {
 		delete map;

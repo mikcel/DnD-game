@@ -31,6 +31,7 @@ public:
 	void unsetEndPoint(); //! Unset the map ending address
 	bool isStartPoint(int x, int y) const; //! Returns true if the provided address is the one of the start point
 	bool isEndPoint(int x, int y) const; //! Returns true if the provided address is the one of the end point
+	bool isEndPoint(Position p) const; //! Returns true if the provided address is the one of the end point
 
 	const Tile& getTileAt(int x, int y) const; //! Gets the tile at the given address
 	bool setTileType(int x, int y, TileType type); //! Changes the type of the tile at the given address
@@ -43,10 +44,10 @@ public:
 	bool isFree(int x, int y) const; //! Returns true is the tile at the given address contains an element
 	bool isTraversible(int x, int y) const; //! Returns true is the tile type allows a character to cross it
 
-	const Player & getPlayer() const;
+	Player & getPlayer() const;
 	const std::list<Element*> & getCharacters() const; //! Returns a the reference of the characters list
 
-	Element* placePlayer(Player& newPlayer); //! Places the player at the start point
+	Player* placePlayer(Player& newPlayer); //! Places the player at the start point
 
 	bool isValid() const; //! Returns true if there exist a valid path between a start address and an ending address of the map
 						  //! This function validates that there are a starting and ending point, that they are placed on a traversible
