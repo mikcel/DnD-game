@@ -24,6 +24,7 @@
 #include "Item.h"
 #include "Weapon.h"
 #include "ItemContainer.h"
+#include "Character.h"
 using namespace std;
 
 
@@ -61,13 +62,19 @@ int main(int argc, char* argv[])
 	//getchar();
 
 #endif // CPPTEST
-	Item* item1 = new Item(item::itemTypes::BELT, "Leather Belt", vector<Buff>{ Buff(buff::buffTypes::CONSTITUTION, 2), Buff(buff::buffTypes::CONSTITUTION, 2)});
+	Character* ca = new Character();
+	Item* item1 = new Item(item::itemTypes::BELT, "Leather Belt", vector<Buff>{ Buff(buff::buffTypes::CONSTITUTION, 2)});
 	Weapon* item2 = new Weapon(item::itemTypes::WEAPON, "Iron Sword", vector<Buff>{ Buff(buff::buffTypes::ATTACK_BONUS, 2), Buff(buff::buffTypes::DAMAGE_BONUS, 2)}, 1);
+	//ca->createItem();
+	
 	cout << item1->serializeItem()<<endl;
-
 	ItemContainer* backpack = new ItemContainer(itemCnt::containerTypes::BACKPACK, vector<Item*> {item1, item2});
 	cout << backpack->serializeItemContainer() << endl;
-
+	ca->storeItem(item1);
+	ca->storeItem(item2);
+	ca->editItem();
+	delete item2;
+	delete item1;
 	delete backpack;
 	//Driver code
 	MapController* m1 = new MapController();

@@ -88,7 +88,8 @@ public:
 
 	bool saveCharacter();
 	static Character loadCharacter();
-
+	void createItem();
+	void editItem();
 private:
 
 	//! Default Constant value for the HP 
