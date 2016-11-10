@@ -8,11 +8,6 @@
 
 using namespace std;
 
-GameController::GameController()
-{
-
-}
-
 void GameController::play()
 {
 	cout << "--------GAME INITIALIZATION--------" << endl << endl;
