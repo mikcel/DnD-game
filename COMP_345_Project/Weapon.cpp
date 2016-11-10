@@ -4,6 +4,7 @@
 #pragma once
 #include "Weapon.h"
 #include "Item.h"
+#include  <fstream>
 
 //! Default Contructor
 Weapon::Weapon():Item()
@@ -54,7 +55,8 @@ bool Weapon::validateWeapon()
 	}
 	return false;
 }
-
+//! Method that converts an Item object into a string representation
+//! return: string that represents an Item Object
 string Weapon::serializeItem() {
 	string itemString = "";
 	itemString += this->getItemName();
@@ -75,7 +77,14 @@ string Weapon::serializeItem() {
 	}
 	return itemString;
 }
-
+//! method that takes the string representation of an Item object and saves to a text file
+void Weapon::saveItem(){
+	ofstream outItem;
+	outItem.open("saveFiles/Items/" + getItemName() + ".txt");
+	outItem << serializeItem();
+	outItem.close();
+	cout << "Weapon was saved!" << endl;
+}
 ostream& operator<<(ostream& stream, const Weapon& wpn){
 	const Item &itm = wpn;
 	return stream << itm << "\nRange: " << wpn.range << endl;

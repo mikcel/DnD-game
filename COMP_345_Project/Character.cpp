@@ -38,8 +38,29 @@ chrAbilityScores[(int)CharacterAbility::WISD], chrAbilityScores[(int)CharacterAb
 	/*Intentionally left empty*/
 }
 
-Character::Character(Character* chara) {
-	Character();
+Character::Character(Character &copyChar) {
+	this->name = copyChar.name;
+	this->level = copyChar.level;
+	this->size = copyChar.size;
+	this->hitDice = copyChar.hitDice;
+
+	for (int i = 0; i < NO_ABILITY; i++){
+		abilityScores[i] = copyChar.abilityScores[i];
+	}
+
+	//! Call the method to generate the each ability modifiers
+	generateAbilityModifiers();
+
+	//! Invokes the method to calculate the armor class
+	calcArmorClass();
+
+	//! Initialise the two items container
+	backpack = new ItemContainer(*copyChar.backpack);
+	currentWornItems = new ItemContainer(*copyChar.currentWornItems);
+
+	//! Calculate the attack and damage bonuses
+	calcDamageBonus();
+	calcAttackBonus();
 }
 //! Constructor: passes values to the name, the hit dice, the size, the level and each ability score
 Character::Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel, CharacterSize chrSize){
@@ -362,14 +383,12 @@ int Character::hit(int dmg){
 	int returnVal = 0;
 	int newDmg = dmg - armorClass; //! Subtract armor class because Character is protected by Armor (max. 22)
 	if (newDmg >= currentHitPoints){  //! If new Damage is more than current HP, character dies.
-		notify();
 		cout << "\n" << name << " hit by " << dmg << " damage. \nNot enough to be protected by armor and above HP. Game Over for " << getName() << "\n";
 		currentHitPoints = 0;
 		returnVal = 0;
 	}
 	else if (newDmg > 0){ //! If new damage is less than current HP
 		currentHitPoints -= newDmg; //! Subtract damage from HP
-		notify();
 		cout << "\n" << name << " hit by " << dmg << " damage.\n"
 			<< "Protected by AC; Total Damage: " << newDmg << "\n"
 			<< name << "'s Current Hit Points (HP): " << currentHitPoints << endl;
@@ -450,7 +469,6 @@ bool Character::takeOffItem(Item *objItem){
 		else{
 			takeOffBuff(objItem->getBuffs());
 		}
-		notify();
 		return true;
 	}
 	return false;
@@ -507,7 +525,6 @@ bool Character::wearItem(Item *objItem){
 				}
 			}
 		}
-		notify();
 		return true;
 	}
 	return false;
@@ -523,7 +540,6 @@ bool Character::storeItem(Item *objItem)
 
 	backpack->addItem(objItem);
 
-	notify();
 	return true;
 }
 
@@ -591,18 +607,33 @@ bool Character::removeItemBack(Item *objItem){
 		return false;
 	backpack->removeItem(objItem->getItemName());
 
-	notify();
 	return true;
 
 }
 
-bool Character::saveCharacter(){
+void Character::saveCharacter(){
 	
 
-
-
+	ofstream outStream("SaveFiles/Characters/" + name + ".txt", ios::out | ios::binary);
 	
-	return true;
+	outStream << "character\n" << name << "\n" << hitDice << "\n" << to_string(level) << "\n" << to_string((int)size) << "\n0\n";
+
+	for (int i = 0; i < NO_ABILITY; i++){
+		outStream << to_string(abilityScores[i]) << "\n";
+	}
+
+	outStream << "backpack\n";
+	for (auto i : backpack->getContents()){
+		outStream << i->getItemName() << "\n";
+	}
+
+	outStream << "wornItem\n";
+	for (auto i : currentWornItems->getContents()){
+		outStream << i->getItemName() << "\n";
+	}
+	
+	outStream.close();
+
 }
 
 //! Method that overloads the output stream operator in order to give a specific output for each character object
@@ -644,3 +675,5 @@ ostream& operator<<(ostream& stream, const Character& chr){
 
 	return stream;
 }
+
+

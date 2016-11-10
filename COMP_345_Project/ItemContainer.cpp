@@ -34,7 +34,7 @@ ItemContainer::ItemContainer(ContainerType type, vector<Item*> vectorOfItems)
 	containerType = type;
 	if (vectorOfItems.size() >= 1) {
 		for (auto i : vectorOfItems) {
-			vecTemp.push_back(i);
+			vecTemp.push_back(new Item(*i));
 		}
 	}
 	int wornItemSize = 7;
@@ -45,6 +45,16 @@ ItemContainer::ItemContainer(ContainerType type, vector<Item*> vectorOfItems)
 		}
 	}
 	contents = vecTemp;
+}
+
+ItemContainer::ItemContainer(ItemContainer &copyCont)
+{
+	this->containerType = copyCont.containerType;
+	vector<Item*> copyVector(0);
+	for (auto i : copyCont.contents){
+		copyVector.push_back(new Item(*i));
+	}
+	this->contents = copyVector;
 }
 
 //! Destructor that goes through the container and deletes the pointers of the vectorOfItem

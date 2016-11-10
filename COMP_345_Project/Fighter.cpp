@@ -112,6 +112,30 @@ int Fighter::attack(Character &chr, int dmg){
 
 }
 
+void Fighter::saveCharacter(){
+
+	ofstream outStream("SaveFiles/Characters/" + getName() + ".dat", ios::out | ios::binary);
+
+	outStream << "fighter\n" << getName() << "\n" << getHitDice() << "\n"<< to_string(getLevel()) << "\n" << to_string((int)getSize()) << "\n" << (int)style << "\n";
+
+	for (int i = 0; i < NO_ABILITY; i++){
+		outStream << to_string(getOneAbilityScore((CharacterAbility)i)) << "\n";
+	}
+
+	outStream << "backpack\n";
+	for (auto i : getBackpackContents()){
+		outStream << i->getItemName() << "\n";
+	}
+
+	outStream << "wornItem\n";
+	for (auto i : getCurrentWornItems()){
+		outStream << i->getItemName() << "\n";
+	}
+
+	outStream.close();
+
+}
+
 //! Overloading the output operator for displaying the fighter's stats
 //! @param reference to output stream
 //! @param reference to fighter object and cannot change data members since constant

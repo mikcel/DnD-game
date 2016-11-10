@@ -26,7 +26,7 @@ using namespace std;
 #include "Observable.h" //! Include the subject class for the observer pattern
 #include "Element.h"
 //! Class that implements the Character
-class Character:public Observable, public Element{
+class Character{
 public:
 	
 	//! Constant for the No. of abilities (scores & modifiers) (mainly use for array size)
@@ -42,7 +42,9 @@ public:
 	//! Constructor with name, hit dice, six variables for each ability score, level and size 
 	//! If level and size are not passed , the level is set to 1 by default and size to tiny by default
 	Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
-	Character(Character* chara);
+	
+	Character(Character &copyChar);
+	
 	//! Destrcutor
 	virtual ~Character(); 
 
@@ -85,8 +87,7 @@ public:
 	vector<Item*> getBackpackContents();
 	vector<Item*> getCurrentWornItems();
 
-	bool saveCharacter();
-	static Character loadCharacter();
+	virtual void saveCharacter();
 
 private:
 

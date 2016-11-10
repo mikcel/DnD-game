@@ -9,6 +9,7 @@
 #include <list>
 #include <string>
 #include "Observable.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -45,7 +46,7 @@ public:
 	const Player & getPlayer() const;
 	const std::list<Element*> & getCharacters() const; //! Returns a the reference of the characters list
 
-	Element* placePlayer(Element& newPlayer); //! Places the player at the start point
+	Element* placePlayer(Player& newPlayer); //! Places the player at the start point
 
 	bool isValid() const; //! Returns true if there exist a valid path between a start address and an ending address of the map
 						  //! This function validates that there are a starting and ending point, that they are placed on a traversible

@@ -21,13 +21,15 @@ public:
 	//! @param itemType: enum type of the type of item
 	//! @param itemName: string of the name of the item
 	Item(ItemType itemType,string itemName);
-	
+	Item(Item *item);
 	//! Constructor that takes a weapon item type, item name, and a vector of buff object
 	//! @param itemType: enum type of the type of item
 	//! @param itemName: string of the name of the item
 	//! @param buffs: a vector of Buff objects that adds modifiers to the item
 	Item(ItemType itemType, string itemName, vector<Buff> buffs);
 	
+	Item(Item &itm);
+
 	//! Destructor, nothing to specify, no heap memory used in the constructor.
 	~Item();
 
@@ -59,7 +61,12 @@ public:
 	//! @return: boolean that indicates validity of item.
 	bool validateItem();
 
+	//! Method that converts an Item object into a string representation
+	//! return: string that represents an Item Object
 	virtual string serializeItem();
+
+	//! method that takes the string representation of an Item object and saves to a text file
+	virtual void saveItem();
 private:
 	//members of the class
 	ItemType itemType;

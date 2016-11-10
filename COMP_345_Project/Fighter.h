@@ -12,6 +12,9 @@
 #pragma once
 #include "Character.h"
 #include "Enums.h"
+#include <fstream>
+#include <string>
+using namespace std;
 
 //! Class that implements the fighter and inherits from the Character Class.
 class Fighter : public Character{
@@ -34,6 +37,8 @@ public:
 	void setStyle(FightStyle chrstyle); //! Mutator for the Fighter's fighting style
 	void incrementLevel(int hitRoll); //! Fghter's overridden method from Chracter class to increment level
 	int attack(Character &chr, int dmg); //! Method for attacking another player
+
+	void saveCharacter();
 
 private:
 
