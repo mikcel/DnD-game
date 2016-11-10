@@ -10,6 +10,7 @@
 #include "Enums.h"
 using namespace std;
 
+//! Free Function to edit an Item File
 void editItem() {
 	int userChoice = -1;
 	while (true) {
@@ -41,6 +42,7 @@ void editItem() {
 				getline(cin, newItemName);
 				item->setItemName(newItemName);
 				item->saveItem();
+				delete item;
 			}
 			else if (userChoice == 1) {
 				//buffs
@@ -90,6 +92,7 @@ void editItem() {
 						buffs.push_back(Buff((BuffType)choiceBuff, choiceAmount));
 					}
 					item->setBuffs(buffs);
+
 				}
 				if (item->getItemTypes() == ItemType::WEAPON){
 					Weapon* weapon = dynamic_cast<Weapon*>(item);
@@ -132,7 +135,7 @@ void editItem() {
 
 }
 
-
+//! Free function to create a new item
 void createItem() {
 	string name = ""; //! Item name
 	int itemType = (int)ItemType::UNSPECIFIED; //! item type
@@ -308,21 +311,26 @@ void createItem() {
 
 }
 
+//! Free function that reads an item file
+//! return: pointer to the newly read item
 Item* readItemFile(string itemName){
 	ifstream itemFile;
 	itemFile.open("SaveFiles/Items/" + itemName + ".txt");
 	
 	Item* item = new Item();
-	Weapon* weapon = nullptr;
+	Weapon* weapon = new Weapon();
 	string readLine;
 	getline(itemFile, readLine);
 	item->setItemName(readLine);
+	weapon->setItemName(readLine);
 	getline(itemFile, readLine);
 
 	item->setItemType((ItemType)stoi(readLine));
+	weapon->setItemType((ItemType)stoi(readLine));
 	if (item->getItemTypes() == ItemType::WEAPON){
-		weapon = dynamic_cast<Weapon*>(item);
+
 		getline(itemFile, readLine);
+
 		weapon->setRange(stoi(readLine));
 
 	}
@@ -347,12 +355,14 @@ Item* readItemFile(string itemName){
 		isBuffType = !isBuffType;
 	}
 	
-	if (weapon != nullptr){
+	if (item->getItemTypes() == ItemType::WEAPON){
 		weapon->setBuffs(tmpBuffs);
+		delete item;
 		return weapon;
 	}
 	else{
 		item->setBuffs(tmpBuffs);
+		delete weapon;
 		return item;
 	}
 }

@@ -36,7 +36,11 @@ public:
 	//! @return : depending on the validity of the weapon object
 	bool validateWeapon(); 
 
+	//! Method that converts an Item object into a string representation
+	//! return: string that represents an Item Object
 	virtual string serializeItem();
+
+	//! method that takes the string representation of an Item object and saves to a text file
 	virtual void saveItem();
 private:
 	int range;
