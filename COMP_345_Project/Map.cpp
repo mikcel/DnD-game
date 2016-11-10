@@ -543,3 +543,8 @@ string Map::serializeMapToString()
 	}
 	return serialMap;
 }
+
+
+const Player & Map::getPlayer() const {
+	return player;
+}

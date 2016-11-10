@@ -14,7 +14,6 @@ public:
 private:
 	void selectCharacter();
 	void selectCampaign();
-	void displayMapElementsConsole();
 	void launchGame();
 	Map * map = nullptr;
 	Character * character = nullptr;

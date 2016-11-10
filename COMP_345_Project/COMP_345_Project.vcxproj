@@ -132,6 +132,7 @@
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="FolderUtils.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemContainer.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Fighter.h" />
     <ClInclude Include="FolderUtils.h" />
     <ClInclude Include="GameController.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemContainer.h" />
     <ClInclude Include="Map.h" />
