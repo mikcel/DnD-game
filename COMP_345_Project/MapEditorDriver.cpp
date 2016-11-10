@@ -15,17 +15,19 @@
 //! These are classes from assignment one and are only there as place holder.
 //! Map, Position, Element, Tile classes are also from assignment 1 but were modified to work with this assignment.
 
-//#include <cppunit/CompilerOutputter.h>
-//#include <cppunit/extensions/TestFactoryRegistry.h>
-//#include <cppunit/ui/text/TestRunner.h>
+#include <cppunit/CompilerOutputter.h>
+#include <cppunit/extensions/TestFactoryRegistry.h>
+#include <cppunit/ui/text/TestRunner.h>
 #include <stdio.h>
 #include "MapController.h"
 #include "CampaignController.h"
 #include "Item.h"
 #include "Weapon.h"
 #include "ItemContainer.h"
-#include "Character.h"
+#include "MapEditorDriver.h"
+#include "GameController.h"
 #include "ItemUtils.h"
+
 using namespace std;
 
 //! main() function. Entry point of the program
@@ -37,46 +39,36 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 //#define CPPTEST
-//#ifdef CPPTEST
-//	// Get the top level suite from the registry
-//	CppUnit::Test *suite = CppUnit::TestFactoryRegistry::getRegistry().makeTest();
-//
-//	// Adds the test to the list of test to run
-//	CppUnit::TextUi::TestRunner runner;
-//	runner.addTest(suite);
-//
-//	// Change the default outputter to a compiler error format outputter
-//	runner.setOutputter(new CppUnit::CompilerOutputter(&runner.result(),
-//		std::cerr));
-//	// Run the tests.
-//	bool wasSucessful = runner.run();
-//
-//	//getchar();
-//
-//#endif // CPPTEST
+#ifdef CPPTEST
 
-	//junk code testing
+	// Get the top level suite from the registry
+	CppUnit::Test *suite = CppUnit::TestFactoryRegistry::getRegistry().makeTest();
 
-	//Character* ca = new Character();
-	//Item* item1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{ Buff(BuffType::CONSTITUTION, 2)});
-	//Weapon* item2 = new Weapon(ItemType::WEAPON, "Iron Sword", vector<Buff>{ Buff(BuffType::ATTACK_BONUS, 2), Buff(BuffType::DAMAGE_BONUS, 2)}, 1);
+	// Adds the test to the list of test to run
+	CppUnit::TextUi::TestRunner runner;
+	runner.addTest(suite);
 
+	// Change the default outputter to a compiler error format outputter
+	runner.setOutputter(new CppUnit::CompilerOutputter(&runner.result(),
+		std::cerr));
+	// Run the tests.
+	bool wasSucessful = runner.run();
+
+	//getchar();
+
+#endif // CPPTEST
+	Item* item1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{ Buff(BuffType::CONSTITUTION, 2), Buff(BuffType::CONSTITUTION, 2)});
+	Weapon* item2 = new Weapon(ItemType::WEAPON, "Iron Sword", vector<Buff>{ Buff(BuffType::ATTACK_BONUS, 2), Buff(BuffType::DAMAGE_BONUS, 2)}, 1);
 	//cout << item1->serializeItem()<<endl;
-	//ItemContainer* backpack = new ItemContainer(ContainerType::BACKPACK, vector<Item*> {item1, item2});
+
+	ItemContainer* backpack = new ItemContainer(ContainerType::BACKPACK, vector<Item*> {item1, item2});
 	//cout << backpack->serializeItemContainer() << endl;
-	//ca->storeItem(item1);
-	//ca->storeItem(item2);
-	//delete item2;
-	//delete item1;
-	//delete backpack;
-	createItem();
 
-	editItem();
-
-
+	delete backpack;
 	//Driver code
 	MapController* m1 = new MapController();
 	CampaignController* c1 = new CampaignController();
+	GameController* g1 = new GameController();
 
 
 
@@ -97,32 +89,47 @@ int main(int argc, char* argv[])
 			continue;
 		}
 
-		switch (userOption) {
-		case 0:
+
+		if (userOption <= 0)
+		{
 			delete m1;
 			delete c1;
 			return 0;
 			break;
-		case 1:
-			c1->createCampaign();
-			break;
-		case 2:
-			c1->editCampaign();
-			break;
-		case 3:
-			m1->createMap();
-			break;
-		case 4:
-			m1->editMap(false);
-			break;
-		default:
-			cout << "Enter a valid input." << endl;
-			break;
+		}
+		//else if(userOption > NBR_OPTIONS){
+		//	cout << "Enter a valid input." << endl;
+		//}
+		else {
+			flushConsole();
+			switch (userOption) {
+			case 1:
+				c1->createCampaign();
+				break;
+			case 2:
+				c1->editCampaign();
+				break;
+			case 3:
+				m1->createMap();
+				break;
+			case 4:
+				m1->editMap(false);
+				break;
+			case 10:
+				g1->play();
+				break;
+			}
+			flushConsole();
 		}
 	}
 	delete m1;
 	delete c1;
-
-
 }
 
+void flushConsole()
+{
+	if (system("CLS"))
+	{
+		system("clear");
+	}
+}

@@ -20,6 +20,9 @@
     <Filter Include="Drivers">
       <UniqueIdentifier>{6003d5eb-1c99-4fb7-bd10-3e0a12aff340}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{6610c2f8-29fe-4fd2-9823-f12fc1a7e7e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Element.cpp">
@@ -91,11 +94,16 @@
     <ClCompile Include="MapObserver.cpp" />
     <ClCompile Include="MapTest.cpp" />
     <ClCompile Include="Observable.cpp" />
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Character</Filter>
+    <ClCompile Include="GameController.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Character</Filter>
+    <ClCompile Include="MapElementsObserver.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ConsoleLogger.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="ItemUtils.cpp">
       <Filter>Utils</Filter>
@@ -160,14 +168,20 @@
     <ClInclude Include="MapObserver.h" />
     <ClInclude Include="MapTest.h" />
     <ClInclude Include="Observable.h" />
-    <ClInclude Include="Enemy.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="GameController.h">
+      <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="MapElementsObserver.h">
+      <Filter>Map</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="ItemUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="ConsoleLogger.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Player.h" />
+>>>>>>> 3e097fef8ce5fa7139ff9f09cd07b3f1776637ce
   </ItemGroup>
 </Project>

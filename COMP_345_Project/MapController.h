@@ -27,11 +27,6 @@ public:
 	void editMap(bool creatingNewMap);
 	//! method that saves the map to a map file
 	void saveMap();
-	//! method that reads a mapfile and returns a new map object
-	//! @param mapFileLocation: string of the file path
-	//! @param mapName: string of the map name;
-	//! @return: pointer to the newly read map.
-	Map* readMapFile(string mapFileLocation, string mapName);
 
 	void quit();
 
@@ -42,4 +37,10 @@ private:
 	//! current Map pointer to a map object.
 	Map* currentMap;
 };
+
+//! method that reads a mapfile and returns a new map object
+//! @param mapFileLocation: string of the file path
+//! @param mapName: string of the map name;
+//! @return: pointer to the newly read map.
+Map* readMapFile(string mapFileLocation, string mapName);
 
