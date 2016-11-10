@@ -34,7 +34,7 @@ ItemContainer::ItemContainer(ContainerType type, vector<Item*> vectorOfItems)
 	containerType = type;
 	if (vectorOfItems.size() >= 1) {
 		for (auto i : vectorOfItems) {
-			vecTemp.push_back(i);
+			vecTemp.push_back(new Item(*i));
 		}
 	}
 	int wornItemSize = 7;

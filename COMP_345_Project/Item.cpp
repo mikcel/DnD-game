@@ -4,7 +4,7 @@
 #include "Item.h"
 #include "Character.h"
 #include "Weapon.h"
-
+#include <fstream>
 //! Default constructor
 Item::Item()
 {
@@ -20,6 +20,12 @@ Item::Item(ItemType itemType, string itemName) {
 	this->itemType = itemType;
 	this->itemName = itemName;
 	buffs = vector<Buff>(0);
+}
+
+Item::Item(Item *item) {
+	this->itemType = item->itemType;
+	this->itemName = item->itemName;
+	buffs = item->getBuffs();
 }
 
 //! Constructor that takes a weapon item type, item name, and a vector of buff object
@@ -178,6 +184,7 @@ ostream& operator<<(ostream& stream, const Item& item){
 }
 
 
+<<<<<<< HEAD
 //! Method to add item to backpack
 //! @param Character to add item to its backpack
 static void createItem(Character &chr) {
@@ -352,4 +359,10 @@ static void createItem(Character &chr) {
 			chr.storeItem(&newWeapon);
 	}
 
+=======
+void Item::saveItem() {
+	ofstream outItem;
+	outItem.open("saveFiles/Items/" + itemName + ".txt");
+	outItem << serializeItem();
+>>>>>>> johny
 }

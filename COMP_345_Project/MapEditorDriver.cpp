@@ -24,9 +24,17 @@
 #include "Item.h"
 #include "Weapon.h"
 #include "ItemContainer.h"
-#include "MapEditorDriver.h"
-
+#include "Character.h"
 using namespace std;
+
+
+
+void editItem() {
+
+}
+
+
+
 
 //! main() function. Entry point of the program
 //! It does the following: 
@@ -36,9 +44,8 @@ using namespace std;
 //! 4. Run the test cases. 
 int main(int argc, char* argv[])
 {
-//#define CPPTEST
+#define CPPTEST
 #ifdef CPPTEST
-
 	// Get the top level suite from the registry
 	CppUnit::Test *suite = CppUnit::TestFactoryRegistry::getRegistry().makeTest();
 
@@ -55,13 +62,19 @@ int main(int argc, char* argv[])
 	//getchar();
 
 #endif // CPPTEST
-	Item* item1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{ Buff(BuffType::CONSTITUTION, 2), Buff(BuffType::CONSTITUTION, 2)});
-	Weapon* item2 = new Weapon(ItemType::WEAPON, "Iron Sword", vector<Buff>{ Buff(BuffType::ATTACK_BONUS, 2), Buff(BuffType::DAMAGE_BONUS, 2)}, 1);
-	//cout << item1->serializeItem()<<endl;
-
-	ItemContainer* backpack = new ItemContainer(ContainerType::BACKPACK, vector<Item*> {item1, item2});
-	//cout << backpack->serializeItemContainer() << endl;
-
+	Character* ca = new Character();
+	Item* item1 = new Item(item::itemTypes::BELT, "Leather Belt", vector<Buff>{ Buff(buff::buffTypes::CONSTITUTION, 2)});
+	Weapon* item2 = new Weapon(item::itemTypes::WEAPON, "Iron Sword", vector<Buff>{ Buff(buff::buffTypes::ATTACK_BONUS, 2), Buff(buff::buffTypes::DAMAGE_BONUS, 2)}, 1);
+	//ca->createItem();
+	
+	cout << item1->serializeItem()<<endl;
+	ItemContainer* backpack = new ItemContainer(itemCnt::containerTypes::BACKPACK, vector<Item*> {item1, item2});
+	cout << backpack->serializeItemContainer() << endl;
+	ca->storeItem(item1);
+	ca->storeItem(item2);
+	ca->editItem();
+	delete item2;
+	delete item1;
 	delete backpack;
 	//Driver code
 	MapController* m1 = new MapController();
@@ -86,44 +99,32 @@ int main(int argc, char* argv[])
 			continue;
 		}
 
-
-		if (userOption <= 0)
-		{
+		switch (userOption) {
+		case 0:
 			delete m1;
 			delete c1;
 			return 0;
 			break;
-		}
-		else if(userOption > NBR_OPTIONS){
+		case 1:
+			c1->createCampaign();
+			break;
+		case 2:
+			c1->editCampaign();
+			break;
+		case 3:
+			m1->createMap();
+			break;
+		case 4:
+			m1->editMap(false);
+			break;
+		default:
 			cout << "Enter a valid input." << endl;
-		}
-		else {
-			flushConsole();
-			switch (userOption) {
-			case 1:
-				c1->createCampaign();
-				break;
-			case 2:
-				c1->editCampaign();
-				break;
-			case 3:
-				m1->createMap();
-				break;
-			case 4:
-				m1->editMap(false);
-				break;
-			}
-			flushConsole();
+			break;
 		}
 	}
 	delete m1;
 	delete c1;
+
+
 }
 
-void flushConsole()
-{
-	if (system("CLS"))
-	{
-		system("clear");
-	}
-}

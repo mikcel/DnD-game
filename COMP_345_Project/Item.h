@@ -20,20 +20,20 @@ public:
 	//! Constructor that  takes a weapon item type and name
 	//! @param itemType: enum type of the type of item
 	//! @param itemName: string of the name of the item
-	Item(ItemType itemType,string itemName);
-	
+	Item(item::itemTypes itemType,string itemName);
+	Item(Item *item);
 	//! Constructor that takes a weapon item type, item name, and a vector of buff object
 	//! @param itemType: enum type of the type of item
 	//! @param itemName: string of the name of the item
 	//! @param buffs: a vector of Buff objects that adds modifiers to the item
-	Item(ItemType itemType, string itemName, vector<Buff> buffs);
+	Item(item::itemTypes itemType, string itemName, vector<Buff> buffs);
 	
 	//! Destructor, nothing to specify, no heap memory used in the constructor.
 	~Item();
 
 	//! method that gets the item type
 	//! @return :itemType, a enum type of the type of item
-	ItemType getItemTypes();
+	item::itemTypes getItemTypes();
 
 	//! method that gets of buffs of an item
 	//! @return :buffs, a vector of Buff objects
@@ -45,7 +45,7 @@ public:
 
 	//! method that sets the item type
 	//! @param itemType: enum type of the item type
-	void setItemType(ItemType itemType);
+	void setItemType(item::itemTypes itemType);
 
 	//! method that sets the buffs of an item
 	//! @param buffs: vector of Buff objects
@@ -60,9 +60,10 @@ public:
 	bool validateItem();
 
 	virtual string serializeItem();
+	void saveItem();
 private:
 	//members of the class
-	ItemType itemType;
+	item::itemTypes itemType;
 	vector<Buff> buffs;
 	string itemName;
 
