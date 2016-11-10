@@ -55,14 +55,8 @@
     <ClCompile Include="CampaignController.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Observer.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Chest.cpp">
       <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Subject.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="TestItemClass.cpp">
       <Filter>Drivers</Filter>
@@ -93,6 +87,15 @@
     </ClCompile>
     <ClCompile Include="FolderUtils.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObserver.cpp" />
+    <ClCompile Include="MapTest.cpp" />
+    <ClCompile Include="Observable.cpp" />
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,9 +135,6 @@
     <ClInclude Include="Chest.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Subject.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Item</Filter>
     </ClInclude>
@@ -152,6 +152,16 @@
     </ClInclude>
     <ClInclude Include="FolderUtils.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MapEditorDriver.h" />
+    <ClInclude Include="MapObserver.h" />
+    <ClInclude Include="MapTest.h" />
+    <ClInclude Include="Observable.h" />
+    <ClInclude Include="Enemy.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

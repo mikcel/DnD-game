@@ -42,7 +42,7 @@ Element* Element::clone()
 * Prints a basic representation of an element
 * @return a string of the character '\xFe'
 */
-const string Element::print()
+const string Element::print() const
 {
 	return "\xFE";
 }
