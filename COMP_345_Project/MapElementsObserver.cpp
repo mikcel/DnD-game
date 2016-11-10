@@ -4,7 +4,8 @@
 
 MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap)
 {
-	secondConsole.Create("Elements Information");
+	
+	///secondConsole.CConsoleLoggers Information");
 
 	/*for (Element& )
 	{
@@ -15,4 +16,11 @@ MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap)
 void MapElementsObserver::update()
 {
 	
+}
+
+bool MapElementsObserver::toggle()
+{
+	secondConsole = new CConsoleLogger();
+	secondConsole->Create("Character Elemets");
+	return true;
 }
