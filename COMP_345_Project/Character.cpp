@@ -617,38 +617,28 @@ bool Character::removeItemBack(Item *objItem){
 
 }
 
-bool Character::saveCharacter(){
+void Character::saveCharacter(){
 	
 
-	ofstream outStream("../SaveFiles/Characters/" + name + ".dat", ios::out | ios::binary);
+	ofstream outStream("SaveFiles/Characters/" + name + ".dat", ios::out | ios::binary);
 	
-	outStream << name << "\n" << to_string(level) << "\n" << to_string((int)size) << "\n";
+	outStream << "character\n" << name << "\n" << hitDice << "\n" << to_string(level) << "\n" << to_string((int)size) << "\n0\n";
 
 	for (int i = 0; i < NO_ABILITY; i++){
 		outStream << to_string(abilityScores[i]) << "\n";
 	}
 
-	outStream.close();
-
-	Character chr = Character();
-
-	ifstream inStream("../SaveFiles/Characters/" + name + ".dat", ios::in | ios::binary);
-
-	string strSize = "";
-	inStream >> chr.name >> chr.level >> strSize;
-
-	for (int i = 0; i < NO_ABILITY; i++){
-		inStream >> chr.abilityScores[i];
+	outStream << "backpack\n";
+	for (auto i : backpack->getContents()){
+		outStream << i->getItemName() << "\n";
 	}
 
-	chr.generateAbilityModifiers();
-	chr.size = (CharacterSize)stoi(strSize);
-
-	inStream.close();
-
-	cout << chr;
-
-	return true;
+	outStream << "wornItem\n";
+	for (auto i : currentWornItems->getContents()){
+		outStream << i->getItemName() << "\n";
+	}
+	
+	outStream.close();
 
 }
 

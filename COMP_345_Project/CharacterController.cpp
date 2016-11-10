@@ -51,25 +51,30 @@ void CharacterController::createCharacter(){
 
 	if (choiceLoad == 'Y'){
 
-		/*string fileName;
-		cout << "Please enter the Character Name for the file: ";
-		cin >> fileName;
-
-		ifstream readFile("../SaveFiles/Character/" + fileName + ".txt", ios::binary);
-		if (!readFile)
-		{
-			cerr << "Cannot open file for reading.\n";
-			cout << "Exiting program...\n";
+		vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Characters/");
+		
+		if (chrFiles.size() == 0){
+			cout << "There are no saved files.\n Returning to main menu...\n";
 			system("pause");
-			exit(1);
+			return;
 		}
-
-		chr1 = new Character();
-		readFile.read((char*)chr1, sizeof (Character));
-
-		cout << *chr1;
-		system("pause");
-		exit(1);*/
+		cout << "The saved files available are: \n";
+		for (auto i : chrFiles){
+			cout << i << "\n";
+		}
+		string fileName = "";
+		bool fileNameCorrect = false;
+		cout << "\nPlease enter the name of the Character you want to load: ";
+		while (!fileNameCorrect){
+			cin >> fileName;
+			if (find(chrFiles.begin(), chrFiles.end(), fileName) != chrFiles.end()){
+				readCharacterFile(fileName, "SaveFiles/Character");
+				fileNameCorrect = true;
+			}
+			else{
+				cout << "File name does not exist. Try again: ";
+			}
+		}
 
 	}
 	else{
@@ -235,14 +240,64 @@ void CharacterController::createCharacter(){
 			}
 		}
 
+		bool flagCorrectChoice = false;
+		string itemChoice = "";
+		cout << "Do you want to add items to your backpack? (Y/N) ";
+		while (!flagCorrectChoice){
+			cin >> itemChoice;
+			if (itemChoice == "Y" || itemChoice == "N")
+				flagCorrectChoice = true;
+			else
+			{
+				cout << "Incorrect choice. Please enter Y or N: ";
+			}
+		}
+
+		if (itemChoice == "Y"){
+
+			vector<string> filesInFolder = getFilesInsideFolderNoExtension("SaveFiles/Items");
+			
+			if (filesInFolder.size() != 0){
+				cout << "The items template file available are:\n";
+				for (auto i : filesInFolder){
+					cout << i << "\n";
+				}
+				string itemFileName = "";
+				bool itemFileFound = false;
+				cout << "\nPlease enter the Item file name: ";
+				while (!itemFileFound && itemFileName!="-1"){
+					cin >> itemFileName;
+					if (find(filesInFolder.begin(), filesInFolder.end(), itemFileName) != filesInFolder.end()){
+						/*read item from file*/
+						itemFileFound = true;
+					}
+					else{
+						cout << "File not found. Please try again (-1 to stop): ";
+					}
+				}
+
+			}
+			else{
+				cout << "There are no items files available. Please create items and then edit the character to add the items.\n";
+				cin.ignore();
+				system("pause");
+			}
+		}
+
+
 		if (choice == 1){
 			//! Create Character Object
 			currentCharacter = new Character(name, "1d10", arrAbilityScores, level, (CharacterSize)size);
 			if (!currentCharacter->validateNewCharacter()){ //! Validate
 				//! If invalid character
-				cout << "Incorrect Character. Exiting program...";
+				cout << "Incorrect Character. Character will not be saved";
 				system("pause");
-				exit(1);
+				currentCharacter = NULL;
+			}
+			else{
+				cout << "Character Created!\nThe Stats are:\n" << *currentCharacter;
+				saveCharacter();
+
 			}
 		}
 		else{
@@ -250,28 +305,160 @@ void CharacterController::createCharacter(){
 			currentCharacter = new Fighter(name, arrAbilityScores, (FightStyle)fightStyle, level, (CharacterSize)size);
 			if (!currentCharacter->validateNewCharacter()){ //! Validate{
 				//! If incorrect Fighter end program
-				cout << "Incorrect Fighter. Exiting program...";
+				cout << "Incorrect Fighter.  Character will not be saved"<< *currentCharacter;
 				system("pause");
-				exit(1);
+				currentCharacter = NULL;
+			}
+			else{
+				cout << "Fighter Created!\nThe stats are:\n" << *currentCharacter;
+				saveCharacter();
 			}
 		}
+
+		system("pause");
 	}
+
 
 }
 
 void CharacterController::editCharacter(){
 
+	if (currentCharacter == NULL){
+		cout << "No Character has yet been created.\n";
+		return;
+	}
 
+	cout << "Please choose from the following:\n"
+		<< "1 - Save Character\n"
+		<< "2 - Edit Name\n"
+		<< "3 - Edit Level\n"
+		<< "4 - Edit Size\n"
+		<< "5 - Return\n";
+	cout << "Please choose: ";
+	int menuChoice = 0;
+
+	while (menuChoice<1 || menuChoice>5){
+
+		cin >> menuChoice;
+		switch (menuChoice){
+			case 1:
+				saveCharacter();
+				break;
+			case 2:
+			{
+					  string newName = "";
+					  cout << "Please enter the new Character name: ";
+					  cin >> newName;
+					  currentCharacter->setName(newName);
+					  cout << "Name set.";
+					  break;
+			}
+			case 3:
+			{
+					  int level = 0;
+					  cout << "Please enter the new Character level (>1): ";
+					  while (level < 1){
+						cin >> level;
+						if (level < 1){
+							cout << "Incorrect Level. Try again (-1 to stop): ";
+						}
+						if (level == -1){
+							break;
+						}
+					  }
+					  if (level != -1){
+						currentCharacter->setLevel(level);
+						cout << "Level changed.";
+					  }
+					  else{
+						  cout << "Level not changed.";
+					  }
+					  break;
+			}
+			case 4:{
+					   int size = -1;
+					   cout << "Please enter the new Character Size by selecting from the list below: ";
+					   displayCharacterSize();
+					   while (size < 0 || size>3){
+						   cin >> size;
+						   if (size < 0 || size>3){
+							   cout << "Incorrect Size. Try again (-1 to stop): ";
+						   }
+						   if (size == -1){
+							   break;
+						   }
+					   }
+					   if (size != -1){
+						   currentCharacter->setSize((CharacterSize)size);
+						   cout << "Size changed.";
+					   }
+					   else{
+						   cout << "Size not changed.";
+					   }
+					   break;
+			}
+			case 5:
+				break;
+			default:
+				cout << "Incorrect Menu choice. Try Again: ";
+				break;			
+		}
+
+	}
+	
 }
 
 void CharacterController::saveCharacter(){
 
+	if (currentCharacter == NULL)
+	{
+		cout << "There is no Character to save.\n";
+		return;
+	}
+
 	cout << "Saving the character...\n";
 
-	currentCharacter->saveCharacter();
+	vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Character");
+
+	if (find(chrFiles.begin(), chrFiles.end(), currentCharacter->getName()) != chrFiles.end()){
+		currentCharacter->saveCharacter();
+		cout << "Saved Successfully!\n";
+	}
+	else{
+		cout << "Error Saving Character. A file with the same name already exists. change the character name and save again.\n"''
+	}
 
 }
 
+void CharacterController::readCharacterFile(string charName, string charFileLocation){
+
+	ifstream inStream("SaveFiles/Characters/" + charName + ".dat", ios::in | ios::binary);
+
+	string chrType = "";
+	string strSize = "";
+	string name;
+	string hitDice;
+	int level;
+	int fightStyle;
+
+	inStream >> chrType >> name >> hitDice >> level >> strSize >> fightStyle;
+
+	int abilityScr[Character::NO_ABILITY];
+	for (int i = 0; i < Character::NO_ABILITY; i++){
+		inStream >> abilityScr[i];
+	}
+
+	if (chrType == "character")
+		currentCharacter = new Character(name, hitDice, abilityScr, level, (CharacterSize)stoi(strSize));
+	else
+		currentCharacter = new Fighter(name, abilityScr, (FightStyle)fightStyle, level, (CharacterSize)stoi(strSize));
+
+	inStream.close();
+
+	cout << *currentCharacter;
+
+	system("pause");
+}
 
 void CharacterController::displayCharacterSize(){
 

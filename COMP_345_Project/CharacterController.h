@@ -1,7 +1,10 @@
 #pragma once
 #include "Character.h"
 #include "Fighter.h"
+#include "FolderUtils.h"
 #include <iostream>
+#include <fstream>
+#include <algorithm>
 #include <time.h>
 using namespace std;
 
@@ -24,7 +27,7 @@ public:
 
 	void saveCharacter();
 
-	Character* readCharacterFile(string charName, string charFileLocation);
+	void readCharacterFile(string charName, string charFileLocation);
 
 private:
 

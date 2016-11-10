@@ -87,8 +87,7 @@ public:
 	vector<Item*> getBackpackContents();
 	vector<Item*> getCurrentWornItems();
 
-	bool saveCharacter();
-	static Character loadCharacter();
+	virtual void saveCharacter();
 
 private:
 
