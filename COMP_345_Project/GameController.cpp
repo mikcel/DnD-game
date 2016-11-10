@@ -17,8 +17,10 @@ void GameController::play()
 	//We let the user select his campaign
 	selectCampaign();
 
+	//We are ready to launch the game
+	launchGame();
 
-	//displayMapElementsConsole();
+	displayMapElementsConsole();
 
 	if (map != nullptr) {
 		delete map;
@@ -32,28 +34,28 @@ void GameController::selectCharacter()
 {
 	cout << "===SELECT A CHARACTER===" << endl << endl;
 	//Load all maps names
-	string mapName;
-	ifstream mapFile;
+	string characterName;
+	ifstream characterFile;
 	vector<string> allFiles = getFilesInsideFolderNoExtension("SaveFiles\\Characters");
-	while (map == nullptr) {
+	while (character == nullptr) {
 
-		cout << "Available maps:" << endl;
+		cout << "Available characters:" << endl;
 		for (string& file : allFiles)
 		{
 			cout << file << endl;
 		}
 
-		cout << endl << "Enter the name of the map you want to play: ";
-		cin >> mapName;
-		map = readMapFile("SaveFiles/Maps/" + mapName + ".txt", mapName);
+		cout << endl << "Enter the name of the character you want to play as: ";
+		cin >> characterName;
+		character = readCharacterFile("SaveFiles/Maps/" + characterName + ".txt", characterName);
 
-		if (map == nullptr)
+		if (character == nullptr)
 		{
-			cout << "The map " << mapName << " does not exist. Please enter a valid map name." << endl << endl;
+			cout << "The character " << characterName << " does not exist. Please enter a valid character name." << endl << endl;
 		}
 	}
 
-	cout << "The map " << mapName << " was succefully loaded." << endl << endl;
+	cout << "The character " << characterName << " was succefully loaded." << endl << endl;
 }
 
 void GameController::selectCampaign()
