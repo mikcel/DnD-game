@@ -620,7 +620,7 @@ bool Character::removeItemBack(Item *objItem){
 void Character::saveCharacter(){
 	
 
-	ofstream outStream("SaveFiles/Characters/" + name + ".dat", ios::out | ios::binary);
+	ofstream outStream("SaveFiles/Characters/" + name + ".txt", ios::out | ios::binary);
 	
 	outStream << "character\n" << name << "\n" << hitDice << "\n" << to_string(level) << "\n" << to_string((int)size) << "\n0\n";
 

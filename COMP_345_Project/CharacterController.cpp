@@ -459,7 +459,7 @@ void CharacterController::saveCharacter(){
 
 void CharacterController::readCharacterFile(string charName, string charFileLocation){
 
-	ifstream inStream("SaveFiles/Characters/" + charName + ".dat", ios::in | ios::binary);
+	ifstream inStream("SaveFiles/Characters/" + charName + ".txt", ios::in | ios::binary);
 
 	string chrType = "";
 	string strSize = "";
