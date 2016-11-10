@@ -76,6 +76,13 @@ void CharacterController::createCharacter(){
 			}
 		}
 
+		if (dynamic_cast<Fighter*>(currentCharacter))
+			cout << *(dynamic_cast<Fighter*>(currentCharacter));
+		else
+			cout << *currentCharacter;
+
+		system("pause");
+
 	}
 	else{
 		cout << "\nPlease choose between creating a simple Character(1) or a Fighter(2) \nEnter the respective number: ";
@@ -307,7 +314,7 @@ void CharacterController::editCharacter(){
 
 	int menuChoice = 0;
 
-	while (menuChoice!=9){
+	while (menuChoice!=10){
 
 		cout << "Please choose from the following:\n"
 			<< "1 - Save Character\n"
@@ -318,10 +325,13 @@ void CharacterController::editCharacter(){
 			<< "6 - Remove Item\n"
 			<< "7 - Equip Item\n"
 			<< "8 - Unequip Item\n"
-			<< "9 - Return\n";
+			<< "9 - Edit Fighting Style\n"
+			<< "10 - Return\n";
 		cout << "Please choose: ";
 		cin >> menuChoice;
 		system("cls");
+
+		bool styleChangeCorrect = true;
 		switch (menuChoice){
 			case 1:
 				saveCharacter();
@@ -532,15 +542,45 @@ void CharacterController::editCharacter(){
 
 					   break;
 			}
-			case 9:
+			case 9:{
+					   if (!dynamic_cast<Fighter*>(currentCharacter)){
+						   cout << "Not a fighter. Cannot modify.";
+						   styleChangeCorrect = false;
+						   break;
+					   }
+
+					   int style = -1;
+					   cout << "Please enter the new Fighter style selecting from the list below:\n";
+					   displayFighterStyle();
+					   while (style < 0 || style>3){
+						   cin >> style;
+						   if (style < 0 || style>3){
+							   cout << "Incorrect Style. Try again (-1 to stop): ";
+						   }
+						   if (style == -1){
+							   break;
+						   }
+					   }
+					   if (style != -1){
+
+						   dynamic_cast<Fighter*>(currentCharacter)->setStyle((FightStyle)style);
+						   cout << "Style changed.";
+					   }
+					   else{
+						   cout << "Style not changed.";
+					   }
+
+					   break;
+			}
+			case 10:
 				break;
 			
 			default:
 				cout << "Incorrect Menu choice. Try Again. ";
 				break;			
 		}
-		if (menuChoice != 9){
-			if (menuChoice != 1)
+		if (menuChoice != 10){
+			if (menuChoice != 1 && styleChangeCorrect)
 				saveCharacter();
 			system("pause");
 			system("cls");
@@ -588,7 +628,7 @@ void CharacterController::saveCharacter(){
 
 }
 
-void CharacterController::readCharacterFile(string charName, string charFileLocation){
+Character* CharacterController::readCharacterFile(string charName, string charFileLocation){
 
 	ifstream inStream("SaveFiles/Characters/" + charName + ".txt", ios::in);
 
@@ -639,12 +679,7 @@ void CharacterController::readCharacterFile(string charName, string charFileLoca
 
 	inStream.close();
 
-	if (chrType == "fighter")
-		cout << *(dynamic_cast<Fighter*>(currentCharacter));
-	else
-		cout << *currentCharacter;
-
-	system("pause");
+	return getCurrentCharacter();
 }
 
 void CharacterController::displayCharacterSize(){

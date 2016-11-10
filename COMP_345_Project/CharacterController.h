@@ -28,7 +28,7 @@ public:
 
 	void saveCharacter();
 
-	void readCharacterFile(string charName, string charFileLocation);
+	Character* readCharacterFile(string charName, string charFileLocation);
 
 private:
 
