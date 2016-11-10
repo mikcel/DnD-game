@@ -9,12 +9,11 @@
 class GameController
 {
 public:
-	GameController(); //
 	void play();
 private:
 	void selectCharacter();
 	void selectCampaign();
 	void displayMapElementsConsole();
-	Map * map;
-	Character * character;
+	Map * map = nullptr;
+	Character * character = nullptr;
 };

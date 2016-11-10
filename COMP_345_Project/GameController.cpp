@@ -8,11 +8,6 @@
 
 using namespace std;
 
-GameController::GameController()
-{
-
-}
-
 void GameController::play()
 {
 	cout << "--------GAME INITIALIZATION--------" << endl << endl;
@@ -23,7 +18,7 @@ void GameController::play()
 	selectCampaign();
 
 
-	displayMapElementsConsole();
+	//displayMapElementsConsole();
 
 	if (map != nullptr) {
 		delete map;
