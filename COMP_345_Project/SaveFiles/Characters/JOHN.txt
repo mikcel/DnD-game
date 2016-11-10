@@ -1,16 +1,19 @@
 character
-mik
+JOHN
 1d10
 1
 0
 0
+16
+16
 14
-7
-6
-6
-3
+13
+10
 6
 backpack
+Johny's Wooden Helmet
+Wooden Helmet
+Wooden Helmet
 wornItem
 UNSPECIFIED
 UNSPECIFIED
@@ -18,4 +21,4 @@ UNSPECIFIED
 UNSPECIFIED
 UNSPECIFIED
 UNSPECIFIED
-UNSPECIFIED
+GOLDEN SWORD

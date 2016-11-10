@@ -109,6 +109,9 @@
     <ClCompile Include="ItemUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterController.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
     <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="CharacterElement.cpp">
       <Filter>Character</Filter>
@@ -190,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="CharacterElement.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterController.h">
       <Filter>Character</Filter>
     </ClInclude>
   </ItemGroup>

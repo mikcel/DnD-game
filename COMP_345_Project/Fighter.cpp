@@ -114,7 +114,7 @@ int Fighter::attack(Character &chr, int dmg){
 
 void Fighter::saveCharacter(){
 
-	ofstream outStream("SaveFiles/Characters/" + getName() + ".dat", ios::out | ios::binary);
+	ofstream outStream("SaveFiles/Characters/" + getName() + ".txt", ios::out);
 
 	outStream << "fighter\n" << getName() << "\n" << getHitDice() << "\n"<< to_string(getLevel()) << "\n" << to_string((int)getSize()) << "\n" << (int)style << "\n";
 
@@ -142,5 +142,5 @@ void Fighter::saveCharacter(){
 //! @return reference to passed stream
 ostream& operator<<(ostream& stream, const Fighter& fighter){
 	const Character& chr = fighter; //! Creates a reference of type Character and assignt he fighter's object to it.
-	return stream << chr << "Style: " << fighter.style; //! Output the Character's stats first and then output the fighter's style
+	return stream << chr << "Style: " << fighter.style <<endl; //! Output the Character's stats first and then output the fighter's style
 }

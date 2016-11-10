@@ -46,3 +46,8 @@ const string Element::print() const
 {
 	return "\xFE";
 }
+
+Position Element::getPosition()
+{
+	return position;
+}

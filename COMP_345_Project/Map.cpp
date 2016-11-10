@@ -294,6 +294,16 @@ bool Map::isStartPoint(int x, int y) const
 
 /**
 * Validates if a given position is the end point
+* @param p Position
+* @return true if the position is the one of the end point
+*/
+bool Map::isEndPoint(Position p) const
+{
+	return isEndPoint(p.x, p.y);
+}
+
+/**
+* Validates if a given position is the end point
 * @param x X coordinate
 * @param y Y coordinate
 * @return true if the position is the one of the end point
@@ -430,7 +440,7 @@ bool Map::validationRecursive(int x, int y, bool** explorationArray) const
 * @param newPlayer Reference to the player character
 * @return Pointer to the actual player character. nullptr if the player was not successfully placed
 */
-Element* Map::placePlayer(Player& newPlayer)
+Player* Map::placePlayer(Player& newPlayer)
 {
 	if (isValid())
 	{
@@ -546,6 +556,6 @@ string Map::serializeMapToString()
 }
 
 
-const Player & Map::getPlayer() const {
+Player & Map::getPlayer() const {
 	return *player;
 }

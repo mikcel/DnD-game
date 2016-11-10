@@ -2,6 +2,7 @@
 #include "Character.h"
 #include "Fighter.h"
 #include "FolderUtils.h"
+#include "ItemUtils.h"
 #include <iostream>
 #include <fstream>
 #include <algorithm>
@@ -27,7 +28,7 @@ public:
 
 	void saveCharacter();
 
-	void readCharacterFile(string charName, string charFileLocation);
+	Character* readCharacterFile(string charName, string charFileLocation);
 
 private:
 
@@ -38,5 +39,7 @@ private:
 	void displayFighterStyle();
 
 	bool checkScr(int *arr, int scr);
+
+	void addItem();
 
 };

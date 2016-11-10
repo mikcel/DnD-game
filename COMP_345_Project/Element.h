@@ -16,6 +16,7 @@ public:
 	virtual Element* clone(); //! Element clone function
 	const bool operator ==(const Element &e2); //! Override the == operator for an Element
 	virtual const std::string print() const;
+	Position getPosition();
 protected:
 	Position position; //! Position of the element
 	friend class Map;
