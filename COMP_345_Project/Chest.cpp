@@ -16,3 +16,8 @@ Chest::Chest(vector<Item*> vectorOfItems)
 Chest::~Chest()
 {
 }
+
+Chest* Chest::clone()
+{
+	return new Chest(*this);
+}

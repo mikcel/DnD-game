@@ -10,3 +10,8 @@ Player::Player(Character& newCharacter) : CharacterElement(newCharacter)
 { 
 	
 }
+
+Player* Player::clone()
+{
+	return new Player(*this);
+}

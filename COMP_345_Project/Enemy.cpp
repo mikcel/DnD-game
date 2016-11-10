@@ -10,3 +10,8 @@ Enemy::Enemy(Character& newCharacter) : CharacterElement(newCharacter)
 {
 	
 }
+
+Enemy* Enemy::clone()
+{
+	return new Enemy(*this);
+}

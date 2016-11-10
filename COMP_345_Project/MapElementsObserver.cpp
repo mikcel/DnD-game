@@ -7,10 +7,10 @@ MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap)
 	
 	///secondConsole.CConsoleLoggers Information");
 
-	/*for (Element& )
+	for (Element* element : map.getElements())
 	{
-
-	}*/
+		element->attach(*this);
+	}
 }
 
 void MapElementsObserver::update()
@@ -20,7 +20,13 @@ void MapElementsObserver::update()
 
 bool MapElementsObserver::toggle()
 {
-	secondConsole = new CConsoleLogger();
-	secondConsole->Create("Character Elemets");
-	return true;
+	if (secondConsole == nullptr)
+	{
+		secondConsole = new CConsoleLogger();
+		secondConsole->Create("Character Elemets");
+		return true;
+	}
+
+	delete secondConsole;
+	return false;
 }
