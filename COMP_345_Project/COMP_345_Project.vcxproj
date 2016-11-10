@@ -132,17 +132,21 @@
     <ClCompile Include="CharacterObserver.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="Element.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="Fighter.cpp" />
+    <ClCompile Include="FolderUtils.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemContainer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapController.cpp" />
     <ClCompile Include="MapEditorDriver.cpp" />
-    <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="MapObserver.cpp" />
+    <ClCompile Include="MapTest.cpp" />
+    <ClCompile Include="Observable.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Position.cpp" />
-    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TestControllers.cpp" />
     <ClCompile Include="TestItemClass.cpp" />
     <ClCompile Include="TestItemContainerClass.cpp" />
@@ -158,6 +162,7 @@
     <ClInclude Include="CharacterObserver.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="Element.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Fighter.h" />
     <ClInclude Include="FolderUtils.h" />
@@ -165,9 +170,13 @@
     <ClInclude Include="ItemContainer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapController.h" />
+    <ClInclude Include="MapEditorDriver.h" />
+    <ClInclude Include="MapObserver.h" />
+    <ClInclude Include="MapTest.h" />
+    <ClInclude Include="Observable.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Position.h" />
-    <ClInclude Include="Subject.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

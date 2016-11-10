@@ -63,7 +63,7 @@ void CampaignController::createCampaign(){
 				cout << "Enter the name of the map you would like to add to the campaign." << endl;
 				
 				cout << "Here is a list of all the existing maps:" << endl;
-				vector<string> allFiles = getAllFilesInsideFolder("SaveFiles\\Maps");
+				vector<string> allFiles = getFilesInsideFolderNoExtension("SaveFiles\\Maps");
 				for (string& file : allFiles)
 				{
 					cout << file << endl;

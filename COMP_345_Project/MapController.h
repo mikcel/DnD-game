@@ -33,6 +33,8 @@ public:
 	//! @return: pointer to the newly read map.
 	Map* readMapFile(string mapFileLocation, string mapName);
 
+	void quit();
+
 private:
 	//! method that prompts the user to find the right map that they want to edit and caches it
 	//! @return: boolean if the cahce was successful

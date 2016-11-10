@@ -25,16 +25,9 @@
 #include "Item.h"
 #include "Weapon.h"
 #include "ItemContainer.h"
+#include "MapEditorDriver.h"
+
 using namespace std;
-
-
-
-void editItem() {
-
-}
-
-
-
 
 //! main() function. Entry point of the program
 //! It does the following: 
@@ -94,13 +87,21 @@ int main(int argc, char* argv[])
 			continue;
 		}
 
-		switch (userOption) {
-		case 0:
+
+		if (userOption <= 0)
+		{
 			delete m1;
 			delete c1;
 			delete chr;
 			return 0;
 			break;
+		}
+		else if(userOption > NBR_OPTIONS){
+			cout << "Enter a valid input." << endl;
+		}
+		else {
+			flushConsole();
+			switch (userOption) {
 		case 1:
 			c1->createCampaign();
 			break;
@@ -120,10 +121,17 @@ int main(int argc, char* argv[])
 			cout << "Enter a valid input." << endl;
 			break;
 		}
+			flushConsole();
+		}
 	}
 	delete m1;
 	delete c1;
-
-
 }
 
+void flushConsole()
+{
+	if (system("CLS"))
+	{
+		system("clear");
+	}
+}

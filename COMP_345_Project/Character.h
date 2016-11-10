@@ -23,10 +23,10 @@ using namespace std;
 #include "Enums.h" //! Include header file for the enumerated type
 
 #include "ItemContainer.h" //! Include the itemcontainer class
-#include "Subject.h" //! Include the subject class for the observer pattern
+#include "Observable.h" //! Include the subject class for the observer pattern
 #include "Element.h"
 //! Class that implements the Character
-class Character:public Subject, public Element{
+class Character:public Observable, public Element{
 public:
 	
 	//! Constant for the No. of abilities (scores & modifiers) (mainly use for array size)

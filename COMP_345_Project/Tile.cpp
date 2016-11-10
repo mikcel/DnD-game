@@ -3,19 +3,19 @@
 //!
 
 #include "Tile.h"
-#include <typeinfo>
-#include "Character.h"
-#include "Chest.h"
+
+using namespace std;
+
 /**
 * Initializes a tile of type FLOOR without any element
 */
-Tile::Tile() : Tile(Type::FLOOR){};
+Tile::Tile() : Tile(TileType::FLOOR) {};
 
 /**
 * Initializes a tile of a given type without any element
 * @param newType Type of the tile
 */
-Tile::Tile(Type newType)
+Tile::Tile(TileType newType)
 {
 	type = newType;
 	element = nullptr;
@@ -25,16 +25,16 @@ Tile::Tile(Type newType)
 * Validates if a tile can be traversed (if it is of type FLOOR)
 * @return true if the tile is of type FLOOR
 */
-bool Tile::isTraversible()
+bool Tile::isTraversible() const
 {
-	return type == Type::FLOOR;
+	return type == TileType::FLOOR;
 }
 
 /**
 * Validates if a tile is free (does not contain any element)
 * @return true if the tile does not contain any element
 */
-bool Tile::isFree()
+bool Tile::isFree() const
 {
 	return this->element == nullptr;
 }
@@ -43,7 +43,7 @@ bool Tile::isFree()
 * Get the tile type
 * @return Tile's type
 */
-Type Tile::getType()
+TileType Tile::getType() const
 {
 	return type;
 }
@@ -52,7 +52,7 @@ Type Tile::getType()
 * Set the tile type
 * @param newType New tile type
 */
-void Tile::setType(Type newType)
+void Tile::setType(TileType newType)
 {
 	type = newType;
 }
@@ -61,7 +61,7 @@ void Tile::setType(Type newType)
 * Get the tile's element pointer
 * @return Tile element pointer
 */
-Element * Tile::getElement() 
+Element * Tile::getElement() const
 {
 	return element;
 }
@@ -88,18 +88,14 @@ Element * Tile::removeElement()
 
 /**
 * Prints a basic representation of a tile
-* @return 'W' if the tile is a wall, 'E' if the tile holds an element, 'F' otherwise
+* @return 'W' if the tile is a wall, the print of its element if the tile holds one, 'F' otherwise
+* @note Later on, the elements will have actual classes, with element being their virtual parent class.
+*		At that point, the main character and all the other types of elements will be displayed differently.
 */
-string Tile::print()
+string Tile::print() const
 {
+	//TODO: Implement each types of elements
 	if (!isTraversible()) return "W";
-	else if (!isFree()) {
-		if (dynamic_cast<Character*>(element)) {
-			return "X";
-		}
-		else if (dynamic_cast<Chest*>(element)) {
-			return "C";
-		}
-	}
+	else if (!isFree()) return element->print();
 	else return "F";
 }

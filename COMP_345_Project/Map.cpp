@@ -6,13 +6,17 @@
 #include <typeinfo>
 #include "Chest.h"
 #include "Character.h"
+#include  "Map.h"
+
+using namespace std;
 /**
-* Initializes a map with a given width and height
+* Initializes a map with a given width, height and name
 * @throw invalid_argument if the width is smaller than 1
 * @throw invalid_argument if the height is smaller than 1
 * @throw invalid_argument if the size of the map is less than 2 tiles
 * @param newWidth Map width
 * @param newHeight Map height
+* @param newName Map name
 */
 Map::Map(int newWidth, int newHeight, string newName) : name(newName), width(newWidth), height(newHeight), isStartSet(false), isEndSet(false)
 {
@@ -38,9 +42,8 @@ Map::Map(int newWidth, int newHeight, string newName) : name(newName), width(new
 	player = nullptr;
 }
 
-Map::Map(Map *map):Map(width = map->width, height = map->height,name = map->getName())
+Map::Map(Map *map) :Map(width = map->width, height = map->height, name = map->getName())
 {
-
 	if (map->isStartSet) {
 		startPoint = map->startPoint;
 		isStartSet = true;
@@ -61,8 +64,6 @@ Map::Map(Map *map):Map(width = map->width, height = map->height,name = map->getN
 			mapArr[i][j].setElement(map->mapArr[i][j].getElement());
 		}
 	}
-	
-
 }
 
 /**
@@ -72,10 +73,8 @@ Map::~Map()
 {
 	while (!elements.empty()) delete elements.front(), elements.pop_front();
 
-
 	for (int i = 0; i < width; ++i)
 	{
-		
 		delete[] mapArr[i];
 	}
 	delete[] mapArr;
@@ -90,7 +89,7 @@ Map::~Map()
 * @param y Y coordinate
 * @return true if the start point was succesfully set
 */
-bool Map::setStartPoint(int x, int y) 
+bool Map::setStartPoint(int x, int y)
 {
 	if (!isFree(x, y) || !isTraversible(x, y) || isEndPoint(x, y)) return false;
 
@@ -99,6 +98,8 @@ bool Map::setStartPoint(int x, int y)
 
 	startPoint.x = x;
 	startPoint.y = y;
+
+	notify();
 	return true;
 }
 
@@ -121,6 +122,8 @@ bool Map::setEndPoint(int x, int y)
 
 	endPoint.x = x;
 	endPoint.y = y;
+
+	notify();
 	return true;
 }
 
@@ -130,6 +133,7 @@ bool Map::setEndPoint(int x, int y)
 void Map::unsetStartPoint()
 {
 	isStartSet = false;
+	notify();
 }
 
 /**
@@ -138,6 +142,7 @@ void Map::unsetStartPoint()
 void Map::unsetEndPoint()
 {
 	isEndSet = false;
+	notify();
 }
 
 /**
@@ -146,7 +151,7 @@ void Map::unsetEndPoint()
 * @param y Y coordinate
 * @return Tile at the given position
 */
-Tile Map::getTileAt(int x, int y)
+const Tile& Map::getTileAt(int x, int y) const
 {
 	return mapArr[x][y];
 }
@@ -155,9 +160,12 @@ Tile Map::getTileAt(int x, int y)
 * Set the tile type at the given position
 * If an element is already occupying this tile, the element is destroyed
 * If the new type is not traversible and this tile was the start or the end point, the point is removed.
+* @param x X coordinate
+* @param y Y coordinate
+* @param type Tile type
 * @return true is the tile was correctly set
 */
-bool Map::setTileType(int x, int y, Type type)
+bool Map::setTileType(int x, int y, TileType type)
 {
 	if (isOob(x, y)) return false;
 
@@ -173,9 +181,10 @@ bool Map::setTileType(int x, int y, Type type)
 
 	t->setType(type);
 
-	if (!isTraversible(x, y) && isStartPoint(x, y)) unsetStartPoint();
-	if (!isTraversible(x, y) && isEndPoint(x, y)) unsetEndPoint();
+	if (isStartPoint(x, y) && !isTraversible(x, y)) unsetStartPoint();
+	if (isEndPoint(x, y) && !isTraversible(x, y)) unsetEndPoint();
 
+	notify();
 	return true;
 }
 
@@ -183,9 +192,9 @@ bool Map::setTileType(int x, int y, Type type)
 * Get a pointer to the element contained by the tile at a given position
 * @param x X coordinate
 * @param y Y coordinate
-* @return Pointer to the element at the given position
+* @return Pointer to the element at the given position. nullptr if there is no element.
 */
-Element * Map::getElementAt(int x, int y)
+Element * Map::getElementAt(int x, int y) const
 {
 	if (isOob(x, y)) return nullptr; //TODO: Throw exception
 
@@ -194,23 +203,24 @@ Element * Map::getElementAt(int x, int y)
 
 /**
 * Set the element of the tile at a given position.
-* To make sure that the element position matches the x and y parameters, we manually set it.
+* The element is cloned and assigned its position based on the coordinates parameters.
+* It is then added to the list of elements and placed at the right tile.
 * @param x X coordinate
 * @param y Y coordinate
 * @param element Element to place at the given tile
-* @return true if the element was correctly set.
-*		  The element will be put only if the tile is free, traversible and not the start point.
+* @return Pointer to the added element. nullptr if the element was not added succesfully.
 */
 Element* Map::setElementAt(int x, int y, Element& element)
 {
-	//if (isFree(x, y) && isTraversible(x, y) && !isStartPoint(x, y))
-	if (isTraversible(x, y) && !isStartPoint(x, y))
+	if (isFree(x, y) && isTraversible(x, y) && !isStartPoint(x, y))
 	{
 		Element& copy = *element.clone();
 		copy.position.x = x;
 		copy.position.y = y;
 		elements.push_back(&copy);
 		mapArr[x][y].setElement(&copy);
+
+		notify();
 		return &copy;
 	}
 	return nullptr;
@@ -222,7 +232,7 @@ Element* Map::setElementAt(int x, int y, Element& element)
 * @param y Y offset
 * @param element Element to move
 * @return true if the element was succesfully moved.
-*		  If the tile where the element was supposed to move is not free or traversible, the element is not moved.
+*		  If the tile where the element was supposed to move is not free or not traversible, the element is not moved.
 */
 bool Map::moveElement(int xOffset, int yOffset, Element & element)
 {
@@ -246,6 +256,7 @@ bool Map::moveElement(int xOffset, int yOffset, Element & element)
 	element.position.x = endX;
 	element.position.y = endY;
 
+	notify();
 	return true;
 }
 
@@ -262,6 +273,8 @@ bool Map::removeElementAt(int x, int y)
 		Element * element = mapArr[x][y].removeElement();
 		elements.remove(element);
 		delete element;
+
+		notify();
 		return true;
 	}
 	return false;
@@ -273,7 +286,7 @@ bool Map::removeElementAt(int x, int y)
 * @param y Y coordinate
 * @return true if the position is the one of the start point
 */
-bool Map::isStartPoint(int x, int y)
+bool Map::isStartPoint(int x, int y) const
 {
 	return isStartSet && x == startPoint.x && y == startPoint.y;
 }
@@ -284,18 +297,18 @@ bool Map::isStartPoint(int x, int y)
 * @param y Y coordinate
 * @return true if the position is the one of the end point
 */
-bool Map::isEndPoint(int x, int y)
+bool Map::isEndPoint(int x, int y) const
 {
 	return isEndSet && x == endPoint.x && y == endPoint.y;
 }
 
 /**
-* Validates if a given tile is traversible (the tile type is FLOOR)
+* Validates if the tile at given coordinates is traversible (the tile type is FLOOR)
 * @param x X coordinate
 * @param y Y coordinate
 * @return true if the tile is traversible
 */
-bool Map::isTraversible(int x, int y)
+bool Map::isTraversible(int x, int y) const
 {
 	if (isOob(x, y)) return false; //TODO: Throw exception
 
@@ -303,9 +316,9 @@ bool Map::isTraversible(int x, int y)
 }
 
 /**
-* Returns the list of all the characters on the map
+* Returns a reference to the list of all the characters on the map
 */
-list<Element*>& Map::getCharacters()
+const list<Element*>& Map::getCharacters() const
 {
 	return elements;
 }
@@ -316,7 +329,7 @@ list<Element*>& Map::getCharacters()
 * @param y Y coordinate
 * @return true if the tile is free
 */
-bool Map::isFree(int x, int y)
+bool Map::isFree(int x, int y) const
 {
 	if (isOob(x, y)) return true; //TODO: Throw exception
 
@@ -329,7 +342,7 @@ bool Map::isFree(int x, int y)
 * @param y Y coordinate
 * @return true if the position is out of bounds
 */
-bool Map::isOob(int x, int y)
+bool Map::isOob(int x, int y) const
 {
 	return (x < 0 || x >= width
 		|| y < 0 || y >= height);
@@ -347,7 +360,7 @@ bool Map::isOob(int x, int y)
 * the creator would have to playtest it. This would also validate a situation where there are simply too many enemies for the character to be
 * capable to reach the end of the level without dying.
 */
-bool Map::isValid()
+bool Map::isValid() const
 {
 	if (!isStartSet || !isEndSet) return false;
 
@@ -381,7 +394,7 @@ bool Map::isValid()
 * @param explorationArray 2D array of booleans. A true bool means that the position has already been explored.
 * @return true if the end tile was found
 */
-bool Map::validationRecursive(int x, int y, bool** explorationArray)
+bool Map::validationRecursive(int x, int y, bool** explorationArray) const
 {
 	if (isOob(x, y))
 	{
@@ -412,9 +425,30 @@ bool Map::validationRecursive(int x, int y, bool** explorationArray)
 }
 
 /**
+* Copies the given character and places it at the start point position
+* @param newPlayer Reference to the player character
+* @return Pointer to the actual player character. nullptr if the player was not successfully placed
+*/
+Element* Map::placePlayer(Element& newPlayer)
+{
+	if (isValid())
+	{
+		Element& copy = *newPlayer.clone();
+		copy.position.x = startPoint.x;
+		copy.position.y = startPoint.y;
+		player = &copy;
+		mapArr[startPoint.x][startPoint.y].setElement(&copy);
+
+		notify();
+		return &copy;
+	}
+	return nullptr;
+}
+
+/**
 * Prints out a basic version of the map based on each of its tiles. The start point is surounded with () and the end point with [];
 */
-string Map::print() {
+string Map::print() const {
 	string mapOutput;
 	for (int y = 0; y < height; ++y)
 	{
@@ -425,9 +459,12 @@ string Map::print() {
 			{
 				tile = "(" + tile + ")";
 			}
-			if (isEndPoint(x, y))
+			else if (isEndPoint(x, y))
 			{
 				tile = "[" + tile + "]";
+			}
+			else {
+				tile = " " + tile + " ";
 			}
 			mapOutput.append(tile + " ");
 		}
@@ -435,12 +472,23 @@ string Map::print() {
 	}
 	return mapOutput;
 }
-string Map::getName()
+
+/**
+* Get the map name
+* @return Map name
+*/
+string Map::getName() const
 {
 	return name;
 }
+
+/**
+* Sets the map name
+* @param mapName Map name
+*/
 void Map::setName(string newName)
 {
+	notify();
 	name = newName;
 }
 
@@ -472,7 +520,7 @@ string Map::serializeMapToString()
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			somethingToWrite = false;
-			if (mapArr[i][j].getType() == WALL) {
+			if (mapArr[i][j].getType() == TileType::WALL) {
 				serialMap += "wall\n";
 				somethingToWrite = true;
 			}

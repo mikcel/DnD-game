@@ -8,6 +8,7 @@
 #include "Position.h"
 #include <list>
 #include <string>
+#include "Observable.h"
 
 using namespace std;
 
@@ -16,11 +17,10 @@ using namespace std;
 //! The actions performed on the tiles are all administered by the map.
 //! The map must also contain a start and an end positions which represent where the player will appear when the map loads and where he must go.
 //! The coordinate (0,0) is located at the top left corner of the map and the Y increase when going down the map (so bottom right corner is at coordinate (width -1, height -1).
-class Map
+class Map : public Observable
 {
 public:
-	Map(int newWidth, int newHeight, string mapName); //! Constructor setting height and width of the map
-	//Map(int newWidth, int newHeight, string mapName, Position startPoint, Position endPoint,)
+	Map(int newWidth, int newHeight, std::string mapName); //! Constructor setting height and width of the map
 	Map(Map *map);
 	~Map(); //! Destructor
 
@@ -28,31 +28,32 @@ public:
 	bool setEndPoint(int x, int y); //! Sets the map ending address
 	void unsetStartPoint(); //! Unset the map starting address
 	void unsetEndPoint(); //! Unset the map ending address
-	bool isStartPoint(int x, int y); //! Returns true if the provided address is the one of the start point
-	bool isEndPoint(int x, int y); //! Returns true if the provided address is the one of the end point
+	bool isStartPoint(int x, int y) const; //! Returns true if the provided address is the one of the start point
+	bool isEndPoint(int x, int y) const; //! Returns true if the provided address is the one of the end point
 
-	Tile getTileAt(int x, int y); //! Gets the tile at the given address
-	bool setTileType(int x, int y, Type type); //! Changes the type of the tile at the given address
+	const Tile& getTileAt(int x, int y) const; //! Gets the tile at the given address
+	bool setTileType(int x, int y, TileType type); //! Changes the type of the tile at the given address
 
-	Element* getElementAt(int x, int y); //! Gets a pointer to the element held by a tile
+	Element* getElementAt(int x, int y) const; //! Gets a pointer to the element held by a tile
 	Element* setElementAt(int x, int y, Element& element); //! Set the element of the tile at the given address
 	bool moveElement(int xOffset, int yOffset, Element & element); //! Move the element from its current tile to another one based on the offset
 	bool removeElementAt(int x, int y); //! Remove the element from the tile at the given address
 
-	bool isFree(int x, int y); //! Returns true is the tile at the given address contains an element
-	bool isTraversible(int x, int y); //! Returns true is the tile type allows a character to cross it
+	bool isFree(int x, int y) const; //! Returns true is the tile at the given address contains an element
+	bool isTraversible(int x, int y) const; //! Returns true is the tile type allows a character to cross it
 
-	list<Element*> & getCharacters(); //! Returns a the reference of the characters list
+	const std::list<Element*> & getCharacters() const; //! Returns a the reference of the characters list
 
-	bool isValid(); //! Returns true if there exist a valid path between a start address and an ending address of the map
-	//! This function validates that there are a starting and ending point, that they are placed on a traversible
-	//! address and that there is a path made of traversible tiles from the starting point to the ending point
+	Element* placePlayer(Element& newPlayer); //! Places the player at the start point
 
-	string print(); //! Prints a basic outline of the map
+	bool isValid() const; //! Returns true if there exist a valid path between a start address and an ending address of the map
+						  //! This function validates that there are a starting and ending point, that they are placed on a traversible
+						  //! address and that there is a path made of traversible tiles from the starting point to the ending point
 
-	string getName();
-	void setName(string name);
+	std::string print() const; //! Prints a basic outline of the map
 
+	std::string getName() const; //! Gets the name of the map
+	void setName(std::string name); //! Sets the name of the map
 
 	string serializeMapToString();
 private:
@@ -69,9 +70,6 @@ private:
 	Element * player; //! Pointer to the player
 	list<Element*> elements; //! List of all the characters in the map
 
-	bool isOob(int x, int y); //! Returns true if the provided address is out of bounds
-	bool validationRecursive(int x, int y, bool** explorationArray); //! Returns true if the address validated is the end point (used by the isValid function)
+	bool isOob(int x, int y) const; //! Returns true if the provided address is out of bounds
+	bool validationRecursive(int x, int y, bool** explorationArray) const; //! Returns true if the address validated is the end point (used by the isValid function)
 };
-
-
-

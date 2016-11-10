@@ -1,10 +1,14 @@
 #include "MapController.h"
 #include "Character.h"
 #include "Chest.h"
-//#include "FolderUtils.h"
+#include "FolderUtils.h"
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <conio.h>
+#include <stdio.h>
+
+using namespace std;
 
 MapController::MapController()
 {
@@ -70,6 +74,7 @@ void MapController::createMap() {
 	currentMap = m;
 	editMap(true);
 }
+
 void MapController::editMap(bool creatingNewMap) {
 	if (!creatingNewMap) {
 		if (!cacheMap()) {
@@ -79,7 +84,7 @@ void MapController::editMap(bool creatingNewMap) {
 	Map* m = currentMap;
 	bool isInvalid = false;
 	cout << "LEGEND: F Floor, W Wall, X Enemy, C Chest, () Start point, [] End point" << endl;
-	cout << "Enter Q at any time to quit the application" << "\n" << endl;
+	cout << "Enter Q at any time to save and quit the map " << (creatingNewMap ? "creation" : "edition") << ".\n" << endl;
 
 	string xS, yS, eS;
 	int x, y;
@@ -103,13 +108,7 @@ void MapController::editMap(bool creatingNewMap) {
 			cin >> eS;
 			if (eS == "Q")
 			{ 
-				if (m->isValid()) {
-					saveMap();
-				}
-				else {
-					cout << "\nMap is not valid. All changes are discarded." << endl;
-				}
-				delete m;
+				quit();
 				return;
 			}
 
@@ -128,13 +127,7 @@ void MapController::editMap(bool creatingNewMap) {
 
 			if (xS == "Q")
 			{
-				if (m->isValid()) {
-					saveMap();
-				}
-				else {
-					cout << "\nMap is not valid. All changes are discarded." << endl;
-				}
-				delete m;
+				quit();
 				return;
 			}
 			stringstream(xS) >> x;
@@ -154,13 +147,7 @@ void MapController::editMap(bool creatingNewMap) {
 
 			if (yS == "Q")
 			{
-				if (m->isValid()) {
-					saveMap();
-				}
-				else {
-					cout << "\nMap is not valid. All changes are discarded." << endl;
-				}
-				delete m;
+				quit();
 				return;
 			}
 			stringstream(yS) >> y;
@@ -181,11 +168,11 @@ void MapController::editMap(bool creatingNewMap) {
 		}
 		else if (eS == "F") //Floor
 		{
-			success = m->setTileType(x, y, Type::FLOOR);
+			success = m->setTileType(x, y, TileType::FLOOR);
 		}
 		else if (eS == "W") //Wall
 		{
-			success = m->setTileType(x, y, Type::WALL);
+			success = m->setTileType(x, y, TileType::WALL);
 		}
 		else if (eS == "X") //Enemy
 		{
@@ -237,11 +224,11 @@ bool MapController::cacheMap() {
 		cout << "Enter the name of the map you would like to edit." << endl;
 
 		cout << "Here is a list of all the existing maps:" << endl;
-		//vector<string> allFiles = getAllFilesInsideFolder("SaveFiles\\Maps");
-		//for (string& file : allFiles)
-		//{
-			//cout << file << endl;
-		//}
+		vector<string> allFiles = getFilesInsideFolderNoExtension("SaveFiles\\Maps");
+		for (string& file : allFiles)
+		{
+			cout << file << endl;
+		}
 
 		cin >> mapEditName;
 		cout << mapEditName << endl;
@@ -311,7 +298,7 @@ Map* MapController::readMapFile(string mapFileLocation, string mapName) {
 			tmpX = stoi(fileLine);
 			getline(mapFile, fileLine);
 			tmpY = stoi(fileLine);
-			tmpMap->setTileType(tmpX, tmpY, WALL);
+			tmpMap->setTileType(tmpX, tmpY,TileType::WALL);
 		}
 
 		else if (fileLine == "enemy") {
@@ -338,4 +325,16 @@ Map* MapController::readMapFile(string mapFileLocation, string mapName) {
 	mapFile.close();
 	cout<< tmpMap->print()<<endl;
 	return tmpMap;
+}
+
+void MapController::quit()
+{
+	if (currentMap->isValid()) {
+		saveMap();
+	}
+	else {
+		cout << "\nMap is not valid. All changes are discarded." << endl;
+	}
+	delete currentMap;
+	system("pause");
 }

@@ -4,28 +4,29 @@
 
 #include "Position.h"
 
-Position::Position(Position& position) : x(position.x), y(position.y)
+/**
+* Position copy constructor
+*/
+Position::Position(const Position& position) : x(position.x), y(position.y)
 {
-	
 }
 
 /**
-* Initializes an unset position at (0,0)
+* Initializes a position at (0,0)
 */
-Position::Position() : Position(0,0){}
+Position::Position() : Position(0, 0) {}
 
 /**
-* Initializes a position at a given posiyion with a given isSet state
+* Initializes a position at given coordinates
 * @param newX X coordinate
 * @param newY Y coordinate
-* @param newIsSet true if the position is set
 */
 Position::Position(int newX, int newY) : x(newX), y(newY)
 {
 }
 
 /**
-* Override of the == operation. Validates that both positions have the same X and Y coordinate and the same isSet state.
+* Override of the == operation. Validates that both positions have the same X and Y coordinates.
 * @param p2 Position to compare
 */
 const bool Position::operator==(const Position & p2)
