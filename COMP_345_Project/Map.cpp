@@ -444,7 +444,7 @@ Player* Map::placePlayer(Player& newPlayer)
 {
 	if (isValid())
 	{
-		Player & copy = *newPlayer.clone();
+		Player& copy = *newPlayer.clone();
 		copy.position.x = startPoint.x;
 		copy.position.y = startPoint.y;
 		player = &copy;
