@@ -6,4 +6,5 @@ class Enemy : public CharacterElement
 	virtual const std::string print() const;
 public:
 	Enemy::Enemy(Character& newCharacter);
+	virtual Enemy* Enemy::clone();
 };

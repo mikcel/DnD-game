@@ -329,7 +329,7 @@ bool Map::isTraversible(int x, int y) const
 /**
 * Returns a reference to the list of all the characters on the map
 */
-const list<Element*>& Map::getCharacters() const
+const list<Element*>& Map::getElements() const
 {
 	return elements;
 }
@@ -444,7 +444,7 @@ Player* Map::placePlayer(Player& newPlayer)
 {
 	if (isValid())
 	{
-		Player copy(newPlayer);
+		Player copy = *newPlayer.clone();
 		copy.position.x = startPoint.x;
 		copy.position.y = startPoint.y;
 		player = &copy;

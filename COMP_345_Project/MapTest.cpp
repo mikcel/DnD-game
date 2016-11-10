@@ -168,13 +168,13 @@ void MapTest::testSetRemoveGetElement()
 	map->setElementAt(0,0, e);
 
 	CPPUNIT_ASSERT(e == *(map->getElementAt(0, 0)));
-	CPPUNIT_ASSERT((map->getCharacters()).back() == map->getElementAt(0, 0)); //! Validates that the characters list is where the Elements are trully held.
-	CPPUNIT_ASSERT((map->getCharacters()).size() == 1);
+	CPPUNIT_ASSERT((map->getElements()).back() == map->getElementAt(0, 0)); //! Validates that the characters list is where the Elements are trully held.
+	CPPUNIT_ASSERT((map->getElements()).size() == 1);
 	CPPUNIT_ASSERT(&e != map->getElementAt(0,0));
 	
 	map->removeElementAt(0, 0);
 	CPPUNIT_ASSERT(map->getElementAt(0, 0) == nullptr);	
-	CPPUNIT_ASSERT((map->getCharacters()).size() == 0);
+	CPPUNIT_ASSERT((map->getElements()).size() == 0);
 }
 
 //! test method to test the moveElement()
@@ -187,15 +187,15 @@ void MapTest::testMoveElement()
 	Element e;
 	map->setElementAt(4, 4, e);
 
-	CPPUNIT_ASSERT((map->getCharacters()).back() == map->getElementAt(4, 4));
-	CPPUNIT_ASSERT((map->getCharacters()).size() == 1);
-	CPPUNIT_ASSERT(map->getElementAt(4, 4) == (map->getCharacters()).back());
+	CPPUNIT_ASSERT((map->getElements()).back() == map->getElementAt(4, 4));
+	CPPUNIT_ASSERT((map->getElements()).size() == 1);
+	CPPUNIT_ASSERT(map->getElementAt(4, 4) == (map->getElements()).back());
 	CPPUNIT_ASSERT(map->getElementAt(3, 4) == nullptr);
 
-	CPPUNIT_ASSERT(map->moveElement(-1,0,*(map->getCharacters()).back()));
-	CPPUNIT_ASSERT((map->getCharacters()).size() == 1);
+	CPPUNIT_ASSERT(map->moveElement(-1,0,*(map->getElements()).back()));
+	CPPUNIT_ASSERT((map->getElements()).size() == 1);
 	CPPUNIT_ASSERT(map->getElementAt(4, 4) == nullptr);
-	CPPUNIT_ASSERT(map->getElementAt(3, 4) == (map->getCharacters()).back());
+	CPPUNIT_ASSERT(map->getElementAt(3, 4) == (map->getElements()).back());
 }
 
 //! test method to test the moveElement()
@@ -207,12 +207,12 @@ void MapTest::testMoveElementOob()
 	Element e;
 	map->setElementAt(0, 0, e);
 
-	CPPUNIT_ASSERT((map->getCharacters()).back() == map->getElementAt(0, 0));
-	CPPUNIT_ASSERT((map->getCharacters()).size() == 1);
+	CPPUNIT_ASSERT((map->getElements()).back() == map->getElementAt(0, 0));
+	CPPUNIT_ASSERT((map->getElements()).size() == 1);
 
-	CPPUNIT_ASSERT(!map->moveElement(-1, 0, *(map->getCharacters()).back()));
-	CPPUNIT_ASSERT((map->getCharacters()).size() == 1);
-	CPPUNIT_ASSERT(map->getElementAt(0, 0) == (map->getCharacters()).back());
+	CPPUNIT_ASSERT(!map->moveElement(-1, 0, *(map->getElements()).back()));
+	CPPUNIT_ASSERT((map->getElements()).size() == 1);
+	CPPUNIT_ASSERT(map->getElementAt(0, 0) == (map->getElements()).back());
 }
 
 //! test method to test the setTileType()
@@ -226,13 +226,13 @@ void MapTest::testSetTileDestroysElement()
 
 	map->setElementAt(0, 0, e);
 	CPPUNIT_ASSERT(map->getTileAt(0, 0).getType() == TileType::FLOOR);
-	CPPUNIT_ASSERT((map->getCharacters()).back() == map->getElementAt(0, 0));
-	CPPUNIT_ASSERT((map->getCharacters()).size() == 1);
+	CPPUNIT_ASSERT((map->getElements()).back() == map->getElementAt(0, 0));
+	CPPUNIT_ASSERT((map->getElements()).size() == 1);
 
 	map->setTileType(0, 0, TileType::WALL);
 	CPPUNIT_ASSERT(map->getTileAt(0, 0).getType() == TileType::WALL);
 	CPPUNIT_ASSERT(map->getElementAt(0, 0) == nullptr);
-	CPPUNIT_ASSERT((map->getCharacters()).size() == 0);
+	CPPUNIT_ASSERT((map->getElements()).size() == 0);
 }
 
 //! test method to test the Map constructor
@@ -368,7 +368,7 @@ void MapTest::testObserverReadNoCallUpdate()
 	map->isTraversible(4, 0);
 	CPPUNIT_ASSERT(!mot.wasInvoked);
 	
-	map->getCharacters();
+	map->getElements();
 	CPPUNIT_ASSERT(!mot.wasInvoked);
 
 	map->isValid();

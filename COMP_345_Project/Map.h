@@ -45,7 +45,7 @@ public:
 	bool isTraversible(int x, int y) const; //! Returns true is the tile type allows a character to cross it
 
 	Player & getPlayer() const;
-	const std::list<Element*> & getCharacters() const; //! Returns a the reference of the characters list
+	const std::list<Element*> & getElements() const; //! Returns a the reference of the characters list
 
 	Player* placePlayer(Player& newPlayer); //! Places the player at the start point
 

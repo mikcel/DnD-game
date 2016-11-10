@@ -18,5 +18,7 @@ public:
 	Chest(vector<Item*> vectorOfItems);
 	//! Destructor
 	~Chest();
+
+	virtual Chest* Chest::clone();
 };
 
