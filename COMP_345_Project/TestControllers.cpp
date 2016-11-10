@@ -58,7 +58,7 @@ void TestControllers::testMapSavingLoading(void)
 	Character e;
 	CharacterElement characterElement(e);
 	map1->setElementAt(4, 2, characterElement);
-	mapController->setCurrentMap(map1);
+	mapController->setCurrentMap(*map1);
 	mapController->saveMap();
 	Map* mapReadFormFile = readMapFile("SaveFiles/Maps/TestMap.txt", "TestMap");
 	CPPUNIT_ASSERT(mapReadFormFile->getName() == map1->getName());//saving and loading was successfull

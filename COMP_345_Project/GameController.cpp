@@ -50,7 +50,7 @@ void GameController::selectCharacter()
 
 		cout << endl << "Enter the name of the character you want to play as: ";
 		cin >> characterName;
-		//character = readCharacterFile("SaveFiles/Maps/" + characterName + ".txt", characterName);
+		character = readCharacterFile("SaveFiles/Maps/", characterName);
 
 		if (character == nullptr)
 		{
@@ -93,5 +93,4 @@ void GameController::launchGame()
 {
 	Game g = Game(map);
 	g.play(character);
-
 }

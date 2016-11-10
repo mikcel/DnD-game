@@ -43,17 +43,17 @@ Map::Map(int newWidth, int newHeight, string newName) : name(newName), width(new
 	player = nullptr;
 }
 
-Map::Map(Map *map) :Map(width = map->width, height = map->height, name = map->getName())
+Map::Map(const Map& map) :Map(width = map.width, height = map.height, name = map.getName())
 {
-	if (map->isStartSet) {
-		startPoint = map->startPoint;
+	if (map.isStartSet) {
+		startPoint = map.startPoint;
 		isStartSet = true;
 	}
 	else {
 		isStartSet = false;
 	}
-	if (map->isEndSet) {
-		endPoint = map->endPoint;
+	if (map.isEndSet) {
+		endPoint = map.endPoint;
 		isEndSet = true;
 	}
 	else {
@@ -61,8 +61,8 @@ Map::Map(Map *map) :Map(width = map->width, height = map->height, name = map->ge
 	}
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
-			mapArr[i][j].setType(map->mapArr[i][j].getType());
-			mapArr[i][j].setElement(map->mapArr[i][j].getElement());
+			mapArr[i][j].setType(map.mapArr[i][j].getType());
+			mapArr[i][j].setElement(map.mapArr[i][j].getElement());
 		}
 	}
 }

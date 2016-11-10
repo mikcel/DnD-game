@@ -22,7 +22,7 @@ class Map : public Observable
 {
 public:
 	Map(int newWidth, int newHeight, std::string mapName); //! Constructor setting height and width of the map
-	Map(Map *map);
+	Map(const Map& map);
 	~Map(); //! Destructor
 
 	bool setStartPoint(int x, int y); //! Sets the map starting address

@@ -19,7 +19,7 @@ public:
 	Map* getCurrentMap();
 	//! method that sets a copy of the passing map object to current map
 	//! @param newMap:pointer to a map object
-	void setCurrentMap(Map* newMap);
+	void setCurrentMap(Map& newMap);
 	//! method that prompt the user for parameters to create a map.
 	void createMap();
 	//! method prompts the user for parameters to edit a map

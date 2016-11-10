@@ -68,7 +68,7 @@ void CharacterController::createCharacter(){
 		while (!fileNameCorrect){
 			cin >> fileName;
 			if (find(chrFiles.begin(), chrFiles.end(), fileName) != chrFiles.end()){
-				readCharacterFile(fileName, "SaveFiles/Character");
+				currentCharacter = new Character(*readCharacterFile("SaveFiles/Character", fileName));
 				fileNameCorrect = true;
 			}
 			else{
@@ -628,9 +628,15 @@ void CharacterController::saveCharacter(){
 
 }
 
-Character* CharacterController::readCharacterFile(string charName, string charFileLocation){
+Character* readCharacterFile(string charFileLocation, string charName){
 
 	ifstream inStream("SaveFiles/Characters/" + charName + ".txt", ios::in);
+
+	if (!inStream){
+		return nullptr;
+	}
+
+	Character * tempCharacter = nullptr;
 
 	string chrType = "";
 	string strSize = "";
@@ -647,9 +653,9 @@ Character* CharacterController::readCharacterFile(string charName, string charFi
 	}
 
 	if (chrType == "character")
-		currentCharacter = new Character(name, hitDice, abilityScr, level, (CharacterSize)stoi(strSize));
+		tempCharacter = new Character(name, hitDice, abilityScr, level, (CharacterSize)stoi(strSize));
 	else
-		currentCharacter = new Fighter(name, abilityScr, (FightStyle)fightStyle, level, (CharacterSize)stoi(strSize));
+		tempCharacter = new Fighter(name, abilityScr, (FightStyle)fightStyle, level, (CharacterSize)stoi(strSize));
 
 	string itemName;
 	inStream.ignore();
@@ -661,7 +667,7 @@ Character* CharacterController::readCharacterFile(string charName, string charFi
 	while (itemName!="wornItem"){
 
 		itmPoint = readItemFile(itemName);
-		currentCharacter->storeItem(itmPoint);
+		tempCharacter->storeItem(itmPoint);
 		getline(inStream, itemName);
 
 	}
@@ -670,8 +676,8 @@ Character* CharacterController::readCharacterFile(string charName, string charFi
 		getline(inStream, itemName);
 		if (itemName!="UNSPECIFIED"){
 			itmPoint = readItemFile(itemName);
-			currentCharacter->storeItem(itmPoint);
-			currentCharacter->wearItem(itmPoint);
+			tempCharacter->storeItem(itmPoint);
+			tempCharacter->wearItem(itmPoint);
 		}
 	}
 
@@ -679,7 +685,7 @@ Character* CharacterController::readCharacterFile(string charName, string charFi
 
 	inStream.close();
 
-	return getCurrentCharacter();
+	return tempCharacter;
 }
 
 void CharacterController::displayCharacterSize(){
@@ -701,8 +707,6 @@ void CharacterController::displayFighterStyle(){
 
 
 void CharacterController::addItem(){
-
-
 
 		vector<string> filesInFolder = getFilesInsideFolderNoExtension("SaveFiles/Items");
 
