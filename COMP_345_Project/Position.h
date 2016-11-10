@@ -8,7 +8,7 @@ class Position
 {
 public:
 	Position(); //! Creates a new unset position at (0,0)
-	Position(Position& position);
+	Position(const Position& position); //! Position copy constructor
 	Position(int newX, int newY); //! Fully parametrized constructor for a Position
 	int x; //! X coordinate
 	int y; //! Y coordinate

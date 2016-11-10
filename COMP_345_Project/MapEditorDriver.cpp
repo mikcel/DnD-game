@@ -24,9 +24,9 @@
 #include "Item.h"
 #include "Weapon.h"
 #include "ItemContainer.h"
-using namespace std;
+#include "MapEditorDriver.h"
 
-void flushConsole();
+using namespace std;
 
 //! main() function. Entry point of the program
 //! It does the following: 
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 			return 0;
 			break;
 		}
-		else if(userOption > 4){
+		else if(userOption > NBR_OPTIONS){
 			cout << "Enter a valid input." << endl;
 		}
 		else {

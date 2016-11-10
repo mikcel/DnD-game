@@ -168,11 +168,11 @@ void MapController::editMap(bool creatingNewMap) {
 		}
 		else if (eS == "F") //Floor
 		{
-			success = m->setTileType(x, y, Type::FLOOR);
+			success = m->setTileType(x, y, TileType::FLOOR);
 		}
 		else if (eS == "W") //Wall
 		{
-			success = m->setTileType(x, y, Type::WALL);
+			success = m->setTileType(x, y, TileType::WALL);
 		}
 		else if (eS == "X") //Enemy
 		{
@@ -298,7 +298,7 @@ Map* MapController::readMapFile(string mapFileLocation, string mapName) {
 			tmpX = stoi(fileLine);
 			getline(mapFile, fileLine);
 			tmpY = stoi(fileLine);
-			tmpMap->setTileType(tmpX, tmpY, WALL);
+			tmpMap->setTileType(tmpX, tmpY,TileType::WALL);
 		}
 
 		else if (fileLine == "enemy") {

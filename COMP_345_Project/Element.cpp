@@ -2,20 +2,22 @@
 //! @brief Implementation file for the Element class
 //!
 
-
-
 #include "Element.h"
-#include "Chest.h"
-#include "Character.h"
-Element::Element(Element& element) : position(element.position)
+
+using namespace std;
+
+/**
+* Element copy constructor
+* @param element Element to copy
+*/
+Element::Element(const Element& element) : position(element.position)
 {
-	
 }
 
 /**
-* Initializes an element at position (0,0) and without having its position set
+* Initializes an element at position (0,0)
 */
-Element::Element() : position(0,0)
+Element::Element() : position(0, 0)
 {
 }
 
@@ -28,20 +30,19 @@ const bool Element::operator==(const Element & e2)
 	return position == e2.position;
 }
 
+/**
+* Clone an element
+*/
 Element* Element::clone()
 {
-	if (dynamic_cast<Character*>(this)) {
-		Character* charTemp = dynamic_cast<Character*>(this);
-		return new Character(*charTemp);
-		delete charTemp;
-	}
-	else if (dynamic_cast<Chest*>(this)) {
-		Chest* chestTemp = dynamic_cast<Chest*>(this);
-		return new Chest(*chestTemp);
-		delete chestTemp;
-	}
-	else {
-		return new Element(*this);
-	}
-	
+	return new Element(*this);
+}
+
+/**
+* Prints a basic representation of an element
+* @return a string of the character '\xFe'
+*/
+const string Element::print()
+{
+	return "\xFE";
 }
