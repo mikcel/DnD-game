@@ -72,13 +72,11 @@ int main(int argc, char* argv[])
 	GameController* g1 = new GameController();
 	CharacterController* chr = new CharacterController();
 
-	editItem();
-
 	string userOptionStr;
 	while (true) {
 		cout << "Enter the index of option you want to do:" << endl;
 
-		cout << "0: To quit\n1: To create a new campaign\n2: To edit a campaign\n3: To create a new map\n4: To edit a map\n5: To create a character\n6: To edit the character" << endl;
+		cout << "0: To quit\n1: To create a new campaign\n2: To edit a campaign\n3: To create a new map\n4: To edit a map\n5: To create a character\n6: To edit the character\n7: To create an item\n8: To edit an item" << endl;
 
 		cin >> userOptionStr;
 		int userOption;
@@ -121,6 +119,12 @@ int main(int argc, char* argv[])
 				break;
 			case 6:
 				chr->editCharacter();
+				break;
+			case 7:
+				createItem();
+				break;
+			case 8:
+				editItem();
 				break;
 			case 10:
 				g1->play();

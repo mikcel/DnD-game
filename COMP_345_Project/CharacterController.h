@@ -40,4 +40,6 @@ private:
 
 	bool checkScr(int *arr, int scr);
 
+	void addItem();
+
 };
