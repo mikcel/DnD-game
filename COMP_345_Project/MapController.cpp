@@ -258,10 +258,17 @@ bool MapController::cacheMap() {
 		return false;
 	}
 }
-Map* MapController::readMapFile(string mapFileLocation, string mapName) {
+
+Map* readMapFile(string mapFileLocation, string mapName) {
 	string fileLine;
 	ifstream mapFile;
 	mapFile.open(mapFileLocation);
+
+	if(mapFile.fail())
+	{
+		mapFile.close();
+		return nullptr;
+	}
 
 	getline(mapFile, fileLine);
 	int newWidth = stoi(fileLine);
@@ -323,7 +330,7 @@ Map* MapController::readMapFile(string mapFileLocation, string mapName) {
 	}
 	//cout << "PRINT" << endl;
 	mapFile.close();
-	cout<< tmpMap->print()<<endl;
+	//cout<< tmpMap->print()<<endl;
 	return tmpMap;
 }
 

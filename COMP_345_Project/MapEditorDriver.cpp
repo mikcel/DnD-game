@@ -21,11 +21,11 @@
 #include <stdio.h>
 #include "MapController.h"
 #include "CampaignController.h"
-#include "CharacterController.h"
 #include "Item.h"
 #include "Weapon.h"
 #include "ItemContainer.h"
 #include "MapEditorDriver.h"
+#include "GameController.h"
 
 using namespace std;
 
@@ -67,7 +67,8 @@ int main(int argc, char* argv[])
 	//Driver code
 	MapController* m1 = new MapController();
 	CampaignController* c1 = new CampaignController();
-	CharacterController* chr = new CharacterController();
+	GameController* g1 = new GameController();
+
 
 
 
@@ -75,7 +76,7 @@ int main(int argc, char* argv[])
 	while (true) {
 		cout << "Enter the index of option you want to do:" << endl;
 
-		cout << "0: To quit\n1: To create a new campaign\n2: To edit a campaign\n3: To create a new map\n4: To edit a map\n5: To create a Character" << endl;
+		cout << "0: To quit\n1: To create a new campaign\n2: To edit a campaign\n3: To create a new map\n4: To edit a map" << endl;
 
 		cin >> userOptionStr;
 		int userOption;
@@ -92,35 +93,31 @@ int main(int argc, char* argv[])
 		{
 			delete m1;
 			delete c1;
-			delete chr;
 			return 0;
 			break;
 		}
-		else if(userOption > NBR_OPTIONS){
-			cout << "Enter a valid input." << endl;
-		}
+		//else if(userOption > NBR_OPTIONS){
+		//	cout << "Enter a valid input." << endl;
+		//}
 		else {
 			flushConsole();
 			switch (userOption) {
-		case 1:
-			c1->createCampaign();
-			break;
-		case 2:
-			c1->editCampaign();
-			break;
-		case 3:
-			m1->createMap();
-			break;
-		case 4:
-			m1->editMap(false);
-			break;
-		case 5:
-			chr->createCharacter();
-			break;
-		default:
-			cout << "Enter a valid input." << endl;
-			break;
-		}
+			case 1:
+				c1->createCampaign();
+				break;
+			case 2:
+				c1->editCampaign();
+				break;
+			case 3:
+				m1->createMap();
+				break;
+			case 4:
+				m1->editMap(false);
+				break;
+			case 10:
+				g1->play();
+				break;
+			}
 			flushConsole();
 		}
 	}
