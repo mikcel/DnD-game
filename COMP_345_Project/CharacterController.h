@@ -27,9 +27,7 @@ public:
 	void editCharacter();
 
 	void saveCharacter();
-
-	Character* readCharacterFile(string charName, string charFileLocation);
-
+	
 private:
 
 	Character *currentCharacter = NULL;
@@ -43,3 +41,5 @@ private:
 	void addItem();
 
 };
+
+Character* readCharacterFile(string charName, string charFileLocation);
