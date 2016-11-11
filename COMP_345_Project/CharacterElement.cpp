@@ -10,3 +10,8 @@ CharacterElement* CharacterElement::clone()
 {
 	return new CharacterElement(*this);
 }
+
+const Character& CharacterElement::getCharacter()
+{
+	return character;
+}

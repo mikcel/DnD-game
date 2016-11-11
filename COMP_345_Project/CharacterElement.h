@@ -9,4 +9,5 @@ class CharacterElement : public Element
 public:
 	CharacterElement(Character& newCharacter);
 	virtual CharacterElement* clone();
+	const Character& getCharacter();
 };

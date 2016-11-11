@@ -20,7 +20,13 @@ MapObserver::MapObserver(const Map& m) : map(m), timesUpdated(0){}
 */
 void MapObserver::update()
 {
+	printMap();
+}
+
+void MapObserver::printMap()
+{
 	if (system("CLS")) system("clear");
+
+	cout << "========= " << map.getName() << " =========" << endl << endl;
 	cout << map.print() << endl;
-	//cout << "Times updated: " << ++timesUpdated << endl;
 }
