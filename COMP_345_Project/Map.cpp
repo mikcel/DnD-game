@@ -473,7 +473,12 @@ Player* Map::placePlayer(Player& newPlayer)
 			Chest* chest = dynamic_cast<Chest*>(element);
 			if (chest)
 			{
-
+				int nbrOfItems = abs(rand()) %6;
+				for (int i = 0; i < nbrOfItems; i++) {
+					int itemIndex = abs(rand()) % allExistingItems.size();
+					//Item* curItem = allExistingItems.at()
+					//chest->addItem()
+				}
 			}
 		}
 

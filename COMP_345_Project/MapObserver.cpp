@@ -38,5 +38,5 @@ void MapObserver::printMap()
 	cout << "P : Display player information" << endl;
 	cout << "E : Display ennemies information" << endl;
 	cout << "C : Display chests information" << endl;
-
+	cout << "Q : Quit (Progression will not be saved" << endl;
 }
