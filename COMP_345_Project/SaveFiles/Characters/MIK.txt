@@ -1,16 +1,17 @@
-fighter
-MIK
+character
+mik
 1d10
 1
 0
 0
 15
-14
-13
-10
-9
+12
+11
+8
 5
+3
 backpack
+Johny's Sword
 wornItem
 UNSPECIFIED
 UNSPECIFIED

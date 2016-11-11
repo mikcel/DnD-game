@@ -417,8 +417,10 @@ int Character::attack(Character &chr, int dmg){
 
 	cout << "\nWith Attack Bonus and Damage Bonus, total damage is " << dmg + attackBonus + damageBonus << endl;
 
+	int diceRoll = Dice::roll("1d20");
+
 	//! Return value got from the hit function of the passed Character
-	return chr.hit(dmg + attackBonus + damageBonus);
+	return chr.hit(dmg + attackBonus + damageBonus + diceRoll);
 }
 
 //! Function that determine size modifier for a character object

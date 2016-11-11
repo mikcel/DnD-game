@@ -21,7 +21,7 @@
 using namespace std; 
 
 #include "Enums.h" //! Include header file for the enumerated type
-
+#include "Dice.h"
 #include "ItemContainer.h" //! Include the itemcontainer class
 #include "Observable.h" //! Include the subject class for the observer pattern
 #include "Element.h"
