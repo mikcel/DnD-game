@@ -4,7 +4,7 @@
 #include <typeinfo>
 #include <conio.h>
 #include "MapObserver.h"
-#include "MapElementsObserver.h"
+#include "MapElementsToggler.h"
 #include "Dice.h"
 #include "CharacterController.h"
 

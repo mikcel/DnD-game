@@ -1,4 +1,4 @@
-#include "MapElementsObserver.h"
+#include "MapElementsToggler.h"
 #include "Map.h"
 #include "Chest.h"
 #include <string>

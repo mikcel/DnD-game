@@ -146,7 +146,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapController.cpp" />
     <ClCompile Include="MapEditorDriver.cpp" />
-    <ClCompile Include="MapElementsObserver.cpp" />
+    <ClCompile Include="MapElementsToggler.cpp" />
     <ClCompile Include="MapObserver.cpp" />
     <ClCompile Include="MapTest.cpp" />
     <ClCompile Include="Observable.cpp" />
@@ -180,7 +180,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapController.h" />
     <ClInclude Include="MapEditorDriver.h" />
-    <ClInclude Include="MapElementsObserver.h" />
+    <ClInclude Include="MapElementsToggler.h" />
     <ClInclude Include="MapObserver.h" />
     <ClInclude Include="MapTest.h" />
     <ClInclude Include="Observable.h" />
