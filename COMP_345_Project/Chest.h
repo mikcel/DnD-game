@@ -9,7 +9,6 @@
 //! Class defining the chest
 class Chest:public ItemContainer,public Element
 {
-	virtual const std::string print() const; //! Print the map representation of the chest
 public:
 	//! Chest Default Constructor
 	Chest();
@@ -24,8 +23,8 @@ public:
 
 	virtual Chest* Chest::clone();
 
+	virtual const std::string print() const; //! Print the map representation of the chest
 private:
-
 	friend ostream& operator<<(ostream& stream, const Chest& chst);
 };
 

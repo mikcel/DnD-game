@@ -48,7 +48,7 @@ void MapElementsObserver::showChestsDirect()
 		Chest* chest = dynamic_cast<Chest*>(element);
 		if (chest)
 		{
-			std::cout << *chest;
+			//std::cout << *chest;
 		}
 	}
 }
