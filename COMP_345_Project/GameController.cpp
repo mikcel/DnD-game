@@ -10,6 +10,9 @@
 
 using namespace std;
 
+//! Starts a new game
+//! Prompts the user to select the character that he will play
+//! and a campaign which maps he will play on
 void GameController::play()
 {
 	cout << "--------GAME INITIALIZATION--------" << endl << endl;
@@ -33,6 +36,8 @@ void GameController::play()
 	
 }
 
+//! Prompts the user to select a character
+//! Reads the characters from the txt files
 void GameController::selectCharacter()
 {
 	cout << "===SELECT A CHARACTER===" << endl << endl;
@@ -61,6 +66,8 @@ void GameController::selectCharacter()
 	cout << "The character " << characterName << " was succefully loaded." << endl << endl;
 }
 
+//! Prompts the user to select a map
+//! Reads the maps from the txt files
 void GameController::selectCampaign()
 {
 	cout << "===SELECT A MAP===" << endl << endl;
@@ -92,6 +99,7 @@ void GameController::selectCampaign()
 	
 }
 
+//! Creates a new instance of the Game class an launches it
 void GameController::launchGame()
 {
 	Game g = Game(map);

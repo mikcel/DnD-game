@@ -1,11 +1,12 @@
 #include "MapElementsObserver.h"
 #include "Map.h"
-#include "ConsoleLogger.h"
 #include "Chest.h"
 #include <iostream>
 
+
 MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap){}
 
+//! Shows the info about the player, enemies and chests
 void MapElementsObserver::show()
 {
 	if (system("CLS")) system("clear");
@@ -15,12 +16,14 @@ void MapElementsObserver::show()
 	showChestsDirect();	
 }
 
+//! Shows the info about the player
 void MapElementsObserver::showPlayerDirect()
 {
 	Player& player = map.getPlayer();
 	std::cout << player.getCharacter();
 }
 
+//! Shows the info about the enemies
 void MapElementsObserver::showEnemiesDirect()
 {
 	Player& player = map.getPlayer();
@@ -36,6 +39,7 @@ void MapElementsObserver::showEnemiesDirect()
 	}
 }
 
+//! Shows the info about the chests
 void MapElementsObserver::showChestsDirect()
 {
 	// Show chests' info
@@ -49,18 +53,21 @@ void MapElementsObserver::showChestsDirect()
 	}
 }
 
+//! Clears the console and shows the info about the player
 void MapElementsObserver::showPlayer()
 {
 	if (system("CLS")) system("clear");
 	showPlayerDirect();
 }
 
+//! Clears the console and shows the info about the enemies
 void MapElementsObserver::showEnemies()
 {
 	if (system("CLS")) system("clear");
 	showEnemiesDirect();
 }
 
+//! Clears the console and shows the info about the chests
 void MapElementsObserver::showChests()
 {
 	if (system("CLS")) system("clear");

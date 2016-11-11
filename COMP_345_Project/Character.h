@@ -81,14 +81,14 @@ public:
 	void incrementLevel(int hitDiceNo, bool displayConsole);
 	void incrementArmorClass(int chrAC); //! Method to increment the Character's AC by a number
 
-	bool takeOffItem(Item *objItem);
+	bool takeOffItem(Item *objItem); //! Unequip item
 	bool wearItem(Item *objItem); //! Wear an item (goes into currently Worn items)
-	bool storeItem(Item *objItem);
-	bool removeItemBack(Item *objItem);
-	vector<Item*> getBackpackContents();
-	vector<Item*> getCurrentWornItems();
+	bool storeItem(Item *objItem); //! Add item into the backpack
+	bool removeItemBack(Item *objItem); //! Remove item from the backpack
+	vector<Item*> getBackpackContents(); //! Get all items that are currently in the Character's backpack
+	vector<Item*> getCurrentWornItems(); //! Get all the items that the Character is currently wearing
 
-	virtual void saveCharacter();
+	virtual void saveCharacter(); // Save teh character to a txt file
 
 private:
 

@@ -1,35 +1,65 @@
+//! 
+//! @file 
+//! @brief Implementation file for the Enemy Class.  
+//! 
+
 #include "Enemy.h"
 #include "Dice.h"
 #include <string>
 #include <cmath>
 
+/**
+* Returns a string representation of the Enemy on the map
+* @return string representing the enemy
+*/
 const std::string Enemy::print() const
 {
 	return "E";
 }
 
+/**
+* Create a new instance of the Enemy class
+*/
 Enemy::Enemy() : CharacterElement()
 {
 	
 }
 
+/**
+* Create a copy of this Enemy
+* @return a pointer to a dynamically allocated copy of the current Enemy instance
+*/
 Enemy* Enemy::clone()
 {
 	return new Enemy(*this);
 }
 
+/**
+* Obtain a random value for a character that is inside the possible
+* bounds (3 to 18 inclusive) following the Dungeons&Dragons rules
+* @return string representing the player
+*/
 int calculateRandomAttributeValue()
 {
 	return (abs(rand()) % 16) + 3;
 }
 
-const std::string names[] = {"Capitan_D.D.", "El_Mafioso", "El_Italiano", "Mikcel", "Celine", "The_Donald", "Hugh_Mungus", "Mastro_Comico", "Batman", "Ken_Bone", "Nestea","Itemsdonthavealevel","Not_Simon"};
+// List of all the possible names for the enemies
+const std::string enemyNames[] = {"Capitan_D.D.", "El_Mafioso", "El_Italiano", "Mikcel", "Celine", "The_Donald", "Hugh_Mungus", "Mastro_Comico", "Batman", "Ken_Bone", "Nestea","Itemsdonthavealevel","Not_Simon"};
 
+/**
+* Obtain a random enemy name from the array of all possible enemy names
+* @return string representing a name of an enemy
+*/
 std::string calculateRandomName()
 {
-	return names[abs(rand()) % 13];
+	return enemyNames[abs(rand()) % 13];
 }
 
+/**
+* Create a Character instance and assign it to the Character of the current Enemy
+* @param level the level to which the newly created Characted should be adapted
+*/
 void Enemy::createCharacterWithLevel(int level)
 {
 	character = new  Character(calculateRandomName(), "1d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), 1);

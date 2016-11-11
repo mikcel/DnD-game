@@ -10,11 +10,15 @@
 
 using namespace std;
 
+//! Creates a new instance of the Game class
+//! @param m a pointer to the map that will be used in the current game
 Game::Game(Map* m)
 {
 	map = m;
 }
 
+//! Starts a new game with the playerined as parameter
+//! @param player to be used in the current game
 void Game::play(Character* player)
 {
 	Player tempP(*player);
@@ -25,14 +29,11 @@ void Game::play(Character* player)
 	perfomEndGame();
 }
 
+//! Represents the main game loop of the Dungeons&Dragons game
+//! "Listens" to the input of the user and adjusts the game accordingly 
+//! @param player to be used in the current game
 int Game::run(Player* p)
 {
-	//Set the level of all the map elements
-	for (Element * e : map->getElements())
-	{
-
-	}
-
 	//Set all of our observers
 	MapObserver mo(*map);
 	map->attach(mo);
@@ -97,11 +98,15 @@ int Game::run(Player* p)
 	}
 }
 
+//! Checks if the game is over (the player has reached the end point)
+//! @return true if the game over, false otherwise
 bool Game::isGameOver()
 {
 	return map->isEndPoint(map->getPlayer().getPosition());
 }
 
+//! Method that is executed at the end of the game
+//! Adjusts the level of the Player and returns the user to the main menu
 void Game::perfomEndGame()
 {
 	Character& currentChar = map->getPlayer().getCharacter();

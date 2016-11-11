@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+//! Read all files inside specified folder with extension
+//! Folder (starting from the project directory)
 std::vector<std::string> getAllFilesInsideFolder(std::string folder)
 {
 	using namespace std;
@@ -24,6 +26,8 @@ std::vector<std::string> getAllFilesInsideFolder(std::string folder)
 	return names;
 }
 
+//! Read all files inside specified folder without extension
+//! Folder (starting from the project directory)
 std::vector<std::string> getFilesInsideFolderNoExtension(std::string folder)
 {
 	std::vector<std::string> filesWithExtension = getAllFilesInsideFolder(folder);
