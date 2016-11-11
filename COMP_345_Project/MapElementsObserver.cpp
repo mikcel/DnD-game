@@ -22,7 +22,9 @@ void MapElementsObserver::show()
 void MapElementsObserver::showPlayerDirect()
 {
 	Player& player = map.getPlayer();
+	cout << endl << "Position: (" << player.getPosition().x << ", " << player.getPosition().y << ")" << endl;
 	std::cout << player.getCharacter();
+
 }
 
 //! Shows the info about the enemies
@@ -36,7 +38,8 @@ void MapElementsObserver::showEnemiesDirect()
 		CharacterElement* characterElement = dynamic_cast<CharacterElement*>(element);
 		if (characterElement && &player != characterElement)
 		{
-			std::cout << characterElement->getCharacter();
+			cout << endl << "Position: (" << characterElement->getPosition().x << ", " << characterElement->getPosition().y << ")" << endl;
+			std::cout << characterElement->getCharacter();			
 		}
 	}
 }
@@ -57,6 +60,7 @@ void MapElementsObserver::showChestsDirect()
 		if (chest)
 		{
 			atLeastOnce = true;
+			cout << endl << "Position: (" << chest->getPosition().x << ", " << chest->getPosition().y << ")" << endl;
 			std::cout << *chest;
 		}
 	}
