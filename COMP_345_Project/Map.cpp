@@ -2,6 +2,7 @@
 //! @brief Implementation file for the Map class
 //!
 
+#include  "Enemy.h"
 #include  "Map.h"
 #include <typeinfo>
 #include "Chest.h"
@@ -449,6 +450,18 @@ Player* Map::placePlayer(Player& newPlayer)
 		copy.position.y = startPoint.y;
 		player = &copy;
 		mapArr[startPoint.x][startPoint.y].setElement(&copy);
+
+		//Player& player = map->getPlayer();
+
+		// Show other characters' stats
+		for (Element* element : getElements())
+		{
+			Enemy* enemy = dynamic_cast<Enemy*>(element);
+			if (enemy)
+			{
+				enemy->createCharacterWithLevel(copy.character->getLevel());
+			}
+		}
 
 		notify();
 		return &copy;

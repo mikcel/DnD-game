@@ -214,6 +214,8 @@ void Character::setName(string chrName){
 void Character::setLevel(int chrLevel){
 	if (chrLevel > 0){ //! Check that new level is positive
 		level = chrLevel;
+		calcAttackBonus();
+		calcDamageBonus();
 	}
 	else{ //! Incorrect message is output if negative new level
 		cout << "Incorrect Level.";
@@ -224,6 +226,8 @@ void Character::setLevel(int chrLevel){
 //! @param Size enumerated size as new Character's size
 void Character::setSize(CharacterSize chrSize){
 	size = chrSize;
+	calcArmorClass();
+	calcAttackBonus();
 }
 
 //! Mutator method for ability scores
@@ -296,8 +300,7 @@ void Character::calcDamageBonus(){
 		damageBonus = 0;
 }
 
-//! Service Method to calculate Character's Attack Bonus
-//! NOTE: THERE WILL BE A BETTER IMPLEMENTATION ONCE PROJECT WILL BE MERGED (with the weapons)
+//! Service Method to calculate Character's Attack Bonuss
 //! @param string - Weapon type that the Character's holds 
 void Character::calcAttackBonus(){
 
@@ -326,7 +329,6 @@ void Character::calcAttackBonus(){
 		}
 
 	}
-
 
 	//! In case attack Bonus is -ve
 	if (attackBonus < 0)
@@ -445,9 +447,13 @@ int Character::getSizeModifier(){
 	}
 }
 
+void Character::incrementLevel(int hitDiceNo){
+	incrementLevel(hitDiceNo, true);
+}
+
 //! Function that can be used to increment the level of the Character and at the same time increases the HP
 //! @param int - representing the roll of the Character's hit dice
-void Character::incrementLevel(int hitDiceNo){
+void Character::incrementLevel(int hitDiceNo, bool displayConsole){
 	level++; //! Increment level by 1
 
 	//! Calculate new hit points
@@ -455,10 +461,14 @@ void Character::incrementLevel(int hitDiceNo){
 	currentHitPoints += abilityModifiers[(int)CharacterAbility::CONS] + hitDiceNo;
 
 	calcAttackBonus();
+	calcDamageBonus();
 
-	//! Output new information
-	cout << "Level " << level << " reached." << endl;
-	cout << "Current HP: " << currentHitPoints << endl;
+	if (displayConsole)
+	{ 
+		//! Output new information
+		cout << "Level " << level << " reached." << endl;
+		cout << "Current HP: " << currentHitPoints << endl;
+	}
 }
 
 bool Character::takeOffItem(Item *objItem){
