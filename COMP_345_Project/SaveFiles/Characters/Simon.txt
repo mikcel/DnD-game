@@ -11,6 +11,7 @@ Simon
 15
 10
 backpack
+GOLDEN SWORD
 wornItem
 UNSPECIFIED
 UNSPECIFIED
