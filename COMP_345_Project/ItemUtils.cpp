@@ -425,3 +425,13 @@ Item* readItemFile(string itemName){
 		return item;
 	}
 }
+
+bool loadAllExistingItems(vector<Item*>& items)
+{
+	vector<string> allFiles = getFilesInsideFolderNoExtension("SaveFiles\\Items");
+	for (string file : allFiles)
+	{
+		items.push_back(readItemFile(file));
+	}
+	return true;
+}
