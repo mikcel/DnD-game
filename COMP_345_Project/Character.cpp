@@ -77,6 +77,9 @@ Character::Character(string chrName, string hitDice, int str, int dex, int cons,
 	//! Call the method to generate the each ability modifiers
 	generateAbilityModifiers();
 
+	int diceRoll = Dice::roll(hitDice);
+	currentHitPoints += (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
+
 	//! Invokes the method to calculate the armor class
 	calcArmorClass();
 

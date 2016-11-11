@@ -36,8 +36,12 @@ void CharacterController::createCharacter(){
 
 	//! Keep asking if choice is not correct
 	while (!choiceCorrect){
-
+		
 		cin >> choice;
+		if (!cin){
+			cin.clear();
+		}
+
 		if (choice == 1){ //! If choice is Character
 			cout << "\nTime to create a new Character!" << "\nLet's gets started.";
 			choiceCorrect = true;
