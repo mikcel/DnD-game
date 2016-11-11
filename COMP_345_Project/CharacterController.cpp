@@ -1,31 +1,44 @@
+//!
+//! @file 
+//! @brief Implementation file for Character Controller
 
 #include "CharacterController.h"
 
-
+//! Default Constructor
 CharacterController::CharacterController()
 {
-	
+	/*Intentionally left blank*/
 }
 
+//! Parametrized Constructor
+//! @param Character pointer
 CharacterController::CharacterController(Character *currentCharacter){
 
-	this->currentCharacter = currentCharacter;
+	this->currentCharacter = currentCharacter; //! Sets the current Character to the object passed
 
 }
 
+//! Destructor
 CharacterController::~CharacterController()
 {
-	delete currentCharacter;
+	delete currentCharacter; //! Deletes the character object
 }
 
+//! Getter to obtain the current Character
+//! @return Character pointer to the current Character
 Character* CharacterController::getCurrentCharacter(){
 	return currentCharacter;
 }
 
+//! Setter for Current character
+//! @param Character pointer to an object
+//! @return -
 void CharacterController::setCurrentCharacter(Character *character){
 	currentCharacter = new Character(*character);
 }
 
+//! Method to create a Character
+//! @return -
 void CharacterController::createCharacter(){
 	
 	cout << "==== Character creation ====" << endl << endl;
@@ -37,7 +50,13 @@ void CharacterController::createCharacter(){
 	//! Keep asking if choice is not correct
 	while (!choiceCorrect){
 
-		cin >> choice;
+		while (!(cin >> choice)){
+			cout << "\nIncorrect choice. Please enter only 1 or 2 depending on the character type you want to create.\n";
+			cout << "1 - Character OR 2 - Fighter. Please choose correctly: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+
 		if (choice == 1){ //! If choice is Character
 			cout << "\nTime to create a new Character!" << "\nLet's gets started.";
 			choiceCorrect = true;
@@ -67,42 +86,57 @@ void CharacterController::createCharacter(){
 		getline(cin, name); //! Get name even with spaces
 
 		cout << "Enter your level: ";
-		cin >> level; //! Get level
+		bool correctLevel = false;
+		while (!correctLevel){ //! if level is still not good keep asking
+			while (!(cin >> level)){
+				cout << "\nIncorrect Level entered. Please enter level again: ";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+			if (level < 1){
+				cout << "\nIncorrect Level entered. Please enter level again: ";
+			}
+			else{
+				correctLevel = true;
+			}
+		}
 
 		cout << "Enter choose size from the list below:\n";
 		//! Display all the sizes possible
 		displayCharacterSize();
-		cin >> size; //! Get size
+		bool correctSize = false;
+		while (!correctSize){ //! If size is still not good check size
+			while (!(cin>>size)){
+				cout << "\nIncorrect Size entered. Please enter Size again: ";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+			if (size <0 || size>3){
+				cout << "\nIncorrect Size entered. Please enter Size again: ";
+			}
+			else{
+				correctSize = true;
+			}
+		}
 
 		if (choice == 2){ //! If fighter
 			cout << "Enter your Fighter Style from the list below:\n";
 			//! Displays all the fighting style possible
 			displayFighterStyle();
 			cout << "Please choose: ";
-			cin >> fightStyle; //! Get fighting style if fighter
-		}
-
-		if (!cin){ //! Error while inputting
-			cout << "\nIncorrect Input. Please enter again all data.";
-		}
-		else if (level<1){ //! Check level
-			while (level < 1){ //! if level is still not good keep asking
-				cout << "\nIncorrect Level entered. Please enter level again: ";
-				cin >> level;
-			}
-		}
-		else if (size<0 || size>3){ //! Check size
-			while (size<0 || size>3){ //! If size is still not good check size
-				cout << "\nIncorrect Size entered. Please enter Size again: ";
-				displayCharacterSize();
-				cin >> size;
-			}
-		}
-		else if (choice == 2 && (fightStyle<0 || fightStyle>2)){
-			while (fightStyle<0 || fightStyle>2){ //! if fighting style is still not good ask again
-				cout << "\nIncorrect Fighting Style entered. Please enter style again from the list below: \n";
-				displayFighterStyle();
-				cin >> fightStyle;
+			bool correctStyle = false;
+			while (!correctStyle){ //! if fighting style is still not good ask again
+				while (!(cin>>fightStyle)){
+					cout << "\nIncorrect Fighting Style entered. Please enter style again: ";
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				}
+				if (fightStyle<0 || fightStyle>2){
+					cout << "\nIncorrect Fighting Style entered. Please enter style again: ";
+				}
+				else{
+					correctStyle = true;
+				}
 			}
 		}
 
@@ -167,12 +201,11 @@ void CharacterController::createCharacter(){
 
 		//! For each ability, (using the enumrated type), choose score
 		cout << "\n" << CharacterAbility(i) << ": ";
-		cin >> chosenScr;
 
-		//! If incorrect input, program dies
-		if (!cin){
-			cerr << "Program dies";
-			exit(1);
+		while (!(cin >> chosenScr)){
+			cout << "\nPlease choose a correct no.: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
 
 		//! Check if number entered is in random generated array. if not ask user to enter again until number is valid
@@ -221,63 +254,68 @@ void CharacterController::createCharacter(){
 
 	bool flagCorrectChoice = false;
 	string itemChoice = "";
-	cout << "Do you want to add items to your backpack? (Y/N) ";
+	
+	//! Ask if user wants to add item to backpack
+	cout << "Do you want to add items to your backpack? (Y/N) "; 
 	while (!flagCorrectChoice){
-		cin >> itemChoice;
+		cin >> itemChoice; //! Enter choice and check
 		if (itemChoice == "Y" || itemChoice == "N")
 			flagCorrectChoice = true;
 		else
 		{
-			cout << "Incorrect choice. Please enter Y or N: ";
+			cout << "Incorrect choice. Please enter Y or N: "; //! Error message
 		}
 	}
 
-	if (itemChoice == "Y"){
+	if (itemChoice == "Y"){ //! If correct choice call method to add item
 		addItem();
 	}
 
-	if (choice == 1){
+	if (choice == 1){ //! Output the character's stats
 		cout << "Character Created!\nThe Stats are:\n" << *currentCharacter;
 	}
 	else{
 		cout << "Fighter Created!\nThe Stats are:\n" << *currentCharacter;
 	}
 
-	saveCharacter();
+	saveCharacter(); //! Save Character 
 
 	system("pause");
 
 }
 
+//! Method to edit character
+//! @return - 
 void CharacterController::editCharacter(){
 	cout << "====  Character Edition ====" << endl << endl;
 
+	//! Get all files available in the Characters folder
 	vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Characters/");
 
-	if (chrFiles.size() == 0) {
+	if (chrFiles.size() == 0) { //! Check if files exist or not
 		cout << "No Character has yet been created.\n";
 		system("pause");
 		return;
 	}
 	cout << "The saved files available are: \n";
-	for (auto i : chrFiles) {
+	for (auto i : chrFiles) { //! Output all save files available
 		cout << i << "\n";
 	}
 	string fileName = "";
-	bool fileNameCorrect = false;
+	bool fileNameCorrect = false; //! Ask for name of the file to load
 	cout << "\nPlease enter the name of the Character you want to load: ";
 	while (!fileNameCorrect) {
-		cin >> fileName;
+		cin >> fileName; //! Check if name is correct
 		if (find(chrFiles.begin(), chrFiles.end(), fileName) != chrFiles.end()) {
 			currentCharacter = new Character(*readCharacterFile("SaveFiles/Character", fileName));
 			fileNameCorrect = true;
 		}
-		else {
+		else { //! Error message if file does not exist
 			cout << "File name does not exist. Try again: ";
 		}
 	}
 
-	system("cls");
+	system("cls"); //! Clear screen and show the stats of the loaded character or fighter
 	if (dynamic_cast<Fighter*>(currentCharacter))
 		cout << *(dynamic_cast<Fighter*>(currentCharacter));
 	else
@@ -286,7 +324,9 @@ void CharacterController::editCharacter(){
 	int menuChoice = 0;
 	string menuChoiceStr;
 
+	//! While do not want to exit
 	while (menuChoice!=10){
+		//! Output the menu to choose what to edit in the character
 		cout << "Currently edited character: " << currentCharacter->getName() << endl << endl;
 		cout << "Please choose from the following:\n"
 			<< "1 - Save Character\n"
@@ -300,8 +340,12 @@ void CharacterController::editCharacter(){
 			<< "9 - Edit Fighting Style\n"
 			<< "10 - Return\n";
 		cout << "Please choose: ";
-		cin >> menuChoiceStr;
-		try {
+		while (!(cin >> menuChoiceStr)){
+			cout << "Enter a valid input." << endl;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+		try { //! Check valid input from user
 			menuChoice = stoi(menuChoiceStr);
 		}
 		catch (...) {
@@ -310,259 +354,296 @@ void CharacterController::editCharacter(){
 		}
 		system("cls");
 
+		//! Switch case depending on the chocie of the user
 		bool styleChangeCorrect = true;
 		switch (menuChoice){
-			case 1:
+			case 1: //! Save Character
 				saveCharacter();
 				break;
-			case 2:
+			case 2: //! Edit the character's name
 			{
-					  string newName = "";
-					  cout << "Please enter the new Character name: ";
-					  cin >> newName;
-					  currentCharacter->setName(newName);
-					  cout << "Name set.\n";
-					  cout << *currentCharacter;
-					  break;
+				//! Ask and set new name
+				string newName = "";
+				cout << "Please enter the new Character name: ";
+				cin >> newName;
+				currentCharacter->setName(newName); 
+				cout << "Name set.\n";
+				cout << *currentCharacter;
+				break;
 			}
-			case 3:
+			case 3: //! Edit the character's level
 			{
-					  int level = 0;
-					  cout << "Please enter the new Character level (>1): ";
-					  while (level < 1){
-						cin >> level;
-						if (level < 1){
-							cout << "Incorrect Level. Try again (-1 to stop): ";
-						}
-						if (level == -1){
-							break;
-						}
-					  }
-					  if (level != -1){
-						currentCharacter->setLevel(level);
-						cout << "Level changed.";
-					  }
-					  else{
-						  cout << "Level not changed.";
-					  }
-					  break;
+				int level = 0; //! Ask new level and set level
+				cout << "Please enter the new Character level (>1): ";
+				bool correctLevel = false;
+				while (!correctLevel){ //! if level is still not good keep asking
+					while (!(cin >> level)){
+						cout << "\nIncorrect Level entered. Please enter level again: ";
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
+					if (level < 1){
+						cout << "\nIncorrect Level entered. Please enter level again: ";
+					}
+					else{
+						correctLevel = true;
+					}
+				}
+
+				if (level != -1){
+					currentCharacter->setLevel(level);
+					cout << "Level changed.";
+				}
+				else{
+					cout << "Level not changed.";
+				}
+				break;
 			}
-			case 4:{
+			case 4:{ //! Edit Character's Size
 		
-					   int size = -1;
-					   cout << "Please enter the new Character Size by selecting from the list below:\n";
-					   displayCharacterSize();
-					   while (size < 0 || size>3){
-						   cin >> size;
-						   if (size < 0 || size>3){
-							   cout << "Incorrect Size. Try again (-1 to stop): ";
-						   }
-						   if (size == -1){
-							   break;
-						   }
-					   }
-					   if (size != -1){
-						   currentCharacter->setSize((CharacterSize)size);
-						   cout << "Size changed.";
-					   }
-					   else{
-						   cout << "Size not changed.";
-					   }
+				int size = -1; //! Display available size list and ask for new size
+				cout << "Please enter the new Character Size by selecting from the list below:\n";
+				displayCharacterSize();
+				bool correctSize = false;
+				while (!correctSize){ //! If size is still not good check size
+					while (!(cin >> size)){
+						cout << "\nIncorrect Size entered. Please enter Size again: ";
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
+					if (size <0 || size>3){
+						cout << "\nIncorrect Size entered. Please enter Size again: ";
+					}
+					else{
+						correctSize = true;
+					}
+				}
+				if (size != -1){
+					currentCharacter->setSize((CharacterSize)size); //! Set the size if correct
+					cout << "Size changed.";
+				}
+				else{
+					cout << "Size not changed.";
+				}
 					   
-					   break;
+				break;
 			}
-			case 5:{
-
-					   addItem();
-					   break;
+			case 5:{ //! Add a new item to backpack
+				addItem();
+				break;
 			}
-			case 6:{
-					   vector <Item*> backItem;
+			case 6:{ //! Remove an item from backpack
 
-						backItem = currentCharacter->getBackpackContents();
+				vector <Item*> backItem;
+				//! Get all backpack contents
+				backItem = currentCharacter->getBackpackContents();
 
-					   if (backItem.size() == 0)
-						   cout << "\n:( There are no item in the backpack!!!";
-					   else{
+				if (backItem.size() == 0) //! Check if there are items
+					cout << "\n:( There are no item in the backpack!!!";
+				else{
 
-						   int itemID = 0;
-						   bool flagCorrect = false;
-						   cout << "\nHere are the items that are in your backpack: ";
-						   for (int i = 0; i < backItem.size(); i++){
-							   cout << "\nItem ID: " << i << "\n" << *backItem[i];
-						   }
+					int itemID = 0;
+					bool flagCorrect = false; //! Display all available items
+					cout << "\nHere are the items that are in your backpack: ";
+					for (int i = 0; i < backItem.size(); i++){
+						cout << "\nItem ID: " << i << "\n" << *backItem[i];
+					}
 
-						   cout << "\nPlease enter the correct item ID: ";
-						   //! Ask user to choose item
-						   while (itemID != -1 && !flagCorrect){
+					cout << "\nPlease enter the correct item ID: ";
+					//! Ask user to choose item
+					while (itemID != -1 && !flagCorrect){
 
-							   cin >> itemID;
-							   //! Check id entered
-							   if (itemID >= 0 && itemID<backItem.size()){
+						while (!(cin >> itemID)){
+							cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
+							cin.clear();
+							cin.ignore(numeric_limits<streamsize>::max(), '\n');
+						}
 
-									  //! If Wearing item was ok
-									   if (!currentCharacter->removeItemBack(backItem[itemID])){
-										   cout << "\nError. Try Again or else enter -1 to exit: ";
-									   }
-									   else{
-										   cout << "Item Removed\n";
-										   flagCorrect = true;
-									   }
+						//! Check id entered
+						if (itemID >= 0 && itemID<backItem.size()){
 
-							   }
-							   else{
-								   //! Asks id for item again since incorrectly entered
-								   cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
+								//! If Wearing item was ok
+								if (!currentCharacter->removeItemBack(backItem[itemID])){
+									cout << "\nError. Try Again or else enter -1 to exit: ";
+								}
+								else{
+									cout << "Item Removed\n";
+									flagCorrect = true;
+								}
 
-							   }
-						   }
+						}
+						else{
+							//! Asks id for item again since incorrectly entered
+							cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
 
-					   }
+						}
+					}
 
-					   break;
+				}
+
+				break;
 			}
-			case 7:
+			case 7: //! Equip with an item
 			{
-					  vector<Item*> backItem; //! Get backpack contents
-						 backItem = currentCharacter->getBackpackContents();
-					  if (backItem.size() == 0) //! Check if there are items in backpack
-						  cout << "\n:( There are no Item that you can equip with!!! Try adding a new item first.\n";
+				vector<Item*> backItem; //! Get backpack contents
+					backItem = currentCharacter->getBackpackContents();
+				if (backItem.size() == 0) //! Check if there are items in backpack
+					cout << "\n:( There are no Item that you can equip with!!! Try adding a new item first.\n";
 
-					  else{
+				else{
 
-						  int itemID = 0; //! Identify each item in backpack
-						  bool flagCorrect = false;
-						  cout << "\nHere are the item(s) in your backpack that you can equip yourself with: ";
+					int itemID = 0; //! Identify each item in backpack
+					bool flagCorrect = false;
+					cout << "\nHere are the item(s) in your backpack that you can equip yourself with: ";
 
-						  //! output backcpack contents with id
-						  for (int i = 0; i < backItem.size(); i++){
-							  cout << "\nITEM ID: " << i << "\n" << *backItem[i];
-						  }
+					//! output backcpack contents with id
+					for (int i = 0; i < backItem.size(); i++){
+						cout << "\nITEM ID: " << i << "\n" << *backItem[i];
+					}
 
-						  cout << "\nPlease enter the correct item ID: ";
-						  //! Ask user to choose item
-						  while (itemID != -1 && !flagCorrect){
+					cout << "\nPlease enter the correct item ID: ";
+					//! Ask user to choose item
+					while (itemID != -1 && !flagCorrect){
 
-							  cin >> itemID;
-							  //! Check id entered
-							  if (itemID >= 0 && itemID<backItem.size()){
-									//! If Wearing item was ok
-									if (!currentCharacter->wearItem(backItem[itemID])){
-										cout << "\nError. Try Again or else enter -1 to exit: ";
-									}
-									else{
-										cout << "Item Equiped\n";
-										flagCorrect = true;
-									}
+						while (!(cin >> itemID)){
+							cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
+							cin.clear();
+							cin.ignore(numeric_limits<streamsize>::max(), '\n');
+						}
 
-							  }
-							  else{
-								  //! Asks id for item again since incorrectly entered
-								  cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
+						//! Check id entered
+						if (itemID >= 0 && itemID<backItem.size()){
+							//! If Wearing item was ok
+							if (!currentCharacter->wearItem(backItem[itemID])){
+								cout << "\nError. Try Again or else enter -1 to exit: ";
+							}
+							else{
+								cout << "Item Equiped\n";
+								flagCorrect = true;
+							}
 
-							  }
-						  }
-					  }
+						}
+						else{
+							//! Asks id for item again since incorrectly entered
+							cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
 
-					  break;
+						}
+					}
+				}
+
+				break;
 			}
-			case 8:{
-					   //! Get contents of currently worn item
-					   vector<Item*> holdItem;
-						holdItem = currentCharacter->getCurrentWornItems();
-					   //! check if there are items
-					   bool wearingItem = false;
-					   for (auto i : holdItem){
-						   if (i->getItemTypes() != ItemType::UNSPECIFIED)
-							   wearingItem = true;
-					   }
+			case 8:{ //! Unequip an item
 
-					   if (!wearingItem)
-						   //! Telle user there are no items currently wearing
-						   cout << "\n:( You are wearing no items!!! Add a new one or equip yourself first.\n";
+				//! Get contents of currently worn item
+				vector<Item*> holdItem;
+				holdItem = currentCharacter->getCurrentWornItems();
+				//! check if there are items
+				bool wearingItem = false;
+				for (auto i : holdItem){
+					if (i->getItemTypes() != ItemType::UNSPECIFIED)
+						wearingItem = true;
+				}
 
-					   else{
+				if (!wearingItem)
+					//! Telle user there are no items currently wearing
+					cout << "\n:( You are wearing no items!!! Add a new one or equip yourself first.\n";
 
-						   int itemID = 0;
-						   bool flagCorrect = false;
-						   cout << "\nHere are the item(s) that you are currently wearing:";
-						   //! output all currently worn items with an id
-						   for (int i = 0; i < holdItem.size(); i++){
-							   if (holdItem[i]->getItemTypes() != ItemType::UNSPECIFIED){
-								   cout << "\nITEM ID: " << i << "\n" << *holdItem[i];
-							   }
-						   }
+				else{
 
-						   cout << "\nPlease enter the correct item ID: ";
-						   //! ask user to enter id
-						   while (itemID != -1 && !flagCorrect){
+					int itemID = 0;
+					bool flagCorrect = false;
+					cout << "\nHere are the item(s) that you are currently wearing:";
+					//! output all currently worn items with an id
+					for (int i = 0; i < holdItem.size(); i++){
+						if (holdItem[i]->getItemTypes() != ItemType::UNSPECIFIED){
+							cout << "\nITEM ID: " << i << "\n" << *holdItem[i];
+						}
+					}
 
-							   cin >> itemID;
-							   //! Check id
-							   if (holdItem[itemID]->getItemTypes() != ItemType::UNSPECIFIED){
+					cout << "\nPlease enter the correct item ID: ";
+					//! ask user to enter id
+					while (itemID != -1 && !flagCorrect){
 
-									   //! Take off item
-									   if (!currentCharacter->takeOffItem(holdItem[itemID])){
-										   cout << "\nError. Try Again or else enter -1 to exit: ";
-									   }
-									   else{
-										   cout << "Item Unequiped \n";
-										   flagCorrect = true;
-									   }
+						while (!(cin>>itemID)){
+							cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
+							cin.clear();
+							cin.ignore(numeric_limits<streamsize>::max(), '\n');
+						}
 
-							   }
-							   else{
-								   //! Ask to reenter id if incorretly entered
-								   cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
+						//! Check id
+						if (itemID!=-1 && holdItem[itemID]->getItemTypes() != ItemType::UNSPECIFIED){
 
-							   }
-						   }
-					   }
+								//! Take off item
+								if (!currentCharacter->takeOffItem(holdItem[itemID])){
+									cout << "\nError. Try Again or else enter -1 to exit: ";
+								}
+								else{
+									cout << "Item Unequiped \n";
+									flagCorrect = true;
+								}
 
-					   break;
+						}
+						else{
+							//! Ask to reenter id if incorretly entered
+							cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
+
+						}
+					}
+				}
+
+				break;
 			}
-			case 9:{
-					   if (!dynamic_cast<Fighter*>(currentCharacter)){
-						   cout << "Not a fighter. Cannot modify.";
-						   styleChangeCorrect = false;
-						   break;
-					   }
+			case 9:{ //! Change fighter style
 
-					   int style = -1;
-					   cout << "Please enter the new Fighter style selecting from the list below:\n";
-					   displayFighterStyle();
-					   while (style < 0 || style>3){
-						   cin >> style;
-						   if (style < 0 || style>3){
-							   cout << "Incorrect Style. Try again (-1 to stop): ";
-						   }
-						   if (style == -1){
-							   break;
-						   }
-					   }
-					   if (style != -1){
+				//! Check if a fighter is a character or not
+				if (!dynamic_cast<Fighter*>(currentCharacter)){
+					cout << "Not a fighter. Cannot modify.";
+					styleChangeCorrect = false;
+					break;
+				}
+				
+				//! Display list of available fighter styles and ask user to select
+				int style = -1;
+				cout << "Please enter the new Fighter style selecting from the list below:\n";
+				displayFighterStyle();
+				bool correctStyle = false;
+				while (!correctStyle){ //! if fighting style is still not good ask again
+					while (!(cin >> style)){
+						cout << "\nIncorrect Fighting Style entered. Please enter style again: ";
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
+					if (style<0 || style>2){
+						cout << "\nIncorrect Fighting Style entered. Please enter style again: ";
+					}
+					else{
+						correctStyle = true;
+					}
+				}
+				if (style != -1){ //! Set style
 
-						   dynamic_cast<Fighter*>(currentCharacter)->setStyle((FightStyle)style);
-						   cout << "Style changed.";
-					   }
-					   else{
-						   cout << "Style not changed.";
-					   }
+					dynamic_cast<Fighter*>(currentCharacter)->setStyle((FightStyle)style);
+					cout << "Style changed.";
+				}
+				else{
+					cout << "Style not changed.";
+				}
 
-					   break;
+				break;
 			}
-			case 10:
+			case 10: //! Return back to main menu
 				break;
 			
-			default:
+			default: //! Else incorrect menu choice
 				cout << "Incorrect Menu choice. Try Again." << endl;
 				continue;			
 		}
 
-		if (menuChoice != 10){
+		if (menuChoice != 10){ //! if not exiting save the character if all is valid
 			if (menuChoice != 1 && styleChangeCorrect)
 				saveCharacter();
-			system("pause");
+			system("pause"); //! Pause to show output and clear the console
 			system("cls");
 		}
 
@@ -570,12 +651,16 @@ void CharacterController::editCharacter(){
 	
 }
 
+//! Method to save Character
+//! @return -
 void CharacterController::saveCharacter(){
 
 	cout << "Saving the character...\n";
 
+	//! get all saved files from the Characters folders
 	vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Characters/");
 
+	//! Check if file exist for the character name 
 	bool foundFile = false;
 	for (auto i : chrFiles){
 		if (i == currentCharacter->getName()){
@@ -584,12 +669,12 @@ void CharacterController::saveCharacter(){
 		}
 	}
 
-	if (chrFiles.size() ==0 || !foundFile){
+	if (chrFiles.size() ==0 || !foundFile){ //! If file does not exist or there is no file file in the folder, save the character
 		currentCharacter->saveCharacter();
 		cout << "Saved Successfully!\n";
 	}
 	else{
-		string choiceOverw = "";
+		string choiceOverw = ""; //! If file already exist, ask user if he/she wants to overwrite the file
 		cout << "A file with the same name already exists. Do you want to overwrite it? (Y/N) ";
 		cin >> choiceOverw;
 		while (choiceOverw != "Y" && choiceOverw != "N"){
@@ -608,16 +693,23 @@ void CharacterController::saveCharacter(){
 
 }
 
+//! Method to read a Character form a file
+//! @param string - the character file location
+//! @param string - the Character name
+//! @return pointer to a character object
 Character* readCharacterFile(string charFileLocation, string charName){
 
+	//! Open stream to read character
 	ifstream inStream("SaveFiles/Characters/" + charName + ".txt", ios::in);
 
-	if (!inStream){
+	if (!inStream){ //! If error in stream return nullptr
 		return nullptr;
 	}
 
+	//! creates a temporary pointer to character
 	Character * tempCharacter = nullptr;
 
+	//! Variables to contain all data of a character
 	string chrType = "";
 	string strSize = "";
 	string name;
@@ -625,37 +717,45 @@ Character* readCharacterFile(string charFileLocation, string charName){
 	int level;
 	int fightStyle;
 
+	//! read all the basic stats
 	inStream >> chrType >> name >> hitDice >> level >> strSize >> fightStyle;
 
+	//! Read the ability scores
 	int abilityScr[Character::NO_ABILITY];
 	for (int i = 0; i < Character::NO_ABILITY; i++){
 		inStream >> abilityScr[i];
 	}
 
+	//! If character create a character object else create a fighter object
 	if (chrType == "character")
 		tempCharacter = new Character(name, hitDice, abilityScr, level, (CharacterSize)stoi(strSize));
 	else
 		tempCharacter = new Fighter(name, abilityScr, (FightStyle)fightStyle, level, (CharacterSize)stoi(strSize));
 
+	//! get the item in the backpack
 	string itemName;
 	inStream.ignore();
 	getline(inStream, itemName);
 	getline(inStream, itemName);
 
+	//! Create a null pointer for item
 	Item *itmPoint = nullptr;
 	
+	//! while not read wornitem container, continue to read
 	while (itemName!="wornItem"){
 
+		//! Read an item and store it in the character's backpack
 		itmPoint = readItemFile(itemName);
 		tempCharacter->storeItem(itmPoint);
 		getline(inStream, itemName);
 
 	}
 
+	//! REad the current worn items
 	for (int i = 0; i < 7; i++){
 		getline(inStream, itemName);
 		if (itemName!="UNSPECIFIED"){
-			itmPoint = readItemFile(itemName);
+			itmPoint = readItemFile(itemName); //! Read item if not unspecified, store and wear it
 			tempCharacter->storeItem(itmPoint);
 			tempCharacter->wearItem(itmPoint);
 		}
@@ -665,9 +765,11 @@ Character* readCharacterFile(string charFileLocation, string charName){
 
 	inStream.close();
 
-	return tempCharacter;
+	return tempCharacter; //! return the temporary pointer
 }
 
+//! Method to display all available character size
+//! @return -
 void CharacterController::displayCharacterSize(){
 
 	cout << (int)CharacterSize::FINE << " - FINE\n"
@@ -677,6 +779,8 @@ void CharacterController::displayCharacterSize(){
 
 }
 
+//! Method to display all available fighter style
+//! @return -
 void CharacterController::displayFighterStyle(){
 
 	cout << (int)FightStyle::ARCHERY << " - " << FightStyle::ARCHERY << "\n"
@@ -685,58 +789,73 @@ void CharacterController::displayFighterStyle(){
 
 }
 
-
+//! Method to add an item to the character's backpack
+//! @return - 
 void CharacterController::addItem(){
 
-		vector<string> filesInFolder = getFilesInsideFolderNoExtension("SaveFiles/Items");
+	//! Get all item files avialable in the respective folder
+	vector<string> filesInFolder = getFilesInsideFolderNoExtension("SaveFiles/Items");
 
-		if (filesInFolder.size() == 0){
-			cout << "There are no items files available. Please create items and then edit the character to add the items.\n";
-			cin.ignore();
-			system("pause");
-		}
-		else{
-			Item* itmPoint = NULL;
-			int itemID = 0;
+	if (filesInFolder.size() == 0){ //! Check there are any saved items
+		cout << "There are no items files available. Please create items and then edit the character to add the items.\n";
+		cin.ignore();
+		system("pause");
+	}
+	else{ 
+		//! If there are saved items, ask user to input item file name.
+		Item* itmPoint = nullptr;
+		int itemID = 0;
 
-			while (itemID != -1 && filesInFolder.size() != 0){
+		//! while there are items in the folders to add and user do not want to stop
+		while (itemID != -1 && filesInFolder.size() != 0){
 
-				cout << "The item template files available are:\n";
-				for (int i = 0; i < filesInFolder.size(); i++){
-					cout << i << " - " << filesInFolder[i] << "\n";
-				}
-
-				cout << "\nPlease enter the Item file name (-1 to stop adding): ";
-				cin >> itemID;
-				if (itemID >= 0 && itemID<filesInFolder.size()){
-
-					bool itemFound = false;
-					for (auto i : currentCharacter->getBackpackContents()){
-						if (i->getItemName() == filesInFolder[itemID])
-							itemFound = true;
-					}
-
-					if (!itemFound){
-						itmPoint = readItemFile(filesInFolder[itemID]);
-						currentCharacter->storeItem(itmPoint);
-						cout << "Item Added.\n";
-						filesInFolder.erase(filesInFolder.begin() + itemID);
-					}
-					else{
-						cout << "Item already in backpack. Cannot add again.\n";
-						filesInFolder.erase(filesInFolder.begin() + itemID);
-					}
-				}
-				else if (itemID != -1){
-					cout << "Incorrect No. Please try again (-1 to stop): ";
-				}
-
+			//! Display all available files
+			cout << "The item template files available are:\n";
+			for (int i = 0; i < filesInFolder.size(); i++){
+				cout << i << " - " << filesInFolder[i] << "\n";
 			}
 
-			delete itmPoint;
+			//! Ask user for item name 
+			cout << "\nPlease enter the Item file name (-1 to stop adding): ";
+
+			//! Check user input
+			while (!(cin >> itemID)){
+				cout << "Incorrect No. Please try again (-1 to stop): ";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+
+			//! Check if item id entered is correct
+			if (itemID >= 0 && itemID<filesInFolder.size()){
+
+				//! Check if item is already in backapck
+				bool itemFound = false;
+				for (auto i : currentCharacter->getBackpackContents()){
+					if (i->getItemName() == filesInFolder[itemID])
+						itemFound = true;
+				}
+
+				//! If item not in backpack add the item
+				if (!itemFound){
+					itmPoint = readItemFile(filesInFolder[itemID]);
+					currentCharacter->storeItem(itmPoint); 
+					cout << "Item Added.\n";
+					filesInFolder.erase(filesInFolder.begin() + itemID);
+				}
+				else{ //! If item in backpack erase from the available list and ask again
+					cout << "Item already in backpack. Cannot add again.\n";
+					filesInFolder.erase(filesInFolder.begin() + itemID);
+				}
+			}
+			else if (itemID != -1){
+				cout << "Incorrect No. Please try again (-1 to stop): ";
+			}
 
 		}
-	
+
+		delete itmPoint;
+
+	}
 
 }
 
