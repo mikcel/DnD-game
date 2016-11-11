@@ -85,21 +85,15 @@
     <ClCompile Include="FolderUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="MapObserver.cpp" />
-    <ClCompile Include="MapTest.cpp" />
-    <ClCompile Include="Observable.cpp" />
     <ClCompile Include="GameController.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="ItemUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="CharacterElement.cpp">
       <Filter>Character</Filter>
     </ClCompile>
@@ -111,6 +105,24 @@
     </ClCompile>
     <ClCompile Include="MapElementsToggler.cpp">
       <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterController.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObserver.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTest.cpp">
+      <Filter>Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="Observable.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,21 +177,15 @@
     <ClInclude Include="FolderUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="MapObserver.h" />
-    <ClInclude Include="MapTest.h" />
-    <ClInclude Include="Observable.h" />
     <ClInclude Include="GameController.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="ItemUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="Game.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterController.h" />
     <ClInclude Include="CharacterElement.h">
       <Filter>Character</Filter>
     </ClInclude>
@@ -191,6 +197,24 @@
     </ClInclude>
     <ClInclude Include="MapElementsToggler.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterController.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObserver.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapTest.h">
+      <Filter>Drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="Observable.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
