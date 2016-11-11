@@ -36,7 +36,7 @@ void MapController::setCurrentMap(Map& newMap) {
 }
 
 void MapController::createMap() {
-	cout << "==== Map creation ====" << endl << endl;
+	cout << "==== MAP CREATION ====" << endl << endl;
 
 	//string widthS, heightS;
 	int width, height;
@@ -54,15 +54,27 @@ void MapController::createMap() {
 
 		isInvalid = false;
 
+		//Width
 		cout << "Enter the desired dimensions of the map" << endl;
-		cout << "Width: "<<endl;
+		cout << "Width: ";
 		cin >> width;
-		cout << "Height: " <<endl;
-		cin >>height;
-		cout << endl;
+		while (cin.fail() || width < 0) {
+			cout << "Incorrect Input. Please enter a valid number: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin >> width;
+		}
 
-		//stringstream(widthS) >> width;
-		//stringstream(heightS) >> height;
+		//Height
+		cout << "Height: ";
+		cin >>height;
+		while (cin.fail() || height < 0) {
+			cout << "Incorrect Input. Please enter a valid number: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin >> height;
+		}
+		cout << endl;
 
 		try {
 			m = new Map(width, height, mapName);
@@ -80,7 +92,7 @@ void MapController::createMap() {
 
 void MapController::editMap(bool creatingNewMap) {
 	if (!creatingNewMap) {
-		cout << "==== Map edition ====" << endl << endl;
+		cout << "==== MAP EDITION ====" << endl << endl;
 		if (!cacheMap()) {
 			return;
 		}

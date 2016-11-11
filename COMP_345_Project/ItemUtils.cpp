@@ -12,6 +12,7 @@ using namespace std;
 
 //! Free Function to edit an Item File
 void editItem() {
+	cout << "==== ITEM EDITION ====" << endl << endl;
 	int userChoice = -1;
 	while (true) {
 		cout << "Enter the index of the item you wish to edit.\nEnter -1 to quit." << endl;
@@ -21,134 +22,172 @@ void editItem() {
 			cout << itemIndex << ": " << i << endl;
 			itemIndex++;
 		}
-		string userChoiceStr;
-		cin >> userChoiceStr;
+
+		cin >> userChoice;
 		
-			userChoice = stoi(userChoiceStr);
-			if (userChoice == -1) {
-				return;
-			}
-			string chosenItem = ItemFileNames[userChoice];
-			Item* item = readItemFile(chosenItem);
-			cout << "Selected: " << item->getItemName() << endl;
-			cout << "What do you want to modify?" << endl;
-			cout << "0: Item Name\n1: Buff\nEnter -1 to quit." << endl;
-			cin >> userChoiceStr;
-			userChoice = stoi(userChoiceStr);
-			if (userChoice == 0) {
-				cout << "Enter the new name of the item." << endl;
-				string  newItemName;
-				cin.ignore();
-				getline(cin, newItemName);
-				item->setItemName(newItemName);
-				item->saveItem();
-				delete item;
-			}
-			else if (userChoice == 1) {
-				//buffs
+		while (cin.fail() || userChoice < -1 || userChoice > ItemFileNames.size() -1) {
+			cout << "Incorrect Input. Please enter a correct number: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin >> userChoice;
+		}
+
+		if (userChoice == -1) {
+			return;
+		}
+		string chosenItem = ItemFileNames[userChoice];
+		Item* item = readItemFile(chosenItem);
+		cout << "Selected: " << item->getItemName() << endl;
+		cout << "What do you want to modify?" << endl;
+		cout << "0: Item Name\n1: Buff\nEnter -1 to quit." << endl;
+		cin >> userChoice;
+
+		while (cin.fail() || userChoice < -1 || userChoice > 1) {
+			cout << "Incorrect Input. Please enter a valid number: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin >> userChoice;
+		}
+
+		if (userChoice == 0) {
+			cout << "Enter the new name of the item." << endl;
+			string  newItemName;
+			cin.ignore();
+			getline(cin, newItemName);
+			item->setItemName(newItemName);
+			item->saveItem();
+			delete item;
+		}
+		else if (userChoice == 1) {
+			//buffs
 				
-				int choiceBuff = 0;
-				int choiceAmount = 0;
-				while (true) { //! Ask for buff choice
-					cout << "Current buffs:" << endl;
-					for (auto bu : item->getBuffs()) {
-						cout << "buff type " << bu.getBuffType() << endl;
-						cout << "buff amount " << bu.getBuffAmount() << endl;
-					}
-					cout << "\nChoose the buffs for this item from the list below:\nEnter -1 to stop picking buffs.\n";
-					cout << (int)BuffType::INTELLIGENCE << " - " << BuffType::INTELLIGENCE << "\n"
-						<< (int)BuffType::WISDOM << " - " << BuffType::WISDOM << "\n"
-						<< (int)BuffType::ARMOR_CLASS << " - " << BuffType::ARMOR_CLASS << "\n"
-						<< (int)BuffType::STRENGTH << " - " << BuffType::STRENGTH << "\n"
-						<< (int)BuffType::CHARISMA << " - " << BuffType::CHARISMA << "\n"
-						<< (int)BuffType::CONSTITUTION << " - " << BuffType::CONSTITUTION << "\n"
-						<< (int)BuffType::DEXTERITY << " - " << BuffType::DEXTERITY << "\n"
-						<< (int)BuffType::ATTACK_BONUS << " - " << BuffType::ATTACK_BONUS << "\n"
-						<< (int)BuffType::DAMAGE_BONUS << " - " << BuffType::DAMAGE_BONUS << "\n"
-						<< "-1 to stop\n" << endl;
-					cout << "Enter choice: " << endl;
+			int choiceBuff = 0;
+			int choiceAmount = 0;
+			while (true) { //! Ask for buff choice
+				cout << "Current buffs:" << endl;
+				for (auto bu : item->getBuffs()) {
+					cout << "buff type " << bu.getBuffType() << endl;
+					cout << "buff amount " << bu.getBuffAmount() << endl;
+				}
+				cout << "\nChoose the buffs for this item from the list below:\nEnter -1 to stop picking buffs.\n";
+				cout << (int)BuffType::INTELLIGENCE << " - " << BuffType::INTELLIGENCE << "\n"
+					<< (int)BuffType::WISDOM << " - " << BuffType::WISDOM << "\n"
+					<< (int)BuffType::ARMOR_CLASS << " - " << BuffType::ARMOR_CLASS << "\n"
+					<< (int)BuffType::STRENGTH << " - " << BuffType::STRENGTH << "\n"
+					<< (int)BuffType::CHARISMA << " - " << BuffType::CHARISMA << "\n"
+					<< (int)BuffType::CONSTITUTION << " - " << BuffType::CONSTITUTION << "\n"
+					<< (int)BuffType::DEXTERITY << " - " << BuffType::DEXTERITY << "\n"
+					<< (int)BuffType::ATTACK_BONUS << " - " << BuffType::ATTACK_BONUS << "\n"
+					<< (int)BuffType::DAMAGE_BONUS << " - " << BuffType::DAMAGE_BONUS << "\n"
+					<< "-1 to stop\n" << endl;
+
+				cout << "Enter choice: " << endl;
+				cin >> choiceBuff;
+				while (cin.fail() || choiceBuff < -1 || choiceBuff >(int)BuffType::DAMAGE_BONUS) {
+					cout << "Incorrect Input. Please enter a valid number: ";
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
 					cin >> choiceBuff;
-					if (choiceBuff == -1) {
-						break;
-					}
-					cout << "Enter amount: " << endl;
+				}
+
+				if (choiceBuff == -1) {
+					break;
+				}
+
+				cout << "Enter amount: " << endl;
+				cin >> choiceAmount;
+				while (cin.fail() || (choiceAmount < 0 && choiceAmount != -1)) {
+					cout << "Incorrect Input. Please enter a valid number: ";
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
 					cin >> choiceAmount;
+				}
 
-					if (choiceAmount == -1) {
+				if (choiceAmount == -1) {
+					break;
+				}
+				vector<Buff> buffs = item->getBuffs();
+				bool buffExist = false;
+				int buffIterator = 0;
+				for (auto b : buffs) {
+					if (b.getBuffType() == (BuffType)choiceBuff) {
+						buffExist = true;
+						buffs[buffIterator].setBuffAmount(choiceAmount);
 						break;
 					}
-					vector<Buff> buffs = item->getBuffs();
-					bool buffExist = false;
-					int buffIterator = 0;
-					for (auto b : buffs) {
-						if (b.getBuffType() == (BuffType)choiceBuff) {
-							buffExist = true;
-							buffs[buffIterator].setBuffAmount(choiceAmount);
-							break;
-						}
-						buffIterator++;
-					}
-					if (!buffExist) {
-						buffs.push_back(Buff((BuffType)choiceBuff, choiceAmount));
-					}
-					item->setBuffs(buffs);
-
+					buffIterator++;
 				}
-				if (item->getItemTypes() == ItemType::WEAPON){
-					Weapon* weapon = dynamic_cast<Weapon*>(item);
-					if (!weapon->validateWeapon()){
-						cout << "Invalid Weapon!\nDiscarding changes.";
-						delete weapon;
-						return;
-					}
+				if (!buffExist) {
+					buffs.push_back(Buff((BuffType)choiceBuff, choiceAmount));
 				}
-				else{
-					if (!item->validateItem()){
-						cout << "Invalid Weapon!\nDiscarding changes.";
-						delete item;
-						return;
-					}
+				item->setBuffs(buffs);
+
+			}
+			if (item->getItemTypes() == ItemType::WEAPON){
+				Weapon* weapon = dynamic_cast<Weapon*>(item);
+				if (!weapon->validateWeapon()){
+					cout << "Invalid Weapon!\nDiscarding changes.";
+					delete weapon;
+					return;
 				}
-				item->saveItem();
 			}
-			else if (userChoice == -1) {
-				return;
-			}
-			else {
-				cout << "Invalid input.\nExiting" << endl;
-				return;
+			else{
+				if (!item->validateItem()){
+					cout << "Invalid Weapon!\nDiscarding changes.";
+					delete item;
+					system("pause");
+					return;
+				}
 			}
 
-			cout << "Edit another Item?\nEnter 0 to continue, -1 to quit." << endl;
-			cin >> userChoiceStr;
-			userChoice = stoi(userChoiceStr);
-			if (userChoice == 0) {
-				continue;
-			}
-			else if (userChoice == -1) {
-				return;
-			}
-		
+			cout << "Saving item..." << endl;
+			item->saveItem();
+			cout << "Item saved." << endl;
+		}
+		else if (userChoice == -1) {
+			return;
+		}
+		else {
+			cout << "Invalid input.\nExiting" << endl;
+			return;
+		}
 
+		cout << "Edit another Item?\nEnter 0 to continue, -1 to quit." << endl;
+		cin >> userChoice;
+		while (cin.fail()) {
+			cout << "Incorrect Input. Please enter a correct number: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin >> userChoice;
+		}
 
+		if (userChoice == 0) {
+			continue;
+		}
+		else if (userChoice == -1) {
+			return;
+		}
 	}
-
 }
 
 //! Free function to create a new item
 void createItem() {
+	cout << "==== ITEM CREATION ====" << endl << endl;
 	string name = ""; //! Item name
 	int itemType = (int)ItemType::UNSPECIFIED; //! item type
-	int choiceItem = 0; //! Item or weapon
+	int choiceItem = -1; //! Item or weapon
 	int range = 0; //! Range of weapon
 	vector<Buff> vecBuff(0); //! Vector for buff
 
-							 //! Ask for weapon or item
+	//! Ask for weapon or item
 	cout << "\nDo you want to create an Item - 0 or a Weapon - 1? ";
 	cin >> choiceItem;
+
 	//! check choice
-	while (choiceItem<0 || choiceItem>1) { //!  ask to continue enter if incorrect
-		cout << "\nIncorrect choice. Please choose only 0 or 1: ";
+	while (cin.fail() || choiceItem<0 || choiceItem>1) { //!  ask to continue enter if incorrect
+		cout << "Incorrect choice. Please choose only 0 or 1: ";
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cin >> choiceItem;
 	}
 
@@ -172,8 +211,10 @@ void createItem() {
 		cout << "Enter choice: ";
 		cin >> itemType;
 		//! Continue to ask if choice is incorrectly entered
-		while (itemType<0 || itemType>6) {
-			cout << "\nIncorrect choice. Please enter again: ";
+		while (cin.fail() || itemType<0 || itemType>6) {
+			cout << "Incorrect choice. Please enter again: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			cin >> itemType;
 		}
 
@@ -195,8 +236,10 @@ void createItem() {
 			cin >> choiceBuff; //! Enter buff choice
 
 							   //! Check for buff choice. Ask again if incorrectly entered
-			while (choiceBuff != -1 && (choiceBuff<0 || choiceBuff>8)) {
-				cout << "\nIncorrect Input. Please enter a correct number: ";
+			while (cin.fail() || choiceBuff != -1 && (choiceBuff<0 || choiceBuff>8)) {
+				cout << "Incorrect Input. Please enter a correct number: ";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				cin >> choiceBuff;
 			}
 
@@ -223,6 +266,13 @@ void createItem() {
 		cout << "\nPlease enter the weapon's range: ";
 		cin >> range; //! Get weapon range
 
+		while (cin.fail()) {
+			cout << "Incorrect Input. Please enter a correct number: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin >> range;
+		}
+
 		int choiceBuff = 0;
 		while (choiceBuff != -1) { //! Ask for buff choice
 			cout << "\nChoose the buffs for this weapon from the list below: \n";
@@ -240,18 +290,28 @@ void createItem() {
 			cin >> choiceBuff;
 
 			//! Check for buff choice. Ask again if incorrectly entered
-			while (choiceBuff != -1 && (choiceBuff<0 || choiceBuff>8)) {
-				cout << "\nIncorrect Input. Please enter a correct number: ";
+			while (cin.fail() || choiceBuff != -1 && (choiceBuff<0 || choiceBuff>8)) {
+				cout << "Incorrect Input. Please enter a correct number: ";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				cin >> choiceBuff;
 			}
 
-			//! If do not want to exxit
+			//! If do not want to exit
 			if (choiceBuff != -1) {
 				int amount = 0;
 				//! Ask for buff amount
 				cout << "Enter buff's amount: ";
 				cin.ignore();
 				cin >> amount;
+
+				while (cin.fail()) {
+					cout << "Incorrect Input. Please enter a correct number: ";
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					cin >> amount;
+				}
+
 				//! Put in vector for buff
 				vecBuff.push_back(Buff((BuffType)choiceBuff, amount));
 			}
