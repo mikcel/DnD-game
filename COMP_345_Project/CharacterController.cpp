@@ -40,6 +40,7 @@ void CharacterController::createCharacter(){
 		cin >> choice;
 		if (!cin){
 			cin.clear();
+			cin.ignore();
 		}
 
 		if (choice == 1){ //! If choice is Character
@@ -87,12 +88,18 @@ void CharacterController::createCharacter(){
 		}
 
 		if (!cin){ //! Error while inputting
+			cin.clear();
+			cin.ignore();
 			cout << "\nIncorrect Input. Please enter again all data.";
 		}
 		else if (level<1){ //! Check level
 			while (level < 1){ //! if level is still not good keep asking
 				cout << "\nIncorrect Level entered. Please enter level again: ";
 				cin >> level;
+				if (!cin){
+					cin.clear();
+					cin.ignore();
+				}
 			}
 		}
 		else if (size<0 || size>3){ //! Check size
@@ -100,6 +107,10 @@ void CharacterController::createCharacter(){
 				cout << "\nIncorrect Size entered. Please enter Size again: ";
 				displayCharacterSize();
 				cin >> size;
+				if (!cin){
+					cin.clear();
+					cin.ignore();
+				}
 			}
 		}
 		else if (choice == 2 && (fightStyle<0 || fightStyle>2)){
@@ -107,6 +118,10 @@ void CharacterController::createCharacter(){
 				cout << "\nIncorrect Fighting Style entered. Please enter style again from the list below: \n";
 				displayFighterStyle();
 				cin >> fightStyle;
+				if (!cin){
+					cin.clear();
+					cin.ignore();
+				}
 			}
 		}
 
@@ -335,6 +350,10 @@ void CharacterController::editCharacter(){
 					  cout << "Please enter the new Character level (>1): ";
 					  while (level < 1){
 						cin >> level;
+						if (!cin){
+							cin.clear();
+							cin.ignore();
+						}
 						if (level < 1){
 							cout << "Incorrect Level. Try again (-1 to stop): ";
 						}
@@ -358,6 +377,10 @@ void CharacterController::editCharacter(){
 					   displayCharacterSize();
 					   while (size < 0 || size>3){
 						   cin >> size;
+						   if (!cin){
+							   cin.clear();
+							   cin.ignore();
+						   }
 						   if (size < 0 || size>3){
 							   cout << "Incorrect Size. Try again (-1 to stop): ";
 						   }
@@ -401,6 +424,11 @@ void CharacterController::editCharacter(){
 						   while (itemID != -1 && !flagCorrect){
 
 							   cin >> itemID;
+							   if (!cin){
+								   cin.clear();
+								   cin.ignore();
+							   }
+
 							   //! Check id entered
 							   if (itemID >= 0 && itemID<backItem.size()){
 
@@ -448,6 +476,11 @@ void CharacterController::editCharacter(){
 						  while (itemID != -1 && !flagCorrect){
 
 							  cin >> itemID;
+							  if (!cin){
+								  cin.clear();
+								  cin.ignore();
+							  }
+
 							  //! Check id entered
 							  if (itemID >= 0 && itemID<backItem.size()){
 									//! If Wearing item was ok
@@ -502,6 +535,11 @@ void CharacterController::editCharacter(){
 						   while (itemID != -1 && !flagCorrect){
 
 							   cin >> itemID;
+							   if (!cin){
+								   cin.clear();
+								   cin.ignore();
+							   }
+
 							   //! Check id
 							   if (holdItem[itemID]->getItemTypes() != ItemType::UNSPECIFIED){
 
@@ -537,6 +575,10 @@ void CharacterController::editCharacter(){
 					   displayFighterStyle();
 					   while (style < 0 || style>3){
 						   cin >> style;
+						   if (!cin){
+							   cin.clear();
+							   cin.ignore();
+						   }
 						   if (style < 0 || style>3){
 							   cout << "Incorrect Style. Try again (-1 to stop): ";
 						   }
