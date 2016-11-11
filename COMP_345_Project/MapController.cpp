@@ -1,3 +1,12 @@
+//!
+//! @file 
+//! @brief Implementation file for Map Controller
+//! 
+
+//!
+//! This class allows the creation and manipulation of a map. It also allows reading from a map file.
+//!
+
 #include "MapController.h"
 #include "Character.h"
 #include "Chest.h"
@@ -12,29 +21,40 @@
 
 using namespace std;
 
+//! Default Constructor
 MapController::MapController()
 {
 	currentMap = NULL;
 }
+
+//! Parametrized constructor
+//! @param Map pointer
 MapController::MapController(Map* currentMap)
 {
-	this->currentMap = currentMap;
+	this->currentMap = currentMap; //! Sets the current map pointer
 }
 
-
+//! Destructor
 MapController::~MapController()
 {
 	
-	//deletion of pointer is already handled
+	//! deletion of pointer is already handled
 }
+
+//! Accessor for current Map
+//! @return Map pointer
 Map* MapController::getCurrentMap() {
-	return currentMap;
+	return currentMap; 
 }
 
+//! Mutator for current Map
+//! @param reference to a map object
 void MapController::setCurrentMap(Map& newMap) {
-	currentMap = new Map(newMap);
+	currentMap = new Map(newMap); //! Make a cdeep copy of the map passed
 }
 
+//! Method to create a Map
+//! @return - 
 void MapController::createMap() {
 	cout << "==== Map creation ====" << endl << endl;
 
@@ -43,17 +63,18 @@ void MapController::createMap() {
 	bool isInvalid = false;
 	Map * m = nullptr;
 	string mapName;
-	cout << "Enter the name of new map." << endl;
+	cout << "Enter the name of new map." << endl; //! Asks name of the map
 	cin >> mapName;
 	do {
 
-		if (isInvalid)
+		if (isInvalid) //! Check if values are valid
 		{
 			cout << "Invalid values!" << endl;
 		}
 
 		isInvalid = false;
 
+		//! Asks for map dimensions
 		cout << "Enter the desired dimensions of the map" << endl;
 		cout << "Width: "<<endl;
 		cin >> width;
@@ -64,6 +85,7 @@ void MapController::createMap() {
 		//stringstream(widthS) >> width;
 		//stringstream(heightS) >> height;
 
+		//! create a new map object with the data entered
 		try {
 			m = new Map(width, height, mapName);
 		}
@@ -75,11 +97,13 @@ void MapController::createMap() {
 	} while (isInvalid);
 
 	currentMap = m;
-	editMap(true);
+	editMap(true); //! Call method to edit the map created
 }
 
+//! Method to edit a map
+//! @param bool if creating currently creating a map
 void MapController::editMap(bool creatingNewMap) {
-	if (!creatingNewMap) {
+	if (!creatingNewMap) { //! If not creating a map
 		cout << "==== Map edition ====" << endl << endl;
 		if (!cacheMap()) {
 			return;
@@ -89,6 +113,7 @@ void MapController::editMap(bool creatingNewMap) {
 
 	cout << m->print() << endl;
 
+	//! Output the keys for editing the map
 	bool isInvalid = false;
 	cout << "LEGEND: F Floor, W Wall, X Enemy, C Chest, () Start point, [] End point" << endl;
 	cout << "Enter Q at any time to save and quit the map " << (creatingNewMap ? "creation" : "edition") << ".\n" << endl;
@@ -96,7 +121,7 @@ void MapController::editMap(bool creatingNewMap) {
 	string xS, yS, eS;
 	int x, y;
 
-	while (true) //For as long as the user wants to edit the map
+	while (true) //! For as long as the user wants to edit the map
 	{
 		cout << "Edit a new tile" << endl;
 		xS.clear();
@@ -104,7 +129,7 @@ void MapController::editMap(bool creatingNewMap) {
 		eS.clear();
 		x = y = -1;
 
-		//Enter Element
+		//! Enter Element
 		do {
 			if (isInvalid)
 			{
@@ -122,7 +147,7 @@ void MapController::editMap(bool creatingNewMap) {
 			isInvalid = eS != "S" && eS != "L" && eS != "F" && eS != "W" && eS != "X" && eS != "C" && eS != "F";
 		} while (isInvalid);
 
-		//Enter X
+		//! Enter X
 		do {
 			if (isInvalid)
 			{
@@ -142,7 +167,7 @@ void MapController::editMap(bool creatingNewMap) {
 			isInvalid = x < 0;
 		} while (isInvalid);
 
-		//Enter Y
+		//! Enter Y
 		do {
 			if (isInvalid)
 			{
@@ -164,45 +189,45 @@ void MapController::editMap(bool creatingNewMap) {
 
 		bool success = false;
 
-		//Actions performed based on the element type
-		if (eS == "S") //Start point
+		//! Actions performed based on the element type
+		if (eS == "S") //! Start point
 		{
 			success = m->setStartPoint(x, y);
 		}
-		else if (eS == "L") //End point
+		else if (eS == "L") //! End point
 		{
 			success = m->setEndPoint(x, y);
 		}
-		else if (eS == "F") //Floor
+		else if (eS == "F") //! Floor
 		{
 			success = m->setTileType(x, y, TileType::FLOOR);
 		}
-		else if (eS == "W") //Wall
+		else if (eS == "W") //! Wall
 		{
 			success = m->setTileType(x, y, TileType::WALL);
 		}
-		else if (eS == "X") //Enemy
+		else if (eS == "X") //! Enemy
 		{			
 			Character e;
 			CharacterElement characterElement(e);
 			success = m->setElementAt(x, y, characterElement);
 		}
-		else if (eS == "C") //Chest
+		else if (eS == "C") //! Chest
 		{
 			Chest * e = new Chest();
 			success = m->setElementAt(x, y, *e);
 			delete e;
 		}
-		else if (eS == "F")//floor
+		else if (eS == "F")//! floor
 		{
 			success = m->removeElementAt(x, y);
 		}
-		//Action result
-		if (success) //If the tile was successfully edited
+		//! Action result
+		if (success) //! If the tile was successfully edited
 		{
 			cout << "The action was SUCCESFULLY performed" << endl;
 		}
-		else //The was an issue during the tile edition
+		else //! The was an issue during the tile edition
 		{
 			cout << "The action was NOT performed due to an INVALID parameter" << endl;
 		}
@@ -213,13 +238,19 @@ void MapController::editMap(bool creatingNewMap) {
 
 
 }
+
+//! Method to save a character
+//! @return -
 void MapController::saveMap() {
 	ofstream outMapFile("SaveFiles/Maps/"+currentMap->getName()+".txt");
-	outMapFile << currentMap->serializeMapToString();
+	outMapFile << currentMap->serializeMapToString(); //! Call serialize method for the map to save it
 	outMapFile.close();
 
 	cout << "Map was Saved!" << endl;
 }
+
+//! Method to read a map from a file
+//! @return true if loaded properly, false otherwise
 bool MapController::cacheMap() {
 	string mapEditName;
 	string mapFileLocation;
@@ -228,8 +259,9 @@ bool MapController::cacheMap() {
 	mapFile.open("");
 	int couldNotFindMap = 0;
 	while (!mapFile) {
-		cout << "Enter the name of the map you would like to edit." << endl;
+		cout << "Enter the name of the map you would like to edit." << endl; 
 
+		//! Display a list of all the saved map files available
 		cout << "Here is a list of all the existing maps:" << endl;
 		vector<string> allFiles = getFilesInsideFolderNoExtension("SaveFiles\\Maps");
 		for (string& file : allFiles)
@@ -237,12 +269,15 @@ bool MapController::cacheMap() {
 			cout << file << endl;
 		}
 
+		//! Prompt for the name of the map
 		cout << "Enter the name: ";
 		cin >> mapEditName;
 
+		//! Retrieve the map
 		mapFileLocation = "SaveFiles/Maps/" + mapEditName + ".txt";
 		mapFile.open(mapFileLocation);
 
+		//! If name is not correct
 		if (!mapFile) {
 			cout << "Could not find map, try a different name.\nEnter 0 to continue.\nEnter -1 to quit." << endl;
 			cin >> couldNotFindMap;
@@ -258,7 +293,7 @@ bool MapController::cacheMap() {
 		}*/
 
 		//#####read map info
-		currentMap = readMapFile(mapFileLocation, mapEditName);
+		currentMap = readMapFile(mapFileLocation, mapEditName); //! read the map info
 		return true;
 	}
 	else {
@@ -266,10 +301,14 @@ bool MapController::cacheMap() {
 	}
 }
 
+//! Method to read a map from a file
+//! @param string location of the file
+//! @param string name of the map
+//! @return pointer to a map object
 Map* readMapFile(string mapFileLocation, string mapName) {
 	string fileLine;
 	ifstream mapFile;
-	mapFile.open(mapFileLocation);
+	mapFile.open(mapFileLocation); //! Open the file for reading
 
 	if(mapFile.fail())
 	{
@@ -284,8 +323,9 @@ Map* readMapFile(string mapFileLocation, string mapName) {
 
 	int tmpX;
 	int tmpY;
-	Map* tmpMap = new Map(newWidth, newHeight, mapName);
+	Map* tmpMap = new Map(newWidth, newHeight, mapName); //! Make a temporary pointer to a map
 	
+	//! Read each element the way it was stored int the file
 	while(!mapFile.eof()){
 		getline(mapFile, fileLine);
 		if (fileLine == "start") {
@@ -342,9 +382,11 @@ Map* readMapFile(string mapFileLocation, string mapName) {
 	return tmpMap;
 }
 
+//! Method to quit while creating or ediing a map
+//! @return -
 void MapController::quit()
 {
-	if (currentMap->isValid()) {
+	if (currentMap->isValid()) { //! Check if map is valid before saving
 		saveMap();
 	}
 	else {
