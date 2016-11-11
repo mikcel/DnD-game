@@ -1,7 +1,7 @@
 character
 MIK
 1d10
-2
+5
 0
 0
 15

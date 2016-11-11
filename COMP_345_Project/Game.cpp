@@ -99,6 +99,6 @@ void Game::perfomEndGame()
 	CharacterController cc(&currentChar);
 	cc.saveCharacter();
 
-	cout << "Press any key to return to the main menu" << endl;
-	cin.ignore(); // Wait for any key
+	cout << endl << "You will be redirected to the main menu." << endl;
+	system("pause");
 }
