@@ -51,6 +51,9 @@ Character::Character(Character &copyChar) {
 	//! Call the method to generate the each ability modifiers
 	generateAbilityModifiers();
 
+	int diceRoll = Dice::roll(hitDice);
+	currentHitPoints += (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
+
 	//! Invokes the method to calculate the armor class
 	calcArmorClass();
 
@@ -217,6 +220,10 @@ void Character::setName(string chrName){
 void Character::setLevel(int chrLevel){
 	if (chrLevel > 0){ //! Check that new level is positive
 		level = chrLevel;
+
+		int diceRoll = Dice::roll(hitDice);
+		currentHitPoints += (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
+
 		calcAttackBonus();
 		calcDamageBonus();
 	}
