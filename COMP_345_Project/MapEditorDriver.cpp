@@ -95,6 +95,12 @@ int main(int argc, char* argv[])
 		
 		cout << "Select an option:";
 		cin >> userOptionStr;
+		while (cin.fail())
+		{
+			cout << "Enter a valid input." << endl << endl;
+			cin.clear();
+			continue;
+		}
 
 		int userOption;
 		try {

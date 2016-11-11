@@ -22,15 +22,18 @@ void GameController::play()
 	//We let the user select his campaign
 	selectCampaign();
 
-	mapElementsObserver = new MapElementsObserver(map);
-
 	//We are ready to launch the game
 	launchGame();
 
 	if (map != nullptr) {
 		delete map;
-		delete mapElementsObserver;
 		map = nullptr;
+	}
+
+	if (character != nullptr)
+	{
+		delete character;
+		character = nullptr;
 	}
 
 	
@@ -55,6 +58,13 @@ void GameController::selectCharacter()
 
 		cout << endl << "Enter the name of the character you want to play as: ";
 		cin >> characterName;
+		while (cin.fail())
+		{
+			cout << "Incorrect Input. Please enter a correct character name: ";
+			cin.clear();
+			cin >> characterName;
+		}
+
 		character = readCharacterFile("SaveFiles/Maps/", characterName);
 
 		if (character == nullptr)
@@ -85,6 +95,13 @@ void GameController::selectCampaign()
 
 		cout << endl << "Enter the name of the map you want to play: ";
 		cin >> mapName;
+		while (cin.fail())
+		{
+			cout << "Incorrect Input. Please enter a correct map name: ";
+			cin.clear();
+			cin >> mapName;
+		}
+
 		map = readMapFile("SaveFiles/Maps/" + mapName + ".txt", mapName);
 
 		if (map == nullptr)

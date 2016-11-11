@@ -2,6 +2,7 @@
 //! @brief Class for the item container
 #pragma once
 #include "ItemContainer.h"
+#include "Chest.h"
 //! Default Constructor
 ItemContainer::ItemContainer()
 {
@@ -293,6 +294,11 @@ ostream& operator<<(ostream& stream, const ItemContainer& cont){
 		else{
 			countNullItem++;
 		}
+	}
+
+	if (countNullItem == cont.contents.size())
+	{
+		stream << "No Items\n";
 	}
 
 	return stream;

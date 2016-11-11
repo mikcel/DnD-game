@@ -476,8 +476,30 @@ Player* Map::placePlayer(Player& newPlayer)
 				int nbrOfItems = abs(rand()) %6;
 				for (int i = 0; i < nbrOfItems; i++) {
 					int itemIndex = abs(rand()) % allExistingItems.size();
-					//Item* curItem = allExistingItems.at()
-					//chest->addItem()
+					Item* baseItem = allExistingItems.at(itemIndex);
+					Weapon* baseWeapon = dynamic_cast<Weapon*>(baseItem);
+					Item* curItem;
+					
+					if (baseWeapon)
+					{
+						curItem = new Weapon(*baseWeapon);
+					}
+					else {
+						curItem = new Item(*baseItem);
+					}
+
+					int characterLevel = player->character->getLevel();
+					curItem->setItemName(curItem->getItemName() + " " + to_string(characterLevel) + " " + to_string(i));
+
+					int increase = characterLevel / 5;
+					vector<Buff> buffs = curItem->getBuffs();
+					for (Buff& b : buffs)
+					{
+						b.setBuffAmount(b.getBuffAmount() + increase);
+					}
+
+					curItem->setBuffs(buffs);
+					chest->addItem(curItem);
 				}
 			}
 		}

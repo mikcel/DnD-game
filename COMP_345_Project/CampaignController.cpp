@@ -53,6 +53,7 @@ void CampaignController::editCampaign() {
 	}
 	catch (...) {
 		cout << "Invalid input, returning to main menu;" << endl;
+		system("pause");
 		return;
 	}
 
@@ -99,6 +100,8 @@ void CampaignController::createCampaign(){
 				if (!mapFile) {
 					cout << "Map does not exist. Would you like to try a new file name?\nEnter 0 to continue\nEnter -1 to quit." << endl;
 					cin >> continueTheMapSearch;
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
 					if (continueTheMapSearch == -1) {
 						break;
 					}

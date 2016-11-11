@@ -9,6 +9,7 @@
 //! 
 
 #include "Chest.h"
+#include "ItemContainer.h"
 
 //! Default constructor
 Chest::Chest()
@@ -49,4 +50,9 @@ ostream& operator<<(ostream& stream, const Chest& chst){
 	//stream << chr;
 	return stream;
 
+}
+
+//Prints the output of a chest
+const std::string Chest::print() const {
+	return "C";
 }
