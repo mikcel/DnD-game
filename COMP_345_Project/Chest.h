@@ -5,6 +5,8 @@
 #pragma once
 #include "Element.h"
 #include "ItemContainer.h"
+
+//! Class defining the chest
 class Chest:public ItemContainer,public Element
 {
 public:
@@ -20,5 +22,9 @@ public:
 	~Chest();
 
 	virtual Chest* Chest::clone();
+
+private:
+
+	friend ostream& operator<<(ostream& stream, const Chest& chst);
 };
 

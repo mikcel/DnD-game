@@ -10,14 +10,16 @@ ItemContainer::ItemContainer()
 
 }
 
-
+//! Parametrized constructor that makes an item container from a container type
+//! @param Container type
 ItemContainer::ItemContainer(ContainerType type){
 
+	//! Set the type
 	containerType = type;
-	vector<Item*>vecTemp(0);
+	vector<Item*>vecTemp(0); //! makes a vector item depending on the type passed
 	if (type == ContainerType::WORN_ITEM)
 	{
-		for (int i = 0; i < 7; i++){
+		for (int i = 0; i < 7; i++){ //! Make default items if of type currently worn items
 			vecTemp.push_back(new Item());
 		}
 	}
@@ -47,15 +49,17 @@ ItemContainer::ItemContainer(ContainerType type, vector<Item*> vectorOfItems)
 	contents = vecTemp;
 }
 
+//! Copy Constructor
+//! @param Reference to an item container
 ItemContainer::ItemContainer(ItemContainer &copyCont)
 {
-	this->containerType = copyCont.containerType;
-	vector<Item*> copyVector(0);
-	for (auto i : copyCont.contents){
-		if (i->getItemTypes()==ItemType::WEAPON)
+	this->containerType = copyCont.containerType; //! copy the container type
+	vector<Item*> copyVector(0); //! make a temporary vector
+	for (auto i : copyCont.contents){ //! Go through each item in the contents of the item container passed
+		if (i->getItemTypes()==ItemType::WEAPON) //! If wepon copy the wepon object
 			copyVector.push_back(new Weapon(*(dynamic_cast<Weapon*>(i))));
 		else
-			copyVector.push_back(new Item(*i));
+			copyVector.push_back(new Item(*i)); //! Copy an item
 	}
 	this->contents = copyVector;
 }
@@ -274,8 +278,8 @@ bool ItemContainer::unequipItem(string itemName, ItemContainer* playerBackpack) 
 ostream& operator<<(ostream& stream, const ItemContainer& cont){
 
 	if (cont.contents.size() == 0)
-		return stream << "No Items";
-
+		return stream << "No Items\n";
+	
 	int countNullItem = 0;
 	for (auto i : cont.contents){
 		if (i->getItemTypes() == ItemType::WEAPON)
@@ -290,9 +294,6 @@ ostream& operator<<(ostream& stream, const ItemContainer& cont){
 			countNullItem++;
 		}
 	}
-
-	if (countNullItem == cont.contents.size())
-		stream << "No Items" << endl;
 
 	return stream;
 

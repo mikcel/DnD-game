@@ -51,8 +51,11 @@ ostream& operator<<(ostream& stream, CharacterSize size);
 //! Overloading the output stream operator to have a specific output for each Character object
 ostream& operator<<(ostream& stream, CharacterAbility ability);
 
+//! Overloading the output stream operator for the fighter style
 ostream& operator<<(ostream& stream, FightStyle style);
 
+//! Overloading the output stream operator for the item type
 ostream& operator<<(ostream& stream, ItemType type);
 
+//! Overloading the output stream opeerator for the buff types
 ostream& operator<<(ostream& stream, BuffType buffType);
