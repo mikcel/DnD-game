@@ -214,6 +214,7 @@ void Character::setName(string chrName){
 void Character::setLevel(int chrLevel){
 	if (chrLevel > 0){ //! Check that new level is positive
 		level = chrLevel;
+		calcAttackBonus();
 	}
 	else{ //! Incorrect message is output if negative new level
 		cout << "Incorrect Level.";
@@ -224,6 +225,7 @@ void Character::setLevel(int chrLevel){
 //! @param Size enumerated size as new Character's size
 void Character::setSize(CharacterSize chrSize){
 	size = chrSize;
+	calcAttackBonus();
 }
 
 //! Mutator method for ability scores
@@ -455,6 +457,7 @@ void Character::incrementLevel(int hitDiceNo){
 	currentHitPoints += abilityModifiers[(int)CharacterAbility::CONS] + hitDiceNo;
 
 	calcAttackBonus();
+	calcDamageBonus();
 
 	//! Output new information
 	cout << "Level " << level << " reached." << endl;
