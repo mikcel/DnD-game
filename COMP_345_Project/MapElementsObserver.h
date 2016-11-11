@@ -2,12 +2,11 @@
 #include "ConsoleLogger.h"
 #include "Observer.h"
 
-class MapElementsObserver : public Observer
+class MapElementsObserver
 {
 	Map& map;
-	CConsoleLogger * secondConsole;
+	bool isShown;
 public:
 	MapElementsObserver(Map* map);
-	virtual void update();
 	bool toggle();
 };
