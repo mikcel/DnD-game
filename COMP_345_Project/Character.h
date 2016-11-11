@@ -49,17 +49,17 @@ public:
 	virtual ~Character(); 
 
 	string getName() const; //! Getter for Character's name
-	int getLevel(); //! Getter for Character's Level
-	CharacterSize getSize(); //! Getter for Character's Size
-	int getOneAbilityScore(CharacterAbility ability); //! Getting one ability score
-	int* getAllAbilityScores(); //! Getter for an array of all the ability scores
-	int getOneAbilityModifier(CharacterAbility ability); //! Getter one ability modifier
-	int* getAllAbilityModifiers(); //! Function to return a pointer to a copy of the ability modifiers array.
-	int getCurrentHitPoints(); //! Getter to get Character's HP
-	int getDamageBonus(); //! Getter to obtain damage bonus of the Character
-	int getAttackBonus(); //! Function that return Attack bonus
-	int getArmorClass(); //! Function that return Armor Class
-	string getHitDice(); //! Getter for the Character's hit dice
+	int getLevel() const; //! Getter for Character's Level
+	CharacterSize getSize() const; //! Getter for Character's Size
+	int getOneAbilityScore(CharacterAbility ability) const; //! Getting one ability score
+	int* getAllAbilityScores() const; //! Getter for an array of all the ability scores
+	int getOneAbilityModifier(CharacterAbility ability) const; //! Getter one ability modifier
+	int* getAllAbilityModifiers() const; //! Function to return a pointer to a copy of the ability modifiers array.
+	int getCurrentHitPoints() const; //! Getter to get Character's HP
+	int getDamageBonus() const; //! Getter to obtain damage bonus of the Character
+	int getAttackBonus() const; //! Function that return Attack bonus
+	int getArmorClass() const; //! Function that return Armor Class
+	string getHitDice() const; //! Getter for the Character's hit dice
 
 	void setName(string chrName); //! Setter for the Character's name
 	void setLevel(int chrLevel); //! Setter for the Character's level

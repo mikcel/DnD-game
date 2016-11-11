@@ -1,7 +1,7 @@
-fighter
+character
 MIK
 1d10
-1
+2
 0
 0
 15
