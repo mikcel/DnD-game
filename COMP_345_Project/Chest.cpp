@@ -47,7 +47,7 @@ ostream& operator<<(ostream& stream, const Chest& chst){
 
 	cout << "==== CHEST ====\n";
 	const ItemContainer& chr = chst; //! cast the chest to item container reference and output the contents
-	//stream << chr;
+	stream << chr;
 	return stream;
 
 }
