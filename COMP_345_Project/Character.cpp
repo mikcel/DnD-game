@@ -358,7 +358,7 @@ void Character::generateAbilityModifiers(){
 		//! and taking the floor of the results. This si the formula provided by the d20 rule.
 		for (int i = 0; i < NO_ABILITY; i++){
 			double modifier = (abilityScores[i] - 10) / 2.0;
-			abilityModifiers[i] = floor(modifier);
+			abilityModifiers[i] = floor(modifier);	
 		}
 	}
 
