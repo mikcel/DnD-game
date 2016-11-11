@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Dice.h"
 #include <string>
 #include <cmath>
 
@@ -31,5 +32,9 @@ std::string calculateRandomName()
 
 void Enemy::createCharacterWithLevel(int level)
 {
-	character = new  Character(calculateRandomName(), "1d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), level);
+	character = new  Character(calculateRandomName(), "1d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), 1);
+	for (int i = 1; i < level; i++)
+	{
+		character->incrementLevel(Dice::roll("1d10"), false);
+	}
 }

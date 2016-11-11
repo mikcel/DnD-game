@@ -447,9 +447,13 @@ int Character::getSizeModifier(){
 	}
 }
 
+void Character::incrementLevel(int hitDiceNo){
+	incrementLevel(hitDiceNo, true);
+}
+
 //! Function that can be used to increment the level of the Character and at the same time increases the HP
 //! @param int - representing the roll of the Character's hit dice
-void Character::incrementLevel(int hitDiceNo){
+void Character::incrementLevel(int hitDiceNo, bool displayConsole){
 	level++; //! Increment level by 1
 
 	//! Calculate new hit points
@@ -459,9 +463,12 @@ void Character::incrementLevel(int hitDiceNo){
 	calcAttackBonus();
 	calcDamageBonus();
 
-	//! Output new information
-	cout << "Level " << level << " reached." << endl;
-	cout << "Current HP: " << currentHitPoints << endl;
+	if (displayConsole)
+	{ 
+		//! Output new information
+		cout << "Level " << level << " reached." << endl;
+		cout << "Current HP: " << currentHitPoints << endl;
+	}
 }
 
 bool Character::takeOffItem(Item *objItem){
