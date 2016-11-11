@@ -1,7 +1,7 @@
 character
 Simon
 1d10
-90
+91
 3
 0
 13

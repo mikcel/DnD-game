@@ -488,7 +488,17 @@ Player* Map::placePlayer(Player& newPlayer)
 						curItem = new Item(*baseItem);
 					}
 
-					curItem->setItemName(curItem->getItemName() + " " + to_string(player->character->getLevel()) + " " + to_string(i));
+					int characterLevel = player->character->getLevel();
+					curItem->setItemName(curItem->getItemName() + " " + to_string(characterLevel) + " " + to_string(i));
+
+					int increase = characterLevel / 5;
+					vector<Buff> buffs = curItem->getBuffs();
+					for (Buff& b : buffs)
+					{
+						b.setBuffAmount(b.getBuffAmount() + increase);
+					}
+
+					curItem->setBuffs(buffs);
 					chest->addItem(curItem);
 				}
 			}

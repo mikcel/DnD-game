@@ -51,8 +51,13 @@ void Buff::setBuffType(BuffType buffType)
 //! @param amount: int of the amount of the buff has
 void Buff::setBuffAmount(int buffAmount)
 {	
-	if (buffAmount < 1 || buffAmount>5) {
+	if (buffAmount < 1) {
 		buffAmount = 1;
 	}
+	else if (buffAmount > 5)
+	{
+		buffAmount = 5;
+	}
+
 	this->buffAmount = buffAmount;
 }
