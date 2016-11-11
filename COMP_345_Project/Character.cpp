@@ -226,6 +226,7 @@ void Character::setLevel(int chrLevel){
 //! @param Size enumerated size as new Character's size
 void Character::setSize(CharacterSize chrSize){
 	size = chrSize;
+	calcArmorClass();
 	calcAttackBonus();
 }
 
