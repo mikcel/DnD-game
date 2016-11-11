@@ -13,8 +13,8 @@ class MapObserver : public Observer
 public:
 	MapObserver(const Map&); //! Map Observer constructor
 	virtual void update(); //! Called when an observed  object send a notification
+	void printMap(); //! Amount of times the update() function was called
 private:
 	const Map& map; //! Reference to the observed map
 	long long timesUpdated; //! Amount of times the update() function was called
-	void printMap(); //! Amount of times the update() function was called
 };

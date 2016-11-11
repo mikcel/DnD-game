@@ -8,7 +8,7 @@
 #include <string>
 
 //! Represents a generic element found in the map. This will later be used for the characters, doors, chests and other elements on a map.
-class Element : public Observable
+class Element
 {
 public:
 	Element(); //! Element default constructor

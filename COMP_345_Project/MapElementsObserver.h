@@ -6,7 +6,13 @@ class MapElementsObserver
 {
 	Map& map;
 	bool isShown;
+	void showPlayerDirect();
+	void showEnemiesDirect();
+	void showChestsDirect();
 public:
 	MapElementsObserver(Map* map);
-	bool toggle();
+	void show();
+	void showPlayer();
+	void showEnemies();
+	void showChests();
 };
