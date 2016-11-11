@@ -50,3 +50,8 @@ ostream& operator<<(ostream& stream, const Chest& chst){
 	return stream;
 
 }
+
+//Prints the output of a chest
+const std::string Chest::print() const {
+	return "C";
+}
