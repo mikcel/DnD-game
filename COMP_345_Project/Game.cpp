@@ -25,14 +25,16 @@ void Game::play(Character* player)
 	Player * p = map->placePlayer(tempP);
 
 	//Let's run the game
-	run(p);
-	perfomEndGame();
+	if (run(p))
+	{
+		perfomEndGame();
+	}
 }
 
 //! Represents the main game loop of the Dungeons&Dragons game
 //! "Listens" to the input of the user and adjusts the game accordingly 
 //! @param player to be used in the current game
-int Game::run(Player* p)
+bool Game::run(Player* p)
 {
 	//Set all of our observers
 	MapObserver mo(*map);
@@ -69,7 +71,7 @@ int Game::run(Player* p)
 				break;
 			case 'q': //Quit the application
 			case 'Q': //Quit the application
-				return 0;
+				return false;
 				break;
 			case 'T': //Toggles the view of the map elements
 			case 't': //Toggles the view of the map elements
@@ -96,6 +98,7 @@ int Game::run(Player* p)
 			isPlaying = true;
 		}
 	}
+	return true;
 }
 
 //! Checks if the game is over (the player has reached the end point)
