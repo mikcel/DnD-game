@@ -69,6 +69,7 @@ void CampaignController::createCampaign(){
 					cout << file << endl;
 				}
 
+				cout << "Enter the name:";
 				cin >> mapEditName;
 				mapFile.open("SaveFiles/Maps/" + mapEditName + ".txt");
 
@@ -136,7 +137,7 @@ int CampaignController::cacheCampaign() {
 			cout << file << endl;
 		}
 
-		cout << "Enter the name: ";
+		cout << "Enter the name:";
 		cin >> campEditName;
 		campFile.open("SaveFiles/Campaigns/" + campEditName + ".txt");
 

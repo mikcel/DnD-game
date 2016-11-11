@@ -36,6 +36,8 @@ void MapController::setCurrentMap(Map& newMap) {
 }
 
 void MapController::createMap() {
+	cout << "==== Map creation ====" << endl << endl;
+
 	//string widthS, heightS;
 	int width, height;
 	bool isInvalid = false;
@@ -72,19 +74,21 @@ void MapController::createMap() {
 
 	} while (isInvalid);
 
-	cout << m->print();
-
 	currentMap = m;
 	editMap(true);
 }
 
 void MapController::editMap(bool creatingNewMap) {
 	if (!creatingNewMap) {
+		cout << "==== Map edition ====" << endl << endl;
 		if (!cacheMap()) {
 			return;
 		}
 	}
 	Map* m = currentMap;
+
+	cout << m->print() << endl;
+
 	bool isInvalid = false;
 	cout << "LEGEND: F Floor, W Wall, X Enemy, C Chest, () Start point, [] End point" << endl;
 	cout << "Enter Q at any time to save and quit the map " << (creatingNewMap ? "creation" : "edition") << ".\n" << endl;
@@ -235,7 +239,6 @@ bool MapController::cacheMap() {
 
 		cout << "Enter the name: ";
 		cin >> mapEditName;
-		cout << mapEditName << endl;
 
 		mapFileLocation = "SaveFiles/Maps/" + mapEditName + ".txt";
 		mapFile.open(mapFileLocation);
