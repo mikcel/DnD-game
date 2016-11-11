@@ -16,6 +16,7 @@ CampaignController::~CampaignController()
 }
 
 void CampaignController::editCampaign() {
+	cout << "==== CAMPAIGN EDITION ====" << endl << endl;
 	if (cacheCampaign() == 1) {
 		return;
 	}
@@ -50,6 +51,7 @@ void CampaignController::editCampaign() {
 }
 
 void CampaignController::createCampaign(){
+		cout << "==== CAMPAIGN CREATION ====" << endl << endl;
 		string campName;
 		cout << "Enter the name of the campaign you want to create." << endl;
 		cin >> campName;

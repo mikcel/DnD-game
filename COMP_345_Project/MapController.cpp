@@ -44,7 +44,7 @@ MapController::~MapController()
 //! Accessor for current Map
 //! @return Map pointer
 Map* MapController::getCurrentMap() {
-	return currentMap; 
+	return currentMap;
 }
 
 //! Mutator for current Map
@@ -56,7 +56,7 @@ void MapController::setCurrentMap(Map& newMap) {
 //! Method to create a Map
 //! @return - 
 void MapController::createMap() {
-	cout << "==== Map creation ====" << endl << endl;
+	cout << "==== MAP CREATION ====" << endl << endl;
 
 	//string widthS, heightS;
 	int width, height;
@@ -76,16 +76,26 @@ void MapController::createMap() {
 
 		//! Asks for map dimensions
 		cout << "Enter the desired dimensions of the map" << endl;
-		cout << "Width: "<<endl;
+		cout << "Width: ";
 		cin >> width;
-		cout << "Height: " <<endl;
+		while (cin.fail() || width < 0) {
+			cout << "Incorrect Input. Please enter a valid number: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin >> width;
+		}
+
+		//Height
+		cout << "Height: ";
 		cin >>height;
+		while (cin.fail() || height < 0) {
+			cout << "Incorrect Input. Please enter a valid number: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin >> height;
+		}
 		cout << endl;
 
-		//stringstream(widthS) >> width;
-		//stringstream(heightS) >> height;
-
-		//! create a new map object with the data entered
 		try {
 			m = new Map(width, height, mapName);
 		}
@@ -103,8 +113,8 @@ void MapController::createMap() {
 //! Method to edit a map
 //! @param bool if creating currently creating a map
 void MapController::editMap(bool creatingNewMap) {
-	if (!creatingNewMap) { //! If not creating a map
-		cout << "==== Map edition ====" << endl << endl;
+	if (!creatingNewMap) {
+		cout << "==== MAP EDITION ====" << endl << endl;
 		if (!cacheMap()) {
 			return;
 		}
@@ -259,7 +269,7 @@ bool MapController::cacheMap() {
 	mapFile.open("");
 	int couldNotFindMap = 0;
 	while (!mapFile) {
-		cout << "Enter the name of the map you would like to edit." << endl; 
+		cout << "Enter the name of the map you would like to edit." << endl;
 
 		//! Display a list of all the saved map files available
 		cout << "Here is a list of all the existing maps:" << endl;

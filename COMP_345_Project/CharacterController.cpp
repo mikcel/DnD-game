@@ -41,7 +41,7 @@ void CharacterController::setCurrentCharacter(Character *character){
 //! @return -
 void CharacterController::createCharacter(){
 	
-	cout << "==== Character creation ====" << endl << endl;
+	cout << "==== CHARACTER CREATION ====" << endl << endl;
 	bool choiceCorrect = false; //Flag for correct choice between character and fighter creation 
 	int choice = 0; //! Choice of user
 
@@ -287,7 +287,7 @@ void CharacterController::createCharacter(){
 //! Method to edit character
 //! @return - 
 void CharacterController::editCharacter(){
-	cout << "====  Character Edition ====" << endl << endl;
+	cout << "==== CHARACTER EDITION ====" << endl << endl;
 
 	//! Get all files available in the Characters folder
 	vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Characters/");
