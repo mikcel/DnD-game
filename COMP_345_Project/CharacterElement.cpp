@@ -1,7 +1,7 @@
 #include "CharacterElement.h"
 #include "Character.h"
 
-CharacterElement::CharacterElement(Character& newCharacter) : character(*new Character(newCharacter))
+CharacterElement::CharacterElement(Character& newCharacter) : character(new Character(newCharacter))
 {
 	//return new CharacterElement(characterCopy);
 }
@@ -13,5 +13,10 @@ CharacterElement* CharacterElement::clone()
 
 Character& CharacterElement::getCharacter()
 {
-	return character;
+	return *character;
+}
+
+CharacterElement::CharacterElement()
+{
+	
 }

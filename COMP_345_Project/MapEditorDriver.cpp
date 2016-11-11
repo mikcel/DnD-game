@@ -39,6 +39,7 @@ using namespace std;
 //! 4. Run the test cases. 
 int main(int argc, char* argv[])
 {
+	srand(time(0));
 //#define CPPTEST
 #ifdef CPPTEST
 
