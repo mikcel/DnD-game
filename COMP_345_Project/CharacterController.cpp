@@ -27,295 +27,267 @@ void CharacterController::setCurrentCharacter(Character *character){
 }
 
 void CharacterController::createCharacter(){
-
-	system("cls");
-
+	
+	cout << "==== Character creation ====" << endl << endl;
 	bool choiceCorrect = false; //Flag for correct choice between character and fighter creation 
 	int choice = 0; //! Choice of user
 
-	char choiceLoad;
-	cout << "\nDo you want to load a Character from a saved file? (Y/N) -> ";
+	cout << "Please choose between creating a simple Character(1) or a Fighter(2) \nEnter the respective number: ";
 
-	bool loadFile = false; //! Flag to check if continue input is correct
-	while (!loadFile){
-		cin >> choiceLoad;
-		if (choiceLoad == 'N' || choiceLoad == 'Y'){
-			loadFile = true;
-		}
-		else
-		{
-			cout << "Please enter Y or N: ";
-		}
+	//! Keep asking if choice is not correct
+	while (!choiceCorrect){
 
+		cin >> choice;
+		if (choice == 1){ //! If choice is Character
+			cout << "\nTime to create a new Character!" << "\nLet's gets started.";
+			choiceCorrect = true;
+		}
+		else if (choice == 2){ //! If choice is Fighter
+			cout << "\nTime to create a new Fighter!" << "\nLet's gets started.";
+			choiceCorrect = true;
+		}
+		else{ //! Asks again if incorrect choice
+			cout << "\nIncorrect choice. Please enter only 1 or 2 depending on the character type you want to create.\n";
+			cout << "1 - Character OR 2 - Fighter. Please choose correctly: ";
+		}
 	}
 
-	if (choiceLoad == 'Y'){
+	bool characterCorrect = false; //! Flag for correct Character
 
-		vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Characters/");
-		
-		if (chrFiles.size() == 0){
-			cout << "There are no saved files.\n Returning to main menu...\n";
-			system("pause");
-			return;
-		}
-		cout << "The saved files available are: \n";
-		for (auto i : chrFiles){
-			cout << i << "\n";
-		}
-		string fileName = "";
-		bool fileNameCorrect = false;
-		cout << "\nPlease enter the name of the Character you want to load: ";
-		while (!fileNameCorrect){
-			cin >> fileName;
-			if (find(chrFiles.begin(), chrFiles.end(), fileName) != chrFiles.end()){
-				currentCharacter = new Character(*readCharacterFile("SaveFiles/Character", fileName));
-				fileNameCorrect = true;
-			}
-			else{
-				cout << "File name does not exist. Try again: ";
-			}
-		}
+	string name; //! Player's name
+	int level; //! Player's level
+	int size; //! Player's size
+	int fightStyle; //! Fighter's fighting style
 
-		if (dynamic_cast<Fighter*>(currentCharacter))
-			cout << *(dynamic_cast<Fighter*>(currentCharacter));
-		else
-			cout << *currentCharacter;
+	//! While character not correct keep asking
+	while (!characterCorrect){
 
-		system("pause");
+		cout << "\nEnter your player's name: ";
+		cin.ignore();
+		getline(cin, name); //! Get name even with spaces
 
-	}
-	else{
-		cout << "\nPlease choose between creating a simple Character(1) or a Fighter(2) \nEnter the respective number: ";
+		cout << "Enter your level: ";
+		cin >> level; //! Get level
 
-		//! Keep asking if choice is not correct
-		while (!choiceCorrect){
+		cout << "Enter choose size from the list below:\n";
+		//! Display all the sizes possible
+		displayCharacterSize();
+		cin >> size; //! Get size
 
-			cin >> choice;
-			if (choice == 1){ //! If choice is Character
-				cout << "\nTime to create a new Character!" << "\nLet's gets started.";
-				choiceCorrect = true;
-			}
-			else if (choice == 2){ //! If choice is Fighter
-				cout << "\nTime to create a new Fighter!" << "\nLet's gets started.";
-				choiceCorrect = true;
-			}
-			else{ //! Asks again if incorrect choice
-				cout << "\nIncorrect choice. Please enter only 1 or 2 depending on the character type you want to create.\n";
-				cout << "1 - Character OR 2 - Fighter. Please choose correctly: ";
-			}
-
+		if (choice == 2){ //! If fighter
+			cout << "Enter your Fighter Style from the list below:\n";
+			//! Displays all the fighting style possible
+			displayFighterStyle();
+			cout << "Please choose: ";
+			cin >> fightStyle; //! Get fighting style if fighter
 		}
 
-		bool characterCorrect = false; //! Flag for correct Character
-
-		string name; //! Player's name
-		int level; //! Player's level
-		int size; //! Player's size
-		int fightStyle; //! Fighter's fighting style
-
-		//! While character not correct keep asking
-		while (!characterCorrect){
-
-			cout << "\nEnter your player's name: ";
-			cin.ignore();
-			getline(cin, name); //! Get name even with spaces
-
-			cout << "Enter your level: ";
-			cin >> level; //! Get level
-
-			cout << "Enter choose size from the list below:\n";
-			//! Display all the sizes possible
-			displayCharacterSize();
-			cin >> size; //! Get size
-
-			if (choice == 2){ //! If fighter
-				cout << "Enter your Fighter Style from the list below:\n";
-				//! Displays all the fighting style possible
+		if (!cin){ //! Error while inputting
+			cout << "\nIncorrect Input. Please enter again all data.";
+		}
+		else if (level<1){ //! Check level
+			while (level < 1){ //! if level is still not good keep asking
+				cout << "\nIncorrect Level entered. Please enter level again: ";
+				cin >> level;
+			}
+		}
+		else if (size<0 || size>3){ //! Check size
+			while (size<0 || size>3){ //! If size is still not good check size
+				cout << "\nIncorrect Size entered. Please enter Size again: ";
+				displayCharacterSize();
+				cin >> size;
+			}
+		}
+		else if (choice == 2 && (fightStyle<0 || fightStyle>2)){
+			while (fightStyle<0 || fightStyle>2){ //! if fighting style is still not good ask again
+				cout << "\nIncorrect Fighting Style entered. Please enter style again from the list below: \n";
 				displayFighterStyle();
-				cout << "Please choose: ";
-				cin >> fightStyle; //! Get fighting style if fighter
-			}
-
-			if (!cin){ //! Error while inputting
-				cout << "\nIncorrect Input. Please enter again all data.";
-			}
-			else if (level<1){ //! Check level
-				while (level < 1){ //! if level is still not good keep asking
-					cout << "\nIncorrect Level entered. Please enter level again: ";
-					cin >> level;
-				}
-			}
-			else if (size<0 || size>3){ //! Check size
-				while (size<0 || size>3){ //! If size is still not good check size
-					cout << "\nIncorrect Size entered. Please enter Size again: ";
-					displayCharacterSize();
-					cin >> size;
-				}
-			}
-			else if (choice == 2 && (fightStyle<0 || fightStyle>2)){
-				while (fightStyle<0 || fightStyle>2){ //! if fighting style is still not good ask again
-					cout << "\nIncorrect Fighting Style entered. Please enter style again from the list below: \n";
-					displayFighterStyle();
-					cin >> fightStyle;
-				}
-			}
-
-			//! Display information entered for now and ask if want to continue
-			cout << "\n\nHere are the data you entered for your character: ";
-			cout << "\nName: " << name << "\nLevel: " << level << "\nSize: " << (CharacterSize)size;
-
-			if (choice == 2)
-				cout << "\nFighting Style: " << (FightStyle)fightStyle;
-
-			string changeData = "";
-			bool changeDataCorrect = false; //! Flag to check if continue input is correct
-			cout << "\nDo you want to change anything? (Y/N) ";
-			while (!changeDataCorrect){
-				cin >> changeData;
-				if (changeData == "N"){
-					characterCorrect = true;
-					changeDataCorrect = true;
-				}
-				else if (changeData == "Y"){
-					changeDataCorrect = true;
-				}
-				else
-				{
-					cout << "Please enter Y or N: ";
-				}
-
-			}
-
-		}
-
-		//! Generates the ability score
-		cout << "\n\nTime to generate the ability scores...";
-
-		srand(time(0)); //! Give a starting point to the random function
-
-		int arrRand[Character::NO_ABILITY]; //Create an array with the no of abilities a character should have
-		int *ptr = arrRand; //! Pointer that points to newly created array
-
-		int arrAbilityScores[Character::NO_ABILITY];//! Creates a second array of ability scores that will be used to passed to the Character constructor
-
-		//! For loop to generate random numbers between 3 and 18 and but them in the first created array
-		cout << "\n\nThe random scores are: ";
-		for (int i = 0; i < Character::NO_ABILITY; i++){
-			arrRand[i] = rand() % 16 + 3;
-			cout << arrRand[i] << " ";
-		}
-
-		//! Variable use for input
-		int chosenScr = 0;
-
-		//! Make user chooses which number generated he wants to assign to each score.
-		cout << "\nPlease choose a score from the numbers obtained for the following: \n";
-		for (int i = 0; i < Character::NO_ABILITY - 1; i++){
-
-			//! Outputs the number that are left ot be chosen
-			cout << "The numbers left are: ";
-			for (int i = 0; i < Character::NO_ABILITY; i++){
-				if (arrRand[i] != 0)
-					cout << arrRand[i] << " ";
-			}
-
-			//! For each ability, (using the enumrated type), choose score
-			cout << "\n" << CharacterAbility(i) << ": ";
-			cin >> chosenScr;
-
-			//! If incorrect input, program dies
-			if (!cin){
-				cerr << "Program dies";
-				exit(1);
-			}
-
-			//! Check if number entered is in random generated array. if not ask user to enter again until number is valid
-			while (!checkScr(ptr, chosenScr)){
-				cout << "Please choose a correct no.: ";
-				cin >> chosenScr;
-			}
-
-			//! Initialise the number chosen to the respective ability score
-			arrAbilityScores[i] = chosenScr;
-			cout << "\n";
-		}
-
-		//! Add remaining ability score
-		for (int i = 0; i < Character::NO_ABILITY; i++){
-			if (arrRand[i] != 0){
-				arrAbilityScores[Character::NO_ABILITY - 1] = arrRand[i];
-				break;
+				cin >> fightStyle;
 			}
 		}
 
+		//! Display information entered for now and ask if want to continue
+		cout << "\n\nHere are the data you entered for your character: ";
+		cout << "\nName: " << name << "\nLevel: " << level << "\nSize: " << (CharacterSize)size;
 
+		if (choice == 2)
+			cout << "\nFighting Style: " << (FightStyle)fightStyle;
 
-		if (choice == 1){
-			//! Create Character Object
-			currentCharacter = new Character(name, "1d10", arrAbilityScores, level, (CharacterSize)size);
-			if (!currentCharacter->validateNewCharacter()){ //! Validate
-				//! If invalid character
-				cout << "Incorrect Character. Character will not be saved";
-				system("pause");
-				currentCharacter = NULL;
-				return;
+		string changeData = "";
+		bool changeDataCorrect = false; //! Flag to check if continue input is correct
+		cout << "\nDo you want to change anything? (Y/N) ";
+		while (!changeDataCorrect){
+			cin >> changeData;
+			if (changeData == "N"){
+				characterCorrect = true;
+				changeDataCorrect = true;
 			}
-		}
-		else{
-			//! Create fighter
-			currentCharacter = new Fighter(name, arrAbilityScores, (FightStyle)fightStyle, level, (CharacterSize)size);
-			if (!currentCharacter->validateNewCharacter()){ //! Validate{
-				//! If incorrect Fighter end program
-				cout << "Incorrect Fighter.  Character will not be saved";
-				system("pause");
-				currentCharacter = NULL;
-				return;
+			else if (changeData == "Y"){
+				changeDataCorrect = true;
 			}
-		}
-
-		bool flagCorrectChoice = false;
-		string itemChoice = "";
-		cout << "Do you want to add items to your backpack? (Y/N) ";
-		while (!flagCorrectChoice){
-			cin >> itemChoice;
-			if (itemChoice == "Y" || itemChoice == "N")
-				flagCorrectChoice = true;
 			else
 			{
-				cout << "Incorrect choice. Please enter Y or N: ";
+				cout << "Please enter Y or N: ";
 			}
+
 		}
 
-		if (itemChoice == "Y"){
-			addItem();
-		}
-
-		if (choice == 1){
-			cout << "Character Created!\nThe Stats are:\n" << *currentCharacter;
-		}
-		else{
-			cout << "Fighter Created!\nThe Stats are:\n" << *currentCharacter;
-		}
-
-		saveCharacter();
-
-		system("pause");
 	}
+
+	//! Generates the ability score
+	cout << "\n\nTime to generate the ability scores...";
+
+	srand(time(0)); //! Give a starting point to the random function
+
+	int arrRand[Character::NO_ABILITY]; //Create an array with the no of abilities a character should have
+	int *ptr = arrRand; //! Pointer that points to newly created array
+
+	int arrAbilityScores[Character::NO_ABILITY];//! Creates a second array of ability scores that will be used to passed to the Character constructor
+
+	//! For loop to generate random numbers between 3 and 18 and but them in the first created array
+	cout << "\n\nThe random scores are: ";
+	for (int i = 0; i < Character::NO_ABILITY; i++){
+		arrRand[i] = rand() % 16 + 3;
+		cout << arrRand[i] << " ";
+	}
+
+	//! Variable use for input
+	int chosenScr = 0;
+
+	//! Make user chooses which number generated he wants to assign to each score.
+	cout << "\nPlease choose a score from the numbers obtained for the following: \n";
+	for (int i = 0; i < Character::NO_ABILITY - 1; i++){
+
+		//! Outputs the number that are left ot be chosen
+		cout << "The numbers left are: ";
+		for (int i = 0; i < Character::NO_ABILITY; i++){
+			if (arrRand[i] != 0)
+				cout << arrRand[i] << " ";
+		}
+
+		//! For each ability, (using the enumrated type), choose score
+		cout << "\n" << CharacterAbility(i) << ": ";
+		cin >> chosenScr;
+
+		//! If incorrect input, program dies
+		if (!cin){
+			cerr << "Program dies";
+			exit(1);
+		}
+
+		//! Check if number entered is in random generated array. if not ask user to enter again until number is valid
+		while (!checkScr(ptr, chosenScr)){
+			cout << "Please choose a correct no.: ";
+			cin >> chosenScr;
+		}
+
+		//! Initialise the number chosen to the respective ability score
+		arrAbilityScores[i] = chosenScr;
+		cout << "\n";
+	}
+
+	//! Add remaining ability score
+	for (int i = 0; i < Character::NO_ABILITY; i++){
+		if (arrRand[i] != 0){
+			arrAbilityScores[Character::NO_ABILITY - 1] = arrRand[i];
+			break;
+		}
+	}
+
+
+
+	if (choice == 1){
+		//! Create Character Object
+		currentCharacter = new Character(name, "1d10", arrAbilityScores, level, (CharacterSize)size);
+		if (!currentCharacter->validateNewCharacter()){ //! Validate
+			//! If invalid character
+			cout << "Incorrect Character. Character will not be saved";
+			system("pause");
+			currentCharacter = NULL;
+			return;
+		}
+	}
+	else{
+		//! Create fighter
+		currentCharacter = new Fighter(name, arrAbilityScores, (FightStyle)fightStyle, level, (CharacterSize)size);
+		if (!currentCharacter->validateNewCharacter()){ //! Validate{
+			//! If incorrect Fighter end program
+			cout << "Incorrect Fighter.  Character will not be saved";
+			system("pause");
+			currentCharacter = NULL;
+			return;
+		}
+	}
+
+	bool flagCorrectChoice = false;
+	string itemChoice = "";
+	cout << "Do you want to add items to your backpack? (Y/N) ";
+	while (!flagCorrectChoice){
+		cin >> itemChoice;
+		if (itemChoice == "Y" || itemChoice == "N")
+			flagCorrectChoice = true;
+		else
+		{
+			cout << "Incorrect choice. Please enter Y or N: ";
+		}
+	}
+
+	if (itemChoice == "Y"){
+		addItem();
+	}
+
+	if (choice == 1){
+		cout << "Character Created!\nThe Stats are:\n" << *currentCharacter;
+	}
+	else{
+		cout << "Fighter Created!\nThe Stats are:\n" << *currentCharacter;
+	}
+
+	saveCharacter();
+
+	system("pause");
 
 }
 
 void CharacterController::editCharacter(){
+	cout << "====  Character Edition ====" << endl << endl;
 
-	if (currentCharacter==NULL){
+	vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Characters/");
+
+	if (chrFiles.size() == 0) {
 		cout << "No Character has yet been created.\n";
 		system("pause");
 		return;
 	}
+	cout << "The saved files available are: \n";
+	for (auto i : chrFiles) {
+		cout << i << "\n";
+	}
+	string fileName = "";
+	bool fileNameCorrect = false;
+	cout << "\nPlease enter the name of the Character you want to load: ";
+	while (!fileNameCorrect) {
+		cin >> fileName;
+		if (find(chrFiles.begin(), chrFiles.end(), fileName) != chrFiles.end()) {
+			currentCharacter = new Character(*readCharacterFile("SaveFiles/Character", fileName));
+			fileNameCorrect = true;
+		}
+		else {
+			cout << "File name does not exist. Try again: ";
+		}
+	}
+
+	system("cls");
+	if (dynamic_cast<Fighter*>(currentCharacter))
+		cout << *(dynamic_cast<Fighter*>(currentCharacter));
+	else
+		cout << *currentCharacter;
 
 	int menuChoice = 0;
+	string menuChoiceStr;
 
 	while (menuChoice!=10){
-
+		cout << "Currently edited character: " << currentCharacter->getName() << endl << endl;
 		cout << "Please choose from the following:\n"
 			<< "1 - Save Character\n"
 			<< "2 - Edit Name\n"
@@ -328,7 +300,14 @@ void CharacterController::editCharacter(){
 			<< "9 - Edit Fighting Style\n"
 			<< "10 - Return\n";
 		cout << "Please choose: ";
-		cin >> menuChoice;
+		cin >> menuChoiceStr;
+		try {
+			menuChoice = stoi(menuChoiceStr);
+		}
+		catch (...) {
+			cout << "Enter a valid input." << endl;
+			continue;
+		}
 		system("cls");
 
 		bool styleChangeCorrect = true;
@@ -447,7 +426,7 @@ void CharacterController::editCharacter(){
 					  vector<Item*> backItem; //! Get backpack contents
 						 backItem = currentCharacter->getBackpackContents();
 					  if (backItem.size() == 0) //! Check if there are items in backpack
-						  cout << "\n:( There are no Item that you can equip with!!! Add a new item.\n";
+						  cout << "\n:( There are no Item that you can equip with!!! Try adding a new item first.\n";
 
 					  else{
 
@@ -576,9 +555,10 @@ void CharacterController::editCharacter(){
 				break;
 			
 			default:
-				cout << "Incorrect Menu choice. Try Again. ";
-				break;			
+				cout << "Incorrect Menu choice. Try Again." << endl;
+				continue;			
 		}
+
 		if (menuChoice != 10){
 			if (menuChoice != 1 && styleChangeCorrect)
 				saveCharacter();

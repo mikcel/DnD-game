@@ -88,6 +88,8 @@ void GameController::selectCampaign()
 
 	cout << "The map " << mapName << " was succefully loaded." << endl << endl;
 
+
+	
 }
 
 void GameController::launchGame()

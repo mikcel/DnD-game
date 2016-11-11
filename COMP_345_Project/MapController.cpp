@@ -3,6 +3,7 @@
 #include "Chest.h"
 #include "FolderUtils.h"
 #include "CharacterElement.h"
+#include "Enemy.h"
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -232,6 +233,7 @@ bool MapController::cacheMap() {
 			cout << file << endl;
 		}
 
+		cout << "Enter the name: ";
 		cin >> mapEditName;
 		cout << mapEditName << endl;
 
@@ -317,8 +319,7 @@ Map* readMapFile(string mapFileLocation, string mapName) {
 			tmpX = stoi(fileLine);
 			getline(mapFile, fileLine);
 			tmpY = stoi(fileLine);
-			Character e;
-			CharacterElement characterElement(e);
+			Enemy characterElement;
 			tmpMap->setElementAt(tmpX, tmpY, characterElement);
 		}
 		else if (fileLine == "chest") {

@@ -5,9 +5,12 @@
 
 class CharacterElement : public Element
 {
-	Character& character;
+protected:
+	Character* character;
 public:
 	CharacterElement(Character& newCharacter);
+	CharacterElement();
+	void setCharacter(Character* newCharacter);
 	virtual CharacterElement* clone();
 	Character& getCharacter();
 };
