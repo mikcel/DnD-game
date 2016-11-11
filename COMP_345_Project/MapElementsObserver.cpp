@@ -3,22 +3,13 @@
 #include "ConsoleLogger.h"
 #include <iostream>
 
-MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap)
+MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap){}
+
+void MapElementsObserver::show()
 {
-	isShown = false;
-	///secondConsole.CConsoleLoggers Information");
-
-	
-}
-
-bool MapElementsObserver::toggle()
-{
-	if (!isShown)
-	{
-		isShown = true;
-
-		Player& player = map.getPlayer();
-		std::cout << player.getCharacter();
+	if (system("CLS")) system("clear");
+	Player& player = map.getPlayer();
+	std::cout << player.getCharacter();
 		
 		//for (Element* element : map.getElements())
 		//{
@@ -30,13 +21,4 @@ bool MapElementsObserver::toggle()
 		//	}
 
 		//}
-
-		return true;
-	}
-
-	isShown = false;
-
-
-
-	return false;
 }

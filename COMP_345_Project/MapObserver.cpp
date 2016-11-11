@@ -26,7 +26,6 @@ void MapObserver::update()
 void MapObserver::printMap()
 {
 	if (system("CLS")) system("clear");
-
 	cout << "========= " << map.getName() << " =========" << endl << endl;
 	cout << map.print() << endl;
 }

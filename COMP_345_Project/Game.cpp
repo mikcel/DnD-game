@@ -39,7 +39,7 @@ int Game::run(Player* p)
 	#define KEY_RIGHT 77
 
 	//Initial display of the map
-	mo.update();
+	mo.printMap();
 	
 	bool isPlaying = true;
 	int c = 0;
@@ -66,12 +66,14 @@ int Game::run(Player* p)
 				break;
 			case 'T': //Toggles the view of the map elements
 			case 't': //Toggles the view of the map elements
-				meo.toggle();
+				meo.show();
 				isPlaying = false;
 				break;
 			}
 		}
 		else if(c == 't' || c == 'T') {
+			if (system("CLS")) system("clear");
+			mo.printMap();
 			isPlaying = true;
 		}
 	}
