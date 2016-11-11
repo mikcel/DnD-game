@@ -2,6 +2,7 @@
 //! @brief Class for the item container
 #pragma once
 #include "ItemContainer.h"
+#include "Chest.h"
 //! Default Constructor
 ItemContainer::ItemContainer()
 {

@@ -9,6 +9,7 @@
 //! 
 
 #include "Chest.h"
+#include "ItemContainer.h"
 
 //! Default constructor
 Chest::Chest()

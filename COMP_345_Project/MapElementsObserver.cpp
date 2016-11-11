@@ -1,6 +1,8 @@
 #include "MapElementsObserver.h"
 #include "Map.h"
 #include "Chest.h"
+#include <string>
+#include <iomanip>
 #include <iostream>
 
 
@@ -42,14 +44,26 @@ void MapElementsObserver::showEnemiesDirect()
 //! Shows the info about the chests
 void MapElementsObserver::showChestsDirect()
 {
+	cout << "-------------------------------------------------------------------------------------------------------\n";
+	cout << setw(60) << right << "All Chests" << endl;
+	cout << "-------------------------------------------------------------------------------------------------------\n";
+	cout << endl;
+
+	bool atLeastOnce = false;
 	// Show chests' info
 	for (Element* element : map.getElements())
 	{
 		Chest* chest = dynamic_cast<Chest*>(element);
 		if (chest)
 		{
+			atLeastOnce = true;
 			std::cout << *chest;
 		}
+	}
+
+	if (!atLeastOnce)
+	{
+		cout << "No chests present on this map" << endl;
 	}
 }
 
