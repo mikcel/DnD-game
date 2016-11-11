@@ -8,5 +8,5 @@ class MapElementsObserver
 	bool isShown;
 public:
 	MapElementsObserver(Map* map);
-	bool toggle();
+	void show();
 };
