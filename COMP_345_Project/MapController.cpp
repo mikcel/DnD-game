@@ -232,6 +232,7 @@ bool MapController::cacheMap() {
 			cout << file << endl;
 		}
 
+		cout << "Enter the name: ";
 		cin >> mapEditName;
 		cout << mapEditName << endl;
 

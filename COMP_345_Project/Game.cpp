@@ -27,6 +27,12 @@ void Game::play(Character* player)
 
 int Game::run(Player* p)
 {
+	//Set the level of all the map elements
+	for (Element * e : map->getElements())
+	{
+
+	}
+
 	//Set all of our observers
 	MapObserver mo(*map);
 	map->attach(mo);
@@ -69,9 +75,21 @@ int Game::run(Player* p)
 				meo.show();
 				isPlaying = false;
 				break;
+			case 'p': //Toggles the view of the map elements
+				meo.showPlayer();
+				isPlaying = false;
+				break;
+			case 'e': //Toggles the view of the map elements
+				meo.showEnemies();
+				isPlaying = false;
+				break;
+			case 'c': //Toggles the view of the map elements
+				meo.showChests();
+				isPlaying = false;
+				break;
 			}
 		}
-		else if(c == 't' || c == 'T') {
+		else if(c != 224 && c != KEY_UP && c != KEY_DOWN && c != KEY_RIGHT && c != KEY_LEFT){
 			if (system("CLS")) system("clear");
 			mo.printMap();
 			isPlaying = true;

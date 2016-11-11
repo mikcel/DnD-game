@@ -23,9 +23,20 @@ void MapObserver::update()
 	printMap();
 }
 
+/**
+* Print map instructions and a view of the map
+*/
 void MapObserver::printMap()
 {
 	if (system("CLS")) system("clear");
 	cout << "========= " << map.getName() << " =========" << endl << endl;
 	cout << map.print() << endl;
+	
+	cout << endl << "---- Instructions ----" << endl;
+	cout << "Move : Arrows" << endl;
+	cout << "T : Display all map information" << endl;
+	cout << "P : Display player information" << endl;
+	cout << "E : Display ennemies information" << endl;
+	cout << "C : Display chests information" << endl;
+
 }

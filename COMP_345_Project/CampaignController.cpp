@@ -128,6 +128,15 @@ int CampaignController::cacheCampaign() {
 	int couldNotFindCamp = 0;
 	while (!campFile) {
 		cout << "Enter the name of the campaign you would like to edit." << endl;
+
+		cout << "Here is a list of all the existing campaigns:" << endl;
+		vector<string> allFiles = getFilesInsideFolderNoExtension("SaveFiles\\Campaigns");
+		for (string& file : allFiles)
+		{
+			cout << file << endl;
+		}
+
+		cout << "Enter the name: ";
 		cin >> campEditName;
 		campFile.open("SaveFiles/Campaigns/" + campEditName + ".txt");
 
