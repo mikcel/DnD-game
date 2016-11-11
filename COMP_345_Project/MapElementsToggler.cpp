@@ -39,7 +39,7 @@ void MapElementsObserver::showEnemiesDirect()
 		if (characterElement && &player != characterElement)
 		{
 			cout << endl << "Position: (" << characterElement->getPosition().x << ", " << characterElement->getPosition().y << ")" << endl;
-			std::cout << characterElement->getCharacter();			
+			std::cout << characterElement->getCharacter();
 		}
 	}
 }

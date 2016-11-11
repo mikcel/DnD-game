@@ -1,34 +1,53 @@
+//! 
+//! @file 
+//! @brief Implementation file of the campaign controller
+//!
+
 #include "CampaignController.h"
 #include "FolderUtils.h"
 #include <fstream>
 
-
+//! Default consructor
 CampaignController::CampaignController()
 {
-	currentCampaign = new Campaign();
+	currentCampaign = new Campaign(); //! Create a default campaign
 }
 
+//! Destructor
 CampaignController::~CampaignController()
 {
-	if (currentCampaign != nullptr) {
+	if (currentCampaign != nullptr) { //! if current campaign is not null delete the current campaign
 		delete currentCampaign;
 	}
 }
 
+//! Method to edit the Campaign
+//! @return -
 void CampaignController::editCampaign() {
 	cout << "==== CAMPAIGN EDITION ====" << endl << endl;
+
 	if (cacheCampaign() == 1) {
 		return;
 	}
+
 	cout<< "The current campaign status:\nTitle:" << (currentCampaign->getCampaignName())<<"\nMaps:"<<endl;
+
+	//! get the campaign vector of map names and display to the screen
 	vector<string> tempCampNames = *(currentCampaign->getCampaignMapNames());
 	for (auto m : tempCampNames) {
 		cout << m<<endl;
 	}
-	cout << "Enter:\n0 To add a new map\n1 To remove a map\n2 To rename the campaign\nEnter any other number to return to menu." << endl;
+
+	//! Display the menu
+	cout << "Enter:" << endl;
+	cout << "0 - To add a new map" << endl;
+	cout << "1 - To remove a map" << endl;
+	cout << "2 - To rename the campaign" << endl;
+	cout << "Enter any other number to return to menu." << endl;
+
 	string userChoiceString;
 	int userChoice;
-	cin >> userChoiceString;
+	cin >> userChoiceString; //! Ask the user for input
 	try {
 		userChoice = stoi(userChoiceString);
 	}
@@ -37,6 +56,8 @@ void CampaignController::editCampaign() {
 		system("pause");
 		return;
 	}
+
+	//! Check the users choice
 	switch (userChoice) {
 	case 0:
 		addMap();
