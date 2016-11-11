@@ -203,7 +203,7 @@ void CharacterController::createCharacter(){
 		cout << "\n" << CharacterAbility(i) << ": ";
 
 		while (!(cin >> chosenScr)){
-			cout << "\nPlease choose a correct no.: ";
+			cout << "Please choose a correct no.: ";
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
@@ -212,6 +212,13 @@ void CharacterController::createCharacter(){
 		while (!checkScr(ptr, chosenScr)){
 			cout << "Please choose a correct no.: ";
 			cin >> chosenScr;
+
+			while (cin.fail()) {
+				cout << "Incorrect Input. Please enter a valid number:";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				cin >> chosenScr;
+			}
 		}
 
 		//! Initialise the number chosen to the respective ability score
@@ -329,6 +336,7 @@ void CharacterController::editCharacter(){
 		//! Output the menu to choose what to edit in the character
 		cout << "Currently edited character: " << currentCharacter->getName() << endl << endl;
 		cout << "Please choose from the following:\n"
+			<< "0 - Display Character\n"
 			<< "1 - Save Character\n"
 			<< "2 - Edit Name\n"
 			<< "3 - Edit Level\n"
@@ -352,11 +360,18 @@ void CharacterController::editCharacter(){
 			cout << "Enter a valid input." << endl;
 			continue;
 		}
-		system("cls");
+
+		cout << endl;
 
 		//! Switch case depending on the chocie of the user
 		bool styleChangeCorrect = true;
 		switch (menuChoice){
+			case 0: //! Display Character
+				if (dynamic_cast<Fighter*>(currentCharacter))
+					cout << *(dynamic_cast<Fighter*>(currentCharacter)) << endl;
+				else
+					cout << *currentCharacter << endl;
+			break;
 			case 1: //! Save Character
 				saveCharacter();
 				break;
@@ -640,11 +655,11 @@ void CharacterController::editCharacter(){
 				continue;			
 		}
 
-		if (menuChoice != 10){ //! if not exiting save the character if all is valid
+		if (menuChoice != 0 && menuChoice != 10){ //! if not exiting save the character if all is valid
 			if (menuChoice != 1 && styleChangeCorrect)
 				saveCharacter();
 			system("pause"); //! Pause to show output and clear the console
-			system("cls");
+			cout << endl;
 		}
 
 	}
@@ -848,7 +863,7 @@ void CharacterController::addItem(){
 				}
 			}
 			else if (itemID != -1){
-				cout << "Incorrect No. Please try again (-1 to stop): ";
+				cout << "Incorrect No. Please try again." << endl;
 			}
 
 		}

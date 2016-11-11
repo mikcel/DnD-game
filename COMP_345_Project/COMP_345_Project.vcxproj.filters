@@ -40,9 +40,6 @@
     <ClCompile Include="Character.cpp">
       <Filter>Character</Filter>
     </ClCompile>
-    <ClCompile Include="MapEditorDriver.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="MapController.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -112,6 +109,9 @@
     <ClCompile Include="Dice.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="MapEditorDriver.cpp">
+      <Filter>Drivers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tile.h">
@@ -165,7 +165,6 @@
     <ClInclude Include="FolderUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="MapEditorDriver.h" />
     <ClInclude Include="MapObserver.h" />
     <ClInclude Include="MapTest.h" />
     <ClInclude Include="Observable.h" />
@@ -189,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="Dice.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MapEditorDriver.h">
+      <Filter>Drivers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

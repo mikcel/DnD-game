@@ -59,14 +59,7 @@ int main(int argc, char* argv[])
 	//getchar();
 
 #endif // CPPTEST
-	Item* item1 = new Item(ItemType::BELT, "Leather Belt", vector<Buff>{ Buff(BuffType::CONSTITUTION, 2), Buff(BuffType::CONSTITUTION, 2)});
-	Weapon* item2 = new Weapon(ItemType::WEAPON, "Iron Sword", vector<Buff>{ Buff(BuffType::ATTACK_BONUS, 2), Buff(BuffType::DAMAGE_BONUS, 2)}, 1);
-	//cout << item1->serializeItem()<<endl;
 
-	ItemContainer* backpack = new ItemContainer(ContainerType::BACKPACK, vector<Item*> {item1, item2});
-	//cout << backpack->serializeItemContainer() << endl;
-
-	delete backpack;
 	//Driver code
 	MapController* m1 = new MapController();
 	CampaignController* c1 = new CampaignController();
@@ -74,18 +67,41 @@ int main(int argc, char* argv[])
 	CharacterController* chr = new CharacterController();
 
 	string userOptionStr;
+
+	cout << "===============================================" << endl;
+	cout << "THE" << endl;
+	cout << "SOMEWHAT" << endl;
+	cout << "COOL" << endl;
+	cout << "GAME" << endl;
+	cout << "===============================================" << endl << endl;
+	
 	while (true) {
-		cout << "Enter the index of option you want to do:" << endl;
+		cout << "=== OPTIONS ===" << endl;
+		cout << "0: Quit" << endl << endl;
+		cout << "1: Create a new campaign" << endl;
+		cout << "2: Edit a campaign" << endl << endl;
 
-		cout << "0: To quit\n1: To create a new campaign\n2: To edit a campaign\n3: To create a new map\n4: To edit a map\n5: To create a character\n6: To edit the character\n7: To create an item\n8: To edit an item" << endl;
+		cout << "3: Create a new map" << endl;
+		cout << "4: Edit a map" << endl << endl;
 
+		cout << "5: Create a character" << endl;
+		cout << "6: Edit a character" << endl << endl;
+
+		cout << "7: Create an item" << endl;
+		cout << "8: Edit an item" << endl << endl;
+
+		cout << "9: Play" << endl;
+		cout <<  "-----------------------------------------------" << endl << endl;
+		
+		cout << "Select an option:";
 		cin >> userOptionStr;
+
 		int userOption;
 		try {
 			userOption = stoi(userOptionStr);
 		}
 		catch (...) {
-			cout << "Enter a valid input." << endl;
+			cout << "Enter a valid input." << endl << endl;
 			continue;
 		}
 
@@ -97,9 +113,9 @@ int main(int argc, char* argv[])
 			return 0;
 			break;
 		}
-		//else if(userOption > NBR_OPTIONS){
-		//	cout << "Enter a valid input." << endl;
-		//}
+		else if(userOption > MAX_OPTIONS){
+			cout << "Enter a valid input." << endl << endl;
+		}
 		else {
 			flushConsole();
 			switch (userOption) {
@@ -127,7 +143,7 @@ int main(int argc, char* argv[])
 			case 8:
 				editItem();
 				break;
-			case 10:
+			case 9:
 				g1->play();
 				break;
 			}
