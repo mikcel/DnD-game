@@ -705,8 +705,8 @@ ostream& operator<<(ostream& stream, const Character& chr){
 		"\nAttack Bonus: " << chr.attackBonus <<
 		"\nArmor Class: " << chr.armorClass <<
 		"\nHit Dice: " << chr.hitDice << "\n" <<
-		"\nBackpack holding: \n\n" << *(chr.backpack) <<
-		"\n\nWearing Items: \n\n" << *(chr.currentWornItems);
+		"\nBackpack holding: \n\n" << *(chr.backpack);
+	stream << "\n\nWearing Items: \n\n" << *(chr.currentWornItems);
 
 	stream << "-------------------------------------------------------------------------------------------------------\n";
 

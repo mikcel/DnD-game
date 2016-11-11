@@ -295,6 +295,11 @@ ostream& operator<<(ostream& stream, const ItemContainer& cont){
 		}
 	}
 
+	if (countNullItem == cont.contents.size())
+	{
+		stream << "No Items\n";
+	}
+
 	return stream;
 
 }
