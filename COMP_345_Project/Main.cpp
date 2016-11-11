@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 
+// Unused main() function that starts SFML
+// May be used later to have a graphical represenation of something
 int main2()
 {
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");

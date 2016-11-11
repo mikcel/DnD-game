@@ -40,9 +40,6 @@
     <ClCompile Include="Character.cpp">
       <Filter>Character</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterObserver.cpp">
-      <Filter>Character</Filter>
-    </ClCompile>
     <ClCompile Include="MapEditorDriver.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -100,7 +97,6 @@
     <ClCompile Include="MapElementsObserver.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleLogger.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Game.cpp">
@@ -131,9 +127,6 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
-      <Filter>Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterObserver.h">
       <Filter>Character</Filter>
     </ClInclude>
     <ClInclude Include="MapController.h">
@@ -185,7 +178,6 @@
     <ClInclude Include="ItemUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleLogger.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Game.h">

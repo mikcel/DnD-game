@@ -471,6 +471,8 @@ void Character::incrementLevel(int hitDiceNo, bool displayConsole){
 	}
 }
 
+//! Function used to unequip an item from the Character and put them back to the backpack
+//! @param int - representing the roll of the Character's hit dice
 bool Character::takeOffItem(Item *objItem){
 
 	if (currentWornItems->unequipItem(objItem->getItemName(), backpack)){
@@ -555,12 +557,16 @@ bool Character::storeItem(Item *objItem)
 	return true;
 }
 
+//! Function to get all the items that are currently in the Character's backpack 
+//! @return vector contains pointers to elements in the backpack of the Character
 vector<Item*> Character::getBackpackContents(){
 
 	return backpack->getContents();
 
 }
 
+//! Function to get all the items that are currently worn by the Character
+//! @return vector that contains pointers to elements worn by the Character
 vector<Item*> Character::getCurrentWornItems(){
 
 	return currentWornItems->getContents();
@@ -578,6 +584,8 @@ void Character::incrementArmorClass(int chrAC){
 		cout << "\nIncorrect incremental\n"; //! Error message if invalid parameter
 }
 
+//! Remove certain buffs from the Character and affecting his stats
+//! @param itemBuff a vector of all the buffs that should be removed from the Character
 void Character::takeOffBuff(vector<Buff> itemBuff){
 	for (auto i : itemBuff){
 		switch (i.getBuffType()){
@@ -613,7 +621,11 @@ void Character::takeOffBuff(vector<Buff> itemBuff){
 	}
 }
 
+//! Remove an item from the backpack
+//! @param objItem an item to be removed from the Character's backpack
+//! @return true if the item is valid and has been successfully deleted, false otherwise
 bool Character::removeItemBack(Item *objItem){
+
 
 	if (!objItem->validateItem())
 		return false;
@@ -623,6 +635,9 @@ bool Character::removeItemBack(Item *objItem){
 
 }
 
+//! Save character inside a txt file
+//! All the information about the character will be stored inside a
+//! text file that will have the same name as the name of teh Character
 void Character::saveCharacter(){
 	
 

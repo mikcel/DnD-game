@@ -177,7 +177,11 @@ string Item::serializeItem() {
 	return itemString;
  }
 
-
+//! Returns a string output tht contains all the information about 
+//! the item to the stream
+//! @param stream the stream to which the string should be written
+//! @param the item which information will be outputed
+//! @return the stream to which the item inforamtion is written
 ostream& operator<<(ostream& stream, const Item& item){
 
 	string buffString = "";
@@ -199,8 +203,6 @@ ostream& operator<<(ostream& stream, const Item& item){
 	return stream;
 
 }
-
-
 
 //! method that takes the string representation of an Item object and saves to a text file
 void Item::saveItem(){

@@ -10,12 +10,12 @@
 class GameController
 {
 public:
-	void play();
+	void play(); //! Starts a new game
 private:
-	void selectCharacter();
-	void selectCampaign();
-	void launchGame();
-	Map * map = nullptr;
-	Character * character = nullptr;
-	MapElementsObserver * mapElementsObserver;
+	void selectCharacter(); //! Prompts the user to select a character
+	void selectCampaign(); //! Prompts the user to select his campaign
+	void launchGame(); //! Launches the game
+	Map * map = nullptr; //! Pointer to the map that is currently played
+	Character * character = nullptr; //! The Character that the user will control on the map
+	MapElementsObserver * mapElementsObserver; //! Toggles information about characters and chests
 };
