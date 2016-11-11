@@ -1,7 +1,7 @@
 character
 JOHN
 1d10
-1
+2
 0
 0
 16

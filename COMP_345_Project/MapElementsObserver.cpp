@@ -1,34 +1,42 @@
 #include "MapElementsObserver.h"
 #include "Map.h"
 #include "ConsoleLogger.h"
+#include <iostream>
 
 MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap)
 {
-	secondConsole = nullptr;
+	isShown = false;
 	///secondConsole.CConsoleLoggers Information");
 
-	for (Element* element : map.getElements())
-	{
-		element->attach(*this);
-	}
-}
-
-void MapElementsObserver::update()
-{
 	
 }
 
 bool MapElementsObserver::toggle()
 {
-	if (secondConsole == nullptr)
+	if (!isShown)
 	{
-		secondConsole = new CConsoleLogger();
-		secondConsole->Create("Character Elemets");
+		isShown = true;
+
+		Player& player = map.getPlayer();
+		std::cout << player.getCharacter();
+		
+		//for (Element* element : map.getElements())
+		//{
+		//	CharacterElement* characterElement = dynamic_cast<CharacterElement*>(element);
+		//	if (characterElement)
+		//	{
+		//		characterElement->getCharacter().attach(*this);
+		//		//characterElement->attach(*this);
+		//	}
+
+		//}
+
 		return true;
 	}
 
-	secondConsole->Close();
-	delete secondConsole;
-	secondConsole = nullptr;
+	isShown = false;
+
+
+
 	return false;
 }

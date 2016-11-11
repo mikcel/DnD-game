@@ -103,20 +103,20 @@ string Character::getName() const{
 
 //! Accessor for the Character's level.
 //! @return level
-int Character::getLevel(){
+int Character::getLevel() const{
 	return level;
 }
 
 //! Accessor for the Character's Size.
 //! @return size
-CharacterSize Character::getSize(){
+CharacterSize Character::getSize() const{
 	return size;
 }
 
 //! Accessor for one ability score
 //! @param ability - Of type abilities from enumerated type
 //! @return integer, the ability score passed as parameter
-int Character::getOneAbilityScore(CharacterAbility ability){
+int Character::getOneAbilityScore(CharacterAbility ability) const{
 	
 	//! Get ability by using the array index (enum type) passed as parameter 
 	return abilityScores[(int)ability]; 
@@ -125,7 +125,7 @@ int Character::getOneAbilityScore(CharacterAbility ability){
 
 //! Accessor for all ability scores
 //! @return a pointer to a copy array containing all the ability scores
-int* Character::getAllAbilityScores(){
+int* Character::getAllAbilityScores() const{
 
 	int *arrayPointer; //! Pointer for new array
 	int arrayCopy[NO_ABILITY]; //! New array to be returned
@@ -144,7 +144,7 @@ int* Character::getAllAbilityScores(){
 //! Accessor for one ablity modifier.
 //! @param ability - of type CharacterAbility (enumerated) to index array of ability modifiers
 //! @return the ability modifer asked for (parameter)
-int Character::getOneAbilityModifier(CharacterAbility ability){
+int Character::getOneAbilityModifier(CharacterAbility ability) const{
 	
 	//! Return the ability modifier by indexing the array to the ability passed (enum type)
 	return abilityModifiers[(int)ability];
@@ -153,7 +153,7 @@ int Character::getOneAbilityModifier(CharacterAbility ability){
 
 //! Accessor method for all ability modifiers
 //! @return a pointer to a copy array of the ability mofidiers
-int* Character::getAllAbilityModifiers(){
+int* Character::getAllAbilityModifiers() const{
 
 	int *arrayPointer; //! Declare pointer
 	int arrayCopy[NO_ABILITY]; //! Declare array to be returned
@@ -170,31 +170,31 @@ int* Character::getAllAbilityModifiers(){
 
 //! Accessor method for the Character's HP
 //! @return Current hit points of the Character object
-int Character::getCurrentHitPoints(){
+int Character::getCurrentHitPoints() const{
 	return currentHitPoints;
 }
 
 //! Accessor method for the Damage Bonus
 //! @return Character's Damage bonus
-int Character::getDamageBonus(){
+int Character::getDamageBonus() const{
 	return damageBonus;
 }
 
 //! Getter for attack Bonus
 //! @return Attack Bonus
-int Character::getAttackBonus(){
+int Character::getAttackBonus() const{
 	return attackBonus;
 }
 
 //! Getter for Armor Class
 //! @return Armor Class
-int Character::getArmorClass(){
+int Character::getArmorClass() const{
 	return armorClass;
 }
 
 //! Accessor method for Character's hit dice
 //! @return the character's hit dice
-string Character::getHitDice(){
+string Character::getHitDice() const{
 	return hitDice;
 }
 
@@ -457,8 +457,8 @@ void Character::incrementLevel(int hitDiceNo){
 	calcAttackBonus();
 
 	//! Output new information
-	cout << "Level" << level << "reached.\n"
-		<<"Current HP: " << currentHitPoints;
+	cout << "Level " << level << " reached." << endl;
+	cout << "Current HP: " << currentHitPoints << endl;
 }
 
 bool Character::takeOffItem(Item *objItem){

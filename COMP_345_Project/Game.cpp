@@ -5,6 +5,8 @@
 #include <conio.h>
 #include "MapObserver.h"
 #include "MapElementsObserver.h"
+#include "Dice.h"
+#include "CharacterController.h"
 
 using namespace std;
 
@@ -38,34 +40,39 @@ int Game::run(Player* p)
 
 	//Initial display of the map
 	mo.update();
-
+	
+	bool isPlaying = true;
 	int c = 0;
 	while (!isGameOver())
 	{
-		c = 0;
-
-		switch ((c = _getch())) {
-		case KEY_UP: //Move the character up
-			map->moveElement(0, -1, *p);
-			break;
-		case KEY_DOWN: //Move the character down
-			map->moveElement(0, 1, *p);
-			break;
-		case KEY_LEFT: //Move the character left
-			map->moveElement(-1, 0, *p);
-			break;
-		case KEY_RIGHT: //Move the character right
-			map->moveElement(1, 0, *p);
-			break;
-		case 'q': //Quit the application
-		case 'Q': //Quit the application
-			return 0;
-			break;
-		case 'T': //Toggles the view of the map elements
-		case 't': //Toggles the view of the map elements
-			meo.toggle();
-			break;
-
+		c = _getch();
+		if (isPlaying) {
+			switch (c) {
+			case KEY_UP: //Move the character up
+				map->moveElement(0, -1, *p);
+				break;
+			case KEY_DOWN: //Move the character down
+				map->moveElement(0, 1, *p);
+				break;
+			case KEY_LEFT: //Move the character left
+				map->moveElement(-1, 0, *p);
+				break;
+			case KEY_RIGHT: //Move the character right
+				map->moveElement(1, 0, *p);
+				break;
+			case 'q': //Quit the application
+			case 'Q': //Quit the application
+				return 0;
+				break;
+			case 'T': //Toggles the view of the map elements
+			case 't': //Toggles the view of the map elements
+				meo.toggle();
+				isPlaying = false;
+				break;
+			}
+		}
+		else if(c == 't' || c == 'T') {
+			isPlaying = true;
 		}
 	}
 }
@@ -77,14 +84,21 @@ bool Game::isGameOver()
 
 void Game::perfomEndGame()
 {
-	const Character& currentChar = map->getPlayer().getCharacter();
-	cout << "CONGRATULATIONS!!! YOU FINISHED THE REACH THE EXIT ALIVE!!!" << endl;
-	cout << "IT'S TIME FOR " << currentChar.getName() << endl << " TO GO UP A LEVEL!!!" << endl;
+	Character& currentChar = map->getPlayer().getCharacter();
+	cout << "CONGRATULATIONS!!! YOU REACHED THE EXIT ALIVE!!!" << endl;
+	cout << "IT'S TIME FOR " << currentChar.getName() << " TO GO UP A LEVEL!!!" << endl << endl;
 
-	//currentChar.incrementLevel();
+	system("pause");
+	cout << endl;
+
+
+	currentChar.incrementLevel(Dice::roll(currentChar.getHitDice()));
 
 	cout << currentChar;
 
-	cout << "press any key.." << endl;
-	cin.ignore(); // Wait for any key
+	CharacterController cc(&currentChar);
+	cc.saveCharacter();
+
+	cout << endl << "You will be redirected to the main menu." << endl;
+	system("pause");
 }
