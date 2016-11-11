@@ -5,45 +5,38 @@
 
 MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap)
 {
-	secondConsole = nullptr;
+	isShown = false;
 	///secondConsole.CConsoleLoggers Information");
 
-	for (Element* element : map.getElements())
-	{
-		CharacterElement* characterElement = dynamic_cast<CharacterElement*>(element);
-		if (characterElement)
-		{
-			//characterElement->
-			//characterElement->attach(*this);
-		}
-		
-	}
-}
-
-void MapElementsObserver::update()
-{
-	secondConsole->printf("asd");
+	
 }
 
 bool MapElementsObserver::toggle()
 {
-	if (secondConsole == nullptr)
+	if (!isShown)
 	{
-		//system("start \"Help\" cmd /C \"echo off & echo Help text 1 & echo Help text 2 & echo Help text 3 & pause\"");
+		isShown = true;
 
-		secondConsole = new CConsoleLogger();
-		secondConsole->Create("Character Elemets");
-		secondConsole->printf("asd");
-		secondConsole->SetAsDefaultOutput();
-		std::cout << "\nstd cout";
-		secondConsole->ResetDefaultOutput();
-		//secondConsole->
+		Player& player = map.getPlayer();
+		std::cout << player.getCharacter();
+		
+		//for (Element* element : map.getElements())
+		//{
+		//	CharacterElement* characterElement = dynamic_cast<CharacterElement*>(element);
+		//	if (characterElement)
+		//	{
+		//		characterElement->getCharacter().attach(*this);
+		//		//characterElement->attach(*this);
+		//	}
+
+		//}
+
 		return true;
 	}
 
-	secondConsole->Close();
-	secondConsole->Close();
-	delete secondConsole;
-	secondConsole = nullptr;
+	isShown = false;
+
+
+
 	return false;
 }
