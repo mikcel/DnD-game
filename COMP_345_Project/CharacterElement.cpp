@@ -25,5 +25,5 @@ Character& CharacterElement::getCharacter()
 //! Default contructor that doesn't set the Character
 CharacterElement::CharacterElement()
 {
-	
+	character = nullptr;
 }

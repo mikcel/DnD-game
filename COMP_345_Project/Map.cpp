@@ -9,6 +9,7 @@
 #include "Character.h"
 #include  "Map.h"
 #include "CharacterElement.h"
+#include "ItemUtils.h"
 
 using namespace std;
 /**
@@ -453,13 +454,26 @@ Player* Map::placePlayer(Player& newPlayer)
 
 		//Player& player = map->getPlayer();
 
-		// Show other characters' stats
+		// Create and adapt enemies level
 		for (Element* element : getElements())
 		{
 			Enemy* enemy = dynamic_cast<Enemy*>(element);
 			if (enemy)
 			{
 				enemy->createCharacterWithLevel(copy.character->getLevel());
+			}
+		}
+
+		//Insert and adapt chests items
+		vector<Item*> allExistingItems;
+		loadAllExistingItems(allExistingItems);
+
+		for (Element* element : getElements())
+		{
+			Chest* chest = dynamic_cast<Chest*>(element);
+			if (chest)
+			{
+
 			}
 		}
 

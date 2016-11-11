@@ -21,3 +21,8 @@ Chest* Chest::clone()
 {
 	return new Chest(*this);
 }
+
+const std::string Chest::print() const
+{
+	return "C";
+}

@@ -14,7 +14,7 @@
 */
 const std::string Enemy::print() const
 {
-	return "E";
+	return "X";
 }
 
 /**
@@ -62,6 +62,10 @@ std::string calculateRandomName()
 */
 void Enemy::createCharacterWithLevel(int level)
 {
+	if (character != nullptr) {
+		delete character;
+	}
+
 	character = new  Character(calculateRandomName(), "1d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), 1);
 	for (int i = 1; i < level; i++)
 	{

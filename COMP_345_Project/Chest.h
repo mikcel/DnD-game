@@ -7,6 +7,7 @@
 #include "ItemContainer.h"
 class Chest:public ItemContainer,public Element
 {
+	virtual const std::string print() const; //! Print the map representation of the chest
 public:
 	//! Chest Default Constructor
 	Chest();
