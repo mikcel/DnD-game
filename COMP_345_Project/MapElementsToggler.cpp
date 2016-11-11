@@ -30,17 +30,28 @@ void MapElementsObserver::showPlayerDirect()
 //! Shows the info about the enemies
 void MapElementsObserver::showEnemiesDirect()
 {
-	Player& player = map.getPlayer();
+	cout << "-------------------------------------------------------------------------------------------------------\n";
+	cout << setw(60) << right << "All Enemies" << endl;
+	cout << "-------------------------------------------------------------------------------------------------------\n";
+	cout << endl;
 
+	Player& player = map.getPlayer();
+	bool atLeastOnce = false;
 	// Show other characters' stats
 	for (Element* element : map.getElements())
 	{
 		CharacterElement* characterElement = dynamic_cast<CharacterElement*>(element);
 		if (characterElement && &player != characterElement)
 		{
+			atLeastOnce = true;
 			cout << endl << "Position: (" << characterElement->getPosition().x << ", " << characterElement->getPosition().y << ")" << endl;
 			std::cout << characterElement->getCharacter();
 		}
+	}
+
+	if (!atLeastOnce)
+	{
+		cout << "No enemies present on this map" << endl;
 	}
 }
 
