@@ -162,7 +162,7 @@ bool Item::validateItem()
 
 //! Method that converts an Item object into a string representation
 //! return: string that represents an Item Object
-string Item::serializeItem() {
+string Item::serializeItem () {
 	string itemString = "";
 	itemString += itemName;
 	itemString += "\n";

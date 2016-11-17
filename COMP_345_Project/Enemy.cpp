@@ -7,7 +7,7 @@
 #include "Dice.h"
 #include <string>
 #include <cmath>
-
+#include "CharacterController.h"
 /**
 * Returns a string representation of the Enemy on the map
 * @return string representing the enemy
@@ -23,6 +23,13 @@ const std::string Enemy::print() const
 Enemy::Enemy() : CharacterElement()
 {
 	
+}
+
+//! Constructor with name
+//! Used to facilitate map construction from a map file
+Enemy::Enemy(string enName) : CharacterElement(enName)
+{
+
 }
 
 /**
@@ -60,13 +67,14 @@ std::string calculateRandomName()
 * Create a Character instance and assign it to the Character of the current Enemy
 * @param level the level to which the newly created Characted should be adapted
 */
-void Enemy::createCharacterWithLevel(int level)
+void Enemy::createCharacterWithLevel(int level, string enemyName)
 {
 	if (character != nullptr) {
 		delete character;
 	}
-
-	character = new  Character(calculateRandomName(), "1d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), 1);
+	character = readCharacterFile("SaveFiles/Characters/" + enemyName + ".txt", enemyName);
+	//new  Character(calculateRandomName(), "1d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), 1);
+	character->setLevel(1);
 	for (int i = 1; i < level; i++)
 	{
 		character->incrementLevel(Dice::roll("1d10"), false);

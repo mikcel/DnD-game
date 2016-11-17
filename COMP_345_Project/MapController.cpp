@@ -218,9 +218,10 @@ void MapController::editMap(bool creatingNewMap) {
 		}
 		else if (eS == "X") //! Enemy
 		{			
-			Character e;
-			CharacterElement characterElement(e);
-			success = m->setElementAt(x, y, characterElement);
+			/*Character e;
+			CharacterElement characterElement(e);*/
+			Enemy enemy(chooseEnemy());
+			success = m->setElementAt(x, y, enemy);
 		}
 		else if (eS == "C") //! Chest
 		{
@@ -247,6 +248,37 @@ void MapController::editMap(bool creatingNewMap) {
 	}
 
 
+}
+
+string MapController::chooseEnemy()
+{
+	vector<string> characterNames = getFilesInsideFolderNoExtension("SaveFiles/Characters");
+	string userInputStr = "0";
+	while (userInputStr != "-1"){
+
+		cout << "\nEnter the index of the character name you want to add to the map." << endl;
+		int userChoice = 0;
+		int index = 0;
+
+		for (auto c : characterNames){
+			cout << index << ": " << c << endl;
+			index++;
+		}
+		cin >> userInputStr;
+		try{
+			userChoice = stoi(userInputStr);
+			if (userChoice > characterNames.size() || userChoice < 0){
+				cout << "Invalid input. Use listed indices." << endl;
+				continue;
+			}
+			return characterNames[userChoice];
+
+		}
+		catch (...){
+			cout << "Invalid input.Try a different input" << endl;
+			continue;
+		}
+	}
 }
 
 //! Method to save a character
@@ -367,12 +399,12 @@ Map* readMapFile(string mapFileLocation, string mapName) {
 
 		else if (fileLine == "enemy") {
 			//cout << "FOUND enenmy" << endl;
-
+			getline(mapFile, fileLine);
+			Enemy characterElement(fileLine);
 			getline(mapFile, fileLine);
 			tmpX = stoi(fileLine);
 			getline(mapFile, fileLine);
 			tmpY = stoi(fileLine);
-			Enemy characterElement;
 			tmpMap->setElementAt(tmpX, tmpY, characterElement);
 		}
 		else if (fileLine == "chest") {

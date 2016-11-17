@@ -35,6 +35,10 @@ public:
 	//! Default Constructor
 	Character(); 
 
+	//! Constructor with name
+	//! Used to facilitate map construction from a map file
+	Character(string chrName);
+
 	//! Constructor with name, hit dice, an array of ability scores, the Character's level and size
 	//! If level and size are not passed , the level is set to 1 by default and size to tiny by default
 	Character(string chrName, string hitDice, int chrAbilityScores[NO_ABILITY], int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);

@@ -25,6 +25,9 @@ public:
 	//! method prompts the user for parameters to edit a map
 	//! @param creatingNewMap: boolean that decides whether to treat the object as a new map or not
 	void editMap(bool creatingNewMap);
+	//! methof that allows the user to choose the name of a character to store in the map
+	//! return string: name of character.
+	string chooseEnemy();
 	//! method that saves the map to a map file
 	void saveMap();
 

@@ -460,7 +460,7 @@ Player* Map::placePlayer(Player& newPlayer)
 			Enemy* enemy = dynamic_cast<Enemy*>(element);
 			if (enemy)
 			{
-				enemy->createCharacterWithLevel(copy.character->getLevel());
+				enemy->createCharacterWithLevel(copy.character->getLevel(), enemy->getCharacter().getName());
 			}
 		}
 
@@ -591,6 +591,8 @@ string Map::serializeMapToString()
 			}
 			else if (dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())) {
 				serialMap += "enemy\n";
+				serialMap += dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacter().getName();
+				serialMap += "\n";
 				somethingToWrite = true;
 			}
 			else if (dynamic_cast<Chest*>(mapArr[i][j].getElement())) {

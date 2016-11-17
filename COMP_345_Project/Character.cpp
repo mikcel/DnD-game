@@ -29,6 +29,11 @@ Character::Character() : Character("Unknown", "1d10", 3, 3, 3, 3, 3, 3, 1, Chara
 
 }
 
+//! Constructor with name
+//! Used to facilitate map construction from a map file
+Character::Character(string chrName):Character(chrName, "1d10", 3, 3, 3, 3, 3, 3, 1, CharacterSize::TINY)
+{
+}
 //! Constructor: gets the name, the hit dice, an array of ability scores, the level and the size.
 //! It invokes the other parametrized constructor to set each variable.
 //! Note: to initialize each ability score, each of them is taken from the passed array using the enum type to index the array.
