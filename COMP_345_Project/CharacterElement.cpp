@@ -27,3 +27,9 @@ CharacterElement::CharacterElement()
 {
 	character = nullptr;
 }
+
+int CharacterElement::attack(CharacterElement& target){
+
+	return this->character->attack(target.getCharacter());
+
+}

@@ -38,7 +38,7 @@ chrAbilityScores[(int)CharacterAbility::WISD], chrAbilityScores[(int)CharacterAb
 	/*Intentionally left empty*/
 }
 
-Character::Character(Character &copyChar) {
+Character::Character(const Character &copyChar) {
 	this->name = copyChar.name;
 	this->level = copyChar.level;
 	this->size = copyChar.size;
@@ -324,7 +324,7 @@ void Character::calcAttackBonus(){
 		
 		Weapon* weapon = (Weapon*)(currentWornItems->getItem(currentWornItems->getContents()[(int)ItemType::WEAPON]->getItemName()));
 		if (weapon != NULL){
-
+			//! Check range and melee weapon
 			if (weapon->getRange()==1) 
 				attackBonus += abilityModifiers[(int)CharacterAbility::STR];
 			else 
@@ -416,9 +416,9 @@ int Character::hit(int dmg){
 }
 
 //! Function to attack another Character
-//! @param Character and int - Representing the Character wanted to attack and the damage to be caused.
+//! @param Character - Representing the Character wanted to attack
 //! @return 0 - if character died (HP=0), 1 - Character was hit (Not protected by armor class) & 2 - Character was not hit 
-int Character::attack(Character &chr, int dmg){
+int Character::attack(Character &chr, int additionalDmg){
 	
 	//! Check if character reference is not the calling object itself
 	if (&chr == this){
@@ -426,13 +426,14 @@ int Character::attack(Character &chr, int dmg){
 		return 2; //! Return not hit
 	}
 
+	int diceRoll = Dice::roll("1d20"); //! Roll a d20 die
 
-	cout << "\nWith Attack Bonus and Damage Bonus, total damage is " << dmg + attackBonus + damageBonus << endl;
+	long totalDamage = attackBonus + damageBonus + additionalDmg + diceRoll;
 
-	int diceRoll = Dice::roll("1d20");
+	cout << "\nWith Roll result, Attack Bonus and Damage Bonus, total damage is " << totalDamage << endl;
 
 	//! Return value got from the hit function of the passed Character
-	return chr.hit(dmg + attackBonus + damageBonus + diceRoll);
+	return chr.hit(totalDamage);
 }
 
 //! Function that determine size modifier for a character object
@@ -457,14 +458,18 @@ int Character::getSizeModifier(){
 	}
 }
 
-void Character::incrementLevel(int hitDiceNo){
-	incrementLevel(hitDiceNo, true);
+void Character::incrementLevel(){
+	incrementLevel(true);
 }
 
 //! Function that can be used to increment the level of the Character and at the same time increases the HP
 //! @param int - representing the roll of the Character's hit dice
-void Character::incrementLevel(int hitDiceNo, bool displayConsole){
+void Character::incrementLevel(bool displayConsole){
 	level++; //! Increment level by 1
+
+	hitDice = to_string(level) + "d10";
+
+	int hitDiceNo = Dice::roll(hitDice);
 
 	//! Calculate new hit points
 	//! Take constitution modifier and add with the hit dice roll

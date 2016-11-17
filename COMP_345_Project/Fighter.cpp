@@ -92,7 +92,7 @@ void Fighter::incrementLevel(int hitRoll){
 //! @param damage caused
 //! @param weapon used
 //! @return 0 - if character died (HP=0), 1 - Character was hit (Not protected by armor class) & 2 - Character was not hit
-int Fighter::attack(Character &chr, int dmg){
+int Fighter::attack(Character &chr){
 
 	//! Check if character is not the calling object
 	if (&chr == this){
@@ -103,12 +103,11 @@ int Fighter::attack(Character &chr, int dmg){
 	//! Check style used based on the d20 rules
 	//! If style is archery or dueling, increment damage by 2
 	if (style == FightStyle::ARCHERY || style == FightStyle::DUELING){
-		dmg += 2;
-		cout << "\nSince " << getName() << " is a fighter, new damage with fighting style is " << dmg << endl;
+		cout << "\nSince " << getName() << " is a fighter, 2 will be added to damage." << endl;
 	}
 
 	//! Call the Character's class attack method and return its return value
-	return Character::attack(chr, dmg);
+	return Character::attack(chr, 2);
 
 }
 
