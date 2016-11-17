@@ -97,6 +97,7 @@ bool Game::run(Player* p)
 			mo.printMap();
 			isPlaying = true;
 		}
+
 	}
 	return true;
 }
@@ -105,7 +106,7 @@ bool Game::run(Player* p)
 //! @return true if the game over, false otherwise
 bool Game::isGameOver()
 {
-	return map->isEndPoint(map->getPlayer().getPosition());
+	return map->isEndPoint(map->getPlayer().getPosition()) || map->getPlayer().getCharacter().getCurrentHitPoints()==0;
 }
 
 //! Method that is executed at the end of the game
@@ -120,7 +121,7 @@ void Game::perfomEndGame()
 	cout << endl;
 
 
-	currentChar.incrementLevel(Dice::roll(currentChar.getHitDice()));
+	currentChar.incrementLevel();
 
 	cout << currentChar;
 

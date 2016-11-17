@@ -45,7 +45,7 @@ int calculateRandomAttributeValue()
 }
 
 // List of all the possible names for the enemies
-const std::string enemyNames[] = {"Capitan_D.D.", "El_Mafioso", "El_Italiano", "Mikcel", "Celine", "The_Donald", "Hugh_Mungus", "Mastro_Comico", "Batman", "Ken_Bone", "Nestea","Itemsdonthavealevel","Not_Simon"};
+const std::string enemyNames[] = {"Capitan_D.D.", "El_Mafioso", "El_Italiano", "The_Donald", "Hugh_Mungus", "Mastro_Comico", "Batman", "Ken_Bone", "Nestea","Simon"};
 
 /**
 * Obtain a random enemy name from the array of all possible enemy names
@@ -66,9 +66,5 @@ void Enemy::createCharacterWithLevel(int level)
 		delete character;
 	}
 
-	character = new  Character(calculateRandomName(), "1d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), 1);
-	for (int i = 1; i < level; i++)
-	{
-		character->incrementLevel(false);
-	}
+	character = new  Character(calculateRandomName(), to_string(level)+"d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), level, (CharacterSize)(rand()%3));
 }

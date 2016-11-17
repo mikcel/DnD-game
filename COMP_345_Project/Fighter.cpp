@@ -79,14 +79,6 @@ void Fighter::setStyle(FightStyle chrStyle){
 	style = chrStyle;
 }
 
-//! Method to increment the fighter's level (overridden method of the Characterès class)
-//! @param int - the hit dice roll no
-void Fighter::incrementLevel(int hitRoll){
-	Character::incrementLevel(hitRoll); //! Increment the level contained in the super class, Character
-	Character::setHitDice(Character::getLevel() + "d10"); //! Change the hitdice (increment it by the new level)
-	cout << "New Hit Dice: " << Character::getHitDice(); //! Output the new hit dice
-}
-
 //! Attack method for the Fighter's class
 //! @param Reference to Character object
 //! @param damage caused

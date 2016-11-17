@@ -77,8 +77,7 @@ public:
 	int hit(int dmg); //! Function that is called when a Character gets hit. Decreases the Character's HP with a damage number
 	virtual int attack(Character &chr, int additionalDmg=0); //! Function that is used when a Character attacks another Character
 	int getSizeModifier(); //! Function to calculate the Size Modifier
-	void incrementLevel(); //! Function to increase the Character's Level
-	void incrementLevel(bool displayConsole);
+	void incrementLevel(); //! Function to increase the Character's 
 	void incrementArmorClass(int chrAC); //! Method to increment the Character's AC by a number
 
 	bool takeOffItem(Item *objItem); //! Unequip item
