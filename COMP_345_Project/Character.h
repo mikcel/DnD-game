@@ -47,7 +47,7 @@ public:
 	//! If level and size are not passed , the level is set to 1 by default and size to tiny by default
 	Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
 	
-	Character(Character &copyChar);
+	Character(const Character &copyChar);
 	
 	//! Destrcutor
 	virtual ~Character(); 
@@ -79,10 +79,9 @@ public:
 	void generateAbilityModifiers(); //! Function to set the Ability modifiers for each ability score
 	bool validateNewCharacter(); //! Method to validate a newly created Character
 	int hit(int dmg); //! Function that is called when a Character gets hit. Decreases the Character's HP with a damage number
-	int attack(Character &chr, int dmg); //! Function that is used when a Character attacks another Character
+	virtual int attack(Character &chr, int additionalDmg=0); //! Function that is used when a Character attacks another Character
 	int getSizeModifier(); //! Function to calculate the Size Modifier
-	void incrementLevel(int hitDiceNo); //! Function to increase the Character's Level
-	void incrementLevel(int hitDiceNo, bool displayConsole);
+	void incrementLevel(); //! Function to increase the Character's 
 	void incrementArmorClass(int chrAC); //! Method to increment the Character's AC by a number
 
 	bool takeOffItem(Item *objItem); //! Unequip item

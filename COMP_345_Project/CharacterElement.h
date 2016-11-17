@@ -17,4 +17,5 @@ public:
 	void setCharacter(Character* newCharacter); // Setter for the current Character
 	virtual CharacterElement* clone(); // Copies the current CharacterElement
 	Character& getCharacter(); // Getter for the current Character
+	int attack(CharacterElement& target);
 };

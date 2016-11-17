@@ -52,7 +52,7 @@ int calculateRandomAttributeValue()
 }
 
 // List of all the possible names for the enemies
-const std::string enemyNames[] = {"Capitan_D.D.", "El_Mafioso", "El_Italiano", "Mikcel", "Celine", "The_Donald", "Hugh_Mungus", "Mastro_Comico", "Batman", "Ken_Bone", "Nestea","Itemsdonthavealevel","Not_Simon"};
+const std::string enemyNames[] = {"Capitan_D.D.", "El_Mafioso", "El_Italiano", "The_Donald", "Hugh_Mungus", "Mastro_Comico", "Batman", "Ken_Bone", "Nestea","Simon"};
 
 /**
 * Obtain a random enemy name from the array of all possible enemy names

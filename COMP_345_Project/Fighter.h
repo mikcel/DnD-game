@@ -35,8 +35,7 @@ public:
 
 	FightStyle getStyle(); //! Accessor for fighting style
 	void setStyle(FightStyle chrstyle); //! Mutator for the Fighter's fighting style
-	void incrementLevel(int hitRoll); //! Fghter's overridden method from Chracter class to increment level
-	int attack(Character &chr, int dmg); //! Method for attacking another player
+	int attack(Character &chr); //! Method for attacking another player
 
 	void saveCharacter();
 

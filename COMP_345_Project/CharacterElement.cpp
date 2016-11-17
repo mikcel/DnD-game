@@ -28,6 +28,11 @@ CharacterElement::CharacterElement()
 	character = nullptr;
 }
 
+int CharacterElement::attack(CharacterElement& target){
+
+	return this->character->attack(target.getCharacter());
+
+}
 //! Constructor with name
 //! Used to facilitate map construction from a map file
 CharacterElement::CharacterElement(string chrName) :character(new Character(chrName))
