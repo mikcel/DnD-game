@@ -1,7 +1,7 @@
 character
 JOHNY
-1d10
-3
+4d10
+4
 0
 0
 18

@@ -19,7 +19,7 @@ Game::Game(Map* m)
 
 //! Starts a new game with the playerined as parameter
 //! @param player to be used in the current game
-void Game::play(Character* player)
+bool Game::play(Character* player)
 {
 	Player tempP(*player);
 	Player * p = map->placePlayer(tempP);
@@ -28,6 +28,10 @@ void Game::play(Character* player)
 	if (run(p))
 	{
 		perfomEndGame();
+		return false;
+	}
+	else{
+		return true;
 	}
 }
 
@@ -121,13 +125,10 @@ void Game::perfomEndGame()
 	cout << endl;
 
 
-	currentChar.incrementLevel();
+	currentChar.incrementLevel(true);
 
 	cout << currentChar;
 
 	CharacterController cc(&currentChar);
 	cc.saveCharacter();
-
-	cout << endl << "You will be redirected to the main menu." << endl;
-	system("pause");
 }

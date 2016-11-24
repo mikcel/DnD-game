@@ -6,7 +6,7 @@ class Game
 {
 public:
 	Game(Map* m); //! Constructor of the Game class
-	void play(Character* player); // Starts a new game
+	bool play(Character* player); // Starts a new game
 private:
 	Map* map; // A pointer to the mapo used in the curretn game
 	bool isGameOver(); // Checks if the game has finished

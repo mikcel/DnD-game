@@ -29,10 +29,7 @@ public:
 	void renameCurrentCampaign();
 	//! method that will save the campaign to a file (using the campaign name as the file name)
 	void saveCampaign();
-	//! method that reads a campaign file and sets it as current campaign
-	//! @param campEditName: string of file name
-	//! @return pointer to a newly create campaign object
-	Campaign* readCampaignFile(string campEditName);
+
 private:
 	//! method that prompts the user to find the campaign files
 	//! return: int to signify the state of the cache
@@ -45,3 +42,7 @@ private:
 	Campaign* currentCampaign;
 };
 
+//! method that reads a campaign file and sets it as current campaign
+//! @param campEditName: string of file name
+//! @return pointer to a newly create campaign object
+Campaign* readCampaignFile(string campEditName);

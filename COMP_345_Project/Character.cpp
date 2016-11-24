@@ -464,7 +464,7 @@ int Character::getSizeModifier(){
 }
 
 //! Function that can be used to increment the level of the Character and at the same time increases the HP
-void Character::incrementLevel(){
+void Character::incrementLevel(bool isPlayer){
 	level++; //! Increment level by 1
 
 	hitDice = to_string(level) + "d10";
@@ -478,10 +478,12 @@ void Character::incrementLevel(){
 	calcAttackBonus();
 	calcDamageBonus();
 
-	//! Output new information
-	cout << "Level " << level << " reached." << endl;
-	cout << "Current HP: " << currentHitPoints << endl;
-	cout << "New Hit Dice: " << hitDice; //! Output the new hit dice
+	if (isPlayer){
+		//! Output new information
+		cout << "Level " << level << " reached." << endl;
+		cout << "Current HP: " << currentHitPoints << endl;
+		cout << "New Hit Dice: " << hitDice<<endl; //! Output the new hit dice
+	}
 }
 
 //! Function used to unequip an item from the Character and put them back to the backpack

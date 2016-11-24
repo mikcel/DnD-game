@@ -76,7 +76,7 @@ void TestControllers::testCampaignSavingLoading(void)
 	camp1->setCampaignMapNames(maps);
 	campaignController->setCurrentCampaign(camp1);
 	campaignController->saveCampaign();
-	campaignController->setCurrentCampaign(campaignController->readCampaignFile("TestCamp"));
+	campaignController->setCurrentCampaign(readCampaignFile("TestCamp"));
 	CPPUNIT_ASSERT(camp1->getCampaignName() == campaignController->getCurrentCampaign()->getCampaignName());
 	delete camp1;
 	delete maps;

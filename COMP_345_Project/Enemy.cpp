@@ -77,6 +77,6 @@ void Enemy::createCharacterWithLevel(int level, string enemyName)
 	character->setLevel(1);
 	for (int i = 1; i < level; i++)
 	{
-		character->incrementLevel();
+		character->incrementLevel(false);
 	}
 }

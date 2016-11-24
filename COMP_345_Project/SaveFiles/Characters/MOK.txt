@@ -1,7 +1,7 @@
 character
 MOK
-1d10
-2
+3d10
+3
 0
 0
 15
