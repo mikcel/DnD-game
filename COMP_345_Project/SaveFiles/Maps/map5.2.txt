@@ -7,10 +7,10 @@ end
 4
 4
 enemy
-JOHNY
+testt
 2
 2
 enemy
-Mikiel
+fightest
 3
 3

@@ -8,9 +8,13 @@
 //! Creates an new instance of the CharacterElement and sets the Character
 //! @param newCharacter the Character to be set
 CharacterElement::CharacterElement(Character& newCharacter, CharacterStrategy* newCharacterStrategy)
-	: character(new Character(newCharacter)), characterStrategy(newCharacterStrategy)
-CharacterElement::CharacterElement(Character& newCharacter)
+	: characterStrategy(newCharacterStrategy)
 {
+	if (dynamic_cast<Fighter*>(&newCharacter))
+		character = new Fighter(dynamic_cast<Fighter&>(newCharacter));
+	else
+		character = new Character(newCharacter);
+		
 	characterStrategy->setCharacterElement(this);
 }
 
@@ -21,7 +25,11 @@ CharacterElement::~CharacterElement()
 
 CharacterElement::CharacterElement(CharacterElement& newCharacterElement)
 {
-	character = new Character(*newCharacterElement.character);
+
+	if (dynamic_cast<Fighter*>(newCharacterElement.character))
+		character = new Fighter(*dynamic_cast<Fighter*>(newCharacterElement.character));
+	else
+		character = new Character(*newCharacterElement.character);
 
 	if (dynamic_cast<HumanPlayerStrategy*>(newCharacterElement.characterStrategy))
 	{
@@ -103,11 +111,7 @@ void CharacterElement::createCharacterWithLevel(int level, string Enemy2Name)
 	}
 	character = readCharacterFile("SaveFiles/Characters/" + Enemy2Name + ".txt", Enemy2Name);
 	//new  Character(calculateRandomName(), "1d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), 1);
-	character->setLevel(1);
-	for (int i = 1; i < level; i++)
-	{
-		character->incrementLevel(false);
-	}
+
 }
 
 const std::string CharacterElement::print() const
