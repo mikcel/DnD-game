@@ -146,7 +146,7 @@ void MapController::editMap(bool creatingNewMap) {
 				cout << "Invalid element!" << endl;
 			}
 
-			cout << "Element (S for start point, L for end point, F for Floor, W for Wall, X for enemy, C for Chest, F for floor): ";
+			cout << "Element (S for start point, L for end point, F for Floor, W for Wall, X for enemy,N for friendly NPC , C for Chest, F for floor): ";
 			cin >> eS;
 			if (eS == "Q")
 			{ 
@@ -154,7 +154,7 @@ void MapController::editMap(bool creatingNewMap) {
 				return;
 			}
 
-			isInvalid = eS != "S" && eS != "L" && eS != "F" && eS != "W" && eS != "X" && eS != "C" && eS != "F";
+			isInvalid = eS != "S" && eS != "L" && eS != "F" && eS != "W" && eS != "X" && eS != "N" && eS != "C" && eS != "F";
 		} while (isInvalid);
 
 		//! Enter X
@@ -218,6 +218,13 @@ void MapController::editMap(bool creatingNewMap) {
 		}
 		else if (eS == "X") //! Enemy
 		{			
+			/*Character e;
+			CharacterElement characterElement(e);*/
+			Enemy enemy(chooseEnemy());
+			success = m->setElementAt(x, y, enemy);
+		}
+		else if (eS == "N") //! Friend
+		{
 			/*Character e;
 			CharacterElement characterElement(e);*/
 			Enemy enemy(chooseEnemy());

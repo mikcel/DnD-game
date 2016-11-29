@@ -102,3 +102,5 @@ void MapElementsObserver::showChests()
 	if (system("CLS")) system("clear");
 	showChestsDirect();
 }
+
+

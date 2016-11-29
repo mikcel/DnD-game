@@ -7,6 +7,7 @@
 #include "MapElementsToggler.h"
 #include "Dice.h"
 #include "CharacterController.h"
+#include "Chest.h"
 
 using namespace std;
 
@@ -105,6 +106,11 @@ bool Game::run(Player* p)
 	}
 	return true;
 }
+
+
+
+
+
 
 //! Checks if the game is over (the player has reached the end point)
 //! @return true if the game over, false otherwise

@@ -129,7 +129,8 @@ void ItemContainer::removeItem(string itemName) {
 
 	for (vector<Item*>::size_type i = 0; i < contents.size(); i++) {
 		
-		if (contents[i]->getItemName().compare(itemName) == 0) {
+		if (contents[i]->getItemName() == itemName) {
+			cout << "FOUND2rem "<< itemName << endl;
 			//if it's not a worn item container, simply delete object and remove the element from the container
 			delete contents[i];
 			if (containerType != ContainerType::WORN_ITEM) {
