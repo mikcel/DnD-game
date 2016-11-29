@@ -25,7 +25,7 @@ public:
 	CharacterController(); //! Default Constructor
 
 	CharacterController(Character *currentChar); //! Parametrized Constructor - pointer to a character
-	
+
 	~CharacterController(); //! Destructor
 
 	Character* getCurrentCharacter(); //! Getter method for character
@@ -37,7 +37,7 @@ public:
 	void editCharacter(); //! Method to edit a Character
 
 	void saveCharacter(); //! Method to save a Character
-	
+
 private:
 
 	Character *currentCharacter = nullptr; //! Pointer to a character object

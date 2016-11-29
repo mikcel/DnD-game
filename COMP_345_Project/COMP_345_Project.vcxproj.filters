@@ -19,6 +19,9 @@
     <Filter Include="Game">
       <UniqueIdentifier>{6610c2f8-29fe-4fd2-9823-f12fc1a7e7e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Character Strategy">
+      <UniqueIdentifier>{ea1abc8a-7af1-45f8-8d67-44899e437da2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Element.cpp">
@@ -105,12 +108,6 @@
     <ClCompile Include="CharacterController.cpp">
       <Filter>Character</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="MapObserver.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -119,6 +116,27 @@
     </ClCompile>
     <ClCompile Include="Observable.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="AggressorStrategy.cpp">
+      <Filter>Character Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="AIPlayerStrategy.cpp">
+      <Filter>Character Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="FriendlyStrategy.cpp">
+      <Filter>Character Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanPlayerStrategy.cpp">
+      <Filter>Character Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="StrategyTest.cpp">
+      <Filter>Character Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="MathHelper.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterStrategy.cpp">
+      <Filter>Character Strategy</Filter>
     </ClCompile>
     <ClCompile Include="BullyBuilder.cpp">
       <Filter>Character</Filter>
@@ -212,12 +230,6 @@
     <ClInclude Include="CharacterController.h">
       <Filter>Character</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Map</Filter>
-    </ClInclude>
     <ClInclude Include="MapObserver.h">
       <Filter>Map</Filter>
     </ClInclude>
@@ -225,6 +237,24 @@
       <Filter>Drivers</Filter>
     </ClInclude>
     <ClInclude Include="Observable.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="AggressorStrategy.h">
+      <Filter>Character Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="AIPlayerStrategy.h">
+      <Filter>Character Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="FriendlyStrategy.h">
+      <Filter>Character Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanPlayerStrategy.h">
+      <Filter>Character Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="StrategyTest.h">
+      <Filter>Character Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="MathHelper.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="BullyBuilder.h">
@@ -241,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="TankBuilder.h">
       <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterStrategy.h">
+      <Filter>Character Strategy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

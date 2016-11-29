@@ -23,6 +23,8 @@ using namespace std;
 #include "Enums.h" //! Include header file for the enumerated type
 #include "Dice.h"
 #include "ItemContainer.h" //! Include the itemcontainer class
+#include "Observable.h" //! Include the subject class for the observer pattern
+#include "Element.h"
 //! Class that implements the Character
 class Character {
 public:
@@ -93,8 +95,8 @@ private:
 	//! Default Constant value for the HP 
 	const int DEFAULT_HP = 10;
 
-	string name="Unknown"; //! Name data member. Default is "Unknown"
-	int level=1; //! Level data member. Default is 1
+	string name = "Unknown"; //! Name data member. Default is "Unknown"
+	int level = 1; //! Level data member. Default is 1
 	CharacterSize size = CharacterSize::TINY; //! Character's Size set to Tiny by default
 	int abilityScores[NO_ABILITY]; //! Array for the ability scores with 6 elements 
 	int abilityModifiers[NO_ABILITY]; //! Array for the ability modifiers containg 6 numbers

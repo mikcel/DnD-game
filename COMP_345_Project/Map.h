@@ -9,7 +9,9 @@
 #include <list>
 #include <string>
 #include "Observable.h"
-#include "Player.h"
+#include "CharacterElement.h"
+
+class CharacterElement;
 
 using namespace std;
 
@@ -44,14 +46,14 @@ public:
 	bool isFree(int x, int y) const; //! Returns true is the tile at the given address contains an element
 	bool isTraversible(int x, int y) const; //! Returns true is the tile type allows a character to cross it
 
-	Player & getPlayer() const;
+	CharacterElement & getPlayer() const;
 	const std::list<Element*> & getElements() const; //! Returns a the reference of the characters list
 
-	Player* placePlayer(Player& newPlayer); //! Places the player at the start point
+	CharacterElement* placePlayer(CharacterElement& newPlayer); //! Places the player at the start point
 
 	bool isValid() const; //! Returns true if there exist a valid path between a start address and an ending address of the map
-						  //! This function validates that there are a starting and ending point, that they are placed on a traversible
-						  //! address and that there is a path made of traversible tiles from the starting point to the ending point
+	//! This function validates that there are a starting and ending point, that they are placed on a traversible
+	//! address and that there is a path made of traversible tiles from the starting point to the ending point
 
 	std::string print() const; //! Prints a basic outline of the map
 
@@ -70,7 +72,7 @@ private:
 	Position startPoint; //! Position of the start point of the map
 	Position endPoint; //! Position of the end point of the map
 
-	Player * player; //! Pointer to the player
+	CharacterElement  * player; //! Pointer to the player
 	list<Element*> elements; //! List of all the characters in the map
 
 	bool isOob(int x, int y) const; //! Returns true if the provided address is out of bounds

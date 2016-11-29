@@ -124,6 +124,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AggressorStrategy.cpp" />
+    <ClCompile Include="AIPlayerStrategy.cpp" />
     <ClCompile Include="Buff.cpp" />
     <ClCompile Include="BullyBuilder.cpp" />
     <ClCompile Include="Campaign.cpp" />
@@ -132,16 +134,18 @@
     <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="CharacterDirector.cpp" />
     <ClCompile Include="CharacterElement.cpp" />
+    <ClCompile Include="CharacterStrategy.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="Element.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="FighterBuilder.cpp" />
     <ClCompile Include="FolderUtils.cpp" />
+    <ClCompile Include="FriendlyStrategy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="HumanPlayerStrategy.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemContainer.cpp" />
     <ClCompile Include="ItemUtils.cpp" />
@@ -153,10 +157,11 @@
     <ClCompile Include="MapObserver.cpp" />
     <ClCompile Include="MapTest.cpp" />
     <ClCompile Include="NimbleBuilder.cpp" />
+    <ClCompile Include="MathHelper.cpp" />
     <ClCompile Include="Observable.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="TankBuilder.cpp" />
+    <ClCompile Include="StrategyTest.cpp" />
     <ClCompile Include="TestControllers.cpp" />
     <ClCompile Include="TestItemClass.cpp" />
     <ClCompile Include="TestItemContainerClass.cpp" />
@@ -164,6 +169,8 @@
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AggressorStrategy.h" />
+    <ClInclude Include="AIPlayerStrategy.h" />
     <ClInclude Include="Buff.h" />
     <ClInclude Include="BullyBuilder.h" />
     <ClInclude Include="Campaign.h" />
@@ -172,16 +179,18 @@
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="CharacterDirector.h" />
     <ClInclude Include="CharacterElement.h" />
+    <ClInclude Include="CharacterStrategy.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="Dice.h" />
     <ClInclude Include="Element.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Fighter.h" />
     <ClInclude Include="FighterBuilder.h" />
     <ClInclude Include="FolderUtils.h" />
+    <ClInclude Include="FriendlyStrategy.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HumanPlayerStrategy.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemContainer.h" />
     <ClInclude Include="ItemUtils.h" />
@@ -192,11 +201,12 @@
     <ClInclude Include="MapObserver.h" />
     <ClInclude Include="MapTest.h" />
     <ClInclude Include="NimbleBuilder.h" />
+    <ClInclude Include="MathHelper.h" />
     <ClInclude Include="Observable.h" />
     <ClInclude Include="Observer.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="TankBuilder.h" />
+    <ClInclude Include="StrategyTest.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

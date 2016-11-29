@@ -7,6 +7,7 @@
 #include "MapController.h"
 #include "CharacterController.h"
 #include "Game.h"
+#include "CampaignController.h"
 
 using namespace std;
 
@@ -24,6 +25,10 @@ void GameController::play()
 
 	//We are ready to launch the game
 	launchGame();
+	if (campaign != nullptr) {
+		delete campaign;
+		campaign = nullptr;
+	}
 
 	if (map != nullptr) {
 		delete map;
@@ -36,7 +41,7 @@ void GameController::play()
 		character = nullptr;
 	}
 
-	
+
 }
 
 //! Prompts the user to select a character
@@ -80,45 +85,98 @@ void GameController::selectCharacter()
 //! Reads the maps from the txt files
 void GameController::selectCampaign()
 {
-	cout << "===SELECT A MAP===" << endl << endl;
-	//Load all maps names
-	string mapName;
-	ifstream mapFile;
-	vector<string> allFiles = getFilesInsideFolderNoExtension("SaveFiles\\Maps");
-	while(map == nullptr) {
+	cout << "===SELECT A CAMPAIGN===" << endl << endl;
+	//Load all Campaign names
+	string campaignName;
+	ifstream campaignFile;
+	vector<string> allFiles = getFilesInsideFolderNoExtension("SaveFiles\\Campaigns");
+	while (campaign == nullptr) {
 
-		cout << "Available maps:" << endl;
+		cout << "Available Campaigns:" << endl;
 		for (string& file : allFiles)
 		{
 			cout << file << endl;
 		}
 
-		cout << endl << "Enter the name of the map you want to play: ";
-		cin >> mapName;
+		cout << endl << "Enter the name of the campaign you want to play: ";
+		cin >> campaignName;
+		/*bool validCampaign = false;
+		for (string& file : allFiles)
+		{
+		if (campaignName == file){
+		validCampaign = true;
+		}
+		}
+		if (!validCampaign){
+		cout << "The campaigns " << campaignName << " does not exist. Please enter a valid campaign name." << endl << endl;
+
+		continue;
+		}*/
+
 		while (cin.fail())
 		{
-			cout << "Incorrect Input. Please enter a correct map name: ";
+			cout << "Incorrect Input. Please enter a correct campaigns name: ";
 			cin.clear();
-			cin >> mapName;
+			cin >> campaignName;
 		}
 
-		map = readMapFile("SaveFiles/Maps/" + mapName + ".txt", mapName);
+		campaign = readCampaignFile(campaignName);
 
-		if (map == nullptr)
+		if (campaign == nullptr)
 		{
-			cout << "The map " << mapName << " does not exist. Please enter a valid map name." << endl << endl;
+			cout << "The campaigns " << campaignName << " does not exist. Please enter a valid campaign name." << endl << endl;
 		}
 	}
 
-	cout << "The map " << mapName << " was succefully loaded." << endl << endl;
+	cout << "The campaign " << campaignName << " was succefully loaded." << endl << endl;
 
 
-	
+
 }
 
 //! Creates a new instance of the Game class an launches it
 void GameController::launchGame()
 {
-	Game g = Game(map);
-	g.play(character);
+	//Game g();
+	//Map* currentMap;
+	vector<string> mapNames = *campaign->getCampaignMapNames();
+
+	for (int i = 0; i < mapNames.size(); i++)
+	{
+		string userChoice = "";
+		bool wantToquit = false;
+		map = readMapFile("SaveFiles/Maps/" + mapNames[i] + ".txt", mapNames[i]);
+
+		wantToquit = Game(map).play(character);
+		if (wantToquit){
+			cout << "Exiting to main menu." << endl;
+
+			return;
+		}
+
+		if (i + 1 >= mapNames.size()){
+			cout << "Congratulations! You have beaten the " << campaign->getCampaignName() << " campaign!\nEnjoy the spoils of a bountiful victory" << endl;
+
+			system("pause");
+		}
+
+		else{
+			while (userChoice != "Y" && userChoice != "N")
+			{
+				cout << endl << "Do you want to play the next map: " + mapNames[i + 1] + " ?(Y/N)" << endl;
+				cin >> userChoice;
+				if (userChoice == "Y" || userChoice == "y"){
+				}
+				else if (userChoice == "N" || userChoice == "n"){
+					cout << "Exiting to main menu." << endl;
+
+					return;
+				}
+				else{
+					cout << "Invalid input.";
+				}
+			}
+		}
+	}
+	//g.play(character);
 }

@@ -10,9 +10,13 @@ enemy
 JOHNY
 1
 7
+ally
+Mikiel
+7
+2
 wall
 4
 0
 chest
 4
-4
+3

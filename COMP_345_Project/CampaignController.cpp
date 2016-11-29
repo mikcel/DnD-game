@@ -217,10 +217,13 @@ int CampaignController::cacheCampaign() {
 //! Method to read a saved campaign file
 //! @param campEditName string for file
 //! @return pointer to campaign 
-Campaign* CampaignController::readCampaignFile(string campEditName)
+Campaign* readCampaignFile(string campEditName)
 {
 	ifstream campFile;
 	campFile.open("SaveFiles/Campaigns/" + campEditName + ".txt");
+	if (!campFile){
+		return nullptr;
+	}
 	vector<string>* tempMapNamesVect = new vector<string>(0);
 	string tempMapName;
 	while (!campFile.eof()) {

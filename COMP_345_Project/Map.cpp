@@ -2,7 +2,6 @@
 //! @brief Implementation file for the Map class
 //!
 
-#include  "Enemy.h"
 #include  "Map.h"
 #include <typeinfo>
 #include "Chest.h"
@@ -10,6 +9,7 @@
 #include  "Map.h"
 #include "CharacterElement.h"
 #include "ItemUtils.h"
+#include  "AggressorStrategy.h"
 
 using namespace std;
 /**
@@ -442,11 +442,11 @@ bool Map::validationRecursive(int x, int y, bool** explorationArray) const
 * @param newPlayer Reference to the player character
 * @return Pointer to the actual player character. nullptr if the player was not successfully placed
 */
-Player* Map::placePlayer(Player& newPlayer)
+CharacterElement* Map::placePlayer(CharacterElement& newPlayer)
 {
 	if (isValid())
 	{
-		Player& copy = *newPlayer.clone();
+		CharacterElement& copy = *newPlayer.clone();
 		copy.position.x = startPoint.x;
 		copy.position.y = startPoint.y;
 		player = &copy;
@@ -457,10 +457,14 @@ Player* Map::placePlayer(Player& newPlayer)
 		// Create and adapt enemies level
 		for (Element* element : getElements())
 		{
-			Enemy* enemy = dynamic_cast<Enemy*>(element);
+			CharacterElement* enemy = dynamic_cast<CharacterElement*>(element);
 			if (enemy)
 			{
-				enemy->createCharacterWithLevel(copy.character->getLevel(), enemy->getCharacter().getName());
+				AggressorStrategy* strategy = dynamic_cast<AggressorStrategy*>(enemy->getCharacterStrategy());
+				if (strategy)
+				{
+					enemy->createCharacterWithLevel(copy.getCharacter().getLevel(), enemy->getCharacter().getName());
+				}
 			}
 		}
 
@@ -473,13 +477,13 @@ Player* Map::placePlayer(Player& newPlayer)
 			Chest* chest = dynamic_cast<Chest*>(element);
 			if (chest)
 			{
-				int nbrOfItems = abs(rand()) %6;
+				int nbrOfItems = abs(rand()) % 6;
 				for (int i = 0; i < nbrOfItems; i++) {
 					int itemIndex = abs(rand()) % allExistingItems.size();
 					Item* baseItem = allExistingItems.at(itemIndex);
 					Weapon* baseWeapon = dynamic_cast<Weapon*>(baseItem);
 					Item* curItem;
-					
+
 					if (baseWeapon)
 					{
 						curItem = new Weapon(*baseWeapon);
@@ -488,7 +492,7 @@ Player* Map::placePlayer(Player& newPlayer)
 						curItem = new Item(*baseItem);
 					}
 
-					int characterLevel = player->character->getLevel();
+					int characterLevel = player->getCharacter().getLevel();
 					curItem->setItemName(curItem->getItemName() + " " + to_string(characterLevel) + " " + to_string(i));
 
 					int increase = characterLevel / 5;
@@ -564,7 +568,7 @@ string Map::serializeMapToString()
 	serialMap += "\n";
 	serialMap += to_string(height);
 	serialMap += "\n";
-	
+
 	serialMap += "start";
 	serialMap += "\n";
 	serialMap += to_string(startPoint.x);
@@ -581,7 +585,7 @@ string Map::serializeMapToString()
 
 
 	bool somethingToWrite = false;
-	
+
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			somethingToWrite = false;
@@ -600,7 +604,7 @@ string Map::serializeMapToString()
 				somethingToWrite = true;
 			}
 
-			if (somethingToWrite) { 
+			if (somethingToWrite) {
 				serialMap += to_string(i);//width
 				serialMap += "\n";
 				serialMap += to_string(j);//height
@@ -612,6 +616,6 @@ string Map::serializeMapToString()
 }
 
 
-Player & Map::getPlayer() const {
+CharacterElement & Map::getPlayer() const {
 	return *player;
 }

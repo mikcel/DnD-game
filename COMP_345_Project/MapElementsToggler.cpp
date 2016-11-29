@@ -1,41 +1,40 @@
 #include "MapElementsToggler.h"
-#include "Map.h"
 #include "Chest.h"
 #include <string>
 #include <iomanip>
 #include <iostream>
 
 
-MapElementsObserver::MapElementsObserver(Map* newMap) : map(*newMap){}
+MapElementsToggler::MapElementsToggler(Map* newMap) : map(*newMap){}
 
 //! Shows the info about the player, enemies and chests
-void MapElementsObserver::show()
+void MapElementsToggler::show()
 {
 	if (system("CLS")) system("clear");
-	
+
 	showPlayerDirect();
 	showEnemiesDirect();
-	showChestsDirect();	
+	showChestsDirect();
 }
 
 //! Shows the info about the player
-void MapElementsObserver::showPlayerDirect()
+void MapElementsToggler::showPlayerDirect()
 {
-	Player& player = map.getPlayer();
+	CharacterElement & player = map.getPlayer();
 	cout << endl << "Position: (" << player.getPosition().x << ", " << player.getPosition().y << ")" << endl;
 	std::cout << player.getCharacter();
 
 }
 
 //! Shows the info about the enemies
-void MapElementsObserver::showEnemiesDirect()
+void MapElementsToggler::showEnemiesDirect()
 {
 	cout << "-------------------------------------------------------------------------------------------------------\n";
 	cout << setw(60) << right << "All Enemies" << endl;
 	cout << "-------------------------------------------------------------------------------------------------------\n";
 	cout << endl;
 
-	Player& player = map.getPlayer();
+	CharacterElement & player = map.getPlayer();
 	bool atLeastOnce = false;
 	// Show other characters' stats
 	for (Element* element : map.getElements())
@@ -56,7 +55,7 @@ void MapElementsObserver::showEnemiesDirect()
 }
 
 //! Shows the info about the chests
-void MapElementsObserver::showChestsDirect()
+void MapElementsToggler::showChestsDirect()
 {
 	cout << "-------------------------------------------------------------------------------------------------------\n";
 	cout << setw(60) << right << "All Chests" << endl;
@@ -83,21 +82,21 @@ void MapElementsObserver::showChestsDirect()
 }
 
 //! Clears the console and shows the info about the player
-void MapElementsObserver::showPlayer()
+void MapElementsToggler::showPlayer()
 {
 	if (system("CLS")) system("clear");
 	showPlayerDirect();
 }
 
 //! Clears the console and shows the info about the enemies
-void MapElementsObserver::showEnemies()
+void MapElementsToggler::showEnemies()
 {
 	if (system("CLS")) system("clear");
 	showEnemiesDirect();
 }
 
 //! Clears the console and shows the info about the chests
-void MapElementsObserver::showChests()
+void MapElementsToggler::showChests()
 {
 	if (system("CLS")) system("clear");
 	showChestsDirect();
