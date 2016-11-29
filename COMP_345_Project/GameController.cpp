@@ -41,7 +41,7 @@ void GameController::play()
 		character = nullptr;
 	}
 
-	
+
 }
 
 //! Prompts the user to select a character
@@ -90,7 +90,7 @@ void GameController::selectCampaign()
 	string campaignName;
 	ifstream campaignFile;
 	vector<string> allFiles = getFilesInsideFolderNoExtension("SaveFiles\\Campaigns");
-	while(campaign == nullptr) {
+	while (campaign == nullptr) {
 
 		cout << "Available Campaigns:" << endl;
 		for (string& file : allFiles)
@@ -103,14 +103,14 @@ void GameController::selectCampaign()
 		/*bool validCampaign = false;
 		for (string& file : allFiles)
 		{
-			if (campaignName == file){
-				validCampaign = true;
-			}
+		if (campaignName == file){
+		validCampaign = true;
+		}
 		}
 		if (!validCampaign){
-			cout << "The campaigns " << campaignName << " does not exist. Please enter a valid campaign name." << endl << endl;
-			
-			continue;
+		cout << "The campaigns " << campaignName << " does not exist. Please enter a valid campaign name." << endl << endl;
+
+		continue;
 		}*/
 
 		while (cin.fail())
@@ -131,7 +131,7 @@ void GameController::selectCampaign()
 	cout << "The campaign " << campaignName << " was succefully loaded." << endl << endl;
 
 
-	
+
 }
 
 //! Creates a new instance of the Game class an launches it
@@ -162,18 +162,19 @@ void GameController::launchGame()
 
 		else{
 			while (userChoice != "Y" && userChoice != "N")
-			{cout << endl << "Do you want to play the next map: " + mapNames[i + 1] + " ?(Y/N)" << endl;
-			cin >> userChoice;
-			if (userChoice == "Y"){
-			}
-			else if (userChoice == "N"){
-				cout << "Exiting to main menu." << endl;
+			{
+				cout << endl << "Do you want to play the next map: " + mapNames[i + 1] + " ?(Y/N)" << endl;
+				cin >> userChoice;
+				if (userChoice == "Y" || userChoice == "y"){
+				}
+				else if (userChoice == "N" || userChoice == "n"){
+					cout << "Exiting to main menu." << endl;
 
-				return;
-			}
-			else{
-				cout << "Invalid input.";
-			}
+					return;
+				}
+				else{
+					cout << "Invalid input.";
+				}
 			}
 		}
 	}

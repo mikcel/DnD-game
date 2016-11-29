@@ -18,7 +18,7 @@
 
 #include <string> //! Library for string for parameters of this type
 #include <iostream> //! Iostream for output use
-using namespace std; 
+using namespace std;
 
 #include "Enums.h" //! Include header file for the enumerated type
 #include "Dice.h"
@@ -28,12 +28,12 @@ using namespace std;
 //! Class that implements the Character
 class Character {
 public:
-	
+
 	//! Constant for the No. of abilities (scores & modifiers) (mainly use for array size)
-	static const int  NO_ABILITY = 6; 
+	static const int  NO_ABILITY = 6;
 
 	//! Default Constructor
-	Character(); 
+	Character();
 
 	//! Constructor with name
 	//! Used to facilitate map construction from a map file
@@ -46,11 +46,11 @@ public:
 	//! Constructor with name, hit dice, six variables for each ability score, level and size 
 	//! If level and size are not passed , the level is set to 1 by default and size to tiny by default
 	Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
-	
+
 	Character(const Character &copyChar);
-	
+
 	//! Destrcutor
-	virtual ~Character(); 
+	virtual ~Character();
 
 	string getName() const; //! Getter for Character's name
 	int getLevel() const; //! Getter for Character's Level
@@ -79,7 +79,7 @@ public:
 	void generateAbilityModifiers(); //! Function to set the Ability modifiers for each ability score
 	bool validateNewCharacter(); //! Method to validate a newly created Character
 	int hit(int dmg); //! Function that is called when a Character gets hit. Decreases the Character's HP with a damage number
-	virtual int attack(Character &chr, int additionalDmg=0); //! Function that is used when a Character attacks another Character
+	virtual int attack(Character &chr, int additionalDmg = 0); //! Function that is used when a Character attacks another Character
 	int getSizeModifier(); //! Function to calculate the Size Modifier
 	void incrementLevel(bool isPlayer); //! Function to increase the Character's 
 	void incrementArmorClass(int chrAC); //! Method to increment the Character's AC by a number
@@ -98,15 +98,15 @@ private:
 	//! Default Constant value for the HP 
 	const int DEFAULT_HP = 10;
 
-	string name="Unknown"; //! Name data member. Default is "Unknown"
-	int level=1; //! Level data member. Default is 1
+	string name = "Unknown"; //! Name data member. Default is "Unknown"
+	int level = 1; //! Level data member. Default is 1
 	CharacterSize size = CharacterSize::TINY; //! Character's Size set to Tiny by default
 	int abilityScores[NO_ABILITY]; //! Array for the ability scores with 6 elements 
 	int abilityModifiers[NO_ABILITY]; //! Array for the ability modifiers containg 6 numbers
 	int currentHitPoints = DEFAULT_HP; //! Character's Hp set to default HP (10)
-	int damageBonus=0; //! Damage Bonus. Set to 0 by default
-	int attackBonus=0; //! Character's Attack Bonus. 0 by default
-	int armorClass=0; //! Character's AC. 0 by default
+	int damageBonus = 0; //! Damage Bonus. Set to 0 by default
+	int attackBonus = 0; //! Character's Attack Bonus. 0 by default
+	int armorClass = 0; //! Character's AC. 0 by default
 	string hitDice; //! Character's Hit Dice
 	ItemContainer *backpack; //! Character's backpack
 	ItemContainer *currentWornItems; //! Character's currently worn items container
@@ -114,7 +114,7 @@ private:
 	void takeOffBuff(vector<Buff> itemBuff); //! Method to check stats and buffs
 
 	//! Method used to overload the output stream operator to output the Character's details to the console.
-	friend ostream& operator<<(ostream& stream, const Character& chr); 
+	friend ostream& operator<<(ostream& stream, const Character& chr);
 
 };
 

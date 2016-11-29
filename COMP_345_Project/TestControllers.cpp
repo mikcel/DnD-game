@@ -19,6 +19,7 @@
 #include "Chest.h"
 #include "Character.h"
 #include "CharacterElement.h"
+#include "AggressorStrategy.h"
 using namespace CppUnit;
 using namespace std;
 
@@ -56,7 +57,7 @@ void TestControllers::testMapSavingLoading(void)
 	map1->setEndPoint(5, 5);
 	map1->setElementAt(3, 2, Chest());
 	Character e;
-	CharacterElement characterElement(e);
+	CharacterElement characterElement(e, new AggressorStrategy());
 	map1->setElementAt(4, 2, characterElement);
 	mapController->setCurrentMap(*map1);
 	mapController->saveMap();
