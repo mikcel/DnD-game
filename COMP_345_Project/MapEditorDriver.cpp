@@ -84,8 +84,8 @@ int main(int argc, char* argv[])
 		cout << "3: Create a new map" << endl;
 		cout << "4: Edit a map" << endl << endl;
 
-		cout << "5: Create a character" << endl;
-		cout << "6: Edit a character" << endl << endl;
+		cout << "5: Create a fighter" << endl;
+		cout << "6: Edit a fighter" << endl << endl;
 
 		cout << "7: Create an item" << endl;
 		cout << "8: Edit an item" << endl << endl;
@@ -114,6 +114,7 @@ int main(int argc, char* argv[])
 
 		if (userOption <= 0)
 		{
+			delete chr;
 			delete m1;
 			delete c1;
 			return 0;
@@ -156,6 +157,7 @@ int main(int argc, char* argv[])
 			flushConsole();
 		}
 	}
+	delete chr;
 	delete m1;
 	delete c1;
 }

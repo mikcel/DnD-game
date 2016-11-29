@@ -3,6 +3,11 @@
 //! @brief Implementation file for Character Controller
 
 #include "CharacterController.h"
+#include "CharacterDirector.h"
+#include "FighterBuilder.h"
+#include "BullyBuilder.h"
+#include "NimbleBuilder.h"
+#include "TankBuilder.h"
 
 //! Default Constructor
 CharacterController::CharacterController()
@@ -41,11 +46,11 @@ void CharacterController::setCurrentCharacter(Character *character){
 //! @return -
 void CharacterController::createCharacter(){
 	
-	cout << "==== CHARACTER CREATION ====" << endl << endl;
-	bool choiceCorrect = false; //Flag for correct choice between character and fighter creation 
-	int choice = 0; //! Choice of user
+	cout << "==== FIGHTER CREATION ====" << endl << endl;
+	//bool choiceCorrect = false; //Flag for correct choice between character and fighter creation 
+	//int choice = 0; //! Choice of user
 
-	cout << "Please choose between creating a simple Character(1) or a Fighter(2) \nEnter the respective number: ";
+	/*cout << "Please choose between creating a simple Character(1) or a Fighter(2) \nEnter the respective number: ";
 
 	//! Keep asking if choice is not correct
 	while (!choiceCorrect){
@@ -69,7 +74,9 @@ void CharacterController::createCharacter(){
 			cout << "\nIncorrect choice. Please enter only 1 or 2 depending on the character type you want to create.\n";
 			cout << "1 - Character OR 2 - Fighter. Please choose correctly: ";
 		}
-	}
+	}*/
+
+	cout << "Let's create your fighter !!!" << endl;
 
 	bool characterCorrect = false; //! Flag for correct Character
 
@@ -77,15 +84,16 @@ void CharacterController::createCharacter(){
 	int level; //! Player's level
 	int size; //! Player's size
 	int fightStyle; //! Fighter's fighting style
+	int fighterType; //! Fighter's Type
 
 	//! While character not correct keep asking
 	while (!characterCorrect){
 
-		cout << "\nEnter your player's name: ";
+		cout << "\nEnter your fighter's name: ";
 		cin.ignore();
 		getline(cin, name); //! Get name even with spaces
 
-		cout << "Enter your level: ";
+		cout << "\nEnter your level: ";
 		bool correctLevel = false;
 		while (!correctLevel){ //! if level is still not good keep asking
 			while (!(cin >> level)){
@@ -101,7 +109,7 @@ void CharacterController::createCharacter(){
 			}
 		}
 
-		cout << "Enter choose size from the list below:\n";
+		cout << "\nEnter choose size from the list below:\n";
 		//! Display all the sizes possible
 		displayCharacterSize();
 		bool correctSize = false;
@@ -119,37 +127,45 @@ void CharacterController::createCharacter(){
 			}
 		}
 
-		if (choice == 2){ //! If fighter
-			cout << "Enter your Fighter Style from the list below:\n";
-			//! Displays all the fighting style possible
-			displayFighterStyle();
-			cout << "Please choose: ";
-			bool correctStyle = false;
-			while (!correctStyle){ //! if fighting style is still not good ask again
-				while (!(cin>>fightStyle)){
-					cout << "\nIncorrect Fighting Style entered. Please enter style again: ";
-					cin.clear();
-					cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				}
-				if (fightStyle<0 || fightStyle>2){
-					cout << "\nIncorrect Fighting Style entered. Please enter style again: ";
-				}
-				else{
-					correctStyle = true;
-				}
+		cout << "\nEnter your Fighter Style from the list below:\n";
+		//! Displays all the fighting style possible
+		displayFighterStyle();
+		cout << "Please choose: ";
+		bool correctStyle = false;
+		while (!correctStyle){ //! if fighting style is still not good ask again
+			while (!(cin>>fightStyle)){
+				cout << "\nIncorrect Fighting Style entered. Please enter style again: ";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
+			if (fightStyle<0 || fightStyle>2){
+				cout << "\nIncorrect Fighting Style entered. Please enter style again: ";
+			}
+			else{
+				correctStyle = true;
+			}
+		}
+		
+
+		cout << "\nFighter Types available: " << endl;
+		displayFighterType();
+		cout << "Which type of fighter do you want to create (Enter the corresponding number)? ";
+		while (!(cin >> fighterType)){
+			cout << "Incorrect Fighter type. Try again: ";
+			cin.ignore();
+			cin.clear();
 		}
 
 		//! Display information entered for now and ask if want to continue
-		cout << "\n\nHere are the data you entered for your character: ";
+		cout << "\nHere are the data you entered for your fighter: ";
 		cout << "\nName: " << name << "\nLevel: " << level << "\nSize: " << (CharacterSize)size;
-
-		if (choice == 2)
-			cout << "\nFighting Style: " << (FightStyle)fightStyle;
+		cout << "\nFighting Style: " << (FightStyle)fightStyle;
+		cout << "\nFighter Type: " << (FighterType)fighterType;
 
 		string changeData = "";
 		bool changeDataCorrect = false; //! Flag to check if continue input is correct
-		cout << "\nDo you want to change anything? (Y/N) ";
+		cout << "\nPlease note that once set the fighter type cannot be modified. \nDo you want to change anything? (Y/N) ";
+
 		while (!changeDataCorrect){
 			cin >> changeData;
 			if (changeData == "N"){
@@ -169,7 +185,7 @@ void CharacterController::createCharacter(){
 	}
 
 	//! Generates the ability score
-	cout << "\n\nTime to generate the ability scores...";
+	/*cout << "\n\nTime to generate the ability scores...";
 
 	srand(time(0)); //! Give a starting point to the random function
 
@@ -232,38 +248,39 @@ void CharacterController::createCharacter(){
 			arrAbilityScores[Character::NO_ABILITY - 1] = arrRand[i];
 			break;
 		}
+	}*/
+
+	CharacterDirector chrDirect;
+	switch (fighterType)
+	{
+		case 0:
+			chrDirect.setFighterBuilder(new BullyBuilder());
+			break;
+		case 1:
+			chrDirect.setFighterBuilder(new NimbleBuilder());
+			break;
+		case 2:
+			chrDirect.setFighterBuilder(new TankBuilder());
+			break;
 	}
+	
+	chrDirect.constructFighter(name,level,(FightStyle)fightStyle,(CharacterSize)size);
 
-
-
-	if (choice == 1){
-		//! Create Character Object
-		currentCharacter = new Character(name, "1d10", arrAbilityScores, level, (CharacterSize)size);
-		if (!currentCharacter->validateNewCharacter()){ //! Validate
-			//! If invalid character
-			cout << "Incorrect Character. Character will not be saved";
-			system("pause");
-			currentCharacter = NULL;
-			return;
-		}
+	//! Create fighter
+	currentCharacter = chrDirect.getFighter();
+	if (!currentCharacter->validateNewCharacter()){ //! Validate{
+		//! If incorrect Fighter end program
+		cout << "Incorrect Fighter.  Character will not be saved";
+		system("pause");
+		currentCharacter = NULL;
+		return;
 	}
-	else{
-		//! Create fighter
-		currentCharacter = new Fighter(name, arrAbilityScores, (FightStyle)fightStyle, level, (CharacterSize)size);
-		if (!currentCharacter->validateNewCharacter()){ //! Validate{
-			//! If incorrect Fighter end program
-			cout << "Incorrect Fighter.  Character will not be saved";
-			system("pause");
-			currentCharacter = NULL;
-			return;
-		}
-	}
-
+	
 	bool flagCorrectChoice = false;
 	string itemChoice = "";
 	
 	//! Ask if user wants to add item to backpack
-	cout << "Do you want to add items to your backpack? (Y/N) "; 
+	cout << "\nDo you want to add items to your backpack? (Y/N) "; 
 	while (!flagCorrectChoice){
 		cin >> itemChoice; //! Enter choice and check
 		if (itemChoice == "Y" || itemChoice == "N")
@@ -278,12 +295,7 @@ void CharacterController::createCharacter(){
 		addItem();
 	}
 
-	if (choice == 1){ //! Output the character's stats
-		cout << "Character Created!\nThe Stats are:\n" << *currentCharacter;
-	}
-	else{
-		cout << "Fighter Created!\nThe Stats are:\n" << *currentCharacter;
-	}
+	cout << "\nFighter Created!\nThe Stats are:\n\n" << *dynamic_cast<Fighter*>(currentCharacter) << endl;
 
 	saveCharacter(); //! Save Character 
 
@@ -294,13 +306,13 @@ void CharacterController::createCharacter(){
 //! Method to edit character
 //! @return - 
 void CharacterController::editCharacter(){
-	cout << "==== CHARACTER EDITION ====" << endl << endl;
+	cout << "==== FIGHTER EDITION ====" << endl << endl;
 
 	//! Get all files available in the Characters folder
 	vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Characters/");
 
 	if (chrFiles.size() == 0) { //! Check if files exist or not
-		cout << "No Character has yet been created.\n";
+		cout << "No Fighter has yet been created.\n";
 		system("pause");
 		return;
 	}
@@ -310,11 +322,11 @@ void CharacterController::editCharacter(){
 	}
 	string fileName = "";
 	bool fileNameCorrect = false; //! Ask for name of the file to load
-	cout << "\nPlease enter the name of the Character you want to load: ";
+	cout << "\nPlease enter the name of the Fighter you want to load: ";
 	while (!fileNameCorrect) {
 		cin >> fileName; //! Check if name is correct
 		if (find(chrFiles.begin(), chrFiles.end(), fileName) != chrFiles.end()) {
-			currentCharacter = new Character(*readCharacterFile("SaveFiles/Character", fileName));
+			currentCharacter = readCharacterFile("SaveFiles/Character", fileName);
 			fileNameCorrect = true;
 		}
 		else { //! Error message if file does not exist
@@ -322,11 +334,8 @@ void CharacterController::editCharacter(){
 		}
 	}
 
-	system("cls"); //! Clear screen and show the stats of the loaded character or fighter
-	if (dynamic_cast<Fighter*>(currentCharacter))
-		cout << *(dynamic_cast<Fighter*>(currentCharacter));
-	else
-		cout << *currentCharacter;
+	system("cls"); //! Clear screen and show the stats of the loaded fighter
+	cout << *(dynamic_cast<Fighter*>(currentCharacter));
 
 	int menuChoice = 0;
 	string menuChoiceStr;
@@ -336,7 +345,7 @@ void CharacterController::editCharacter(){
 		//! Output the menu to choose what to edit in the character
 		cout << "Currently edited character: " << currentCharacter->getName() << endl << endl;
 		cout << "Please choose from the following:\n"
-			<< "0 - Display Character\n"
+			<< "0 - Display Fighter\n"
 			<< "1 - Save Character\n"
 			<< "2 - Edit Name\n"
 			<< "3 - Edit Level\n"
@@ -367,11 +376,12 @@ void CharacterController::editCharacter(){
 		bool styleChangeCorrect = true;
 		switch (menuChoice){
 			case 0: //! Display Character
-				if (dynamic_cast<Fighter*>(currentCharacter))
-					cout << *(dynamic_cast<Fighter*>(currentCharacter)) << endl;
-				else
-					cout << *currentCharacter << endl;
-			break;
+				if (system("CLS"))
+				{
+					system("clear");
+				}
+				cout << *(dynamic_cast<Fighter*>(currentCharacter)) << endl;
+				break;
 			case 1: //! Save Character
 				saveCharacter();
 				break;
@@ -451,7 +461,7 @@ void CharacterController::editCharacter(){
 
 				vector <Item*> backItem;
 				//! Get all backpack contents
-				backItem = currentCharacter->getBackpackContents();
+				backItem = currentCharacter->getBackpackContents()->getContents();
 
 				if (backItem.size() == 0) //! Check if there are items
 					cout << "\n:( There are no item in the backpack!!!";
@@ -501,7 +511,7 @@ void CharacterController::editCharacter(){
 			case 7: //! Equip with an item
 			{
 				vector<Item*> backItem; //! Get backpack contents
-					backItem = currentCharacter->getBackpackContents();
+					backItem = currentCharacter->getBackpackContents()->getContents();
 				if (backItem.size() == 0) //! Check if there are items in backpack
 					cout << "\n:( There are no Item that you can equip with!!! Try adding a new item first.\n";
 
@@ -552,7 +562,7 @@ void CharacterController::editCharacter(){
 
 				//! Get contents of currently worn item
 				vector<Item*> holdItem;
-				holdItem = currentCharacter->getCurrentWornItems();
+				holdItem = currentCharacter->getCurrentWornItems()->getContents();
 				//! check if there are items
 				bool wearingItem = false;
 				for (auto i : holdItem){
@@ -659,6 +669,10 @@ void CharacterController::editCharacter(){
 			if (menuChoice != 1 && styleChangeCorrect)
 				saveCharacter();
 			system("pause"); //! Pause to show output and clear the console
+			if (system("CLS"))
+			{
+				system("clear");
+			}
 			cout << endl;
 		}
 
@@ -728,12 +742,15 @@ Character* readCharacterFile(string charFileLocation, string charName){
 	string chrType = "";
 	string strSize = "";
 	string name;
-	string hitDice;
 	int level;
 	int fightStyle;
+	int fightType;
 
 	//! read all the basic stats
-	inStream >> chrType >> name >> hitDice >> level >> strSize >> fightStyle;
+	inStream >> chrType >> name >> level >> strSize;
+
+	if (chrType == "fighter")
+		inStream >> fightStyle >> fightType;
 
 	//! Read the ability scores
 	int abilityScr[Character::NO_ABILITY];
@@ -743,9 +760,11 @@ Character* readCharacterFile(string charFileLocation, string charName){
 
 	//! If character create a character object else create a fighter object
 	if (chrType == "character")
-		tempCharacter = new Character(name, hitDice, abilityScr, level, (CharacterSize)stoi(strSize));
-	else
+		tempCharacter = new Character(name, abilityScr, level, (CharacterSize)stoi(strSize));
+	else{
 		tempCharacter = new Fighter(name, abilityScr, (FightStyle)fightStyle, level, (CharacterSize)stoi(strSize));
+		dynamic_cast<Fighter*>(tempCharacter)->setType((FighterType)fightType);
+	}
 
 	//! get the item in the backpack
 	string itemName;
@@ -804,6 +823,16 @@ void CharacterController::displayFighterStyle(){
 
 }
 
+//! Method to display all available fighter types
+//! @return -
+void CharacterController::displayFighterType(){
+
+	cout << (int)FighterType::BULLY << " - " << FighterType::BULLY << "\n"
+		<< (int)FighterType::NIMBLE << " - " << FighterType::NIMBLE << "\n"
+		<< (int)FighterType::TANK  << " - " << FighterType::TANK << "\n";
+
+}
+
 //! Method to add an item to the character's backpack
 //! @return - 
 void CharacterController::addItem(){
@@ -845,7 +874,7 @@ void CharacterController::addItem(){
 
 				//! Check if item is already in backapck
 				bool itemFound = false;
-				for (auto i : currentCharacter->getBackpackContents()){
+				for (auto i : currentCharacter->getBackpackContents()->getContents()){
 					if (i->getItemName() == filesInFolder[itemID])
 						itemFound = true;
 				}
@@ -878,7 +907,7 @@ void CharacterController::addItem(){
 //! @param array pointer - array to check
 //! @param number - number to check if in array
 //! @return true - if number is in array, false - if not
-bool CharacterController::checkScr(int *arr, int scr){
+/*bool CharacterController::checkScr(int *arr, int scr){
 
 	//! If number is 0 return false (no. already used in array/element does not exist)
 	if (scr == 0)
@@ -894,4 +923,4 @@ bool CharacterController::checkScr(int *arr, int scr){
 	}
 	return false; //! Return false if not found
 
-}
+}*/

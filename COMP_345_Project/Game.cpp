@@ -113,19 +113,18 @@ bool Game::isGameOver()
 //! Adjusts the level of the Player and returns the user to the main menu
 void Game::perfomEndGame()
 {
-	Character& currentChar = map->getPlayer().getCharacter();
+	Character* currentChar = &(map->getPlayer().getCharacter());
 	cout << "CONGRATULATIONS!!! YOU REACHED THE EXIT ALIVE!!!" << endl;
-	cout << "IT'S TIME FOR " << currentChar.getName() << " TO GO UP A LEVEL!!!" << endl << endl;
+	cout << "IT'S TIME FOR " << currentChar->getName() << " TO GO UP A LEVEL!!!" << endl << endl;
 
 	system("pause");
 	cout << endl;
+	
+	currentChar->incrementLevel();
 
+	cout << *dynamic_cast<Fighter*>(currentChar);
 
-	currentChar.incrementLevel();
-
-	cout << currentChar;
-
-	CharacterController cc(&currentChar);
+	CharacterController cc(currentChar);
 	cc.saveCharacter();
 
 	cout << endl << "You will be redirected to the main menu." << endl;

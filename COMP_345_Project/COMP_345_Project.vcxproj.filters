@@ -120,6 +120,21 @@
     <ClCompile Include="Observable.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="BullyBuilder.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterDirector.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="FighterBuilder.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="NimbleBuilder.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="TankBuilder.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tile.h">
@@ -211,6 +226,21 @@
     </ClInclude>
     <ClInclude Include="Observable.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="BullyBuilder.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterDirector.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="FighterBuilder.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="NimbleBuilder.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="TankBuilder.h">
+      <Filter>Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

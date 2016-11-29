@@ -13,11 +13,10 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <iomanip>
 using namespace std;
-#include "Fighter.h"
 
-//! Set the constatant static variable for the default hit dice to "1d10" for fighters
-const string Fighter::DEFAULT_HIT_DICE = "1d10";
+#include "Fighter.h"
 
 //! Constructor: Default Constructor
 //! Sets Fighter's name to "unknown", all abilities to 3, the fighting style by default set to archery, the level and the size
@@ -42,7 +41,7 @@ Fighter::Fighter(string chrName, int chrAbilityScores[Character::NO_ABILITY], Fi
 //! the default hit dice for the fighter. Note that the strength, the dexterity and the constitution are incremented by 1 if not 
 //! already 18 as it is a characteristics of the Fighter class in the d20 rule. Other data members are initalized as usual.
 Fighter::Fighter(string chrName, int str, int dex, int cons, int intel, int wisd, int cha, FightStyle chrStyle, int chrLevel, CharacterSize chrSize)
-: Character(chrName, DEFAULT_HIT_DICE, (str == 18 ? str : str++), (dex == 18 ? dex : dex++), (cons == 18 ? cons : cons++), intel, wisd, cha, chrLevel, chrSize){
+: Character(chrName, (str == 18 ? str : str++), (dex == 18 ? dex : dex++), (cons == 18 ? cons : cons++), intel, wisd, cha, chrLevel, chrSize){
 
 	//! set the character's style
 	style = chrStyle;
@@ -61,16 +60,34 @@ Fighter::Fighter(string chrName, int str, int dex, int cons, int intel, int wisd
 
 }
 
+Fighter::Fighter(Fighter& copyFight) : Character(dynamic_cast<Character&>(copyFight)){
+
+	style = copyFight.getStyle();
+	type = copyFight.getType();
+
+}
+
 //! Destructor for the fighter class
-//! It destroys also the super object that were created when the fighter's class was initialized.
 Fighter::~Fighter(){
-	Character::~Character();
+
 }
 
 //! Accessor method for the fighting style
 //! @return fighter's style of enumerated type style
 FightStyle Fighter::getStyle(){
 	return style;
+}
+
+//! Accessor method for the fighter type
+//! @return fighter's type of enumerated type type
+FighterType Fighter::getType(){
+	return type;
+}
+
+//! Mutator method for the fighter's type
+//! @param style - the Fighter's new type of enumerated type 
+void Fighter::setType(FighterType type){
+	this->type = type;
 }
 
 //! Mutator method for the fighter's style
@@ -81,25 +98,48 @@ void Fighter::setStyle(FightStyle chrStyle){
 
 //! Attack method for the Fighter's class
 //! @param Reference to Character object
-//! @param damage caused
-//! @param weapon used
-//! @return 0 - if character died (HP=0), 1 - Character was hit (Not protected by armor class) & 2 - Character was not hit
+//! @return no. of attacks
 int Fighter::attack(Character &chr){
 
-	//! Check if character is not the calling object
-	if (&chr == this){
-		cout << "\nYou cannot attack yourself." << endl;
-		return 1;
+	int additionalAttack = 0;
+	int additionalDamage = 0;
+
+	//! Search if fighter is using melee or range weapon and add to attack depending on fighting style
+	if (getCurrentWornItems()->getContents()[(int)ItemType::WEAPON]->getItemTypes() != ItemType::UNSPECIFIED){
+		
+		Weapon* weapon = (Weapon*)(getCurrentWornItems()->getItem(getCurrentWornItems()->getContents()[(int)ItemType::WEAPON]->getItemName()));
+		if (weapon != NULL){
+			//! Check range and melee weapon
+			if (style==FightStyle::ARCHERY && weapon->getRange()> 1)
+				additionalAttack = 2;
+
+			if (style == FightStyle::DUELING && weapon->getRange() == 1)
+				additionalDamage = 2;
+		}
+
 	}
 
-	//! Check style used based on the d20 rules
-	//! If style is archery or dueling, increment damage by 2
-	if (style == FightStyle::ARCHERY || style == FightStyle::DUELING){
-		cout << "\nSince " << getName() << " is a fighter, 2 will be added to damage." << endl;
-	}
+	//! Counters for multiple attacks
+	int calcLevel = getLevel();
+	int count = 0;
 
-	//! Call the Character's class attack method and return its return value
-	return Character::attack(chr, 2);
+	do{
+		count++;
+		cout << "Attack " << count << endl;
+		//! Subtract armor class because Character is protected by Armor, add the attack bonus and the attack rounds per level
+		int totalAttackBonus = (calcAttackBonus() + calcLevel + Dice::roll("1d20") + additionalAttack) - chr.getArmorClass();
+		if (totalAttackBonus > 0){
+			cout << chr.getName() << " can be attacked. Hitting..." << endl;
+			//! Calculate the damage cause to the opponent
+			int totalDmgBonus = calcDamageBonus() + Dice::roll("1d8") + additionalDamage;
+			chr.hit(totalDmgBonus); //! Hit the opponent
+		}
+		else{
+			cout << "Attack Missed. " << chr.getName() << " protected by Armor Class." << endl;
+		}
+		calcLevel -= 5; //! Decrease counter by 5 until reach 0 or below
+	} while (calcLevel > 0);
+	return count;
 
 }
 
@@ -107,19 +147,19 @@ void Fighter::saveCharacter(){
 
 	ofstream outStream("SaveFiles/Characters/" + getName() + ".txt", ios::out);
 
-	outStream << "fighter\n" << getName() << "\n" << getHitDice() << "\n"<< to_string(getLevel()) << "\n" << to_string((int)getSize()) << "\n" << (int)style << "\n";
+	outStream << "fighter\n" << getName() << "\n"<< to_string(getLevel()) << "\n" << to_string((int)getSize()) << "\n" << (int)style << "\n" << (int)type << "\n";
 
 	for (int i = 0; i < NO_ABILITY; i++){
 		outStream << to_string(getOneAbilityScore((CharacterAbility)i)) << "\n";
 	}
 
 	outStream << "backpack\n";
-	for (auto i : getBackpackContents()){
+	for (auto i : getBackpackContents()->getContents()){
 		outStream << i->getItemName() << "\n";
 	}
 
 	outStream << "wornItem\n";
-	for (auto i : getCurrentWornItems()){
+	for (auto i : getCurrentWornItems()->getContents()){
 		outStream << i->getItemName() << "\n";
 	}
 
@@ -132,6 +172,40 @@ void Fighter::saveCharacter(){
 //! @param reference to fighter object and cannot change data members since constant
 //! @return reference to passed stream
 ostream& operator<<(ostream& stream, const Fighter& fighter){
-	const Character& chr = fighter; //! Creates a reference of type Character and assignt he fighter's object to it.
-	return stream << chr << "Style: " << fighter.style <<endl; //! Output the Character's stats first and then output the fighter's style
+	
+	const int labelSpace = 9;
+	const int abilitylabelSpace = 19;
+	const int abilityScrSpace = 8;
+	const int abilityModSpace = 5;
+
+	stream << "-------------------------------------------------------------------------------------------------------\n";
+	stream << setw(30) << right << fighter.getName() << "'s STATS\n";
+	stream << "-------------------------------------------------------------------------------------------------------\n";
+
+	//! Specific output format for a Character object
+	stream << "\nName: " << fighter.getName() <<
+		"\nLevel: " << fighter.getLevel() <<
+		"\nSize: " << fighter.getSize() << 
+		"\nStyle: " << fighter.style << 
+		"\nType: " << fighter.type << endl;
+
+	stream << "\n\nAbility \t" << "Score\t Modifier\n";
+
+	stream << CharacterAbility::STR << "\t" << fighter.getOneAbilityScore(CharacterAbility::STR) << "\t" << fighter.getOneAbilityModifier(CharacterAbility::STR) << "\n" <<
+		CharacterAbility::DEX << "\t" << fighter.getOneAbilityScore(CharacterAbility::DEX) << "\t" << fighter.getOneAbilityModifier(CharacterAbility::DEX) << "\n" <<
+		CharacterAbility::CONS << "\t" << fighter.getOneAbilityScore(CharacterAbility::CONS) << "\t" << fighter.getOneAbilityModifier(CharacterAbility::CONS) << "\n" <<
+		CharacterAbility::INTEL << "\t" << fighter.getOneAbilityScore(CharacterAbility::INTEL) << "\t" << fighter.getOneAbilityModifier(CharacterAbility::INTEL) << "\n" <<
+		CharacterAbility::WISD << "\t\t" << fighter.getOneAbilityScore(CharacterAbility::WISD) << "\t" << fighter.getOneAbilityModifier(CharacterAbility::WISD) << "\n" <<
+		CharacterAbility::CHA << "\t" << fighter.getOneAbilityScore(CharacterAbility::CHA) << "\t" << fighter.getOneAbilityModifier(CharacterAbility::CHA) << "\n";
+
+	stream << "\n\nCurrent Hit Points(HP): " << fighter.getCurrentHitPoints() <<
+		"\nDamage Bonus: " << fighter.calcAttackBonus() <<
+		"\nAttack Bonus: " << fighter.calcAttackBonus() <<
+		"\nArmor Class: " << fighter.getArmorClass() <<
+		"\n\nBackpack holding: \n\n" << *(fighter.getBackpackContents());
+	stream << "\n\nWearing Items: \n\n" << *(fighter.getCurrentWornItems());
+
+	stream << "-------------------------------------------------------------------------------------------------------\n";
+
+	return stream;
 }

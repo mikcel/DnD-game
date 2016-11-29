@@ -40,13 +40,15 @@ public:
 	
 private:
 
-	Character *currentCharacter = NULL; //! Pointer to a character object
+	Character *currentCharacter = nullptr; //! Pointer to a character object
 
 	void displayCharacterSize(); //! Method to display all available character sizes
 
 	void displayFighterStyle(); //! Method to display all available fighter style
 
-	bool checkScr(int *arr, int scr); //! Method to check score when entering
+	void displayFighterType(); //! Method to display all available fighter style
+
+	//! bool checkScr(int *arr, int scr); //! Method to check score when entering
 
 	void addItem(); //! Method to add an item to a Character
 

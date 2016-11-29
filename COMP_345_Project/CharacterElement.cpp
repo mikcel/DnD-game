@@ -1,11 +1,15 @@
 #include "CharacterElement.h"
 #include "Character.h"
+#include "Fighter.h"
 
 //! Creates an new instance of the CharacterElement and sets the Character
 //! @param newCharacter the Character to be set
-CharacterElement::CharacterElement(Character& newCharacter) : character(new Character(newCharacter))
+CharacterElement::CharacterElement(Character& newCharacter)
 {
-	
+	if (dynamic_cast<Fighter*>(&newCharacter))
+		character = new Fighter(dynamic_cast<Fighter&>(newCharacter));
+	else
+		character = new Character(newCharacter);
 }
 
 //! Creates a copy of the current CharacterElement

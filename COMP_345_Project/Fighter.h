@@ -31,9 +31,13 @@ public:
 	//! data members both in the Fighter and Character class
 	Fighter(string chrName, int str, int dex, int cons, int intel, int wisd, int cha, FightStyle chrStyle, int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
 	
+	Fighter(Fighter& copyFight);
+
 	~Fighter(); //! Destructor
 
 	FightStyle getStyle(); //! Accessor for fighting style
+	FighterType getType();
+	void setType(FighterType type);
 	void setStyle(FightStyle chrstyle); //! Mutator for the Fighter's fighting style
 	int attack(Character &chr); //! Method for attacking another player
 
@@ -41,8 +45,8 @@ public:
 
 private:
 
-	static const string DEFAULT_HIT_DICE; //! Default hit dice for a Fighter
 	FightStyle style = FightStyle::ARCHERY; //! Fighting style. default to archery
+	FighterType type = FighterType::BULLY;
 
 	//! Method to overload output stream operator for a Fighter
 	friend ostream& operator<<(ostream& stream, const Fighter& fighter);
