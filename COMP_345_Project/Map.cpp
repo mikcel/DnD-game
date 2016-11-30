@@ -10,6 +10,7 @@
 #include "CharacterElement.h"
 #include "ItemUtils.h"
 #include  "AggressorStrategy.h"
+#include "FriendlyStrategy.h"
 
 using namespace std;
 /**
@@ -593,11 +594,20 @@ string Map::serializeMapToString()
 				serialMap += "wall\n";
 				somethingToWrite = true;
 			}
-			else if (dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())) {
-				serialMap += "enemy\n";
-				serialMap += dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacter().getName();
-				serialMap += "\n";
-				somethingToWrite = true;
+			else if (dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())){
+				if (dynamic_cast<AggressorStrategy*>(dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacterStrategy())) {
+
+					serialMap += "enemy\n";
+					serialMap += dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacter().getName();
+					serialMap += "\n";
+					somethingToWrite = true;
+				}
+				else if (dynamic_cast<FriendlyStrategy*>(dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacterStrategy())) {
+					serialMap += "ally\n";
+					serialMap += dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacter().getName();
+					serialMap += "\n";
+					somethingToWrite = true;
+				}
 			}
 			else if (dynamic_cast<Chest*>(mapArr[i][j].getElement())) {
 				serialMap += "chest\n";
