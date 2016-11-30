@@ -1,24 +1,20 @@
-character
-Sam
-13d10
-13
-3
+fighter
+test
+15
 0
-10
+0
+1
 12
-16
+14
+13
 10
-4
-3
+10
+7
 backpack
-Johny's Sword
-mik
-SILVER SWORD
-Sword
-Wooden Helmet
 GOLDEN SWORD
+Johny's Sword
 wornItem
-Johny's Wooden Helmet
+UNSPECIFIED
 UNSPECIFIED
 UNSPECIFIED
 UNSPECIFIED

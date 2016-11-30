@@ -93,6 +93,28 @@ ostream& operator<<(ostream& stream, FightStyle style){
 	return stream << strStyle; //! Return the assigned string variable to the stream.
 }
 
+//! Method for outputting the Fighter's type
+ostream& operator<<(ostream& stream, FighterType type){
+
+	string strType; //! Variable to hold the contents to output for each ability
+
+	//! A switch statement to assign a different value for each fighter type to output.
+	switch (type)
+	{
+		case FighterType::BULLY:
+			strType = "BULLY";
+			break;
+		case FighterType::NIMBLE:
+			strType = "NIMBLE";
+			break;
+		case FighterType::TANK:
+			strType = "TANK";
+			break;
+	}
+
+	return stream << strType; //! Return the assigned string variable to the stream.
+}
+
 ostream& operator<<(ostream& stream, ItemType type){
 
 	string strType; //! Variable to hold the contents to output for each item type

@@ -1,16 +1,17 @@
-character
-Nouveau
-1d10
-2000
+fighter
+mom
+13
 0
-0
-9
-14
+1
+1
+11
 17
-17
-6
-3
+12
+11
+11
+7
 backpack
+Johny's Sword
 wornItem
 UNSPECIFIED
 UNSPECIFIED

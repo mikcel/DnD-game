@@ -7,10 +7,9 @@ end
 4
 4
 enemy
-testt
-2
-2
-enemy
 fightest
+0
+1
+chest
 3
-3
+0

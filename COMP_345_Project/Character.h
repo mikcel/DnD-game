@@ -39,13 +39,13 @@ public:
 	//! Used to facilitate map construction from a map file
 	Character(string chrName);
 
-	//! Constructor with name, hit dice, an array of ability scores, the Character's level and size
+	//! Constructor with name, an array of ability scores, the Character's level and size
 	//! If level and size are not passed , the level is set to 1 by default and size to tiny by default
-	Character(string chrName, string hitDice, int chrAbilityScores[NO_ABILITY], int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
+	Character(string chrName,int chrAbilityScores[NO_ABILITY], int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
 
-	//! Constructor with name, hit dice, six variables for each ability score, level and size 
+	//! Constructor with name, six variables for each ability score, level and size 
 	//! If level and size are not passed , the level is set to 1 by default and size to tiny by default
-	Character(string chrName, string hitDice, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
+	Character(string chrName, int str, int dex, int cons, int intel, int wisd, int cha, int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
 	
 	Character(const Character &copyChar);
 	
@@ -60,10 +60,7 @@ public:
 	int getOneAbilityModifier(CharacterAbility ability) const; //! Getter one ability modifier
 	int* getAllAbilityModifiers() const; //! Function to return a pointer to a copy of the ability modifiers array.
 	int getCurrentHitPoints() const; //! Getter to get Character's HP
-	int getDamageBonus() const; //! Getter to obtain damage bonus of the Character
-	int getAttackBonus() const; //! Function that return Attack bonus
 	int getArmorClass() const; //! Function that return Armor Class
-	string getHitDice() const; //! Getter for the Character's hit dice
 
 	void setName(string chrName); //! Setter for the Character's name
 	void setLevel(int chrLevel); //! Setter for the Character's level
@@ -71,25 +68,25 @@ public:
 	void setAbilityScores(int str, int dex, int cons, int intel, int wisd, int cha); //! Function to set each ability scores
 	void setAbilityScores(int chrAbilityScores[NO_ABILITY]); //! Function to set ability scores from a passed array
 	void setCurrentHitPoints(int chrHitPt); //! Setter for the Character's HP
-	void setHitDice(string hitDice); //! Function to set the Characters 
 
-	void calcAttackBonus(); //! Function to calculate the Attack Bonus
+	int calcAttackBonus() const; //! Function to calculate the Attack Bonus
 	void calcArmorClass(); //! Method to calculate a Character's Armor Class
-	void calcDamageBonus(); //! Function to calculate the Damage Bonus
+	int calcDamageBonus() const; //! Function to calculate the Damage Bonus
 	void generateAbilityModifiers(); //! Function to set the Ability modifiers for each ability score
 	bool validateNewCharacter(); //! Method to validate a newly created Character
 	int hit(int dmg); //! Function that is called when a Character gets hit. Decreases the Character's HP with a damage number
-	virtual int attack(Character &chr, int additionalDmg=0); //! Function that is used when a Character attacks another Character
-	int getSizeModifier(); //! Function to calculate the Size Modifier
-	void incrementLevel(bool isPlayer); //! Function to increase the Character's 
+	virtual int attack(Character &chr); //! Function that is used when a Character attacks another Character
+	int getSizeModifier() const; //! Function to calculate the Size Modifier
+	void incrementLevel(); //! Function to increase the Character's 
 	void incrementArmorClass(int chrAC); //! Method to increment the Character's AC by a number
 
 	bool takeOffItem(Item *objItem); //! Unequip item
 	bool wearItem(Item *objItem); //! Wear an item (goes into currently Worn items)
 	bool storeItem(Item *objItem); //! Add item into the backpack
 	bool removeItemBack(Item *objItem); //! Remove item from the backpack
-	vector<Item*> getBackpackContents(); //! Get all items that are currently in the Character's backpack
-	vector<Item*> getCurrentWornItems(); //! Get all the items that the Character is currently wearing
+	ItemContainer* getBackpackContents() const; //! Get all items that are currently in the Character's backpack
+	ItemContainer* getCurrentWornItems() const; //! Get all the items that the Character is currently wearing
+	int getWeaponRange(); //! Melee or Range weapon being worn
 
 	virtual void saveCharacter(); // Save teh character to a txt file
 
@@ -98,16 +95,13 @@ private:
 	//! Default Constant value for the HP 
 	const int DEFAULT_HP = 10;
 
-	string name="Unknown"; //! Name data member. Default is "Unknown"
-	int level=1; //! Level data member. Default is 1
+	string name = "Unknown"; //! Name data member. Default is "Unknown"
+	int level = 1; //! Level data member. Default is 1
 	CharacterSize size = CharacterSize::TINY; //! Character's Size set to Tiny by default
 	int abilityScores[NO_ABILITY]; //! Array for the ability scores with 6 elements 
 	int abilityModifiers[NO_ABILITY]; //! Array for the ability modifiers containg 6 numbers
 	int currentHitPoints = DEFAULT_HP; //! Character's Hp set to default HP (10)
-	int damageBonus=0; //! Damage Bonus. Set to 0 by default
-	int attackBonus=0; //! Character's Attack Bonus. 0 by default
 	int armorClass=0; //! Character's AC. 0 by default
-	string hitDice; //! Character's Hit Dice
 	ItemContainer *backpack; //! Character's backpack
 	ItemContainer *currentWornItems; //! Character's currently worn items container
 

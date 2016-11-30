@@ -1,16 +1,17 @@
-character
-Mikiel
-1d10
-2000
-0
-0
-9
-14
-17
-17
-6
+fighter
+test3
+13
 3
+1
+2
+16
+16
+17
+10
+9
+9
 backpack
+SILVER SWORD
 wornItem
 UNSPECIFIED
 UNSPECIFIED
@@ -18,4 +19,4 @@ UNSPECIFIED
 UNSPECIFIED
 UNSPECIFIED
 UNSPECIFIED
-UNSPECIFIED
+Sword

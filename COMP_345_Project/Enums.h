@@ -34,6 +34,9 @@ enum class CharacterAbility { STR = 0, DEX = 1, CONS = 2, INTEL = 3, WISD = 4, C
 //!An enumerated type for the Fighter's Style that will help in determining Fighter's stats.
 enum class FightStyle{ ARCHERY, DEFENSE, DUELING };
 
+//! An enumerated type for fighter type
+enum class FighterType{BULLY, NIMBLE, TANK};
+
 //! enum type used to identify item types
 enum class ItemType { HELMET = 0, ARMOR = 1, SHIELD = 2, RING = 3, BELT = 4, BOOTS = 5, WEAPON = 6, UNSPECIFIED = 7 };
 
@@ -53,6 +56,9 @@ ostream& operator<<(ostream& stream, CharacterAbility ability);
 
 //! Overloading the output stream operator for the fighter style
 ostream& operator<<(ostream& stream, FightStyle style);
+
+//! Overloading the output stream operator for the fighter type
+ostream& operator<<(ostream& stream, FighterType type);
 
 //! Overloading the output stream operator for the item type
 ostream& operator<<(ostream& stream, ItemType type);

@@ -12,12 +12,14 @@
 #include "Chest.h"
 #include "FolderUtils.h"
 #include "CharacterElement.h"
-#include "Enemy.h"
 #include <sstream>
 #include <fstream>
 #include <iostream>
 #include <conio.h>
 #include <stdio.h>
+#include "AggressorStrategy.h"
+#include "FriendlyStrategy.h"
+#include "HumanPlayerStrategy.h"
 
 using namespace std;
 
@@ -37,7 +39,7 @@ MapController::MapController(Map* currentMap)
 //! Destructor
 MapController::~MapController()
 {
-	
+
 	//! deletion of pointer is already handled
 }
 
@@ -87,7 +89,7 @@ void MapController::createMap() {
 
 		//Height
 		cout << "Height: ";
-		cin >>height;
+		cin >> height;
 		while (cin.fail() || height < 0) {
 			cout << "Incorrect Input. Please enter a valid number: ";
 			cin.clear();
@@ -149,7 +151,7 @@ void MapController::editMap(bool creatingNewMap) {
 			cout << "Element (S for start point, L for end point, F for Floor, W for Wall, X for enemy,N for friendly NPC , C for Chest, F for floor): ";
 			cin >> eS;
 			if (eS == "Q")
-			{ 
+			{
 				quit();
 				return;
 			}
@@ -165,7 +167,7 @@ void MapController::editMap(bool creatingNewMap) {
 			}
 
 			cout << "X: ";
-			cin>> xS;
+			cin >> xS;
 
 			if (xS == "Q")
 			{
@@ -217,18 +219,18 @@ void MapController::editMap(bool creatingNewMap) {
 			success = m->setTileType(x, y, TileType::WALL);
 		}
 		else if (eS == "X") //! Enemy
-		{			
+		{
 			/*Character e;
 			CharacterElement characterElement(e);*/
-			Enemy enemy(chooseEnemy());
+			CharacterElement enemy(chooseEnemy(), new AggressorStrategy());
 			success = m->setElementAt(x, y, enemy);
 		}
 		else if (eS == "N") //! Friend
 		{
 			/*Character e;
 			CharacterElement characterElement(e);*/
-			Enemy enemy(chooseEnemy());
-			success = m->setElementAt(x, y, enemy);
+			//Enemy enemy(chooseEnemy());
+			//success = m->setElementAt(x, y, enemy);
 		}
 		else if (eS == "C") //! Chest
 		{
@@ -291,7 +293,7 @@ string MapController::chooseEnemy()
 //! Method to save a character
 //! @return -
 void MapController::saveMap() {
-	ofstream outMapFile("SaveFiles/Maps/"+currentMap->getName()+".txt");
+	ofstream outMapFile("SaveFiles/Maps/" + currentMap->getName() + ".txt");
 	outMapFile << currentMap->serializeMapToString(); //! Call serialize method for the map to save it
 	outMapFile.close();
 
@@ -338,7 +340,7 @@ bool MapController::cacheMap() {
 	mapFile.close();
 	if (couldNotFindMap != -1) {
 		/*if (currentMap != nullptr) {
-			delete currentMap;
+		delete currentMap;
 		}*/
 
 		//#####read map info
@@ -359,7 +361,7 @@ Map* readMapFile(string mapFileLocation, string mapName) {
 	ifstream mapFile;
 	mapFile.open(mapFileLocation); //! Open the file for reading
 
-	if(mapFile.fail())
+	if (mapFile.fail())
 	{
 		mapFile.close();
 		return nullptr;
@@ -373,17 +375,17 @@ Map* readMapFile(string mapFileLocation, string mapName) {
 	int tmpX;
 	int tmpY;
 	Map* tmpMap = new Map(newWidth, newHeight, mapName); //! Make a temporary pointer to a map
-	
+
 	//! Read each element the way it was stored int the file
-	while(!mapFile.eof()){
+	while (!mapFile.eof()){
 		getline(mapFile, fileLine);
 		if (fileLine == "start") {
 			//cout << "FOUND start" << endl;
 			getline(mapFile, fileLine);
 			tmpX = stoi(fileLine);
 			getline(mapFile, fileLine);
-			tmpY= stoi(fileLine);
-			tmpMap->setStartPoint(tmpX,tmpY);
+			tmpY = stoi(fileLine);
+			tmpMap->setStartPoint(tmpX, tmpY);
 		}
 		else if (fileLine == "end") {
 			//cout << "FOUND end" << endl;
@@ -401,13 +403,23 @@ Map* readMapFile(string mapFileLocation, string mapName) {
 			tmpX = stoi(fileLine);
 			getline(mapFile, fileLine);
 			tmpY = stoi(fileLine);
-			tmpMap->setTileType(tmpX, tmpY,TileType::WALL);
+			tmpMap->setTileType(tmpX, tmpY, TileType::WALL);
 		}
 
 		else if (fileLine == "enemy") {
 			//cout << "FOUND enenmy" << endl;
 			getline(mapFile, fileLine);
-			Enemy characterElement(fileLine);
+			CharacterElement characterElement(fileLine, new AggressorStrategy());
+			getline(mapFile, fileLine);
+			tmpX = stoi(fileLine);
+			getline(mapFile, fileLine);
+			tmpY = stoi(fileLine);
+			tmpMap->setElementAt(tmpX, tmpY, characterElement);
+		}
+		else if (fileLine == "ally") {
+			//cout << "FOUND ally" << endl;
+			getline(mapFile, fileLine);
+			CharacterElement characterElement(fileLine, new FriendlyStrategy());
 			getline(mapFile, fileLine);
 			tmpX = stoi(fileLine);
 			getline(mapFile, fileLine);
