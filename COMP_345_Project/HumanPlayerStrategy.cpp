@@ -333,7 +333,7 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 			}
 		}
 	}
-	if (vecPos.size() == 0){
+	if (allLootableNames.size() == 0){
 		cout << "Nothing to loot." << endl;
 		return;
 	}
