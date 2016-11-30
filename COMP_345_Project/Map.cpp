@@ -611,6 +611,14 @@ string Map::serializeMapToString()
 			}
 			else if (dynamic_cast<Chest*>(mapArr[i][j].getElement())) {
 				serialMap += "chest\n";
+				serialMap += to_string(dynamic_cast<Chest*>(mapArr[i][j].getElement())->getContents().size());
+				serialMap +="\n";
+
+				for (auto i : dynamic_cast<Chest*>(mapArr[i][j].getElement())->getContents()){
+					serialMap += i->getItemName();
+					serialMap += "\n";
+				}
+
 				somethingToWrite = true;
 			}
 

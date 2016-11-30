@@ -6,7 +6,7 @@
 #include "CampaignController.h"
 #include "FolderUtils.h"
 #include <fstream>
-
+using namespace std;
 //! Default consructor
 CampaignController::CampaignController()
 {
@@ -24,52 +24,57 @@ CampaignController::~CampaignController()
 //! Method to edit the Campaign
 //! @return -
 void CampaignController::editCampaign() {
-	cout << "==== CAMPAIGN EDITION ====" << endl << endl;
+	while (true){
+		if (system("CLS")) system("clear");
+		cout << "==== CAMPAIGN EDITION ====" << endl << endl;
 
-	if (cacheCampaign() == 1) {
-		return;
+		if (cacheCampaign() == 1) {
+			return;
+		}
+
+		cout << "The current campaign status:\nTitle:" << (currentCampaign->getCampaignName()) << "\nMaps:" << endl;
+
+		//! get the campaign vector of map names and display to the screen
+		vector<string> tempCampNames = *(currentCampaign->getCampaignMapNames());
+		for (auto m : tempCampNames) {
+			cout << m << endl;
+		}
+
+		//! Display the menu
+		cout << "Enter:" << endl;
+		cout << "0 - To add a new map" << endl;
+		cout << "1 - To remove a map" << endl;
+		cout << "2 - To rename the campaign" << endl;
+		cout << "3 - To return to main menu" << endl;
+
+		string userChoiceString;
+		int userChoice;
+		cin >> userChoiceString; //! Ask the user for input
+		try {
+			userChoice = stoi(userChoiceString);
+		}
+		catch (...) {
+			cout << "Invalid input, returning to main menu;" << endl;
+			system("pause");
+			return;
+		}
+
+		//! Check the users choice
+		switch (userChoice) {
+		case 0:
+			addMap();
+			break;
+		case 1:
+			removeMap();
+			break;
+		case 2:
+			renameCurrentCampaign();
+			break;
+		case 3:
+			return;
+		}
+		saveCampaign();
 	}
-
-	cout<< "The current campaign status:\nTitle:" << (currentCampaign->getCampaignName())<<"\nMaps:"<<endl;
-
-	//! get the campaign vector of map names and display to the screen
-	vector<string> tempCampNames = *(currentCampaign->getCampaignMapNames());
-	for (auto m : tempCampNames) {
-		cout << m<<endl;
-	}
-
-	//! Display the menu
-	cout << "Enter:" << endl;
-	cout << "0 - To add a new map" << endl;
-	cout << "1 - To remove a map" << endl;
-	cout << "2 - To rename the campaign" << endl;
-	cout << "Enter any other number to return to menu." << endl;
-
-	string userChoiceString;
-	int userChoice;
-	cin >> userChoiceString; //! Ask the user for input
-	try {
-		userChoice = stoi(userChoiceString);
-	}
-	catch (...) {
-		cout << "Invalid input, returning to main menu;" << endl;
-		system("pause");
-		return;
-	}
-
-	//! Check the users choice
-	switch (userChoice) {
-	case 0:
-		addMap();
-		break;
-	case 1:
-		removeMap();
-		break;
-	case 2:
-		renameCurrentCampaign();
-		break;
-	}
-	saveCampaign();
 }
 
 //! Method to create a Campaign
@@ -247,14 +252,32 @@ void CampaignController::addMap()
 		cout << i << ": "<< m << endl;
 		i++;
 	}
+	int indexToAdd = 0;
+	string indexToAddstr;
+	while (indexToAdd != -1){
+		//! Ask for which index to index map
+		cout << "\nEnter at which index you wish to add the new map.\nEnter 0 to continue.\nEnter -1 to quit." << endl;
+		cin >> indexToAddstr;
 
-	//! Ask for which index to index map
-	cout << "\nEnter at which index you wish to add the new map.\nEnter 0 to continue.\nEnter -1 to quit." << endl;
-	int indexToAdd;
-	cin >> indexToAdd;
-	if (indexToAdd <0 || indexToAdd> currentCampaign->getCampaignMapNames()->size())
-	{
-		return;
+		try{
+			
+			indexToAdd = stoi(indexToAddstr);
+			if (indexToAdd == -1){
+				return;
+			}
+		}
+		catch (...){
+			cout << "Invalid input.\nTry again." << endl;
+			continue;
+		}
+		if (indexToAdd <-1 || indexToAdd> currentCampaign->getCampaignMapNames()->size())
+		{
+			cout << "Invalid input.\nTry again." << endl;
+			return;
+		}
+		else{
+			break;
+		}
 	}
 
 	//! Asks for name f the map to add in the campaign at the entered index
@@ -264,7 +287,11 @@ void CampaignController::addMap()
 	while(continueTheMapSearch != -1){
 		mapFile.open("");
 		while (!mapFile) {
-			cout << "Enter the name of the map you would like to add to the campaign." << endl;
+			cout << "Enter the name of the map you would like to add to the campaign.\nList of maps:" << endl;
+			vector<string> allMapNames = getFilesInsideFolderNoExtension("SaveFiles\\Maps");
+			for (auto m : allMapNames){
+				cout << m << endl;
+			}
 			cin >> mapEditName;
 			mapFile.open("SaveFiles/Maps/" + mapEditName + ".txt");
 			if (!mapFile) {
@@ -305,15 +332,32 @@ void CampaignController::removeMap()
 			cout << i << ": " << m << endl;
 			i++;
 		}
-		//! Asks for the index for the map to remove
-		cout << "\nEnter the index of the map you wish to remove.\nEnter -1 to exit." << endl;
-		int indexToRemove;
-		cin >> indexToRemove;
-		//! Check index
-		if(indexToRemove <0 || indexToRemove> currentCampaign->getCampaignMapNames()->size())
-		{
-			cout << "Index out of bounds. Action cancelled." << endl;
-			return;
+
+		int indexToRemove = -0;
+		string indexToRemoveSTR;
+		while (indexToRemove != -1){
+			//! Asks for the index for the map to remove
+			cout << "\nEnter the index of the map you wish to remove.\nEnter -1 to exit." << endl;
+			cin >> indexToRemoveSTR;
+			try{
+				indexToRemove = stoi(indexToRemoveSTR);
+			}
+			catch (...){
+				cout << "invalid input.Try again." << endl;
+				continue;
+			}
+			//! Check index
+			if (indexToRemove <-1 || indexToRemove> currentCampaign->getCampaignMapNames()->size())
+			{
+				cout << "Index out of bounds. Action cancelled." << endl;
+				return;
+			}
+			else if (indexToRemove == -1){
+				return;
+			}
+			else{
+				break;
+			}
 		}
 		currentCampaign->getCampaignMapNames()->erase(currentCampaign->getCampaignMapNames()->begin() + indexToRemove);
 		//! Show updated campaign
