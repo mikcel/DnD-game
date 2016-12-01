@@ -114,7 +114,7 @@ void CharacterElement::createCharacterWithLevel(int level, string Enemy2Name)
 	}
 	character = readCharacterFile(Enemy2Name);
 	//new  Character(calculateRandomName(), "1d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), 1);
-
+	character->setLevel(level);
 }
 
 const std::string CharacterElement::print() const

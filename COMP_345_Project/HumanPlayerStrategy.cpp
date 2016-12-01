@@ -122,7 +122,7 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 * @param meo the map elements toggler
 * @return true if the player wants to continue to play, false otherwise
 */
-bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo, vector<CharacterElement*>& chrElems)
+bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo)
 {
 	mo.setPrintTurnInfo(TurnType::HUMAN_PLAYER_ATTACK);
 	mo.printMap();
@@ -142,12 +142,7 @@ bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTo
 				CharacterElement* characterToAttack = chooseAttackTarget(map, mo, meo);
 				if (characterToAttack != nullptr)
 				{
-					if (!this->characterElement->attack(*characterToAttack)){
-						
-						//chrElems->erase(remove(chrElems->begin(), chrElems->end(), characterToAttack), chrElems->end());;
-						//?
-						//map.removeElementAt(characterToAttack->getPosition().x, characterToAttack->getPosition().y);
-					}
+					this->characterElement->attack(*characterToAttack);
 				}
 				cout << endl;
 				system("pause");
@@ -215,7 +210,7 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 		{
 			Position characterPosition = characterElement->getPosition();
 			Position currentCharacterPosition = currentCharacter->getPosition();
-			if (isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y))
+			if (currentCharacter->getCharacter().getCurrentHitPoints()!=0 && isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y))
 			{
 				attackableChracters.push_back(currentCharacter);
 			}			
@@ -287,7 +282,7 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 //! lets player loot a chest or dead enemy
 void HumanPlayerStrategy::closestLootable(Map& map){
 	if (system("CLS")) system("clear");
-	Position pos = Position(map.getPlayer().getPosition());//player's position
+	Position pos = Position(map.getPlayer().getPosition());//! player's position
 	vector<Element*> vecPos = vector<Element*>(0);
 	if (dynamic_cast<Chest*>(map.getElementAt(pos.x + 1, pos.y)) != nullptr || dynamic_cast<CharacterElement*>(map.getElementAt(pos.x + 1, pos.y)) != nullptr){ // 1,0
 		vecPos.push_back(map.getElementAt(pos.x + 1, pos.y));
@@ -321,7 +316,7 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 	Chest* tmpChest;
 	CharacterElement* tmpChara;
 	vector<string> allLootableNames = vector<string>(0);
-	//transfering names
+	//! transfering names
 	for (auto e : vecPos){
 		tmpChest = dynamic_cast<Chest*>(e);
 		tmpChara = dynamic_cast<CharacterElement*>(e);
@@ -331,7 +326,7 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 				allLootableNames.push_back(i->getItemName());
 			}
 		}
-		else if (tmpChara && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//only dead foes
+		else if (tmpChara && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//! only dead foes
 			tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
 			for (auto i : tmpItem){
 				allLootableNames.push_back(i->getItemName());
@@ -348,7 +343,7 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 	while (true){
 
 		cout << "Lootable Items: " << endl;
-		//printing name
+		//! printing name
 		int k = 0;
 		for (auto i : allLootableNames){
 			cout << k << ": " << i << endl;
@@ -358,7 +353,6 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 		cin >> userInputSTR;
 		try{
 			userInput = stoi(userInputSTR);
-
 		}
 		catch (...){
 			cout << "Invalid input, enter a valid input.\n" << endl;

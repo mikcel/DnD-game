@@ -7,11 +7,11 @@
 * @param meo the map elements toggler
 * @return true if the players wants to continue to play, false otherwise.
 */
-bool CharacterStrategy::executeTurn(Map& map, MapObserver& mo, MapElementsToggler& meo, vector<CharacterElement*>& chrElems)
+bool CharacterStrategy::executeTurn(Map& map, MapObserver& mo, MapElementsToggler& meo)
 {
 	if (executeMovementTurn(map, mo, meo))
 	{
-		return executeAttack(map, mo, meo,chrElems);
+		return executeAttack(map, mo, meo);
 	}
 
 	return false;

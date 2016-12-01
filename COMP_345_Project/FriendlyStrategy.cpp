@@ -26,7 +26,7 @@ std::string FriendlyStrategy::getStrategyName()
 * @param meo the map elements toggler
 * @return true if the player wants to continue to play, false otherwise
 */
-bool FriendlyStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo, vector<CharacterElement*>& chrElems)
+bool FriendlyStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo)
 {
 	mo.setPrintTurnInfo(TurnType::AI_ATTACK);
 	mo.printMap();

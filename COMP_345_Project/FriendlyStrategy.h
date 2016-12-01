@@ -9,7 +9,7 @@ class AIPLayerStrategy;
 class FriendlyStrategy : public AIPLayerStrategy
 {
 protected:
-	virtual bool executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo, vector<CharacterElement*>& chrElems); //! Executes the attack of the friendly character
+	virtual bool executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo); //! Executes the attack of the friendly character
 public:
 	virtual std::string print() const; //! Obtains the map representation of the CharacterElement
 	virtual std::string getStrategyName(); //! Obtains human-readble the name of the CharacterStrategy

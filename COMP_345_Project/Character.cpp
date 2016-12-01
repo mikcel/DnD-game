@@ -195,7 +195,7 @@ void Character::setLevel(int chrLevel){
 		level = chrLevel;
 
 		int diceRoll = Dice::roll("1d10");
-		currentHitPoints += (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
+		currentHitPoints = (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
 
 	}
 	else{ //! Incorrect message is output if negative new level
