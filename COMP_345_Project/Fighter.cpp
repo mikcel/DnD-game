@@ -122,7 +122,7 @@ bool Fighter::attack(Character &chr){
 	do{
 		count++;
 		cout << "\nAttack " << count << endl;
-		int d20Roll = Dice::roll("1d20");
+		int d20Roll = Dice::instance().roll("1d20");
 		//! Subtract armor class because Character is protected by Armor, add the attack bonus and the attack rounds per level
 		int totalAttackBonus = (calcAttackBonus() + calcLevel + d20Roll + additionalAttack) - chr.getArmorClass();
 		//! Log
@@ -132,7 +132,7 @@ bool Fighter::attack(Character &chr){
 		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
 			//! Calculate the damage cause to the opponent
-			int d8Roll = Dice::roll("1d8");
+			int d8Roll = Dice::instance().roll("1d8");
 			int totalDmgBonus = calcDamageBonus() +d8Roll + additionalDamage;
 			//!Log
 			cout << chr.getName() << " can be attacked." << endl;

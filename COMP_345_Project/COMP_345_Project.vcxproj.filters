@@ -22,6 +22,9 @@
     <Filter Include="Character Strategy">
       <UniqueIdentifier>{ea1abc8a-7af1-45f8-8d67-44899e437da2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{573422d1-0202-4d6b-b283-007c6f54055a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Element.cpp">
@@ -153,6 +156,15 @@
     <ClCompile Include="TankBuilder.cpp">
       <Filter>Character</Filter>
     </ClCompile>
+    <ClCompile Include="Loggable.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogger.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tile.h">
@@ -274,6 +286,18 @@
     </ClInclude>
     <ClInclude Include="CharacterStrategy.h">
       <Filter>Character Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Loggable.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogger.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Time_Utils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

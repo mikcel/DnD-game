@@ -5,6 +5,7 @@
 
 #include <string>
 #include <regex>
+#include "Loggable.h"
 
 //! class that implements the rolling of Dice 
 //! This class allows to roll dice following the D20 system and follows the xdy[+z] notation.
@@ -24,11 +25,18 @@
 //! to convert strings to integers. The reason why I used a library is because it allowed me to
 //! reduce the size of my code. The reason why I used STL specifically is because it is the 
 //! most known and widely used C++ library.
-class Dice
+//!
+//! Extends loggable to log every dice toss.
+
+class Dice : public Loggable
 {
 private:
+	static Dice* dice_instance; //Singleton instance of the Dice
+	Dice(); //Private contructor
 	static const std::regex dice_regex;
-	static bool is_already_initialized;
+	bool is_already_initialized; // Variable to remember if the seed for the random generation is already set
 public:
-	static int roll(std::string expression);
+	static Dice& instance(); //Initializes the instance of the dice if it does not exists and returns it
+	int roll(std::string expression);
+	virtual std::string provider(); //Loggable provider
 };

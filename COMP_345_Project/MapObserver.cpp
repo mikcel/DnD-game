@@ -79,11 +79,13 @@ void MapObserver::printMap()
 	{
 		cout << "Arrows : Move" << endl;
 		cout << "Z : Loot nearby Chests or fallen Enemies." << endl;
+		cout << "I : To manage your equipment." << endl;
 	}
 	else if (turnType == TurnType::HUMAN_PLAYER_ATTACK)
 	{
 		cout << "Z : Loot nearby Chests or fallen Enemies." << endl;
 		cout << "A : Attack" << endl;
+		cout << "I : To manage your equipment." << endl;
 	}
 
 	// AI

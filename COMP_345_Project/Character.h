@@ -25,8 +25,10 @@ using namespace std;
 #include "ItemContainer.h" //! Include the itemcontainer class
 #include "Observable.h" //! Include the subject class for the observer pattern
 #include "Element.h"
+#include "Loggable.h"
+
 //! Class that implements the Character
-class Character {
+class Character : public Loggable {
 public:
 	
 	//! Constant for the No. of abilities (scores & modifiers) (mainly use for array size)
@@ -90,6 +92,8 @@ public:
 	int getWeaponRange(); //! Melee or Range weapon being worn
 
 	virtual void saveCharacter(); // Save teh character to a txt file
+
+	virtual std::string provider(); //! Returns the Loggable provider.
 
 private:
 

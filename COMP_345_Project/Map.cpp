@@ -643,3 +643,9 @@ CharacterElement & Map::getPlayer() const {
 CharacterElement* Map::getPlayerPointer(){
 	return player;
 }
+
+//Return the provider string "Map"
+string Map::provider()
+{
+	return "Map";
+}
