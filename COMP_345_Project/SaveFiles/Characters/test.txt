@@ -1,6 +1,6 @@
 fighter
 test
-15
+29
 0
 0
 1

@@ -24,6 +24,8 @@ public:
 	//! Default constructor
 	Fighter(); 
 
+	Fighter(string chrName);
+
 	//! A parametrized constructor getting name, an array containing the ability scores, the fighting style, the level and the size
 	Fighter(string chrName, int chrAbilityScores[Character::NO_ABILITY], FightStyle chrStyle, int chrLevel, CharacterSize chrSize);
 	
@@ -39,7 +41,7 @@ public:
 	FighterType getType();
 	void setType(FighterType type);
 	void setStyle(FightStyle chrstyle); //! Mutator for the Fighter's fighting style
-	int attack(Character &chr); //! Method for attacking another player
+	virtual bool attack(Character &chr); //! Method for attacking another player
 
 	void saveCharacter();
 

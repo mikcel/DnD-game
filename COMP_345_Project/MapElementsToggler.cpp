@@ -1,5 +1,6 @@
 #include "MapElementsToggler.h"
 #include "Chest.h"
+#include "Fighter.h"
 #include <string>
 #include <iomanip>
 #include <iostream>
@@ -22,7 +23,7 @@ void MapElementsToggler::showPlayerDirect()
 {
 	CharacterElement & player = map.getPlayer();
 	cout << endl << "Position: (" << player.getPosition().x << ", " << player.getPosition().y << ")" << endl;
-	std::cout << player.getCharacter();
+	std::cout << dynamic_cast<Fighter&>(player.getCharacter());
 
 }
 
@@ -44,7 +45,7 @@ void MapElementsToggler::showEnemiesDirect()
 		{
 			atLeastOnce = true;
 			cout << endl << "Position: (" << characterElement->getPosition().x << ", " << characterElement->getPosition().y << ")" << endl;
-			std::cout << characterElement->getCharacter();
+			std::cout << dynamic_cast<Fighter&>(characterElement->getCharacter());
 		}
 	}
 

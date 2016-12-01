@@ -70,7 +70,7 @@ void GameController::selectCharacter()
 			cin >> characterName;
 		}
 
-		character = readCharacterFile("SaveFiles/Maps/", characterName);
+		character = readCharacterFile(characterName);
 
 		if (character == nullptr)
 		{

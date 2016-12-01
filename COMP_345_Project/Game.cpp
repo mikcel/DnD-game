@@ -71,14 +71,18 @@ bool Game::run(CharacterElement* p)
 
 	for (int i = 0;; i++)
 	{
-		bool wantsToContinuePlaying = characterElementsHavingTurn[i % characterElementsHavingTurn.size()]->getCharacterStrategy()->executeTurn(*map, mo, meo);
-		if (!wantsToContinuePlaying)
-		{
+		int chrIdx = i % characterElementsHavingTurn.size();
+		if (characterElementsHavingTurn[chrIdx]->getCharacter().getCurrentHitPoints() != 0){
+
+			bool wantsToContinuePlaying = characterElementsHavingTurn[chrIdx]->getCharacterStrategy()->executeTurn(*map, mo, meo);
+			if (!wantsToContinuePlaying)
+			{
 				return false;
-		}
-		if (isGameOver())
-		{
-				break;
+			}
+			if (isGameOver())
+			{
+					break;
+				}
 			}
 		}
 
@@ -94,14 +98,14 @@ bool Game::run(CharacterElement* p)
 //! @return true if the game over, false otherwise
 bool Game::isGameOver()
 {
-	return map->isEndPoint(map->getPlayer().getPosition()) || map->getPlayer().getCharacter().getCurrentHitPoints() == 0;
+	return map->isEndPoint(map->getPlayer().getPosition()) /*|| map->getPlayer().getCharacter().getCurrentHitPoints() == 0*/;
 }
 
 //! Method that is executed at the end of the game
 //! Adjusts the level of the Player and returns the user to the main menu
 void Game::perfomEndGame()
 {
-	Character* currentChar = &(map->getPlayer().getCharacter());
+	Character* currentChar = &(map->getPlayerPointer()->getCharacter());
 	cout << "CONGRATULATIONS!!! YOU REACHED THE EXIT ALIVE!!!" << endl;
 	cout << "IT'S TIME FOR " << currentChar->getName() << " TO GO UP A LEVEL!!!" << endl << endl;
 

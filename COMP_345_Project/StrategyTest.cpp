@@ -40,7 +40,7 @@ void StrategyTest::allyAndEnemyMovement()
 	string character_name = "Simon";
 	string map_name = "map5.1";
 
-	Character* character = readCharacterFile("SaveFiles/Maps/", character_name);
+	Character* character = readCharacterFile(character_name);
 	Map* map = readMapFile("SaveFiles/Maps/" + map_name + ".txt", map_name);
 
 	CharacterElement tempPlayer(*character, new HumanPlayerStrategy());

@@ -22,7 +22,11 @@ using namespace std;
 //! Sets Fighter's name to "unknown", all abilities to 3, the fighting style by default set to archery, the level and the size
 //! It invokes one of the Parametrized constructor to initialize each data member (to avoid code repetition)
 Fighter::Fighter() : Fighter("Unknown", 3, 3, 3, 3, 3, 3, FightStyle::ARCHERY, 1, CharacterSize::TINY){
-	/*Intentionally left empty*/
+	type = FighterType::BULLY;
+}
+
+Fighter::Fighter(string chrName) : Fighter(chrName, 3, 3, 3, 3, 3, 3, FightStyle::ARCHERY, 1, CharacterSize::TINY){
+	type = FighterType::BULLY;
 }
 
 //! Constructor: Parametrized constructor 1
@@ -98,8 +102,8 @@ void Fighter::setStyle(FightStyle chrStyle){
 
 //! Attack method for the Fighter's class
 //! @param Reference to Character object
-//! @return no. of attacks
-int Fighter::attack(Character &chr){
+//! @return true - Opponent not dead, false - Opponent dead
+bool Fighter::attack(Character &chr){
 
 	int additionalAttack = 0;
 	int additionalDamage = 0;
@@ -125,21 +129,38 @@ int Fighter::attack(Character &chr){
 
 	do{
 		count++;
-		cout << "Attack " << count << endl;
+		cout << "\nAttack " << count << endl;
+		int d20Roll = Dice::roll("1d20");
 		//! Subtract armor class because Character is protected by Armor, add the attack bonus and the attack rounds per level
-		int totalAttackBonus = (calcAttackBonus() + calcLevel + Dice::roll("1d20") + additionalAttack) - chr.getArmorClass();
+		int totalAttackBonus = (calcAttackBonus() + calcLevel + d20Roll + additionalAttack) - chr.getArmorClass();
+		//! Log
+		cout << "\nTrying to attack." << endl;
+		cout << "Calculating attack roll ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : ("
+			<< calcAttackBonus() << " + " << calcLevel << " + " << d20Roll << " + " << additionalAttack << ") - " << chr.getArmorClass() << endl;
+		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
-			cout << chr.getName() << " can be attacked. Hitting..." << endl;
 			//! Calculate the damage cause to the opponent
-			int totalDmgBonus = calcDamageBonus() + Dice::roll("1d8") + additionalDamage;
-			chr.hit(totalDmgBonus); //! Hit the opponent
+			int d8Roll = Dice::roll("1d8");
+			int totalDmgBonus = calcDamageBonus() +d8Roll + additionalDamage;
+			//!Log
+			cout << chr.getName() << " can be attacked." << endl;
+
+			cout << "Calculating damage roll (Damage Bonus + d8Roll + Fighter's addition damage): "
+				<< calcDamageBonus() << " + " << d8Roll << " + " << additionalDamage << endl;
+
+			cout << "Hitting and causing a damage of " << totalDmgBonus << endl;
+			if (chr.hit(totalDmgBonus)==0)//! Hit the opponent
+				return false; 
 		}
 		else{
 			cout << "Attack Missed. " << chr.getName() << " protected by Armor Class." << endl;
 		}
 		calcLevel -= 5; //! Decrease counter by 5 until reach 0 or below
 	} while (calcLevel > 0);
-	return count;
+
+	//system("pause");
+
+	return true;
 
 }
 

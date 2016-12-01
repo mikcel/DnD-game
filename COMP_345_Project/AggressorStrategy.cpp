@@ -46,7 +46,12 @@ bool AggressorStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTogg
 				Position humanPlayerCharacterPosition = map.getPlayer().getPosition();
 				if (isTileNextTo(thisCharacterPosition.x, thisCharacterPosition.y, humanPlayerCharacterPosition.x, humanPlayerCharacterPosition.y))
 				{
-					characterElement->attack(map.getPlayer());
+					if (!characterElement->attack(map.getPlayer())) //! If player died
+					{
+						cout << "You died. Game over." << endl;
+						system("pause");
+						return false;
+					}
 				}
 				else
 				{

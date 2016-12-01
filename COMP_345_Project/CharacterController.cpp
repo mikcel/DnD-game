@@ -326,7 +326,7 @@ void CharacterController::editCharacter(){
 	while (!fileNameCorrect) {
 		cin >> fileName; //! Check if name is correct
 		if (find(chrFiles.begin(), chrFiles.end(), fileName) != chrFiles.end()) {
-			currentCharacter = readCharacterFile("SaveFiles/Character", fileName);
+			currentCharacter = readCharacterFile(fileName);
 			fileNameCorrect = true;
 		}
 		else { //! Error message if file does not exist
@@ -726,7 +726,7 @@ void CharacterController::saveCharacter(){
 //! @param string - the character file location
 //! @param string - the Character name
 //! @return pointer to a character object
-Character* readCharacterFile(string charFileLocation, string charName){
+Character* readCharacterFile(string charName){
 
 	//! Open stream to read character
 	ifstream inStream("SaveFiles/Characters/" + charName + ".txt", ios::in);
@@ -860,7 +860,7 @@ void CharacterController::addItem(){
 			}
 
 			//! Ask user for item name 
-			cout << "\nPlease enter the Item file name (-1 to stop adding): ";
+			cout << "\nPlease enter the Item ID (-1 to stop adding): ";
 
 			//! Check user input
 			while (!(cin >> itemID)){

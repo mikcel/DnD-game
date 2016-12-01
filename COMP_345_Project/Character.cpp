@@ -195,7 +195,7 @@ void Character::setLevel(int chrLevel){
 		level = chrLevel;
 
 		int diceRoll = Dice::roll("1d10");
-		currentHitPoints += (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
+		currentHitPoints = (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
 
 	}
 	else{ //! Incorrect message is output if negative new level
@@ -357,7 +357,7 @@ bool Character::validateNewCharacter(){
 
 //! Function to reduce damage of Character if gets hit
 //! @param int representing the damage caused to the character
-//! @return 0 - if character died (HP=0), 1 - Character was hit (Not protected by armor class)
+//! @return 0 - if character died (HP=0), 1 - Character was hit 
 int Character::hit(int dmg){
 
 	int returnVal = 0;
@@ -378,8 +378,8 @@ int Character::hit(int dmg){
 
 //! Function to attack another Character
 //! @param Character - Representing the Character wanted to attack
-//! @return no of attacks 
-int Character::attack(Character &chr){
+//! @return true - Opponent not dead, false - Opponent dead
+bool Character::attack(Character &chr){
 
 	//! Counters for multiple attacks
 	int calcLevel = level;
@@ -387,20 +387,36 @@ int Character::attack(Character &chr){
 	do{
 		count++;
 		cout << "Attack " << count << endl;
+		int d20Roll = Dice::roll("1d20");
 		//! Subtract armor class because Character is protected by Armor, add the attack bonus and the attack rounds per level
-		int totalAttackBonus = (calcAttackBonus() + calcLevel + Dice::roll("1d20")) - chr.armorClass;
+		int totalAttackBonus = (calcAttackBonus() + calcLevel + d20Roll) - chr.armorClass;
+		cout << "\nTrying to attack." << endl;
+		cout << "Calculating attack roll ((Attack Bonus + Level + d20Roll) - Opponent's AC) : ("
+			<< calcAttackBonus() << " + " << calcLevel << " + " << d20Roll << ") - " << chr.getArmorClass() << endl;
+		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
-			cout << "Opponent can be attacked. Hitting..." << endl;
-			//! Calculate damage caused to opponent
-			int totalDmgBonus = calcDamageBonus() + Dice::roll("1d8");
-			chr.hit(totalDmgBonus); //! Hit the opponent with damage calculated
+			//! Calculate damage caused to opponent		
+			int d8Roll = Dice::roll("1d8");
+			int totalDmgBonus = calcDamageBonus() + d8Roll ;
+			//!Log
+			cout << chr.getName() << " can be attacked." << endl;
+
+			cout << "Calculating damage roll (Damage Bonus + d8Roll): "
+				<< calcDamageBonus() << " + " << d8Roll << " + "  << endl;
+
+			cout << "Hitting and causing a damage of " << totalDmgBonus << endl;
+			if (chr.hit(totalDmgBonus)==0)//! Hit the opponent with damage calculated
+				return false; 
 		}
 		else{
 			cout << "Attack Missed. Opponent protected by Armor Class.";
 		}
 		calcLevel -= 5; //! Decrease by 5 for each level and attack
 	} while (calcLevel > 0);
-	return count;//! return the number of attacks performed
+
+	//system("pause");
+
+	return true;//! return true if opponent did not died
 
 }
 
@@ -461,44 +477,38 @@ bool Character::wearItem(Item *objItem){
 		takeOffBuff(currentWornItems->getContents()[(int)objItem->getItemTypes()]->getBuffs());
 	}
 
-	if (objItem->getItemTypes() == ItemType::WEAPON){
-		calcAttackBonus();
-		calcDamageBonus();
-	}
-	else
-	{
+	if (currentWornItems->equipItem(objItem->getItemName(), backpack)){
 		vector<Buff> itemBuff = objItem->getBuffs();
 		for (auto i : itemBuff){
 			switch (i.getBuffType()){
-			case BuffType::ARMOR_CLASS:{
-				armorClass += i.getBuffAmount();
-				break;
-			}
-			case BuffType::INTELLIGENCE:{
-				abilityModifiers[(int)CharacterAbility::INTEL] += i.getBuffAmount();
-				break;
-			}
-			case BuffType::WISDOM:{
-				abilityModifiers[(int)CharacterAbility::WISD] += i.getBuffAmount();
-				break;
-			}
-			case BuffType::STRENGTH:{
-				abilityModifiers[(int)CharacterAbility::STR] += i.getBuffAmount();
-				break;
-			}
-			case BuffType::CONSTITUTION:{
-				abilityModifiers[(int)CharacterAbility::CONS] += i.getBuffAmount();
-				break;
-			}
-			case BuffType::CHARISMA:{
-				abilityModifiers[(int)CharacterAbility::CHA] += i.getBuffAmount();
-				break;
-			}
-			case BuffType::DEXTERITY:{
-				abilityModifiers[(int)CharacterAbility::DEX] += i.getBuffAmount();
-				break;
-			}
-				
+				case BuffType::ARMOR_CLASS:{
+											   armorClass += i.getBuffAmount();
+											   break;
+				}
+				case BuffType::INTELLIGENCE:{
+												abilityModifiers[(int)CharacterAbility::INTEL] += i.getBuffAmount();
+												break;
+				}
+				case BuffType::WISDOM:{
+										  abilityModifiers[(int)CharacterAbility::WISD] += i.getBuffAmount();
+										  break;
+				}
+				case BuffType::STRENGTH:{
+											abilityModifiers[(int)CharacterAbility::STR] += i.getBuffAmount();
+											break;
+				}
+				case BuffType::CONSTITUTION:{
+												abilityModifiers[(int)CharacterAbility::CONS] += i.getBuffAmount();
+												break;
+				}
+				case BuffType::CHARISMA:{
+											abilityModifiers[(int)CharacterAbility::CHA] += i.getBuffAmount();
+											break;
+				}
+				case BuffType::DEXTERITY:{
+											 abilityModifiers[(int)CharacterAbility::DEX] += i.getBuffAmount();
+											 break;
+				}
 			}
 		}
 		return true;
