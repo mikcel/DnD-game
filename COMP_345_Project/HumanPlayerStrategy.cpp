@@ -520,7 +520,7 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 				break;
 			}
 		}
-		cout << "Unequipping: " << worn[itemindex]->getItemName();
+		cout << "Unequipping: " << worn[itemindex]->getItemName() << endl;
 
 		player->getCharacter().takeOffItem(worn[itemindex]);
 		cout << "Press any button to return to the game." << endl;
@@ -558,7 +558,7 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 				break;
 			}
 		}
-		cout << "Equipping: " << stored[itemindex]->getItemName();
+		cout << "Equipping: " << stored[itemindex]->getItemName() << endl;
 		player->getCharacter().wearItem(stored[itemindex]);
 		cout << "Press any button to return to the game." << endl;
 
