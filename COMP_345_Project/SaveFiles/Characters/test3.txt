@@ -1,6 +1,6 @@
 fighter
 test3
-13
+16
 3
 1
 2

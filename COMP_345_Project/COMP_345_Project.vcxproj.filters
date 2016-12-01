@@ -165,6 +165,9 @@
     <ClCompile Include="GameLogger.cpp">
       <Filter>Logger</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleLogger.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tile.h">
@@ -297,6 +300,9 @@
       <Filter>Logger</Filter>
     </ClInclude>
     <ClInclude Include="Time_Utils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleLogger.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
