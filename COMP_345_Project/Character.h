@@ -60,6 +60,7 @@ public:
 	int getOneAbilityModifier(CharacterAbility ability) const; //! Getter one ability modifier
 	int* getAllAbilityModifiers() const; //! Function to return a pointer to a copy of the ability modifiers array.
 	int getCurrentHitPoints() const; //! Getter to get Character's HP
+	int getMaxHP() const; //! Accessor for the max hit points
 	int getArmorClass() const; //! Function that return Armor Class
 
 	void setName(string chrName); //! Setter for the Character's name
@@ -101,6 +102,7 @@ private:
 	int abilityScores[NO_ABILITY]; //! Array for the ability scores with 6 elements 
 	int abilityModifiers[NO_ABILITY]; //! Array for the ability modifiers containg 6 numbers
 	int currentHitPoints = DEFAULT_HP; //! Character's Hp set to default HP (10)
+	int maxHP = DEFAULT_HP; //! Max hp for the character
 	int armorClass=0; //! Character's AC. 0 by default
 	ItemContainer *backpack; //! Character's backpack
 	ItemContainer *currentWornItems; //! Character's currently worn items container

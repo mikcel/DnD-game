@@ -50,14 +50,6 @@ Fighter::Fighter(string chrName, int str, int dex, int cons, int intel, int wisd
 	//! set the character's style
 	style = chrStyle;
 
-	//! Get the constituion modifier
-	int consMod = Character::getOneAbilityModifier(CharacterAbility::CONS);
-
-	//! Check if the constitution modifier is +ve
-	//! If true, add the constitution modifier to the HP
-	if (consMod>=1)
-		Character::setCurrentHitPoints(Character::getCurrentHitPoints() + consMod);
-
 	//! If fighter's style to defense, increment the armor class
 	if (style == FightStyle::DEFENSE)
 		Character::incrementArmorClass(1);
@@ -219,8 +211,8 @@ ostream& operator<<(ostream& stream, const Fighter& fighter){
 		CharacterAbility::WISD << "\t\t" << fighter.getOneAbilityScore(CharacterAbility::WISD) << "\t" << fighter.getOneAbilityModifier(CharacterAbility::WISD) << "\n" <<
 		CharacterAbility::CHA << "\t" << fighter.getOneAbilityScore(CharacterAbility::CHA) << "\t" << fighter.getOneAbilityModifier(CharacterAbility::CHA) << "\n";
 
-	stream << "\n\nCurrent Hit Points(HP): " << fighter.getCurrentHitPoints() <<
-		"\nDamage Bonus: " << fighter.calcAttackBonus() <<
+	stream << "\n\nCurrent Hit Points(HP): " << fighter.getCurrentHitPoints() << "/" << fighter.getMaxHP() <<
+		"\nDamage Bonus: " << fighter.calcDamageBonus() <<
 		"\nAttack Bonus: " << fighter.calcAttackBonus() <<
 		"\nArmor Class: " << fighter.getArmorClass() <<
 		"\n\nBackpack holding: \n\n" << *(fighter.getBackpackContents());

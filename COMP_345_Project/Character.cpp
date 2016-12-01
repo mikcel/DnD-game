@@ -53,8 +53,9 @@ Character::Character(const Character &copyChar) {
 		copyChar.getOneAbilityScore(CharacterAbility::CONS), copyChar.getOneAbilityScore(CharacterAbility::INTEL), 
 		copyChar.getOneAbilityScore(CharacterAbility::WISD), copyChar.getOneAbilityScore(CharacterAbility::CHA));
 
-	currentHitPoints += (abilityModifiers[(int)CharacterAbility::CONS] + Dice::roll("1d10")) * level;
-
+	int hp = (abilityModifiers[(int)CharacterAbility::CONS] + Dice::roll("1d10")) * level;
+	currentHitPoints = hp;
+	maxHP = hp;
 	//! Invokes the method to calculate the armor class
 	calcArmorClass();
 
@@ -75,7 +76,8 @@ Character::Character(string chrName, int str, int dex, int cons, int intel, int 
 	setAbilityScores(str, dex, cons, intel, wisd, cha);
 
 	int diceRoll = Dice::roll("1d10");
-	currentHitPoints += (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
+	currentHitPoints = (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
+	maxHP = currentHitPoints;
 
 	//! Invokes the method to calculate the armor class
 	calcArmorClass();
@@ -171,6 +173,10 @@ int Character::getCurrentHitPoints() const{
 	return currentHitPoints;
 }
 
+int Character::getMaxHP() const{
+	return maxHP;
+}
+
 //! Getter for Armor Class
 //! @return Armor Class
 int Character::getArmorClass() const{
@@ -196,7 +202,7 @@ void Character::setLevel(int chrLevel){
 
 		int diceRoll = Dice::roll("1d10");
 		currentHitPoints = (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
-
+		maxHP = currentHitPoints;
 	}
 	else{ //! Incorrect message is output if negative new level
 		cout << "Incorrect Level.";
@@ -391,8 +397,9 @@ bool Character::attack(Character &chr){
 		//! Subtract armor class because Character is protected by Armor, add the attack bonus and the attack rounds per level
 		int totalAttackBonus = (calcAttackBonus() + calcLevel + d20Roll) - chr.armorClass;
 		cout << "\nTrying to attack." << endl;
-		cout << "Calculating attack roll ((Attack Bonus + Level + d20Roll) - Opponent's AC) : ("
-			<< calcAttackBonus() << " + " << calcLevel << " + " << d20Roll << ") - " << chr.getArmorClass() << endl;
+		string log = "Calculating attack roll ((Attack Bonus + Level + d20Roll) - Opponent's AC) : (" + to_string(calcAttackBonus()) + " + " + to_string(calcLevel) + " + " + to_string(d20Roll) + ") - " + to_string(chr.getArmorClass()) + "\n";
+		
+		
 		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
 			//! Calculate damage caused to opponent		
@@ -449,8 +456,9 @@ void Character::incrementLevel(){
 
 	//! Calculate new hit points
 	//! Take constitution modifier and add with the hit dice roll
-	currentHitPoints += abilityModifiers[(int)CharacterAbility::CONS] + Dice::roll("1d10");
-
+	int increment = abilityModifiers[(int)CharacterAbility::CONS] + Dice::roll("1d10");
+	currentHitPoints += increment;
+	maxHP += increment;
 	//! Output new information
 	cout << "Level " << level << " reached." << endl;
 	cout << "Current HP: " << currentHitPoints << endl;
@@ -662,9 +670,9 @@ ostream& operator<<(ostream& stream, const Character& chr){
 		CharacterAbility::WISD << "\t\t" << chr.abilityScores[(int)CharacterAbility::WISD] << "\t" << chr.abilityModifiers[(int)CharacterAbility::WISD] << "\n" <<
 		CharacterAbility::CHA << "\t" << chr.abilityScores[(int)CharacterAbility::CHA] << "\t" << chr.abilityModifiers[(int)CharacterAbility::CHA] << "\n";
 
-	stream << "\n\nCurrent Hit Points(HP): " << chr.currentHitPoints <<
-		"\nDamage Bonus: " << &Character::calcDamageBonus <<
-		"\nAttack Bonus: " << &Character::calcAttackBonus <<
+	stream << "\n\nCurrent Hit Points(HP): " << chr.currentHitPoints << "/" << chr.maxHP <<
+		"\nDamage Bonus: " << chr.calcDamageBonus() <<
+		"\nAttack Bonus: " << chr.calcAttackBonus() <<
 		"\nArmor Class: " << chr.armorClass <<
 		"\nBackpack holding: \n\n" << *(chr.backpack);
 	stream << "\n\nWearing Items: \n\n" << *(chr.currentWornItems);
