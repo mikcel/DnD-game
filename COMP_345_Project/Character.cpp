@@ -53,7 +53,7 @@ Character::Character(const Character &copyChar) {
 		copyChar.getOneAbilityScore(CharacterAbility::CONS), copyChar.getOneAbilityScore(CharacterAbility::INTEL), 
 		copyChar.getOneAbilityScore(CharacterAbility::WISD), copyChar.getOneAbilityScore(CharacterAbility::CHA));
 
-	int hp = (abilityModifiers[(int)CharacterAbility::CONS] + Dice::roll("1d10")) * level;
+	int hp = (abilityModifiers[(int)CharacterAbility::CONS] + Dice::instance().roll("1d10")) * level;
 	currentHitPoints = hp;
 	maxHP = hp;
 	//! Invokes the method to calculate the armor class
@@ -75,7 +75,7 @@ Character::Character(string chrName, int str, int dex, int cons, int intel, int 
 	//! Call the setter method for the ability scores
 	setAbilityScores(str, dex, cons, intel, wisd, cha);
 
-	int diceRoll = Dice::roll("1d10");
+	int diceRoll = Dice::instance().roll("1d10");
 	currentHitPoints = (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
 	maxHP = currentHitPoints;
 
@@ -369,6 +369,7 @@ int Character::hit(int dmg){
 	int returnVal = 0;
 	if (dmg >= currentHitPoints){  //! If new Damage is more than current HP, character dies.
 		cout << name << " hit by " << dmg << " damage. \nNot enough to be protected by armor and above HP. Game Over for " << getName() << endl;
+		log(name + " hit by " + to_string(dmg) + " damage.\n" + name + "'s Current Hit Points (HP): \nNot enough to be protected by armor and above HP. Game Over for " + getName() + "\n");
 		currentHitPoints = 0;
 		returnVal = 0;
 	}
@@ -376,6 +377,9 @@ int Character::hit(int dmg){
 		currentHitPoints -= dmg; //! Subtract damage from HP
 		cout << name << " hit by " << dmg << " damage.\n"
 			<< name << "'s Current Hit Points (HP): " << currentHitPoints << endl;
+
+		log( name + " hit by " + to_string(dmg) + " damage.\n" + name + "'s Current Hit Points (HP): " + to_string(currentHitPoints) + "\n");
+
 		returnVal = 1;
 	}
 	return returnVal;
@@ -393,12 +397,15 @@ bool Character::attack(Character &chr){
 	do{
 		count++;
 		cout << "Attack " << count << endl;
+		log("Attack " + to_string(count) + " for " + name + "\n");
+
 		int d20Roll = Dice::instance().roll("1d20");
 		//! Subtract armor class because Character is protected by Armor, add the attack bonus and the attack rounds per level
 		int totalAttackBonus = (calcAttackBonus() + calcLevel + d20Roll) - chr.armorClass;
 		cout << "\nTrying to attack." << endl;
-		string log = "Calculating attack roll ((Attack Bonus + Level + d20Roll) - Opponent's AC) : (" + to_string(calcAttackBonus()) + " + " + to_string(calcLevel) + " + " + to_string(d20Roll) + ") - " + to_string(chr.getArmorClass()) + "\n";
-		
+		log("\nTrying to attack.");
+
+		log("Calculating attack roll ((Attack Bonus + Level + d20Roll) - Opponent's AC) : (" + to_string(calcAttackBonus()) + " + " + to_string(calcLevel) + " + " + to_string(d20Roll) + ") - " + to_string(chr.getArmorClass()) + "\n");
 		
 		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
@@ -407,16 +414,19 @@ bool Character::attack(Character &chr){
 			int totalDmgBonus = calcDamageBonus() + d8Roll ;
 			//!Log
 			cout << chr.getName() << " can be attacked." << endl;
+			log(chr.getName() + " can be attacked.\n");
 
-			cout << "Calculating damage roll (Damage Bonus + d8Roll): "
-				<< calcDamageBonus() << " + " << d8Roll << " + "  << endl;
+			log("Calculating damage roll (Damage Bonus + d8Roll): " + to_string(calcDamageBonus()) + " + " + to_string(d8Roll) + "\n");
 
 			cout << "Hitting and causing a damage of " << totalDmgBonus << endl;
+			log("Hitting and causing a damage of " + to_string(totalDmgBonus) + "\n");
+
 			if (chr.hit(totalDmgBonus)==0)//! Hit the opponent with damage calculated
 				return false; 
 		}
 		else{
 			cout << "Attack Missed. Opponent protected by Armor Class.";
+			log("Attack Missed. Opponent protected by Armor Class.");
 		}
 		calcLevel -= 5; //! Decrease by 5 for each level and attack
 	} while (calcLevel > 0);
@@ -456,12 +466,16 @@ void Character::incrementLevel(){
 
 	//! Calculate new hit points
 	//! Take constitution modifier and add with the hit dice roll
-	int increment = abilityModifiers[(int)CharacterAbility::CONS] + Dice::roll("1d10");
+	int diceRoll = Dice::instance().roll("1d10");
+	int increment = abilityModifiers[(int)CharacterAbility::CONS] + diceRoll;
 	currentHitPoints += increment;
 	maxHP += increment;
 	//! Output new information
 	cout << "Level " << level << " reached." << endl;
 	cout << "Current HP: " << currentHitPoints << endl;
+
+	log("Level " + to_string(level) + " reached.\n" + "Adding to HP: " + to_string(abilityModifiers[(int)CharacterAbility::CONS]) + " + " + to_string(diceRoll));
+	log("New HP: " + to_string(currentHitPoints) + "\n");
 }
 
 //! Function used to unequip an item from the Character and put them back to the backpack
