@@ -133,12 +133,22 @@ bool Fighter::attack(Character &chr){
 		int d20Roll = Dice::roll("1d20");
 		//! Subtract armor class because Character is protected by Armor, add the attack bonus and the attack rounds per level
 		int totalAttackBonus = (calcAttackBonus() + calcLevel + d20Roll + additionalAttack) - chr.getArmorClass();
-		cout << "\nTrying to attack. Attack roll: " << totalAttackBonus << endl;
+		//! Log
+		cout << "\nTrying to attack." << endl;
+		cout << "Calculating attack roll ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : ("
+			<< calcAttackBonus() << " + " << calcLevel << " + " << d20Roll << " + " << additionalAttack << ") - " << chr.getArmorClass() << endl;
+		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
 			//! Calculate the damage cause to the opponent
 			int d8Roll = Dice::roll("1d8");
 			int totalDmgBonus = calcDamageBonus() +d8Roll + additionalDamage;
-			cout << chr.getName() << " can be attacked. Hitting and causing a damage of " << totalDmgBonus << endl;
+			//!Log
+			cout << chr.getName() << " can be attacked." << endl;
+
+			cout << "Calculating damage roll (Damage Bonus + d8Roll + Fighter's addition damage): "
+				<< calcDamageBonus() << " + " << d8Roll << " + " << additionalDamage << endl;
+
+			cout << "Hitting and causing a damage of " << totalDmgBonus << endl;
 			if (chr.hit(totalDmgBonus)==0)//! Hit the opponent
 				return false; 
 		}
