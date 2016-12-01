@@ -136,6 +136,7 @@
     <ClCompile Include="CharacterElement.cpp" />
     <ClCompile Include="CharacterStrategy.cpp" />
     <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="ConsoleLogger.cpp" />
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="Enums.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="CharacterElement.h" />
     <ClInclude Include="CharacterStrategy.h" />
     <ClInclude Include="Chest.h" />
+    <ClInclude Include="ConsoleLogger.h" />
     <ClInclude Include="Dice.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="Enums.h" />
