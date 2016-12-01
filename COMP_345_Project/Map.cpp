@@ -230,6 +230,8 @@ Element* Map::setElementAt(int x, int y, Element& element)
 	return nullptr;
 }
 
+
+
 /**
 * Move a given element of a x and y offset
 * @param x X offset
@@ -473,7 +475,7 @@ CharacterElement* Map::placePlayer(CharacterElement& newPlayer)
 		vector<Item*> allExistingItems;
 		loadAllExistingItems(allExistingItems);
 
-		for (Element* element : getElements())
+		/*for (Element* element : getElements())
 		{
 			Chest* chest = dynamic_cast<Chest*>(element);
 			if (chest)
@@ -507,7 +509,7 @@ CharacterElement* Map::placePlayer(CharacterElement& newPlayer)
 					chest->addItem(curItem);
 				}
 			}
-		}
+		}*/
 
 		notify();
 		return &copy;

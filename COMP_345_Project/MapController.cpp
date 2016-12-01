@@ -465,7 +465,6 @@ Map* readMapFile(string mapFileLocation, string mapName) {
 				tmpItemVec.push_back(readItemFile(fileLine));
 			}
 
-
 			getline(mapFile, fileLine);
 			tmpX = stoi(fileLine);
 			getline(mapFile, fileLine);

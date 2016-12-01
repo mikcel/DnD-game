@@ -37,7 +37,12 @@ ItemContainer::ItemContainer(ContainerType type, vector<Item*> vectorOfItems)
 	containerType = type;
 	if (vectorOfItems.size() >= 1) {
 		for (auto i : vectorOfItems) {
-			vecTemp.push_back(new Item(*i));
+			if (dynamic_cast<Weapon*>(i)){
+				vecTemp.push_back(new Weapon(*dynamic_cast<Weapon*>(i)));
+			}
+			else{
+				vecTemp.push_back(new Item(*i));
+			}
 		}
 	}
 	int wornItemSize = 7;

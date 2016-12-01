@@ -379,9 +379,12 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 					if (i->getItemName() == allLootableNames[userInput]){
 						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
 						if (tmpWea != nullptr){
+							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
 							p->getCharacter().storeItem(new Weapon(*tmpWea));
 						}
 						else{
+							cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
+
 							p->getCharacter().storeItem(new Item(i));
 						}
 						tmpChest->removeItem(allLootableNames[userInput]);
@@ -396,9 +399,11 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 					if (i->getItemName() == allLootableNames[userInput]){
 						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
 						if (tmpWea != nullptr){
+							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
 							p->getCharacter().storeItem(new Weapon(*tmpWea));
 						}
 						else{
+							cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
 							p->getCharacter().storeItem(new Item(i));
 						}
 						tmpChara->getCharacter().removeItemBack(i);
