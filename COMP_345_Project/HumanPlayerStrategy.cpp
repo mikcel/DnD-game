@@ -99,6 +99,11 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 				closestLootable(map);
 				isPlaying = false;
 				break;
+			case 'i': //manage items
+				manageEquipment(map);
+				isPlaying = false;
+				break;
+
 			case KEY_ENTER:
 				return true;
 				break;
@@ -172,6 +177,10 @@ bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTo
 				break;
 			case 'z':// tries to loot
 				closestLootable(map);
+				isPlaying = false;
+				break;
+			case 'i': //manage items
+				manageEquipment(map);
 				isPlaying = false;
 				break;
 			case KEY_ENTER:
@@ -361,6 +370,7 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 		}
 
 		if (userInput <= -1){
+			cout << "Press any button to return to the game." << endl;
 			break;
 		}
 		if (userInput >= allLootableNames.size()){
@@ -419,6 +429,139 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 			}
 
 		}
+
+	}
+}
+
+
+
+void  HumanPlayerStrategy::manageEquipment(Map& map)
+{
+	CharacterElement* player = map.getPlayerPointer();
+	//these are copies
+	vector<Item*> worn = player->getCharacter().getCurrentWornItems()->getContents();
+	vector<Item*> stored = player->getCharacter().getBackpackContents()->getContents();
+
+	cout << "Currently wearing:" << endl;
+	for (auto i : worn){
+		if (i->getItemName() != "UNSPECIFIED"){
+			cout << "	" << i->getItemTypes() << ": " << i->getItemName() << endl;
+		}
+
+	}
+
+	cout << "\nCurrently in your backpack" << endl;
+	for (auto i : stored){
+
+		cout << "	" << i->getItemTypes() << ": " << i->getItemName() << endl;
+	}
+	int userChoice;
+	do{
+		cout << "What would you like to do?\n0 - Equip an Item\n1 - Take off an item\n2 - Return to game" << endl;
+	} while (!(cin >> userChoice));
+
+
+	if (userChoice == 2){
+		cout << "Press any button to return to the game." << endl;
+		return;
+	}
+	if (userChoice < 0 || userChoice>2){
+		cout << "Invalid input" << endl;
+	}
+	else{
+		manageEquipmentChoiceHelper(userChoice, player, worn, stored);
+	}
+	
+}
+
+void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterElement* player, vector<Item*> worn, vector<Item*> stored){
+	if (userChoice == 1){
+		string itemindexSTR;
+		int itemindex;
+		while (true){
+			int itemCount = 0;
+			int unspecifiedCount = 0;
+			cout << "Currently wearing:" << endl;
+			for (auto i : worn){
+				if (i->getItemName() != "UNSPECIFIED"){
+					cout << "	" << to_string(itemCount) << i->getItemTypes() << ": " << i->getItemName() << endl;
+				}
+				else{
+					unspecifiedCount++;
+				}
+				itemCount++;
+			}
+			if (unspecifiedCount == worn.size()){
+				cout << "You are not wearing anything. Press any key to return to game." << endl;
+				return;
+			}
+			cout << "Enter the index of the item you want to take off.\nEnter -1 to cancel." << endl;
+			try {
+				cin >> itemindexSTR;
+				itemindex = stoi(itemindexSTR);
+			}
+			catch (...){
+				cout << "\nInvalid input. Try again." << endl;
+				continue;
+			}
+			if (itemindex < -1 || itemindex >= worn.size()){
+				cout << "\nInvalid input. Try again." << endl;
+				continue;
+			}
+
+			if (worn[itemindex]->getItemName() == "UNSPECIFIED"){
+				cout << "You are not wearing anything in that slot.Pick something else." << endl;
+				continue;
+			}
+			if (itemindex == -1){
+				cout << "Press any button to return to the game." << endl;
+				return;
+			}
+			else{
+				break;
+			}
+		}
+		cout << "Unequipping: " << worn[itemindex]->getItemName();
+
+		player->getCharacter().takeOffItem(worn[itemindex]);
+		cout << "Press any button to return to the game." << endl;
+
+	}
+	else if (userChoice == 0){
+		string itemindexSTR;
+		int itemindex;
+		int itemCount = 0;
+		while (true){
+			cout << "\nCurrently in your backpack" << endl;
+			for (auto i : stored){
+				cout << "	" << to_string(itemCount) << ": " << i->getItemTypes() << ": " << i->getItemName() << endl;
+				itemCount++;
+			}
+			cout << "Enter the index of the item you want to equip.\nEnter -1 to cancel." << endl;
+
+			try {
+				cin >> itemindexSTR;
+				itemindex = stoi(itemindexSTR);
+			}
+			catch (...){
+				cout << "\nInvalid input. Try again." << endl;
+				continue;
+			}
+			if (itemindex < -1 || itemindex >= stored.size()){
+				cout << "\nInvalid input. Try again." << endl;
+				continue;
+			}
+			if (itemindex == -1){
+				cout << "Press any button to return to the game." << endl;
+				return;
+			}
+			else{
+				break;
+			}
+		}
+		cout << "Equipping: " << stored[itemindex]->getItemName();
+		player->getCharacter().wearItem(stored[itemindex]);
+		cout << "Press any button to return to the game." << endl;
 
 	}
 }
