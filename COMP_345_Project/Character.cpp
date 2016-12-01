@@ -53,7 +53,7 @@ Character::Character(const Character &copyChar) {
 		copyChar.getOneAbilityScore(CharacterAbility::CONS), copyChar.getOneAbilityScore(CharacterAbility::INTEL), 
 		copyChar.getOneAbilityScore(CharacterAbility::WISD), copyChar.getOneAbilityScore(CharacterAbility::CHA));
 
-	currentHitPoints += (abilityModifiers[(int)CharacterAbility::CONS] + Dice::roll("1d10")) * level;
+	currentHitPoints += (abilityModifiers[(int)CharacterAbility::CONS] + Dice::instance().roll("1d10")) * level;
 
 	//! Invokes the method to calculate the armor class
 	calcArmorClass();
@@ -74,7 +74,7 @@ Character::Character(string chrName, int str, int dex, int cons, int intel, int 
 	//! Call the setter method for the ability scores
 	setAbilityScores(str, dex, cons, intel, wisd, cha);
 
-	int diceRoll = Dice::roll("1d10");
+	int diceRoll = Dice::instance().roll("1d10");
 	currentHitPoints += (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
 
 	//! Invokes the method to calculate the armor class
@@ -194,7 +194,7 @@ void Character::setLevel(int chrLevel){
 	if (chrLevel > 0){ //! Check that new level is positive
 		level = chrLevel;
 
-		int diceRoll = Dice::roll("1d10");
+		int diceRoll = Dice::instance().roll("1d10");
 		currentHitPoints = (abilityModifiers[(int)CharacterAbility::CONS] + diceRoll) * level;
 
 	}
@@ -387,7 +387,7 @@ bool Character::attack(Character &chr){
 	do{
 		count++;
 		cout << "Attack " << count << endl;
-		int d20Roll = Dice::roll("1d20");
+		int d20Roll = Dice::instance().roll("1d20");
 		//! Subtract armor class because Character is protected by Armor, add the attack bonus and the attack rounds per level
 		int totalAttackBonus = (calcAttackBonus() + calcLevel + d20Roll) - chr.armorClass;
 		cout << "\nTrying to attack." << endl;
@@ -396,7 +396,7 @@ bool Character::attack(Character &chr){
 		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
 			//! Calculate damage caused to opponent		
-			int d8Roll = Dice::roll("1d8");
+			int d8Roll = Dice::instance().roll("1d8");
 			int totalDmgBonus = calcDamageBonus() + d8Roll ;
 			//!Log
 			cout << chr.getName() << " can be attacked." << endl;
@@ -449,7 +449,7 @@ void Character::incrementLevel(){
 
 	//! Calculate new hit points
 	//! Take constitution modifier and add with the hit dice roll
-	currentHitPoints += abilityModifiers[(int)CharacterAbility::CONS] + Dice::roll("1d10");
+	currentHitPoints += abilityModifiers[(int)CharacterAbility::CONS] + Dice::instance().roll("1d10");
 
 	//! Output new information
 	cout << "Level " << level << " reached." << endl;
@@ -674,4 +674,9 @@ ostream& operator<<(ostream& stream, const Character& chr){
 	return stream;
 }
 
+//!Return the provider string "Character"
+string Character::provider()
+{
+	return "Character";
+}
 

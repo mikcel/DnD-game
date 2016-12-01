@@ -43,7 +43,7 @@ bool Game::run(CharacterElement* p)
 {
 	//Set all of our observers
 	MapObserver mo(*map);
-	map->attach(mo);
+	map->Observable::attach(mo);
 
 	MapElementsToggler meo(map);
 
@@ -123,4 +123,10 @@ void Game::perfomEndGame()
 Map* Game::getMap()
 {
 	return map;
+}
+
+//!Return the provider string "Game"
+std::string Game::provider()
+{
+	return "Game";
 }

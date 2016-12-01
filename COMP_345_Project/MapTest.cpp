@@ -300,7 +300,7 @@ void MapTest::testObserverModificationCallUpdate()
 		}
 	}mot;
 
-	map->attach(mot);
+	map->Observable::attach(mot);
 
 	map->setStartPoint(4, 0);
 	CPPUNIT_ASSERT(mot.timesInvoked == 1);
@@ -348,7 +348,7 @@ void MapTest::testObserverReadNoCallUpdate()
 		}
 	}mot;
 
-	map->attach(mot);
+	map->Observable::attach(mot);
 
 	map->isStartPoint(4, 0);
 	CPPUNIT_ASSERT(!mot.wasInvoked);
@@ -392,11 +392,11 @@ void MapTest::testObserverAttachDetachObservers()
 	MapObserver mo(*map);
 	CPPUNIT_ASSERT(map->getObservers().size() == 0);
 
-	map->attach(mo);
+	map->Observable::attach(mo);
 	CPPUNIT_ASSERT(map->getObservers().size() == 1);
 	CPPUNIT_ASSERT(map->getObservers().front() == &mo);
 
-	map->detach(mo);
+	map->Observable::detach(mo);
 	CPPUNIT_ASSERT(map->getObservers().size() == 0);
 }
 
@@ -417,15 +417,15 @@ void MapTest::testObserverNotNotifiedWhenDetached()
 		}
 	}mot;
 	
-	map->attach(mot);
+	map->Observable::attach(mot);
 	map->setStartPoint(4, 0);
 	CPPUNIT_ASSERT(mot.timesInvoked == 1);
 
-	map->detach(mot);
+	map->Observable::detach(mot);
 	map->unsetStartPoint();
 	CPPUNIT_ASSERT(mot.timesInvoked == 1);
 
-	map->attach(mot);
+	map->Observable::attach(mot);
 	map->setEndPoint(4, 0);
 	CPPUNIT_ASSERT(mot.timesInvoked == 2);
 }

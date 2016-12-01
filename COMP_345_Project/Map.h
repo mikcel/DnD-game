@@ -10,6 +10,7 @@
 #include <string>
 #include "Observable.h"
 #include "CharacterElement.h"
+#include "Loggable.h"
 
 class CharacterElement;
 
@@ -20,7 +21,7 @@ using namespace std;
 //! The actions performed on the tiles are all administered by the map.
 //! The map must also contain a start and an end positions which represent where the player will appear when the map loads and where he must go.
 //! The coordinate (0,0) is located at the top left corner of the map and the Y increase when going down the map (so bottom right corner is at coordinate (width -1, height -1).
-class Map : public Observable
+class Map : public Observable, public Loggable
 {
 public:
 	Map(int newWidth, int newHeight, std::string mapName); //! Constructor setting height and width of the map
@@ -63,6 +64,8 @@ public:
 	string serializeMapToString();
 
 	CharacterElement* getPlayerPointer();
+
+	virtual std::string provider(); //! Returns the Loggable provider.
 private:
 	string name;
 	Tile** mapArr; //! 2D Array of the tiles
