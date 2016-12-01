@@ -28,6 +28,7 @@
 #include "GameController.h"
 #include "ItemUtils.h"
 #include "CharacterController.h"
+#include "PlayerConsoleSingleton.h"
 
 using namespace std;
 

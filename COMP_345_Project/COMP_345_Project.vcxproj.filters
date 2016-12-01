@@ -168,6 +168,9 @@
     <ClCompile Include="ConsoleLogger.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerConsoleSingleton.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tile.h">
@@ -303,6 +306,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleLogger.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerConsoleSingleton.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
