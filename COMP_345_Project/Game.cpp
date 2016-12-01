@@ -71,10 +71,10 @@ bool Game::run(CharacterElement* p)
 
 	for (int i = 0;; i++)
 	{
-		bool wantsToContinuePlaying = characterElementsHavingTurn[i % characterElementsHavingTurn.size()]->getCharacterStrategy()->executeTurn(*map, mo, meo);
-		if (!wantsToContinuePlaying)
+		bool wantsToContinuePlaying = characterElementsHavingTurn[i % characterElementsHavingTurn.size()]->getCharacterStrategy()->executeTurn(*map, mo, meo, characterElementsHavingTurn);
+  		if (!wantsToContinuePlaying)
 		{
-				return false;
+			return false;
 		}
 		if (isGameOver())
 		{
@@ -89,7 +89,7 @@ bool Game::run(CharacterElement* p)
 //! @return true if the game over, false otherwise
 bool Game::isGameOver()
 {
-	return map->isEndPoint(map->getPlayer().getPosition()) || map->getPlayer().getCharacter().getCurrentHitPoints() == 0;
+	return map->isEndPoint(map->getPlayer().getPosition()) /*|| map->getPlayer().getCharacter().getCurrentHitPoints() == 0*/;
 }
 
 //! Method that is executed at the end of the game

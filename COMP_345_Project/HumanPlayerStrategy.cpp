@@ -117,7 +117,7 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 * @param meo the map elements toggler
 * @return true if the player wants to continue to play, false otherwise
 */
-bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo)
+bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo, vector<CharacterElement*>& chrElems)
 {
 	mo.setPrintTurnInfo(TurnType::HUMAN_PLAYER_ATTACK);
 	mo.printMap();
@@ -137,7 +137,12 @@ bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTo
 				CharacterElement* characterToAttack = chooseAttackTarget(map, mo, meo);
 				if (characterToAttack != nullptr)
 				{
-					this->characterElement->attack(*characterToAttack);
+					if (!this->characterElement->attack(*characterToAttack)){
+						
+						//chrElems->erase(remove(chrElems->begin(), chrElems->end(), characterToAttack), chrElems->end());;
+						//?
+						//map.removeElementAt(characterToAttack->getPosition().x, characterToAttack->getPosition().y);
+					}
 				}
 				cout << endl;
 				system("pause");

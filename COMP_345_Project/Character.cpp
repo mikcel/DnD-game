@@ -357,7 +357,7 @@ bool Character::validateNewCharacter(){
 
 //! Function to reduce damage of Character if gets hit
 //! @param int representing the damage caused to the character
-//! @return 0 - if character died (HP=0), 1 - Character was hit (Not protected by armor class)
+//! @return 0 - if character died (HP=0), 1 - Character was hit 
 int Character::hit(int dmg){
 
 	int returnVal = 0;
@@ -378,8 +378,8 @@ int Character::hit(int dmg){
 
 //! Function to attack another Character
 //! @param Character - Representing the Character wanted to attack
-//! @return no of attacks 
-int Character::attack(Character &chr){
+//! @return true - Opponent not dead, false - Opponent dead
+bool Character::attack(Character &chr){
 
 	//! Counters for multiple attacks
 	int calcLevel = level;
@@ -393,14 +393,18 @@ int Character::attack(Character &chr){
 			cout << "Opponent can be attacked. Hitting..." << endl;
 			//! Calculate damage caused to opponent
 			int totalDmgBonus = calcDamageBonus() + Dice::roll("1d8");
-			chr.hit(totalDmgBonus); //! Hit the opponent with damage calculated
+			if (chr.hit(totalDmgBonus)==0)//! Hit the opponent with damage calculated
+				return false; 
 		}
 		else{
 			cout << "Attack Missed. Opponent protected by Armor Class.";
 		}
 		calcLevel -= 5; //! Decrease by 5 for each level and attack
 	} while (calcLevel > 0);
-	return count;//! return the number of attacks performed
+
+	//system("pause");
+
+	return true;//! return true if opponent did not died
 
 }
 

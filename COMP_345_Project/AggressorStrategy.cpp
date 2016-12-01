@@ -26,7 +26,7 @@ std::string AggressorStrategy::getStrategyName()
 * @param meo the map elements toggler
 * @return true if the players wants to continue to play, false otherwise.
 */
-bool AggressorStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo)
+bool AggressorStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo, vector<CharacterElement*>& chrElems)
 {
 	mo.setPrintTurnInfo(TurnType::AI_ATTACK);
 	mo.printMap();
@@ -46,7 +46,12 @@ bool AggressorStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTogg
 				Position humanPlayerCharacterPosition = map.getPlayer().getPosition();
 				if (isTileNextTo(thisCharacterPosition.x, thisCharacterPosition.y, humanPlayerCharacterPosition.x, humanPlayerCharacterPosition.y))
 				{
-					characterElement->attack(map.getPlayer());
+					if (!characterElement->attack(map.getPlayer())) //! If player died
+					{
+						cout << "You died. Game over." << endl;
+
+						return false;
+					}
 				}
 				else
 				{

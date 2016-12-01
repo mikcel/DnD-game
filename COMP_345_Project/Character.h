@@ -75,7 +75,7 @@ public:
 	void generateAbilityModifiers(); //! Function to set the Ability modifiers for each ability score
 	bool validateNewCharacter(); //! Method to validate a newly created Character
 	int hit(int dmg); //! Function that is called when a Character gets hit. Decreases the Character's HP with a damage number
-	virtual int attack(Character &chr); //! Function that is used when a Character attacks another Character
+	virtual bool attack(Character &chr); //! Function that is used when a Character attacks another Character
 	int getSizeModifier() const; //! Function to calculate the Size Modifier
 	void incrementLevel(); //! Function to increase the Character's 
 	void incrementArmorClass(int chrAC); //! Method to increment the Character's AC by a number

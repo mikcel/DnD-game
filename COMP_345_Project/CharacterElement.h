@@ -23,7 +23,7 @@ public:
 	void setCharacter(Character* newCharacter); // Setter for the current Character
 	virtual CharacterElement* clone(); // Copies the current CharacterElement
 	Character& getCharacter(); // Getter for the current Character
-	void attack(CharacterElement& target);
+	bool attack(CharacterElement& target);
 	CharacterStrategy* getCharacterStrategy();
 	void setCharacterStrategy(CharacterStrategy* newCharacterStrategy);
 	void createCharacterWithLevel(int level, string Enemy2Name);

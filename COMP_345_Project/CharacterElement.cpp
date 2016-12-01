@@ -66,27 +66,30 @@ Character& CharacterElement::getCharacter()
 //{
 //	character = nullptr;
 //}
+//! @return true if target not died, false otherwise
+bool CharacterElement::attack(CharacterElement& target){
 
-void CharacterElement::attack(CharacterElement& target){
-
-	//return this->character->attack(target.getCharacter());
+	bool returnVal = this->character->attack(target.getCharacter());
 	cout << endl << getCharacter().getName() << " has just attacked " << target.getCharacter().getName() << endl;
 
 	if (dynamic_cast<FriendlyStrategy*>(target.getCharacterStrategy()))
-{
+	{
 		string previousStrategyName = target.getCharacterStrategy()->getStrategyName();
 		delete target.getCharacterStrategy();
 		target.setCharacterStrategy(new AggressorStrategy());
 		cout << endl << "Former " << previousStrategyName << " \"" << target.getCharacter().getName()
 			<< "\"  has now become an " << target.getCharacterStrategy()->getStrategyName() << endl;
-}
-
+	}
+	return returnVal;
 
 }
 //! Constructor with name
 //! Used to facilitate map construction from a map file
-CharacterElement::CharacterElement(string chrName, CharacterStrategy* newCharacterStrategy) :character(new Character(chrName)), characterStrategy(newCharacterStrategy)
+CharacterElement::CharacterElement(string chrName, CharacterStrategy* newCharacterStrategy) : characterStrategy(newCharacterStrategy)
 {
+
+	character = readCharacterFile(chrName);
+
 }
 
 CharacterStrategy* CharacterElement::getCharacterStrategy()
@@ -109,7 +112,7 @@ void CharacterElement::createCharacterWithLevel(int level, string Enemy2Name)
 	if (character != nullptr) {
 		delete character;
 	}
-	character = readCharacterFile("SaveFiles/Characters/" + Enemy2Name + ".txt", Enemy2Name);
+	character = readCharacterFile(Enemy2Name);
 	//new  Character(calculateRandomName(), "1d10", calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), calculateRandomAttributeValue(), 1);
 
 }

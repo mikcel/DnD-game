@@ -54,4 +54,4 @@ private:
 
 };
 
-Character* readCharacterFile(string charName, string charFileLocation); //! Method to read a character from a file
+Character* readCharacterFile(string charName); //! Method to read a character from a file
