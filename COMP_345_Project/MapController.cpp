@@ -20,7 +20,7 @@
 #include "AggressorStrategy.h"
 #include "FriendlyStrategy.h"
 #include "HumanPlayerStrategy.h"
-
+#include "ItemUtils.h"
 using namespace std;
 
 //! Default Constructor
@@ -148,7 +148,7 @@ void MapController::editMap(bool creatingNewMap) {
 				cout << "Invalid element!" << endl;
 			}
 
-			cout << "Element (S for start point, L for end point, F for Floor, W for Wall, X for enemy, C for Chest, F for floor): ";
+			cout << "Element (S for start point, L for end point, F for Floor, W for Wall, X for enemy,A for friendly NPC , C for Chest, F for floor): ";
 			cin >> eS;
 			if (eS == "Q")
 			{
@@ -156,7 +156,7 @@ void MapController::editMap(bool creatingNewMap) {
 				return;
 			}
 
-			isInvalid = eS != "S" && eS != "L" && eS != "F" && eS != "W" && eS != "X" && eS != "C" && eS != "F";
+			isInvalid = eS != "S" && eS != "L" && eS != "F" && eS != "W" && eS != "X" && eS != "A" && eS != "C" && eS != "F";
 		} while (isInvalid);
 
 		//! Enter X
@@ -220,14 +220,17 @@ void MapController::editMap(bool creatingNewMap) {
 		}
 		else if (eS == "X") //! Enemy
 		{
-			/*Character e;
-			CharacterElement characterElement(e);*/
 			CharacterElement enemy(chooseEnemy(), new AggressorStrategy());
 			success = m->setElementAt(x, y, enemy);
 		}
+		else if (eS == "A") //! Friend
+		{
+			CharacterElement ally(chooseEnemy(), new FriendlyStrategy());
+			success = m->setElementAt(x, y, ally);
+		}
 		else if (eS == "C") //! Chest
 		{
-			Chest * e = new Chest();
+			Chest * e = chooseChestItems();
 			success = m->setElementAt(x, y, *e);
 			delete e;
 		}
@@ -249,6 +252,39 @@ void MapController::editMap(bool creatingNewMap) {
 		cout << "Map validity: " << (m->isValid() ? "VALID" : "INVALID") << endl << endl;
 	}
 
+
+}
+Chest* MapController::chooseChestItems()
+{
+	vector<string> itemName = getFilesInsideFolderNoExtension("SaveFiles/Items");
+	vector<Item*> chosenItems;
+	string userInputStr = "0";
+	while (userInputStr != "-1"){
+
+		cout << "\nEnter the index of the item name you want to add to the chest.(Enter -1 to stop adding to the chest)" << endl;
+		int userChoice = 0;
+		int index = 0;
+
+		for (auto c : itemName){
+			cout << index << ": " << c << endl;
+			index++;
+		}
+		cin >> userInputStr;
+		try{
+			userChoice = stoi(userInputStr);
+			if (userChoice > itemName.size() || userChoice < -1){
+				cout << "Invalid input. Use listed indices." << endl;
+				continue;
+			}
+			chosenItems.push_back(readItemFile(itemName[userChoice]));
+
+		}
+		catch (...){
+			cout << "Invalid input.Try a different input" << endl;
+			continue;
+		}
+	}
+	return new Chest(chosenItems);
 
 }
 
@@ -421,12 +457,19 @@ Map* readMapFile(string mapFileLocation, string mapName) {
 		}
 		else if (fileLine == "chest") {
 			//cout << "FOUND chest" << endl;
+			getline(mapFile, fileLine);
+			int itemAmount = stoi(fileLine);
+			vector<Item*> tmpItemVec;
+			for (int i = 0; i < itemAmount; i++){
+				getline(mapFile, fileLine);
+				tmpItemVec.push_back(readItemFile(fileLine));
+			}
 
 			getline(mapFile, fileLine);
 			tmpX = stoi(fileLine);
 			getline(mapFile, fileLine);
 			tmpY = stoi(fileLine);
-			tmpMap->setElementAt(tmpX, tmpY, Chest());
+			tmpMap->setElementAt(tmpX, tmpY, Chest(tmpItemVec));
 		}
 
 	}

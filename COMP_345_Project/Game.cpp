@@ -33,7 +33,7 @@ bool Game::play(Character* player)
 	}
 	else{
 		return true;
-}
+	}
 }
 
 //! Represents the main game loop of the Dungeons&Dragons game
@@ -84,6 +84,11 @@ bool Game::run(CharacterElement* p)
 
 	return true;
 }
+
+
+
+
+
 
 //! Checks if the game is over (the player has reached the end point)
 //! @return true if the game over, false otherwise

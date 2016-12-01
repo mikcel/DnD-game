@@ -37,7 +37,12 @@ ItemContainer::ItemContainer(ContainerType type, vector<Item*> vectorOfItems)
 	containerType = type;
 	if (vectorOfItems.size() >= 1) {
 		for (auto i : vectorOfItems) {
-			vecTemp.push_back(new Item(*i));
+			if (dynamic_cast<Weapon*>(i)){
+				vecTemp.push_back(new Weapon(*dynamic_cast<Weapon*>(i)));
+			}
+			else{
+				vecTemp.push_back(new Item(*i));
+			}
 		}
 	}
 	int wornItemSize = 7;
@@ -129,7 +134,7 @@ void ItemContainer::removeItem(string itemName) {
 
 	for (vector<Item*>::size_type i = 0; i < contents.size(); i++) {
 		
-		if (contents[i]->getItemName().compare(itemName) == 0) {
+		if (contents[i]->getItemName() == itemName) {
 			//if it's not a worn item container, simply delete object and remove the element from the container
 			delete contents[i];
 			if (containerType != ContainerType::WORN_ITEM) {

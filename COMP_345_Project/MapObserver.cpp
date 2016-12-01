@@ -78,9 +78,11 @@ void MapObserver::printMap()
 	if (turnType == TurnType::HUMAN_PLAYER_MOVE)
 	{
 		cout << "Arrows : Move" << endl;
+		cout << "Z : Loot nearby Chests or fallen Enemies." << endl;
 	}
 	else if (turnType == TurnType::HUMAN_PLAYER_ATTACK)
 	{
+		cout << "Z : Loot nearby Chests or fallen Enemies." << endl;
 		cout << "A : Attack" << endl;
 	}
 
@@ -92,7 +94,7 @@ void MapObserver::printMap()
 
 	cout << "T : Display all map information" << endl;
 	cout << "P : Display player information" << endl;
-	cout << "E : Display ennemies information" << endl;
+	cout << "E : Display enemies information" << endl;
 	cout << "C : Display chests information" << endl;
 	cout << "Q : Quit (Progression will not be saved)" << endl;
 }

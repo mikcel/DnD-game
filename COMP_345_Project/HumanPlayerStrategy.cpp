@@ -1,5 +1,6 @@
 #include "HumanPlayerStrategy.h"
-
+#include "Chest.h"
+#include <vector>
 #include <string> 
 
 /**
@@ -94,6 +95,10 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 				meo.showChests();
 				isPlaying = false;
 				break;
+			case 'z':// tries to loot
+				closestLootable(map);
+				isPlaying = false;
+				break;
 			case KEY_ENTER:
 				return true;
 				break;
@@ -168,6 +173,10 @@ bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTo
 				break;
 			case 'c': //Toggles the view of the map elements
 				meo.showChests();
+				isPlaying = false;
+				break;
+			case 'z':// tries to loot
+				closestLootable(map);
 				isPlaying = false;
 				break;
 			case KEY_ENTER:
@@ -271,5 +280,150 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 	{
 		cout << endl << "No characters are near, so there is no one to attack" << endl;
 		return nullptr;
+	}
+}
+
+
+//! lets player loot a chest or dead enemy
+void HumanPlayerStrategy::closestLootable(Map& map){
+	if (system("CLS")) system("clear");
+	Position pos = Position(map.getPlayer().getPosition());//player's position
+	vector<Element*> vecPos = vector<Element*>(0);
+	if (dynamic_cast<Chest*>(map.getElementAt(pos.x + 1, pos.y)) != nullptr || dynamic_cast<CharacterElement*>(map.getElementAt(pos.x + 1, pos.y)) != nullptr){ // 1,0
+		vecPos.push_back(map.getElementAt(pos.x + 1, pos.y));
+	}
+	if (dynamic_cast<Chest*>(map.getElementAt(pos.x + 1, pos.y + 1)) != nullptr || dynamic_cast<CharacterElement*>(map.getElementAt(pos.x + 1, pos.y + 1)) != nullptr){ // 1,1
+		vecPos.push_back(map.getElementAt(pos.x + 1, pos.y + 1));
+	}
+	if (dynamic_cast<Chest*>(map.getElementAt(pos.x + 1, pos.y - 1)) != nullptr || dynamic_cast<CharacterElement*>(map.getElementAt(pos.x + 1, pos.y - 1)) != nullptr){ // 1,-1
+		vecPos.push_back(map.getElementAt(pos.x + 1, pos.y - 1));
+	}
+	if (dynamic_cast<Chest*>(map.getElementAt(pos.x - 1, pos.y)) != nullptr || dynamic_cast<CharacterElement*>(map.getElementAt(pos.x - 1, pos.y)) != nullptr){ // -1,0
+		vecPos.push_back(map.getElementAt(pos.x - 1, pos.y));
+	}
+	if (dynamic_cast<Chest*>(map.getElementAt(pos.x - 1, pos.y + 1)) != nullptr || dynamic_cast<CharacterElement*>(map.getElementAt(pos.x - 1, pos.y + 1)) != nullptr){ // -1,1
+		vecPos.push_back(map.getElementAt(pos.x - 1, pos.y + 1));
+	}
+	if (dynamic_cast<Chest*>(map.getElementAt(pos.x - 1, pos.y - 1)) != nullptr || dynamic_cast<CharacterElement*>(map.getElementAt(pos.x - 1, pos.y - 1)) != nullptr){ // -1,-1
+		vecPos.push_back(map.getElementAt(pos.x - 1, pos.y - 1));
+	}
+	if (dynamic_cast<Chest*>(map.getElementAt(pos.x, pos.y - 1)) != nullptr || dynamic_cast<CharacterElement*>(map.getElementAt(pos.x, pos.y - 1)) != nullptr){ // 0,-1
+		vecPos.push_back(map.getElementAt(pos.x, pos.y - 1));
+	}
+	if (dynamic_cast<Chest*>(map.getElementAt(pos.x, pos.y + 1)) != nullptr || dynamic_cast<CharacterElement*>(map.getElementAt(pos.x, pos.y + 1)) != nullptr){ // 0,+1
+		vecPos.push_back(map.getElementAt(pos.x, pos.y + 1));
+	}
+
+
+
+	vector<Item*> tmpItem;
+	
+	Chest* tmpChest;
+	CharacterElement* tmpChara;
+	vector<string> allLootableNames = vector<string>(0);
+	//transfering names
+	for (auto e : vecPos){
+		tmpChest = dynamic_cast<Chest*>(e);
+		tmpChara = dynamic_cast<CharacterElement*>(e);
+		if (tmpChest){
+			tmpItem = tmpChest->getContents();
+			for (auto i : tmpItem){
+				allLootableNames.push_back(i->getItemName());
+			}
+		}
+		else if (tmpChara && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//only dead foes
+			tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
+			for (auto i : tmpItem){
+				allLootableNames.push_back(i->getItemName());
+			}
+		}
+	}
+	if (allLootableNames.size() == 0){
+		cout << "Nothing to loot." << endl;
+		return;
+	}
+	string userInputSTR;
+	int userInput;
+	CharacterElement* p = map.getPlayerPointer();
+	while (true){
+
+		cout << "Lootable Items: " << endl;
+		//printing name
+		int k = 0;
+		for (auto i : allLootableNames){
+			cout << k << ": " << i << endl;
+			k++;
+		}
+		cout << "Enter the index of the item you want to take, enter -1 to not take anything" << endl;
+		cin >> userInputSTR;
+		try{
+			userInput = stoi(userInputSTR);
+
+		}
+		catch (...){
+			cout << "Invalid input, enter a valid input.\n" << endl;
+			continue;
+		}
+
+		if (userInput <= -1){
+			break;
+		}
+		if (userInput >= allLootableNames.size()){
+			cout << "Invalid input, enter a valid input.\n" << endl;
+			continue;
+		}
+		bool foundInContainer = false;
+
+		//transfer to backpack
+		for (auto e : vecPos){
+			tmpChest = dynamic_cast<Chest*>(e);
+			tmpChara = dynamic_cast<CharacterElement*>(e);
+			if (tmpChest != nullptr){
+				tmpItem = tmpChest->getContents();
+				for (auto i : tmpItem){
+					if (i->getItemName() == allLootableNames[userInput]){
+						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
+						if (tmpWea != nullptr){
+							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
+							p->getCharacter().storeItem(new Weapon(*tmpWea));
+						}
+						else{
+							cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
+
+							p->getCharacter().storeItem(new Item(i));
+						}
+						tmpChest->removeItem(allLootableNames[userInput]);
+						foundInContainer = true;
+						break;
+					}
+				}
+			}
+			else if (tmpChara != nullptr && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//only dead foes
+				tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
+				for (auto i : tmpItem){
+					if (i->getItemName() == allLootableNames[userInput]){
+						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
+						if (tmpWea != nullptr){
+							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
+							p->getCharacter().storeItem(new Weapon(*tmpWea));
+						}
+						else{
+							cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
+							p->getCharacter().storeItem(new Item(i));
+						}
+						tmpChara->getCharacter().removeItemBack(i);
+						foundInContainer = true;
+						break;
+					}
+				}
+			}
+			if (foundInContainer = true)
+			{
+				allLootableNames.erase(allLootableNames.begin() + userInput);
+				break;
+			}
+
+		}
+
 	}
 }

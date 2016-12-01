@@ -1,0 +1,16 @@
+8
+8
+start
+3
+3
+end
+5
+5
+chest
+4
+GOLDEN SWORD
+Hammer
+Iron Hammer
+Johny's Sword
+0
+0

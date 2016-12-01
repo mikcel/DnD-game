@@ -102,3 +102,5 @@ void MapElementsToggler::showChests()
 	if (system("CLS")) system("clear");
 	showChestsDirect();
 }
+
+

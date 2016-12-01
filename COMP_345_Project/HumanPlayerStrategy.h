@@ -12,4 +12,5 @@ protected:
 public:
 	virtual std::string print() const; //! Obtains the map representation of the CharacterElement
 	virtual std::string getStrategyName(); //! Obtains human-readble the name of the CharacterStrategy
+	void closestLootable(Map& map);//! lets player loot a chest or dead enemy
 };

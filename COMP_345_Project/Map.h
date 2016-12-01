@@ -61,6 +61,8 @@ public:
 	void setName(std::string name); //! Sets the name of the map
 
 	string serializeMapToString();
+
+	CharacterElement* getPlayerPointer();
 private:
 	string name;
 	Tile** mapArr; //! 2D Array of the tiles

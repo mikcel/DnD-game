@@ -10,6 +10,7 @@
 #include "CharacterElement.h"
 #include "ItemUtils.h"
 #include  "AggressorStrategy.h"
+#include "FriendlyStrategy.h"
 
 using namespace std;
 /**
@@ -228,6 +229,8 @@ Element* Map::setElementAt(int x, int y, Element& element)
 	}
 	return nullptr;
 }
+
+
 
 /**
 * Move a given element of a x and y offset
@@ -472,7 +475,7 @@ CharacterElement* Map::placePlayer(CharacterElement& newPlayer)
 		vector<Item*> allExistingItems;
 		loadAllExistingItems(allExistingItems);
 
-		for (Element* element : getElements())
+		/*for (Element* element : getElements())
 		{
 			Chest* chest = dynamic_cast<Chest*>(element);
 			if (chest)
@@ -506,7 +509,7 @@ CharacterElement* Map::placePlayer(CharacterElement& newPlayer)
 					chest->addItem(curItem);
 				}
 			}
-		}
+		}*/
 
 		notify();
 		return &copy;
@@ -593,14 +596,31 @@ string Map::serializeMapToString()
 				serialMap += "wall\n";
 				somethingToWrite = true;
 			}
-			else if (dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())) {
-				serialMap += "enemy\n";
-				serialMap += dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacter().getName();
-				serialMap += "\n";
-				somethingToWrite = true;
+			else if (dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())){
+				if (dynamic_cast<AggressorStrategy*>(dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacterStrategy())) {
+
+					serialMap += "enemy\n";
+					serialMap += dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacter().getName();
+					serialMap += "\n";
+					somethingToWrite = true;
+				}
+				else if (dynamic_cast<FriendlyStrategy*>(dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacterStrategy())) {
+					serialMap += "ally\n";
+					serialMap += dynamic_cast<CharacterElement*>(mapArr[i][j].getElement())->getCharacter().getName();
+					serialMap += "\n";
+					somethingToWrite = true;
+				}
 			}
 			else if (dynamic_cast<Chest*>(mapArr[i][j].getElement())) {
 				serialMap += "chest\n";
+				serialMap += to_string(dynamic_cast<Chest*>(mapArr[i][j].getElement())->getContents().size());
+				serialMap +="\n";
+
+				for (auto i : dynamic_cast<Chest*>(mapArr[i][j].getElement())->getContents()){
+					serialMap += i->getItemName();
+					serialMap += "\n";
+				}
+
 				somethingToWrite = true;
 			}
 
@@ -618,4 +638,8 @@ string Map::serializeMapToString()
 
 CharacterElement & Map::getPlayer() const {
 	return *player;
+}
+
+CharacterElement* Map::getPlayerPointer(){
+	return player;
 }

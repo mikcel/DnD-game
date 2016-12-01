@@ -3,6 +3,7 @@
 #pragma once
 #include "Map.h"
 #include <iostream>
+#include "Chest.h"
 using namespace std;
 //! Class to create MapControllers that points to a Map object
 class MapController
@@ -25,6 +26,11 @@ public:
 	//! method prompts the user for parameters to edit a map
 	//! @param creatingNewMap: boolean that decides whether to treat the object as a new map or not
 	void editMap(bool creatingNewMap);
+
+	//!method that  prompts the user to choose items to put in a chest
+	//! return : pointer to a chest object
+	Chest* chooseChestItems();
+
 	//! methof that allows the user to choose the name of a character to store in the map
 	//! return string: name of character.
 	string chooseEnemy();

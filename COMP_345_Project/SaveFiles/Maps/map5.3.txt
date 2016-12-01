@@ -1,0 +1,15 @@
+5
+5
+start
+0
+0
+end
+4
+4
+enemy
+fightest
+0
+1
+chest
+3
+0

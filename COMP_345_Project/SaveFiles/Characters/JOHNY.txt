@@ -1,0 +1,22 @@
+character
+JOHNY
+5d10
+5
+0
+0
+18
+17
+13
+5
+5
+3
+backpack
+Johny's Wooden Helmet
+wornItem
+Johny's Wooden Helmet
+UNSPECIFIED
+UNSPECIFIED
+UNSPECIFIED
+UNSPECIFIED
+UNSPECIFIED
+GOLDEN SWORD
