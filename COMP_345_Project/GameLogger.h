@@ -42,7 +42,7 @@ private:
 	Game* _game; //Pointer to the game logged
 	Map* _map; //Pointer to the map logged
 	Dice* _dice; //Pointer to the dice logged
-	std::list<LogType> autoLoggedTypes; //List of the auto logged types (types of Loggables we want to attach ourself to on record.
+	std::list<LogType> _autoLoggedTypes; //List of the auto logged types (types of Loggables we want to attach ourself to on record.
 
 public:
 	static GameLogger& instance(); //Static instance getter
