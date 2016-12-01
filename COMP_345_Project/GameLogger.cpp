@@ -23,6 +23,11 @@ GameLogger::GameLogger()
 	_map = nullptr;
 	_dice = nullptr;
 	file = nullptr;
+
+	_autoLoggedTypes.push_back(LogType::GAME);
+	_autoLoggedTypes.push_back(LogType::MAP);
+	_autoLoggedTypes.push_back(LogType::CHARACTERS);
+	_autoLoggedTypes.push_back(LogType::DICE);
 }
 
 /**
@@ -62,7 +67,7 @@ void GameLogger::flush()
 void GameLogger::recordGame(Game* game)
 {
 	_game = game;
-	if (find(autoLoggedTypes.begin(), autoLoggedTypes.end(), LogType::GAME) != autoLoggedTypes.end())
+	if (find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), LogType::GAME) != _autoLoggedTypes.end())
 	{
 		attachLogType(LogType::GAME);
 	}
@@ -75,7 +80,7 @@ void GameLogger::recordGame(Game* game)
 void GameLogger::recordMap(Map* map)
 {
 	_map = map;
-	if (find(autoLoggedTypes.begin(), autoLoggedTypes.end(), LogType::MAP) != autoLoggedTypes.end())
+	if (find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), LogType::MAP) != _autoLoggedTypes.end())
 	{
 		attachLogType(LogType::MAP);
 	}
@@ -88,7 +93,7 @@ void GameLogger::recordMap(Map* map)
 void GameLogger::recordDice(Dice* dice)
 {
 	_dice = dice;
-	if (find(autoLoggedTypes.begin(), autoLoggedTypes.end(), LogType::DICE) != autoLoggedTypes.end())
+	if (find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), LogType::DICE) != _autoLoggedTypes.end())
 	{
 		attachLogType(LogType::DICE);
 	}
@@ -99,7 +104,7 @@ void GameLogger::recordDice(Dice* dice)
 */
 void GameLogger::recordCharacters()
 {
-	if (find(autoLoggedTypes.begin(), autoLoggedTypes.end(), LogType::CHARACTERS) != autoLoggedTypes.end())
+	if (find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), LogType::CHARACTERS) != _autoLoggedTypes.end())
 	{
 		attachLogType(LogType::CHARACTERS);
 	}
@@ -239,9 +244,9 @@ void GameLogger::setOutputStream(string targetOutput)
 */
 bool GameLogger::addAutoAttachLogtype(LogType lt)
 {
-	if (find(autoLoggedTypes.begin(), autoLoggedTypes.end(), lt) == autoLoggedTypes.end())
+	if (find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), lt) == _autoLoggedTypes.end())
 	{
-		autoLoggedTypes.push_back(lt);
+		_autoLoggedTypes.push_back(lt);
 		return true;
 	}
 	return false;
@@ -254,9 +259,9 @@ bool GameLogger::addAutoAttachLogtype(LogType lt)
 */
 bool GameLogger::removeAutoAttachLogtype(LogType lt)
 {
-	if (find(autoLoggedTypes.begin(), autoLoggedTypes.end(), lt) != autoLoggedTypes.end())
+	if (find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), lt) != _autoLoggedTypes.end())
 	{
-		autoLoggedTypes.remove(lt);
+		_autoLoggedTypes.remove(lt);
 		return true;
 	}
 	return false;
@@ -269,13 +274,13 @@ bool GameLogger::removeAutoAttachLogtype(LogType lt)
 */
 string GameLogger::currentLogTypes()
 {
-	if (autoLoggedTypes.empty())
+	if (_autoLoggedTypes.empty())
 	{
 		return "NONE.";
 	}
 
 	string s = "";
-	for (LogType lt : autoLoggedTypes)
+	for (LogType lt : _autoLoggedTypes)
 	{
 		switch (lt)
 		{

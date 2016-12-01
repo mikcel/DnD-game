@@ -2,4 +2,5 @@
 
 int main(int argc, char* argv[]);
 void flushConsole();
-const int MAX_OPTIONS = 9;
+void changeBaseLog();
+const int MAX_OPTIONS = 10;

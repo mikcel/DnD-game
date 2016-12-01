@@ -28,6 +28,7 @@
 #include "GameController.h"
 #include "ItemUtils.h"
 #include "CharacterController.h"
+#include "GameLogger.h"
 #include "PlayerConsoleSingleton.h"
 
 using namespace std;
@@ -92,6 +93,8 @@ int main(int argc, char* argv[])
 		cout << "8: Edit an item" << endl << endl;
 
 		cout << "9: Play" << endl;
+
+		cout << "10: Edit based logged elements" << endl;
 		cout <<  "-----------------------------------------------" << endl << endl;
 		
 		cout << "Select an option:";
@@ -154,6 +157,9 @@ int main(int argc, char* argv[])
 			case 9:
 				g1->play();
 				break;
+			case 10:
+				changeBaseLog();
+				break;
 			}
 			flushConsole();
 		}
@@ -170,3 +176,90 @@ void flushConsole()
 		system("clear");
 	}
 }
+
+/**
+* Function used to promp the user for modifications to the based logged types by the GameLogger
+*/
+void changeBaseLog()
+{
+	string text = "";
+	LogType curLt;
+
+	cout << "=== LOG TYPE EDITION ===" << endl;
+	cout << "Press Q at anytime to quit" << endl;
+
+	while (true)
+	{
+		while (true)
+		{
+			cout << "Current base logs are :" << GameLogger::instance().currentLogTypes() << endl;
+			cout << "Select a log type type:" << endl;
+			cout << "0 - Game" << endl;
+			cout << "1 - Map" << endl;
+			cout << "2 - Character" << endl;
+			cout << "3 - Dice" << endl;
+
+			cin >> text;
+			if (text == "Q" || text == "q")
+			{
+				return;
+			}
+			else if (text == "0")
+			{
+				curLt = LogType::GAME;
+				break;
+			}
+			else if (text == "1")
+			{
+				curLt = LogType::MAP;
+				break;
+			}
+			else if (text == "2")
+			{
+				curLt = LogType::CHARACTERS;
+				break;
+			}
+			else if (text == "3")
+			{
+				curLt = LogType::DICE;
+				break;
+			}
+			else{
+				cout << "Invalid selection." << endl << endl;
+				text = "";
+			}
+		}
+
+		while (true)
+		{
+			cout << "Select new state :" << endl;
+			cout << "1- Add" << endl;
+			cout << "2- Remove" << endl;
+
+			cin >> text;
+			if (text == "Q" || text == "q")
+			{
+				return;
+			}
+			else if (text == "1")
+			{
+				GameLogger::instance().addAutoAttachLogtype(curLt);
+				break;
+			}
+			else if (text == "2")
+			{
+				GameLogger::instance().removeAutoAttachLogtype(curLt);
+				break;
+			}
+			else{
+				cout << "Invalid selection." << endl << endl;
+				text = "";
+			}
+		}
+
+		cout << endl;
+	}
+
+
+}
+

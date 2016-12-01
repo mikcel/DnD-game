@@ -226,3 +226,8 @@ ostream& operator<<(ostream& stream, const Fighter& fighter){
 
 	return stream;
 }
+
+Fighter* Fighter::clone()
+{
+	return new Fighter(*this);
+}
