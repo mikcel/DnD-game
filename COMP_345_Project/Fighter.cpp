@@ -50,14 +50,6 @@ Fighter::Fighter(string chrName, int str, int dex, int cons, int intel, int wisd
 	//! set the character's style
 	style = chrStyle;
 
-	//! Get the constituion modifier
-	int consMod = Character::getOneAbilityModifier(CharacterAbility::CONS);
-
-	//! Check if the constitution modifier is +ve
-	//! If true, add the constitution modifier to the HP
-	if (consMod>=1)
-		Character::setCurrentHitPoints(Character::getCurrentHitPoints() + consMod);
-
 	//! If fighter's style to defense, increment the armor class
 	if (style == FightStyle::DEFENSE)
 		Character::incrementArmorClass(1);
@@ -135,8 +127,10 @@ bool Fighter::attack(Character &chr){
 		int totalAttackBonus = (calcAttackBonus() + calcLevel + d20Roll + additionalAttack) - chr.getArmorClass();
 		//! Log
 		cout << "\nTrying to attack." << endl;
-		cout << "Calculating attack roll ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : ("
-			<< calcAttackBonus() << " + " << calcLevel << " + " << d20Roll << " + " << additionalAttack << ") - " << chr.getArmorClass() << endl;
+		log("\nTrying to attack.");
+
+		log("Calculating attack roll ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (" + to_string(calcAttackBonus()) + " + " + to_string(calcLevel) + " + " + to_string(d20Roll) + " + " + to_string(additionalAttack) + ") - " + to_string(chr.getArmorClass()) + "\n");
+		
 		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
 			//! Calculate the damage cause to the opponent
@@ -144,16 +138,18 @@ bool Fighter::attack(Character &chr){
 			int totalDmgBonus = calcDamageBonus() +d8Roll + additionalDamage;
 			//!Log
 			cout << chr.getName() << " can be attacked." << endl;
+			log(chr.getName() + " can be attacked.\n");
 
-			cout << "Calculating damage roll (Damage Bonus + d8Roll + Fighter's addition damage): "
-				<< calcDamageBonus() << " + " << d8Roll << " + " << additionalDamage << endl;
+			log("Calculating damage roll (Damage Bonus + d8Roll + Fighter's addition damage): " + to_string(calcDamageBonus()) + " + " + to_string(d8Roll) + " + "+ to_string(additionalDamage) +"\n");
 
 			cout << "Hitting and causing a damage of " << totalDmgBonus << endl;
+			log("Hitting and causing a damage of " + to_string(totalDmgBonus) + "\n");
 			if (chr.hit(totalDmgBonus)==0)//! Hit the opponent
 				return false; 
 		}
 		else{
-			cout << "Attack Missed. " << chr.getName() << " protected by Armor Class." << endl;
+			cout << "Attack Missed. Opponent protected by Armor Class.";
+			log("Attack Missed. Opponent protected by Armor Class.");
 		}
 		calcLevel -= 5; //! Decrease counter by 5 until reach 0 or below
 	} while (calcLevel > 0);
@@ -219,8 +215,8 @@ ostream& operator<<(ostream& stream, const Fighter& fighter){
 		CharacterAbility::WISD << "\t\t" << fighter.getOneAbilityScore(CharacterAbility::WISD) << "\t" << fighter.getOneAbilityModifier(CharacterAbility::WISD) << "\n" <<
 		CharacterAbility::CHA << "\t" << fighter.getOneAbilityScore(CharacterAbility::CHA) << "\t" << fighter.getOneAbilityModifier(CharacterAbility::CHA) << "\n";
 
-	stream << "\n\nCurrent Hit Points(HP): " << fighter.getCurrentHitPoints() <<
-		"\nDamage Bonus: " << fighter.calcAttackBonus() <<
+	stream << "\n\nCurrent Hit Points(HP): " << fighter.getCurrentHitPoints() << "/" << fighter.getMaxHP() <<
+		"\nDamage Bonus: " << fighter.calcDamageBonus() <<
 		"\nAttack Bonus: " << fighter.calcAttackBonus() <<
 		"\nArmor Class: " << fighter.getArmorClass() <<
 		"\n\nBackpack holding: \n\n" << *(fighter.getBackpackContents());
