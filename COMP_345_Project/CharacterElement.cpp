@@ -13,7 +13,7 @@ CharacterElement::CharacterElement(Character& newCharacter, CharacterStrategy* n
 	if (dynamic_cast<Fighter*>(&newCharacter))
 		character = new Fighter(dynamic_cast<Fighter&>(newCharacter));
 	else
-		character = new Character(newCharacter);
+		throw new exception();
 		
 	characterStrategy->setCharacterElement(this);
 }
@@ -29,7 +29,7 @@ CharacterElement::CharacterElement(CharacterElement& newCharacterElement)
 	if (dynamic_cast<Fighter*>(newCharacterElement.character))
 		character = new Fighter(*dynamic_cast<Fighter*>(newCharacterElement.character));
 	else
-		character = new Character(*newCharacterElement.character);
+		throw new exception();
 
 	if (dynamic_cast<HumanPlayerStrategy*>(newCharacterElement.characterStrategy))
 	{

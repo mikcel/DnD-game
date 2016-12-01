@@ -11,20 +11,22 @@
 #include "Map.h"
 #include "CharacterElement.h"
 #include "Loggable.h"
+#include "Campaign.h"
 
 class CharacterElement;
+class GameLogger;
 
 class Game : public Loggable
 {
 public:
-	Game(Map* m); //! Constructor of the Game class
-	bool play(Character* player); // Starts a new game
-	Map* getMap();
+	Game(Campaign* m); //! Constructor of the Game class
+	void play(Character* player); // Starts a new game
 private:
-	Map* map; // A pointer to the mapo used in the curretn game
-	bool isGameOver(); // Checks if the game has finished
-	bool run(CharacterElement*); // Is executed while that game hasn't finished running
-	void perfomEndGame(); // Is executed at the end of the game	
+	Campaign* campaign; // A pointer to the campaign used in the curretn game
+	bool isGameOver(Map&); // Checks if the game has finished
+	bool run(Map&); // Is executed while that game hasn't finished running
+	void perfomEndGame(Character**, Map&); // Is executed at the end of the game
+	bool gameContinues(bool wantToquit, int nextMapName, vector<string>& mapNames); //Determines if the player wants to continue the game
 
 	virtual std::string provider();//! Returns the Loggable provider.
 };

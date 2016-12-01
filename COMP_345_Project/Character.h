@@ -93,6 +93,7 @@ public:
 	virtual void saveCharacter(); // Save teh character to a txt file
 
 	virtual std::string provider(); //! Returns the Loggable provider.
+	virtual Character* clone() = 0; // Copies the current CharacterElement
 
 private:
 
