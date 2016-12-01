@@ -1,3 +1,2 @@
 mapchesttest
-map5.3
 map5.4
