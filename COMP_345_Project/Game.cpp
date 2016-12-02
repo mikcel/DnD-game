@@ -37,18 +37,18 @@ void Game::play(Character* player)
 		GameLogger::instance().recordMap(map); //The map was loaded and ready to be recorded.
 
 		log("Map setup start.");
-		CharacterElement tempP(*player, new HumanPlayerStrategy());
-		CharacterElement * p = map->placePlayer(tempP);
+	CharacterElement tempP(*player, new HumanPlayerStrategy());
+	CharacterElement * p = map->placePlayer(tempP);
 		log("Map setup ended.");
 
 		GameLogger::instance().recordCharacters(); //The characters were placed and ready to be recorded.
 
-		//Let's run the game
+	//Let's run the game
 		bool finishedMap = run(*map);
 		log("Map ended.");
 
 		if (finishedMap)
-		{
+	{
 			log("Map end phase start.");
 			perfomEndGame(&player, *map);
 			log("Map end phase finished.");
@@ -101,8 +101,8 @@ bool Game::gameContinues(bool wantToQuit, int nextMapIndex, vector<string>& mapN
 			cout << endl << "Do you want to play the next map: " + mapNames[nextMapIndex] + " ?(Y/N)" << endl;
 			cin >> userChoice;
 			if (userChoice == "Y"){
-				return true;
-			}
+		return true;
+	}
 			else if (userChoice == "N"){
 				return false;
 			}
@@ -149,6 +149,7 @@ bool Game::run(Map& map)
 	for (int i = 0;; i++)
 	{
 		int chrIdx = i % characterElementsHavingTurn.size();
+		if (characterElementsHavingTurn[chrIdx] != nullptr){
 		if (characterElementsHavingTurn[chrIdx]->getCharacter().getCurrentHitPoints() != 0){
 
 			CharacterElement* currentChar = characterElementsHavingTurn[chrIdx];
@@ -162,10 +163,12 @@ bool Game::run(Map& map)
 			}
 			if (isGameOver(map))
 			{
-				break;
+					break;
+				}
 			}
+			}
+
 		}
-	}
 
 	return true;
 }

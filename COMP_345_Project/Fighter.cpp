@@ -122,14 +122,15 @@ bool Fighter::attack(Character &chr){
 	do{
 		count++;
 		cout << "\nAttack " << count << endl;
+		log("Attack " + to_string(count) + " for " + getName() + "\n");
 		int d20Roll = Dice::instance().roll("1d20");
 		//! Subtract armor class because Character is protected by Armor, add the attack bonus and the attack rounds per level
 		int totalAttackBonus = (calcAttackBonus() + calcLevel + d20Roll + additionalAttack) - chr.getArmorClass();
 		//! Log
 		cout << "\nTrying to attack." << endl;
-		log("\nTrying to attack.");
+		log("Player " + getName() + " Trying to attack " + chr.getName());
 
-		log("Calculating attack roll ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (" + to_string(calcAttackBonus()) + " + " + to_string(calcLevel) + " + " + to_string(d20Roll) + " + " + to_string(additionalAttack) + ") - " + to_string(chr.getArmorClass()) + "\n");
+		log("Calculating attack roll for player " + chr.getName() + " ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (" + to_string(calcAttackBonus()) + " + " + to_string(calcLevel) + " + " + to_string(d20Roll) + " + " + to_string(additionalAttack) + ") - " + to_string(chr.getArmorClass()) + "");
 		
 		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
@@ -138,18 +139,18 @@ bool Fighter::attack(Character &chr){
 			int totalDmgBonus = calcDamageBonus() +d8Roll + additionalDamage;
 			//!Log
 			cout << chr.getName() << " can be attacked." << endl;
-			log(chr.getName() + " can be attacked.\n");
+			log("Opponent " + chr.getName() + " can be attacked.");
 
-			log("Calculating damage roll (Damage Bonus + d8Roll + Fighter's addition damage): " + to_string(calcDamageBonus()) + " + " + to_string(d8Roll) + " + "+ to_string(additionalDamage) +"\n");
+			log("Calculating damage roll for player " + getName() + " (Damage Bonus + d8Roll + Fighter's additional damage): " + to_string(calcDamageBonus()) + " + " + to_string(d8Roll) + " + "+ to_string(additionalDamage) );
 
 			cout << "Hitting and causing a damage of " << totalDmgBonus << endl;
-			log("Hitting and causing a damage of " + to_string(totalDmgBonus) + "\n");
+			log("Player " + getName() +" is hitting and causing a damage of " + to_string(totalDmgBonus) + " to opponent " + chr.getName());
 			if (chr.hit(totalDmgBonus)==0)//! Hit the opponent
 				return false; 
 		}
 		else{
-			cout << "Attack Missed. Opponent protected by Armor Class.";
-			log("Attack Missed. Opponent protected by Armor Class.");
+			cout << "Attack Missed. Opponent protected by Armor Class." << endl;
+			log("Player " + getName() + "'s attack Missed. Opponent " + chr.getName() +" protected by Armor Class.");
 		}
 		calcLevel -= 5; //! Decrease counter by 5 until reach 0 or below
 	} while (calcLevel > 0);

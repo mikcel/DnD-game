@@ -369,7 +369,8 @@ int Character::hit(int dmg){
 	int returnVal = 0;
 	if (dmg >= currentHitPoints){  //! If new Damage is more than current HP, character dies.
 		cout << name << " hit by " << dmg << " damage. \nNot enough to be protected by armor and above HP. Game Over for " << getName() << endl;
-		log(name + " hit by " + to_string(dmg) + " damage.\n" + name + "'s Current Hit Points (HP): \nNot enough to be protected by armor and above HP. Game Over for " + getName() + "\n");
+		log(name + " hit by " + to_string(dmg) + " damage." + name + "'s Current Hit Points (HP): " + to_string(currentHitPoints));
+		log("Not enough to be protected by armor and above HP. Game Over for " + getName());
 		currentHitPoints = 0;
 		returnVal = 0;
 	}
@@ -378,7 +379,7 @@ int Character::hit(int dmg){
 		cout << name << " hit by " << dmg << " damage.\n"
 			<< name << "'s Current Hit Points (HP): " << currentHitPoints << endl;
 
-		log( name + " hit by " + to_string(dmg) + " damage.\n" + name + "'s Current Hit Points (HP): " + to_string(currentHitPoints) + "\n");
+		log( name + " hit by " + to_string(dmg) + " damage." + name + "'s Current Hit Points (HP): " + to_string(currentHitPoints));
 
 		returnVal = 1;
 	}
@@ -403,10 +404,10 @@ bool Character::attack(Character &chr){
 		//! Subtract armor class because Character is protected by Armor, add the attack bonus and the attack rounds per level
 		int totalAttackBonus = (calcAttackBonus() + calcLevel + d20Roll) - chr.armorClass;
 		cout << "\nTrying to attack." << endl;
-		log("\nTrying to attack.");
+		log("Player " + getName() + " Trying to attack " + chr.getName());
 
-		log("Calculating attack roll ((Attack Bonus + Level + d20Roll) - Opponent's AC) : (" + to_string(calcAttackBonus()) + " + " + to_string(calcLevel) + " + " + to_string(d20Roll) + ") - " + to_string(chr.getArmorClass()) + "\n");
-		
+		log("Calculating attack roll for player " + chr.getName() + " ((Attack Bonus + Level + d20Roll) - Opponent's AC) : (" + to_string(calcAttackBonus()) + " + " + to_string(calcLevel) + " + " + to_string(d20Roll) + ") - " + to_string(chr.getArmorClass()) + "");
+
 		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
 			//! Calculate damage caused to opponent		
@@ -414,19 +415,20 @@ bool Character::attack(Character &chr){
 			int totalDmgBonus = calcDamageBonus() + d8Roll ;
 			//!Log
 			cout << chr.getName() << " can be attacked." << endl;
-			log(chr.getName() + " can be attacked.\n");
 
-			log("Calculating damage roll (Damage Bonus + d8Roll): " + to_string(calcDamageBonus()) + " + " + to_string(d8Roll) + "\n");
+			log("Opponent " + chr.getName() + " can be attacked.");
+
+			log("Calculating damage roll for player " + getName() + " (Damage Bonus + d8Roll): " + to_string(calcDamageBonus()) + " + " + to_string(d8Roll));
 
 			cout << "Hitting and causing a damage of " << totalDmgBonus << endl;
-			log("Hitting and causing a damage of " + to_string(totalDmgBonus) + "\n");
+			log("Player " + getName() + " is hitting and causing a damage of " + to_string(totalDmgBonus) + " to opponent " + chr.getName());
 
 			if (chr.hit(totalDmgBonus)==0)//! Hit the opponent with damage calculated
 				return false; 
 		}
 		else{
 			cout << "Attack Missed. Opponent protected by Armor Class.";
-			log("Attack Missed. Opponent protected by Armor Class.");
+			log("Player " + getName() + "'s attack Missed. Opponent " + chr.getName() + " protected by Armor Class.");
 		}
 		calcLevel -= 5; //! Decrease by 5 for each level and attack
 	} while (calcLevel > 0);
