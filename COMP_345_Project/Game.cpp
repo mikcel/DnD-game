@@ -37,18 +37,18 @@ void Game::play(Character* player)
 		GameLogger::instance().recordMap(map); //The map was loaded and ready to be recorded.
 
 		log("Map setup start.");
-		CharacterElement tempP(*player, new HumanPlayerStrategy());
-		CharacterElement * p = map->placePlayer(tempP);
+	CharacterElement tempP(*player, new HumanPlayerStrategy());
+	CharacterElement * p = map->placePlayer(tempP);
 		log("Map setup ended.");
 
 		GameLogger::instance().recordCharacters(); //The characters were placed and ready to be recorded.
 
-		//Let's run the game
+	//Let's run the game
 		bool finishedMap = run(*map);
 		log("Map ended.");
 
 		if (finishedMap)
-		{
+	{
 			log("Map end phase start.");
 			perfomEndGame(&player, *map);
 			log("Map end phase finished.");
@@ -58,7 +58,7 @@ void Game::play(Character* player)
 
 		if (!gameContinues(!finishedMap, i + 1, mapNames))
 		{
-       			if (!p->getCharacter().isAlive()){
+       		if (!p->getCharacter().isAlive()){
 				log("Player died.");
 			}
 			else{
@@ -69,6 +69,9 @@ void Game::play(Character* player)
 			system("pause");
 			return;
 		}
+
+		GameLogger::instance().detachLogType(LogType::CHARACTERS);
+		GameLogger::instance().detachLogType(LogType::MAP);
 
 	}
 
@@ -98,8 +101,8 @@ bool Game::gameContinues(bool wantToQuit, int nextMapIndex, vector<string>& mapN
 			cout << endl << "Do you want to play the next map: " + mapNames[nextMapIndex] + " ?(Y/N)" << endl;
 			cin >> userChoice;
 			if (userChoice == "Y"){
-				return true;
-			}
+		return true;
+	}
 			else if (userChoice == "N"){
 				return false;
 			}
@@ -146,9 +149,14 @@ bool Game::run(Map& map)
 	for (int i = 0;; i++)
 	{
 		int chrIdx = i % characterElementsHavingTurn.size();
+		if (characterElementsHavingTurn[chrIdx] != nullptr){
 		if (characterElementsHavingTurn[chrIdx]->getCharacter().getCurrentHitPoints() != 0){
 
-			bool wantsToContinuePlaying = characterElementsHavingTurn[chrIdx]->getCharacterStrategy()->executeTurn(map, mo, meo);
+			CharacterElement* currentChar = characterElementsHavingTurn[chrIdx];
+			log("Character " + currentChar->getCharacter().getName() + " turn starts.");
+			bool wantsToContinuePlaying = currentChar->getCharacterStrategy()->executeTurn(map, mo, meo);
+			log("Character " + currentChar->getCharacter().getName() + " turn ends.");
+
 			if (!wantsToContinuePlaying)
 			{
 				return false;
@@ -158,6 +166,8 @@ bool Game::run(Map& map)
 					break;
 				}
 			}
+			}
+
 		}
 
 	return true;
@@ -176,7 +186,7 @@ void Game::perfomEndGame(Character** p, Map& map)
 
 
 	currentChar->incrementLevel();
-	log("Player " + currentChar->getName() + " level increased to " + to_string(currentChar->getLevel()) + ".");
+	log("Player's character " + currentChar->getName() + " level increased to " + to_string(currentChar->getLevel()) + ".");
 
 	cout << *currentChar;
 

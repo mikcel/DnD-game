@@ -192,6 +192,27 @@ bool Map::setTileType(int x, int y, TileType type)
 	return true;
 }
 
+bool Map::setTileTypeNull(int x, int y, TileType type)
+{
+	if (isOob(x, y)) return false;
+
+	Tile * t = &mapArr[x][y];
+	Element * elementRemoved = nullptr;
+
+	if (t->getElement() != nullptr)
+	{
+		t->setElement(nullptr);
+	}
+
+	t->setType(type);
+
+	if (isStartPoint(x, y) && !isTraversible(x, y)) unsetStartPoint();
+	if (isEndPoint(x, y) && !isTraversible(x, y)) unsetEndPoint();
+
+	notify();
+	return true;
+}
+
 /**
 * Get a pointer to the element contained by the tile at a given position
 * @param x X coordinate

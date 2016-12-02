@@ -50,7 +50,7 @@ private:
 
 	//! bool checkScr(int *arr, int scr); //! Method to check score when entering
 
-	void addItem(); //! Method to add an item to a Character
+	bool addItem(); //! Method to add an item to a Character
 
 };
 

@@ -44,6 +44,8 @@ private:
 	Dice* _dice; //Pointer to the dice logged
 	std::list<LogType> _autoLoggedTypes; //List of the auto logged types (types of Loggables we want to attach ourself to on record.
 
+	bool isLogging(LogType);
+
 public:
 	static GameLogger& instance(); //Static instance getter
 	void setOutputStream(std::string targetOutputFilename); //Output stream setter
