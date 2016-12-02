@@ -50,7 +50,7 @@ void MapElementsToggler::showPlayerDirect()
 void MapElementsToggler::showEnemiesDirect()
 {
 	PlayerConsoleSingleton::stream() << "-------------------------------------------------------------------------------------------------------\n";
-	PlayerConsoleSingleton::stream() << setw(60) << right << "All Enemies" << endl;
+	PlayerConsoleSingleton::stream() << setw(60) << right << "All NPCs" << endl;
 	PlayerConsoleSingleton::stream() << "-------------------------------------------------------------------------------------------------------\n";
 	PlayerConsoleSingleton::stream() << endl;
 
@@ -63,7 +63,9 @@ void MapElementsToggler::showEnemiesDirect()
 		if (characterElement && &player != characterElement)
 		{
 			atLeastOnce = true;
-			PlayerConsoleSingleton::stream() << endl << "Position: (" << characterElement->getPosition().x << ", " << characterElement->getPosition().y << ")" << endl;
+			PlayerConsoleSingleton::stream() << endl;
+			PlayerConsoleSingleton::stream() << "Position: (" << characterElement->getPosition().x << ", " << characterElement->getPosition().y << ")" << endl;
+			PlayerConsoleSingleton::stream() << "Strategy: " << characterElement->getCharacterStrategy()->getStrategyName() << endl;
 			PlayerConsoleSingleton::stream() << dynamic_cast<Fighter&>(characterElement->getCharacter());
 		}
 	}

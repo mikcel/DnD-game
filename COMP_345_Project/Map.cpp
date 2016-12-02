@@ -503,7 +503,7 @@ CharacterElement* Map::placePlayer(CharacterElement& newPlayer)
 			CharacterElement* enemy = dynamic_cast<CharacterElement*>(element);
 			if (enemy)
 			{
-				AggressorStrategy* strategy = dynamic_cast<AggressorStrategy*>(enemy->getCharacterStrategy());
+				AIPLayerStrategy* strategy = dynamic_cast<AIPLayerStrategy*>(enemy->getCharacterStrategy());
 				if (strategy)
 				{
 					enemy->createCharacterWithLevel(copy.getCharacter().getLevel(), enemy->getCharacter().getName());

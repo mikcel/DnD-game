@@ -1,0 +1,66 @@
+2016-12-02 12:04:53- Game : Start logging.
+2016-12-02 12:04:53- Dice : Start logging.
+2016-12-02 12:04:53- Game : Loading map : mapchesttest.
+2016-12-02 12:04:53- Game : Map loaded
+2016-12-02 12:04:53- Map : Start logging.
+2016-12-02 12:04:53- Game : Map setup start.
+2016-12-02 12:04:53- Dice : Dice tossed. Value: 3
+2016-12-02 12:04:53- Dice : All dices tossed. Total: 3
+2016-12-02 12:04:53- Dice : Dice tossed. Value: 9
+2016-12-02 12:04:53- Dice : All dices tossed. Total: 9
+2016-12-02 12:04:53- Game : Map setup ended.
+2016-12-02 12:04:53- Character : Start logging.
+2016-12-02 12:04:53- Game : Character mom turn starts.
+2016-12-02 12:05:00- Map : Movement on map mapchesttest. Moved character mom from (3,3) to (4,3).
+2016-12-02 12:05:00- Map : Movement on map mapchesttest. Moved character mom from (4,3) to (5,3).
+2016-12-02 12:05:01- Map : Movement on map mapchesttest. Moved character mom from (5,3) to (5,4).
+2016-12-02 12:05:01- Map : Movement on map mapchesttest. Moved character mom from (5,4) to (5,5).
+2016-12-02 12:05:02- Game : Character mom turn ends.
+2016-12-02 12:05:02- Game : Map ended.
+2016-12-02 12:05:02- Game : Map end phase start.
+2016-12-02 12:05:02- Dice : Dice tossed. Value: 2
+2016-12-02 12:05:02- Dice : All dices tossed. Total: 2
+2016-12-02 12:05:02- Character : Level 32 reached.Adding to HP: 1 + 2
+2016-12-02 12:05:02- Character : New HP: 313
+2016-12-02 12:05:02- Game : Player's character mom level increased to 32.
+2016-12-02 12:05:04- Game : Character mom saved.
+2016-12-02 12:05:04- Dice : Dice tossed. Value: 3
+2016-12-02 12:05:04- Dice : All dices tossed. Total: 3
+2016-12-02 12:05:04- Game : Map end phase finished.
+2016-12-02 12:05:05- Character : Stop logging.
+2016-12-02 12:05:05- Map : Stop logging.
+2016-12-02 12:05:05- Game : Loading map : map5.4.
+2016-12-02 12:05:05- Dice : Dice tossed. Value: 8
+2016-12-02 12:05:05- Dice : All dices tossed. Total: 8
+2016-12-02 12:05:05- Dice : Dice tossed. Value: 4
+2016-12-02 12:05:05- Dice : All dices tossed. Total: 4
+2016-12-02 12:05:05- Dice : Dice tossed. Value: 4
+2016-12-02 12:05:05- Dice : All dices tossed. Total: 4
+2016-12-02 12:05:05- Dice : Dice tossed. Value: 7
+2016-12-02 12:05:05- Dice : All dices tossed. Total: 7
+2016-12-02 12:05:05- Dice : Dice tossed. Value: 6
+2016-12-02 12:05:05- Dice : All dices tossed. Total: 6
+2016-12-02 12:05:05- Dice : Dice tossed. Value: 7
+2016-12-02 12:05:05- Dice : All dices tossed. Total: 7
+2016-12-02 12:05:05- Game : Map loaded
+2016-12-02 12:05:06- Map : Start logging.
+2016-12-02 12:05:06- Game : Map setup start.
+2016-12-02 12:05:06- Dice : Dice tossed. Value: 1
+2016-12-02 12:05:06- Dice : All dices tossed. Total: 1
+2016-12-02 12:05:06- Dice : Dice tossed. Value: 6
+2016-12-02 12:05:06- Dice : All dices tossed. Total: 6
+2016-12-02 12:05:06- Dice : Dice tossed. Value: 4
+2016-12-02 12:05:06- Dice : All dices tossed. Total: 4
+2016-12-02 12:05:06- Dice : Dice tossed. Value: 5
+2016-12-02 12:05:06- Dice : All dices tossed. Total: 5
+2016-12-02 12:05:06- Dice : Dice tossed. Value: 3
+2016-12-02 12:05:06- Dice : All dices tossed. Total: 3
+2016-12-02 12:05:06- Dice : Dice tossed. Value: 6
+2016-12-02 12:05:06- Dice : All dices tossed. Total: 6
+2016-12-02 12:05:06- Dice : Dice tossed. Value: 10
+2016-12-02 12:05:06- Dice : All dices tossed. Total: 10
+2016-12-02 12:05:06- Dice : Dice tossed. Value: 9
+2016-12-02 12:05:06- Dice : All dices tossed. Total: 9
+2016-12-02 12:05:06- Game : Map setup ended.
+2016-12-02 12:05:06- Character : Start logging.
+2016-12-02 12:05:06- Game : Character mom turn starts.

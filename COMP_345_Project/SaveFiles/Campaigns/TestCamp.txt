@@ -1,2 +1,0 @@
-TestMap1
-TestMap2
