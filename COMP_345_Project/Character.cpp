@@ -486,6 +486,8 @@ bool Character::takeOffItem(Item *objItem){
 
 	if (currentWornItems->unequipItem(objItem->getItemName(), backpack)){
 		takeOffBuff(objItem->getBuffs());
+		log("Character " + name + " took off item " + objItem->getItemName());
+
 		return true;
 	}
 	return false;
@@ -502,36 +504,37 @@ bool Character::wearItem(Item *objItem){
 	}
 
 	if (currentWornItems->equipItem(objItem->getItemName(), backpack)){
+		log("Character " + name + " equipped item " + objItem->getItemName());
 		vector<Buff> itemBuff = objItem->getBuffs();
 		for (auto i : itemBuff){
 			switch (i.getBuffType()){
 				case BuffType::ARMOR_CLASS:{
-											   armorClass += i.getBuffAmount();
-											   break;
+					armorClass += i.getBuffAmount();
+					break;
 				}
 				case BuffType::INTELLIGENCE:{
-												abilityModifiers[(int)CharacterAbility::INTEL] += i.getBuffAmount();
-												break;
+					abilityModifiers[(int)CharacterAbility::INTEL] += i.getBuffAmount();
+					break;
 				}
 				case BuffType::WISDOM:{
-										  abilityModifiers[(int)CharacterAbility::WISD] += i.getBuffAmount();
-										  break;
+					abilityModifiers[(int)CharacterAbility::WISD] += i.getBuffAmount();
+					break;
 				}
 				case BuffType::STRENGTH:{
-											abilityModifiers[(int)CharacterAbility::STR] += i.getBuffAmount();
-											break;
+					abilityModifiers[(int)CharacterAbility::STR] += i.getBuffAmount();
+					break;
 				}
 				case BuffType::CONSTITUTION:{
-												abilityModifiers[(int)CharacterAbility::CONS] += i.getBuffAmount();
-												break;
+					abilityModifiers[(int)CharacterAbility::CONS] += i.getBuffAmount();
+					break;
 				}
 				case BuffType::CHARISMA:{
-											abilityModifiers[(int)CharacterAbility::CHA] += i.getBuffAmount();
-											break;
+					abilityModifiers[(int)CharacterAbility::CHA] += i.getBuffAmount();
+					break;
 				}
 				case BuffType::DEXTERITY:{
-											 abilityModifiers[(int)CharacterAbility::DEX] += i.getBuffAmount();
-											 break;
+					abilityModifiers[(int)CharacterAbility::DEX] += i.getBuffAmount();
+					break;
 				}
 			}
 		}
@@ -549,6 +552,7 @@ bool Character::storeItem(Item *objItem)
 		return false;
 
 	backpack->addItem(objItem);
+	log("Character " + name + " added item " + objItem->getItemName() + " to his/her backpack.");
 
 	return true;
 }
@@ -626,6 +630,7 @@ bool Character::removeItemBack(Item *objItem){
 	if (!objItem->validateItem())
 		return false;
 	backpack->removeItem(objItem->getItemName());
+	log("Character " + name + " removes item " + objItem->getItemName() + " to his/her backpack.");
 
 	return true;
 

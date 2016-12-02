@@ -75,6 +75,9 @@ void Game::play(Character* player)
 
 			cout << "Exiting to main menu." << endl;
 			system("pause");
+
+			GameLogger::instance().detachLogType(LogType::CHARACTERS);
+			GameLogger::instance().detachLogType(LogType::MAP);
 			return;
 		}
 
