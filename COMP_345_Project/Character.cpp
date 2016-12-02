@@ -369,7 +369,8 @@ int Character::hit(int dmg){
 	int returnVal = 0;
 	if (dmg >= currentHitPoints){  //! If new Damage is more than current HP, character dies.
 		cout << name << " hit by " << dmg << " damage. \nNot enough to be protected by armor and above HP. Game Over for " << getName() << endl;
-		log(name + " hit by " + to_string(dmg) + " damage.\n" + name + "'s Current Hit Points (HP): \nNot enough to be protected by armor and above HP. Game Over for " + getName() + "\n");
+		log(name + " hit by " + to_string(dmg) + " damage." + name + "'s Current Hit Points (HP): " + to_string(currentHitPoints));
+		log("Not enough to be protected by armor and above HP. Game Over for " + getName());
 		currentHitPoints = 0;
 		returnVal = 0;
 	}
@@ -378,7 +379,7 @@ int Character::hit(int dmg){
 		cout << name << " hit by " << dmg << " damage.\n"
 			<< name << "'s Current Hit Points (HP): " << currentHitPoints << endl;
 
-		log( name + " hit by " + to_string(dmg) + " damage.\n" + name + "'s Current Hit Points (HP): " + to_string(currentHitPoints) + "\n");
+		log( name + " hit by " + to_string(dmg) + " damage." + name + "'s Current Hit Points (HP): " + to_string(currentHitPoints));
 
 		returnVal = 1;
 	}
