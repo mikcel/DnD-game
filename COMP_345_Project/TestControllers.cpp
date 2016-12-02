@@ -53,23 +53,10 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestControllers);//most important
 //! Test Case: Reading from the map file should bring back the same name as the original map object
 void TestControllers::testMapSavingLoading(void)
 {
-<<<<<<< HEAD
 
 	MapController* mapController1 = new MapController(new Map(10, 10, "TestMap"));
-	//Map* map1 = new Map(10, 10, "TestMap");
 	mapController1->getCurrentMap()->setStartPoint(0, 0);
 	mapController1->getCurrentMap()->setEndPoint(5, 5);
-	/*Character e;
-=======
-	Map* map1 = new Map(10, 10, "TestMap");
-	map1->setStartPoint(0, 0);
-	map1->setEndPoint(5, 5);
-	map1->setElementAt(3, 2, Chest());
-	Fighter e;
->>>>>>> 3c15b408f360dc28157820cc5d2b4eec2cd92137
-	CharacterElement characterElement(e, new AggressorStrategy());
-	mapController1->getCurrentMap()->setElementAt(4, 2, characterElement);*/
-	//mapController1->setCurrentMap(*map1);
 	mapController1->saveMap();
 	Map* mapReadFormFile = readMapFile("SaveFiles/Maps/TestMap.txt", "TestMap");
 	CPPUNIT_ASSERT(mapReadFormFile->getName() == mapController1->getCurrentMap()->getName());//saving and loading was successfull
