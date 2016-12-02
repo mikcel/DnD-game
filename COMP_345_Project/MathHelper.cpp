@@ -133,7 +133,7 @@ bool isTileNextTo(int x1, int y1, int x2, int y2)
 * @param y1 y of the first point
 * @param x2 x of the second point
 * @param y2 y of the second point
-* @return true if they are just next to eachother, false otherwise
+* @return true if they are next to eachother, false otherwise
 */
 bool isTileNextToOrDiagonal(int x1, int y1, int x2, int y2)
 {
