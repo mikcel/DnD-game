@@ -1,0 +1,103 @@
+2016-12-02 13:08:16- Game : Start logging.
+2016-12-02 13:08:16- Dice : Start logging.
+2016-12-02 13:08:16- Game : Loading map : mapchesttest.
+2016-12-02 13:08:16- Game : Map loaded
+2016-12-02 13:08:17- Map : Start logging.
+2016-12-02 13:08:17- Game : Map setup start.
+2016-12-02 13:08:17- Dice : Dice tossed. Value: 2
+2016-12-02 13:08:17- Dice : All dices tossed. Total: 2
+2016-12-02 13:08:17- Dice : Dice tossed. Value: 2
+2016-12-02 13:08:17- Dice : All dices tossed. Total: 2
+2016-12-02 13:08:17- Game : Map setup ended.
+2016-12-02 13:08:17- Character : Start logging.
+2016-12-02 13:08:17- Game : Character mom turn starts.
+2016-12-02 13:08:18- Map : Movement on map mapchesttest. Moved character mom from (3,3) to (4,3).
+2016-12-02 13:08:19- Map : Movement on map mapchesttest. Moved character mom from (4,3) to (5,3).
+2016-12-02 13:08:19- Map : Movement on map mapchesttest. Moved character mom from (5,3) to (5,4).
+2016-12-02 13:08:19- Map : Movement on map mapchesttest. Moved character mom from (5,4) to (5,5).
+2016-12-02 13:08:20- Game : Character mom turn ends.
+2016-12-02 13:08:20- Game : Map ended.
+2016-12-02 13:08:20- Game : Map end phase start.
+2016-12-02 13:08:20- Dice : Dice tossed. Value: 1
+2016-12-02 13:08:20- Dice : All dices tossed. Total: 1
+2016-12-02 13:08:20- Character : Level 38 reached.Adding to HP: 1 + 1
+2016-12-02 13:08:20- Character : New HP: 113
+2016-12-02 13:08:20- Game : Player's character mom level increased to 38.
+2016-12-02 13:08:22- Game : Character mom saved.
+2016-12-02 13:08:22- Dice : Dice tossed. Value: 2
+2016-12-02 13:08:22- Dice : All dices tossed. Total: 2
+2016-12-02 13:08:22- Game : Map end phase finished.
+2016-12-02 13:08:24- Character : Stop logging.
+2016-12-02 13:08:24- Map : Stop logging.
+2016-12-02 13:08:24- Game : Loading map : map5.4.
+2016-12-02 13:08:24- Dice : Dice tossed. Value: 5
+2016-12-02 13:08:24- Dice : All dices tossed. Total: 5
+2016-12-02 13:08:24- Dice : Dice tossed. Value: 3
+2016-12-02 13:08:24- Dice : All dices tossed. Total: 3
+2016-12-02 13:08:24- Dice : Dice tossed. Value: 3
+2016-12-02 13:08:24- Dice : All dices tossed. Total: 3
+2016-12-02 13:08:24- Dice : Dice tossed. Value: 10
+2016-12-02 13:08:24- Dice : All dices tossed. Total: 10
+2016-12-02 13:08:24- Dice : Dice tossed. Value: 8
+2016-12-02 13:08:24- Dice : All dices tossed. Total: 8
+2016-12-02 13:08:24- Dice : Dice tossed. Value: 2
+2016-12-02 13:08:24- Dice : All dices tossed. Total: 2
+2016-12-02 13:08:24- Game : Map loaded
+2016-12-02 13:08:25- Map : Start logging.
+2016-12-02 13:08:25- Game : Map setup start.
+2016-12-02 13:08:25- Dice : Dice tossed. Value: 8
+2016-12-02 13:08:25- Dice : All dices tossed. Total: 8
+2016-12-02 13:08:25- Dice : Dice tossed. Value: 8
+2016-12-02 13:08:25- Dice : All dices tossed. Total: 8
+2016-12-02 13:08:25- Dice : Dice tossed. Value: 4
+2016-12-02 13:08:25- Dice : All dices tossed. Total: 4
+2016-12-02 13:08:25- Dice : Dice tossed. Value: 1
+2016-12-02 13:08:25- Dice : All dices tossed. Total: 1
+2016-12-02 13:08:25- Dice : Dice tossed. Value: 2
+2016-12-02 13:08:25- Dice : All dices tossed. Total: 2
+2016-12-02 13:08:25- Dice : Dice tossed. Value: 2
+2016-12-02 13:08:25- Dice : All dices tossed. Total: 2
+2016-12-02 13:08:25- Dice : Dice tossed. Value: 4
+2016-12-02 13:08:25- Dice : All dices tossed. Total: 4
+2016-12-02 13:08:25- Dice : Dice tossed. Value: 3
+2016-12-02 13:08:25- Dice : All dices tossed. Total: 3
+2016-12-02 13:08:25- Game : Map setup ended.
+2016-12-02 13:08:25- Character : Start logging.
+2016-12-02 13:08:25- Game : Character mom turn starts.
+2016-12-02 13:08:31- Map : Movement on map map5.4. Moved character mom from (0,0) to (1,0).
+2016-12-02 13:08:45- Character : Attack 1 for mom
+2016-12-02 13:08:45- Dice : Dice tossed. Value: 15
+2016-12-02 13:08:45- Dice : All dices tossed. Total: 15
+2016-12-02 13:08:45- Character : mom Trying to attack fightest
+2016-12-02 13:08:45- Character : Calculating attack roll for mom ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (10 + 38 + 15 + 0) - 18 = 45
+2016-12-02 13:08:45- Dice : Dice tossed. Value: 4
+2016-12-02 13:08:45- Dice : All dices tossed. Total: 4
+2016-12-02 13:08:45- Character : Opponent fightest can be attacked.
+2016-12-02 13:08:45- Character : Calculating damage roll for mom (Damage Bonus + d8Roll + Fighter's additional damage): 41 + 4 + 0 = 45
+2016-12-02 13:08:45- Character : mom is hitting and causing a damage of 45 to opponent fightest
+2016-12-02 13:08:45- Character : fightest hit by 45 damage.fightest's Current Hit Points (HP): 69
+2016-12-02 13:08:45- Character : Attack 2 for mom
+2016-12-02 13:08:45- Dice : Dice tossed. Value: 14
+2016-12-02 13:08:45- Dice : All dices tossed. Total: 14
+2016-12-02 13:08:45- Character : mom Trying to attack fightest
+2016-12-02 13:08:45- Character : Calculating attack roll for mom ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (10 + 33 + 14 + 0) - 18 = 39
+2016-12-02 13:08:45- Dice : Dice tossed. Value: 2
+2016-12-02 13:08:45- Dice : All dices tossed. Total: 2
+2016-12-02 13:08:45- Character : Opponent fightest can be attacked.
+2016-12-02 13:08:45- Character : Calculating damage roll for mom (Damage Bonus + d8Roll + Fighter's additional damage): 41 + 2 + 0 = 43
+2016-12-02 13:08:45- Character : mom is hitting and causing a damage of 43 to opponent fightest
+2016-12-02 13:08:45- Character : fightest hit by 43 damage.fightest's Current Hit Points (HP): 26
+2016-12-02 13:08:45- Character : Attack 3 for mom
+2016-12-02 13:08:45- Dice : Dice tossed. Value: 13
+2016-12-02 13:08:45- Dice : All dices tossed. Total: 13
+2016-12-02 13:08:45- Character : mom Trying to attack fightest
+2016-12-02 13:08:45- Character : Calculating attack roll for mom ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (10 + 28 + 13 + 0) - 18 = 33
+2016-12-02 13:08:45- Dice : Dice tossed. Value: 4
+2016-12-02 13:08:45- Dice : All dices tossed. Total: 4
+2016-12-02 13:08:45- Character : Opponent fightest can be attacked.
+2016-12-02 13:08:45- Character : Calculating damage roll for mom (Damage Bonus + d8Roll + Fighter's additional damage): 41 + 4 + 0 = 45
+2016-12-02 13:08:45- Character : mom is hitting and causing a damage of 45 to opponent fightest
+2016-12-02 13:08:45- Character : fightest hit by 45 damage.fightest's Current Hit Points (HP): 26
+2016-12-02 13:08:45- Character : Not enough to be protected by armor and above HP. Game Over for fightest
+2016-12-02 13:09:30- Game : Character mom turn ends.
+2016-12-02 13:09:30- Game : Character mom turn starts.

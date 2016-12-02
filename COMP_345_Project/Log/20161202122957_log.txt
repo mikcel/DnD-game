@@ -1,0 +1,143 @@
+2016-12-02 12:29:57- Game : Start logging.
+2016-12-02 12:29:57- Dice : Start logging.
+2016-12-02 12:29:57- Game : Loading map : mapchesttest.
+2016-12-02 12:29:57- Game : Map loaded
+2016-12-02 12:29:58- Map : Start logging.
+2016-12-02 12:29:58- Game : Map setup start.
+2016-12-02 12:29:58- Dice : Dice tossed. Value: 10
+2016-12-02 12:29:58- Dice : All dices tossed. Total: 10
+2016-12-02 12:29:58- Dice : Dice tossed. Value: 8
+2016-12-02 12:29:58- Dice : All dices tossed. Total: 8
+2016-12-02 12:29:58- Game : Map setup ended.
+2016-12-02 12:29:58- Character : Start logging.
+2016-12-02 12:29:58- Game : Character mom turn starts.
+2016-12-02 12:29:59- Map : Movement on map mapchesttest. Moved character mom from (3,3) to (4,3).
+2016-12-02 12:29:59- Map : Movement on map mapchesttest. Moved character mom from (4,3) to (5,3).
+2016-12-02 12:29:59- Map : Movement on map mapchesttest. Moved character mom from (5,3) to (5,4).
+2016-12-02 12:30:00- Map : Movement on map mapchesttest. Moved character mom from (5,4) to (5,5).
+2016-12-02 12:30:31- Game : Character mom turn ends.
+2016-12-02 12:30:31- Game : Map ended.
+2016-12-02 12:30:31- Game : Map end phase start.
+2016-12-02 12:30:31- Dice : Dice tossed. Value: 7
+2016-12-02 12:30:31- Dice : All dices tossed. Total: 7
+2016-12-02 12:30:31- Character : Level 35 reached.Adding to HP: 1 + 7
+2016-12-02 12:30:31- Character : New HP: 314
+2016-12-02 12:30:31- Game : Player's character mom level increased to 35.
+2016-12-02 12:30:33- Game : Character mom saved.
+2016-12-02 12:30:33- Dice : Dice tossed. Value: 5
+2016-12-02 12:30:33- Dice : All dices tossed. Total: 5
+2016-12-02 12:30:33- Game : Map end phase finished.
+2016-12-02 12:30:34- Character : Stop logging.
+2016-12-02 12:30:34- Map : Stop logging.
+2016-12-02 12:30:34- Game : Loading map : map5.4.
+2016-12-02 12:30:34- Dice : Dice tossed. Value: 5
+2016-12-02 12:30:34- Dice : All dices tossed. Total: 5
+2016-12-02 12:30:34- Dice : Dice tossed. Value: 4
+2016-12-02 12:30:34- Dice : All dices tossed. Total: 4
+2016-12-02 12:30:34- Dice : Dice tossed. Value: 3
+2016-12-02 12:30:34- Dice : All dices tossed. Total: 3
+2016-12-02 12:30:34- Dice : Dice tossed. Value: 6
+2016-12-02 12:30:34- Dice : All dices tossed. Total: 6
+2016-12-02 12:30:34- Dice : Dice tossed. Value: 5
+2016-12-02 12:30:34- Dice : All dices tossed. Total: 5
+2016-12-02 12:30:34- Dice : Dice tossed. Value: 6
+2016-12-02 12:30:34- Dice : All dices tossed. Total: 6
+2016-12-02 12:30:34- Game : Map loaded
+2016-12-02 12:30:35- Map : Start logging.
+2016-12-02 12:30:35- Game : Map setup start.
+2016-12-02 12:30:35- Dice : Dice tossed. Value: 3
+2016-12-02 12:30:35- Dice : All dices tossed. Total: 3
+2016-12-02 12:30:35- Dice : Dice tossed. Value: 9
+2016-12-02 12:30:35- Dice : All dices tossed. Total: 9
+2016-12-02 12:30:35- Dice : Dice tossed. Value: 7
+2016-12-02 12:30:35- Dice : All dices tossed. Total: 7
+2016-12-02 12:30:35- Dice : Dice tossed. Value: 4
+2016-12-02 12:30:35- Dice : All dices tossed. Total: 4
+2016-12-02 12:30:35- Dice : Dice tossed. Value: 6
+2016-12-02 12:30:35- Dice : All dices tossed. Total: 6
+2016-12-02 12:30:35- Dice : Dice tossed. Value: 2
+2016-12-02 12:30:35- Dice : All dices tossed. Total: 2
+2016-12-02 12:30:35- Dice : Dice tossed. Value: 7
+2016-12-02 12:30:35- Dice : All dices tossed. Total: 7
+2016-12-02 12:30:35- Dice : Dice tossed. Value: 5
+2016-12-02 12:30:35- Dice : All dices tossed. Total: 5
+2016-12-02 12:30:35- Game : Map setup ended.
+2016-12-02 12:30:35- Character : Start logging.
+2016-12-02 12:30:35- Game : Character mom turn starts.
+2016-12-02 12:30:44- Game : Character mom turn ends.
+2016-12-02 12:30:44- Game : Character mom turn starts.
+2016-12-02 12:30:47- Map : Movement on map map5.4. Moved character mom from (0,5) to (0,4).
+2016-12-02 12:30:48- Map : Movement on map map5.4. Moved character mom from (0,4) to (0,3).
+2016-12-02 12:30:50- Game : Character mom turn ends.
+2016-12-02 12:30:50- Game : Character fightest turn starts.
+2016-12-02 12:30:50- Map : Movement on map map5.4. Moved character fightest from (1,1) to (0,1).
+2016-12-02 12:30:51- Game : Character fightest turn ends.
+2016-12-02 12:30:51- Game : Character mom turn starts.
+2016-12-02 12:30:51- Map : Movement on map map5.4. Moved character mom from (5,0) to (4,0).
+2016-12-02 12:30:51- Map : Movement on map map5.4. Moved character mom from (4,0) to (3,0).
+2016-12-02 12:30:52- Game : Character mom turn ends.
+2016-12-02 12:30:52- Game : Character mom turn starts.
+2016-12-02 12:30:53- Map : Movement on map map5.4. Moved character mom from (0,0) to (1,0).
+2016-12-02 12:30:55- Game : Character mom turn ends.
+2016-12-02 12:30:55- Game : Character mom turn starts.
+2016-12-02 12:31:01- Game : Character mom turn ends.
+2016-12-02 12:31:01- Game : Character fightest turn starts.
+2016-12-02 12:31:01- Map : Movement on map map5.4. Moved character fightest from (0,1) to (1,1).
+2016-12-02 12:31:01- Game : Character fightest turn ends.
+2016-12-02 12:31:01- Game : Character mom turn starts.
+2016-12-02 12:31:02- Game : Character mom turn ends.
+2016-12-02 12:31:02- Game : Character mom turn starts.
+2016-12-02 12:31:05- Character : Attack 1 for mom
+2016-12-02 12:31:05- Dice : Dice tossed. Value: 7
+2016-12-02 12:31:05- Dice : All dices tossed. Total: 7
+2016-12-02 12:31:05- Character : mom Trying to attack fightest
+2016-12-02 12:31:05- Character : Calculating attack roll for mom ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (10 + 35 + 7 + 0) - 18 = 34
+2016-12-02 12:31:05- Dice : Dice tossed. Value: 4
+2016-12-02 12:31:05- Dice : All dices tossed. Total: 4
+2016-12-02 12:31:05- Character : Opponent fightest can be attacked.
+2016-12-02 12:31:05- Character : Calculating damage roll for mom (Damage Bonus + d8Roll + Fighter's additional damage): 38 + 4 + 0 = 42
+2016-12-02 12:31:05- Character : mom is hitting and causing a damage of 42 to opponent fightest
+2016-12-02 12:31:05- Character : fightest hit by 42 damage.fightest's Current Hit Points (HP): 63
+2016-12-02 12:31:05- Character : Attack 2 for mom
+2016-12-02 12:31:05- Dice : Dice tossed. Value: 10
+2016-12-02 12:31:05- Dice : All dices tossed. Total: 10
+2016-12-02 12:31:05- Character : mom Trying to attack fightest
+2016-12-02 12:31:05- Character : Calculating attack roll for mom ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (10 + 30 + 10 + 0) - 18 = 32
+2016-12-02 12:31:05- Dice : Dice tossed. Value: 3
+2016-12-02 12:31:05- Dice : All dices tossed. Total: 3
+2016-12-02 12:31:05- Character : Opponent fightest can be attacked.
+2016-12-02 12:31:05- Character : Calculating damage roll for mom (Damage Bonus + d8Roll + Fighter's additional damage): 38 + 3 + 0 = 41
+2016-12-02 12:31:05- Character : mom is hitting and causing a damage of 41 to opponent fightest
+2016-12-02 12:31:05- Character : fightest hit by 41 damage.fightest's Current Hit Points (HP): 22
+2016-12-02 12:31:05- Character : Attack 3 for mom
+2016-12-02 12:31:05- Dice : Dice tossed. Value: 3
+2016-12-02 12:31:05- Dice : All dices tossed. Total: 3
+2016-12-02 12:31:05- Character : mom Trying to attack fightest
+2016-12-02 12:31:05- Character : Calculating attack roll for mom ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (10 + 25 + 3 + 0) - 18 = 20
+2016-12-02 12:31:05- Dice : Dice tossed. Value: 3
+2016-12-02 12:31:05- Dice : All dices tossed. Total: 3
+2016-12-02 12:31:05- Character : Opponent fightest can be attacked.
+2016-12-02 12:31:05- Character : Calculating damage roll for mom (Damage Bonus + d8Roll + Fighter's additional damage): 38 + 3 + 0 = 41
+2016-12-02 12:31:05- Character : mom is hitting and causing a damage of 41 to opponent fightest
+2016-12-02 12:31:05- Character : fightest hit by 41 damage.fightest's Current Hit Points (HP): 22
+2016-12-02 12:31:05- Character : Not enough to be protected by armor and above HP. Game Over for fightest
+2016-12-02 12:31:27- Game : Character mom turn ends.
+2016-12-02 12:31:27- Game : Character mom turn starts.
+2016-12-02 12:31:29- Game : Character mom turn ends.
+2016-12-02 12:31:29- Game : Character mom turn starts.
+2016-12-02 12:31:30- Game : Character mom turn ends.
+2016-12-02 12:31:30- Game : Character mom turn starts.
+2016-12-02 12:31:37- Game : Character mom turn ends.
+2016-12-02 12:31:37- Game : Character mom turn starts.
+2016-12-02 12:31:43- Game : Character mom turn ends.
+2016-12-02 12:31:43- Game : Character mom turn starts.
+2016-12-02 12:31:44- Game : Character mom turn ends.
+2016-12-02 12:31:44- Game : Character mom turn starts.
+2016-12-02 12:31:53- Game : Character mom turn ends.
+2016-12-02 12:31:53- Game : Character mom turn starts.
+2016-12-02 12:31:55- Game : Character mom turn ends.
+2016-12-02 12:31:55- Game : Character mom turn starts.
+2016-12-02 12:31:56- Game : Character mom turn ends.
+2016-12-02 12:31:56- Game : Character mom turn starts.
+2016-12-02 12:32:04- Character : Character mom added item Iron Hammer to his/her backpack.
+2016-12-02 12:32:04- Character : Character fightest removes item Iron Hammer to his/her backpack.

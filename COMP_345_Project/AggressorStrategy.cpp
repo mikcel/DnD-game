@@ -10,7 +10,7 @@
 */
 std::string AggressorStrategy::print() const
 {
-	return "X";
+	return characterElement->getCharacter().isAlive() ? "X" : "D";
 }
 
 /**
@@ -48,7 +48,7 @@ bool AggressorStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTogg
 			{
 				Position thisCharacterPosition = characterElement->getPosition();
 				Position humanPlayerCharacterPosition = map.getPlayer().getPosition();
-				if (isTileNextTo(thisCharacterPosition.x, thisCharacterPosition.y, humanPlayerCharacterPosition.x, humanPlayerCharacterPosition.y))
+				if (isTileNextToOrDiagonal(thisCharacterPosition.x, thisCharacterPosition.y, humanPlayerCharacterPosition.x, humanPlayerCharacterPosition.y))
 				{
 					if (!characterElement->attack(map.getPlayer())) //! If player died
 					{

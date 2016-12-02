@@ -199,7 +199,10 @@ void Game::perfomEndGame(Character** p, Map& map)
 	currentChar->incrementLevel();
 	log("Player's character " + currentChar->getName() + " level increased to " + to_string(currentChar->getLevel()) + ".");
 
-	cout << *currentChar;
+	if (dynamic_cast<Fighter*>(currentChar))
+		cout << *dynamic_cast<Fighter*>(currentChar);
+	else
+		cout << *currentChar;
 
 	CharacterController cc(currentChar);
 	cc.saveCharacter();
