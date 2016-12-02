@@ -285,12 +285,16 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 }
 
 
-//! lets player loot a chest or dead enemy
+//! method that lets player loot a chest or dead enemy
+//! @param map: reference to map object
+//! @param meo: reference to MapElementsToggler, used to notify views.
 void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 
 	if (system("CLS")) system("clear");
 	Position pos = Position(map.getPlayer().getPosition());//! player's position
 	vector<Element*> vecPos = vector<Element*>(0);
+
+	//! checks player's surroundings
 	if (dynamic_cast<Chest*>(map.getElementAt(pos.x + 1, pos.y)) != nullptr || dynamic_cast<CharacterElement*>(map.getElementAt(pos.x + 1, pos.y)) != nullptr){ // 1,0
 		vecPos.push_back(map.getElementAt(pos.x + 1, pos.y));
 	}
@@ -321,7 +325,7 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 	CharacterElement* tmpChara;
 	vector<string> allLootableNames = vector<string>(0);
 	//! transfering names
-	for (auto e : vecPos){
+	for (auto e : vecPos){ //! transfer item names to string vector
 		tmpChest = dynamic_cast<Chest*>(e);
 		tmpChara = dynamic_cast<CharacterElement*>(e);
 		if (tmpChest){
@@ -331,11 +335,13 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 			}
 		}
 		else if (tmpChara && !tmpChara->getCharacter().isAlive()){//! only dead foes
-			tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
+
+			tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();//backpack
 			for (auto i : tmpItem){
 				allLootableNames.push_back(i->getItemName());
 			}
-			tmpItem = tmpChara->getCharacter().getCurrentWornItems()->getContents();
+
+			tmpItem = tmpChara->getCharacter().getCurrentWornItems()->getContents();//worn items
 			for (auto i : tmpItem){
 				if (i->getItemName() != "UNSPECIFIED"){
 					allLootableNames.push_back(i->getItemName());
@@ -354,7 +360,7 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 	if (!doNotLoot){
 
 	while (true){
-
+		//! prompts user
 		cout << "Lootable Items: " << endl;
 		//! printing name
 		int k = 0;
@@ -364,6 +370,7 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 		}
 		cout << "Enter the index of the item you want to take, enter -1 to not take anything" << endl;
 		cin >> userInputSTR;
+		//! io check
 		try{
 			userInput = stoi(userInputSTR);
 		}
@@ -391,11 +398,11 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 				for (auto i : tmpItem){
 					if (i->getItemName() == allLootableNames[userInput]){
 						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
-						if (tmpWea != nullptr){
+						if (tmpWea != nullptr){ //checks if it is a weapon
 							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
 							p->getCharacter().storeItem(new Weapon(*tmpWea));
 						}
-						else{
+						else{//else weapon
 							cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
 
 							p->getCharacter().storeItem(new Item(i));
@@ -405,7 +412,7 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 						break;
 					}
 				}
-				meo.showPrevious();
+				meo.showPrevious();//update view
 
 			}
 			else if (tmpChara != nullptr && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//only dead foes
@@ -417,11 +424,11 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
 						if (tmpWea != nullptr){
 							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
-							p->getCharacter().storeItem(new Weapon(*tmpWea));
+							p->getCharacter().storeItem(new Weapon(*tmpWea));//stor in back pack
 						}
 						else{
 							cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
-							p->getCharacter().storeItem(new Item(i));
+							p->getCharacter().storeItem(new Item(i));//store in backpack
 						}
 						tmpChara->getCharacter().removeItemBack(i);
 						foundInContainer = true;
@@ -435,21 +442,22 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 					for (auto i : tmpItem){
 						if (i->getItemName() == allLootableNames[userInput]){
 						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
-						if (tmpWea != nullptr){
+						if (tmpWea != nullptr){ // if weapon 
 							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
-							p->getCharacter().storeItem(new Weapon(*tmpWea));
+							p->getCharacter().storeItem(new Weapon(*tmpWea));//store in backpack
 						}
 						else{
 							cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
-							p->getCharacter().storeItem(new Item(i));
+							p->getCharacter().storeItem(new Item(i));//stor in backpack
 						}
-							tmpChara->getCharacter().takeOffItem(i);
+						//transfer
+						tmpChara->getCharacter().takeOffItem(i);
 						tmpChara->getCharacter().removeItemBack(i);
 						foundInContainer = true;
 						break;
 					}
 				}
-					meo.showPrevious();
+					meo.showPrevious();//update view
 
 			}
 
@@ -472,7 +480,7 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 
 		}
 	}
-
+	//now burning prompts
 	bool deadEnemies = false;
 	vector<CharacterElement*> chrDiedEnemies;
 	for (auto i : vecPos){
@@ -499,8 +507,8 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 		if (burnEnemy == "Y" || burnEnemy == "y"){
 			
 			cout << "BURNING ALL ENEMIES !!!" << endl;
-			for(auto chr : chrDiedEnemies){
-				map.setTileTypeNull(chr->getPosition().x, chr->getPosition().y, TileType::FLOOR);
+			for(auto chr : chrDiedEnemies){///for all dead enemies
+				map.setTileTypeNull(chr->getPosition().x, chr->getPosition().y, TileType::FLOOR);//empties the tile
 			}
 		}
 
@@ -521,6 +529,7 @@ void  HumanPlayerStrategy::manageEquipment(Map& map,MapElementsToggler& meo)
 	vector<Item*> worn = player->getCharacter().getCurrentWornItems()->getContents();
 	vector<Item*> stored = player->getCharacter().getBackpackContents()->getContents();
 
+	//user Prompts
 	cout << "Currently wearing:" << endl;
 	for (auto i : worn){
 		if (i->getItemName() != "UNSPECIFIED"){
@@ -548,7 +557,7 @@ void  HumanPlayerStrategy::manageEquipment(Map& map,MapElementsToggler& meo)
 		cout << "Invalid input" << endl;
 	}
 	else{
-		manageEquipmentChoiceHelper(userChoice, player, worn, stored, meo);
+		manageEquipmentChoiceHelper(userChoice, player, worn, stored, meo);// helper method to execute the actions
 	}
 	
 }
