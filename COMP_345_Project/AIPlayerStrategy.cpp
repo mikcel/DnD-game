@@ -50,19 +50,15 @@ bool AIPLayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElement
 			case 'T': //Toggles the view of the map elements
 			case 't': //Toggles the view of the map elements
 				meo.show();
-				isPlaying = false;
 				break;
 			case 'p': //Toggles the view of the map elements
 				meo.showPlayer();
-				isPlaying = false;
 				break;
 			case 'e': //Toggles the view of the map elements
 				meo.showEnemies();
-				isPlaying = false;
 				break;
 			case 'c': //Toggles the view of the map elements
 				meo.showChests();
-				isPlaying = false;
 				break;
 			}
 		}

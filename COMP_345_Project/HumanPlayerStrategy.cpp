@@ -81,26 +81,24 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 			case 'T': //Toggles the view of the map elements
 			case 't': //Toggles the view of the map elements
 				meo.show();
-				isPlaying = false;
 				break;
 			case 'p': //Toggles the view of the map elements
 				meo.showPlayer();
-				isPlaying = false;
 				break;
 			case 'e': //Toggles the view of the map elements
 				meo.showEnemies();
-				isPlaying = false;
 				break;
 			case 'c': //Toggles the view of the map elements
 				meo.showChests();
-				isPlaying = false;
 				break;
 			case 'z':// tries to loot
 				closestLootable(map);
+				meo.showPrevious();
 				isPlaying = false;
 				break;
 			case 'i': //manage items
 				manageEquipment(map);
+				meo.showPrevious();
 				isPlaying = false;
 				break;
 
@@ -148,6 +146,7 @@ bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTo
 				if (characterToAttack != nullptr)
 				{
 					this->characterElement->attack(*characterToAttack);
+					meo.showPrevious();
 				}
 				cout << endl;
 				system("pause");
@@ -161,19 +160,15 @@ bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTo
 			case 'T': //Toggles the view of the map elements
 			case 't': //Toggles the view of the map elements
 				meo.show();
-				isPlaying = false;
 				break;
 			case 'p': //Toggles the view of the map elements
 				meo.showPlayer();
-				isPlaying = false;
 				break;
 			case 'e': //Toggles the view of the map elements
 				meo.showEnemies();
-				isPlaying = false;
 				break;
 			case 'c': //Toggles the view of the map elements
 				meo.showChests();
-				isPlaying = false;
 				break;
 			case 'z':// tries to loot
 				closestLootable(map);
@@ -219,7 +214,7 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 		{
 			Position characterPosition = characterElement->getPosition();
 			Position currentCharacterPosition = currentCharacter->getPosition();
-			if (currentCharacter->getCharacter().getCurrentHitPoints()!=0 && isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y))
+			if (currentCharacter->getCharacter().getCurrentHitPoints()!=0 && canReach(characterPosition, currentCharacterPosition, map))
 			{
 				attackableChracters.push_back(currentCharacter);
 			}			
@@ -576,7 +571,7 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
-			if (itemindex < -1 || itemindex >= worn.size()){
+			if (itemindex < -1 || itemindex >= (int)worn.size()){
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
@@ -619,10 +614,11 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
-			if (itemindex < -1 || itemindex >= stored.size()){
+			if (itemindex < -1 || itemindex >= (int)stored.size()){
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
+
 			if (itemindex == -1){
 				cout << "Press any button to return to the game." << endl;
 				return;
@@ -636,4 +632,41 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 		cout << "Press any button to return to the game." << endl;
 
 	}
+}
+
+bool HumanPlayerStrategy::canReach(Position& characterPosition, Position& currentCharacterPosition, Map& map){
+
+	if (characterElement->getCharacter().getCurrentWornItems()->getContents()[(int)ItemType::WEAPON]->getItemTypes() != ItemType::UNSPECIFIED){
+
+		Weapon* weapon = (Weapon*)(characterElement->getCharacter().getCurrentWornItems()->getItem(characterElement->getCharacter().getCurrentWornItems()->getContents()[(int)ItemType::WEAPON]->getItemName()));
+		if (weapon != NULL){
+			//! Check range and melee weapon
+
+			if (weapon->getRange() == 1)
+				return isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
+			else{
+
+				vector<pair<int,int>> betPairs = bresenhamRightDirection(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
+				int countInBetween = 0;
+				for (auto i : betPairs){
+					if (map.getTileAt(i.first, i.second).getType() == TileType::WALL)
+						return false;
+					else
+						countInBetween++;
+				}
+					
+				countInBetween -= 1;
+				if (countInBetween!=0 && weapon->getRange() >= countInBetween){
+					return true;
+				}
+				else{
+					return false;
+				}
+
+			}
+		}
+	}
+		
+	return isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
+
 }

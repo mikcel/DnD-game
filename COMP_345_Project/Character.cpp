@@ -476,8 +476,8 @@ void Character::incrementLevel(){
 	cout << "Level " << level << " reached." << endl;
 	cout << "Current HP: " << currentHitPoints << endl;
 
-	log("Level " + to_string(level) + " reached.\n" + "Adding to HP: " + to_string(abilityModifiers[(int)CharacterAbility::CONS]) + " + " + to_string(diceRoll));
-	log("New HP: " + to_string(currentHitPoints) + "\n");
+	log("Level " + to_string(level) + " reached." + "Adding to HP: " + to_string(abilityModifiers[(int)CharacterAbility::CONS]) + " + " + to_string(diceRoll));
+	log("New HP: " + to_string(currentHitPoints));
 }
 
 //! Function used to unequip an item from the Character and put them back to the backpack

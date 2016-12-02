@@ -27,28 +27,31 @@ void Game::play(Character* player)
 	vector<string> mapNames = *campaign->getCampaignMapNames();
 	bool wantToquit = false;
 
+	MapElementsToggler meo;
+
 	for (int i = 0; i < mapNames.size(); i++){
 
 		log("Loading map : " + mapNames[i] + ".");
 		Map* map = readMapFile("SaveFiles/Maps/" + mapNames[i] + ".txt", mapNames[i]);
+		meo.setMap(map);
 		log("Map loaded");
 		system("pause");
 
 		GameLogger::instance().recordMap(map); //The map was loaded and ready to be recorded.
 
 		log("Map setup start.");
-	CharacterElement tempP(*player, new HumanPlayerStrategy());
-	CharacterElement * p = map->placePlayer(tempP);
+		CharacterElement tempP(*player, new HumanPlayerStrategy());
+		CharacterElement * p = map->placePlayer(tempP);
 		log("Map setup ended.");
 
 		GameLogger::instance().recordCharacters(); //The characters were placed and ready to be recorded.
 
-	//Let's run the game
-		bool finishedMap = run(*map);
+		//Let's run the game
+		bool finishedMap = run(*map, meo);
 		log("Map ended.");
 
 		if (finishedMap)
-	{
+		{
 			log("Map end phase start.");
 			perfomEndGame(&player, *map);
 			log("Map end phase finished.");
@@ -62,7 +65,7 @@ void Game::play(Character* player)
 				log("Player died.");
 			}
 			else{
-				log("Player quit.");
+			log("Player quit.");
 			}
 
 			cout << "Exiting to main menu." << endl;
@@ -101,8 +104,8 @@ bool Game::gameContinues(bool wantToQuit, int nextMapIndex, vector<string>& mapN
 			cout << endl << "Do you want to play the next map: " + mapNames[nextMapIndex] + " ?(Y/N)" << endl;
 			cin >> userChoice;
 			if (userChoice == "Y"){
-		return true;
-	}
+				return true;
+			}
 			else if (userChoice == "N"){
 				return false;
 			}
@@ -116,13 +119,13 @@ bool Game::gameContinues(bool wantToQuit, int nextMapIndex, vector<string>& mapN
 //! Represents the main game loop of the Dungeons&Dragons game
 //! "Listens" to the input of the user and adjusts the game accordingly 
 //! @param player to be used in the current game
-bool Game::run(Map& map)
+bool Game::run(Map& map, MapElementsToggler& meo)
 {
 	//Set all of our observers
 	MapObserver mo(map);
 	map.Observable::attach(mo);
 
-	MapElementsToggler meo(&map);
+	meo.showPrevious();
 
 	#define KEY_UP 72
 	#define KEY_DOWN 80

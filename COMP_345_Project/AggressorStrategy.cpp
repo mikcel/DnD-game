@@ -28,7 +28,7 @@ std::string AggressorStrategy::getStrategyName()
 */
 bool AggressorStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo)
 {
-	mo.setPrintTurnInfo(TurnType::AI_ATTACK);
+ 	mo.setPrintTurnInfo(TurnType::AI_ATTACK);
 	mo.printMap();
 
 	bool isPlaying = true;
@@ -48,10 +48,12 @@ bool AggressorStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTogg
 				{
 					if (!characterElement->attack(map.getPlayer())) //! If player died
 					{
+						meo.showPrevious();
 						cout << "You died. Game over." << endl;
 						system("pause");
 						return false;
 					}
+					meo.showPrevious();
 				}
 				else
 				{
@@ -70,19 +72,15 @@ bool AggressorStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTogg
 			case 'T': //Toggles the view of the map elements
 			case 't': //Toggles the view of the map elements
 				meo.show();
-				isPlaying = false;
 				break;
 			case 'p': //Toggles the view of the map elements
 				meo.showPlayer();
-				isPlaying = false;
 				break;
 			case 'e': //Toggles the view of the map elements
 				meo.showEnemies();
-				isPlaying = false;
 				break;
 			case 'c': //Toggles the view of the map elements
 				meo.showChests();
-				isPlaying = false;
 				break;
 			}
 		}

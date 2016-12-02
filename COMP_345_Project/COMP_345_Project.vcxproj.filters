@@ -169,7 +169,7 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="PlayerConsoleSingleton.cpp">
-      <Filter>Utils</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -309,7 +309,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="PlayerConsoleSingleton.h">
-      <Filter>Utils</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

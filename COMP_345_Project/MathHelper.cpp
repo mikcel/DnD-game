@@ -126,3 +126,18 @@ bool isTileNextTo(int x1, int y1, int x2, int y2)
 {
 	return (abs(x1 - x2) == 1 && y1 == y2) || (abs(y1 - y2) == 1 && x1 == x2);
 }
+
+/**
+* Determines if two points are just next to eachother including diagonal points
+* @param x1 x of the first point
+* @param y1 y of the first point
+* @param x2 x of the second point
+* @param y2 y of the second point
+* @return true if they are next to eachother, false otherwise
+*/
+bool isTileNextToOrDiagonal(int x1, int y1, int x2, int y2)
+{
+	int dx = abs(x2 - x1);
+	int dy = abs(y2 - y1);
+	return (dx == 0 && dy == 1) || (dx == 1 && dy == 0) || (dx == 1 && dy == 1);
+}

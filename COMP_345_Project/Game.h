@@ -24,7 +24,7 @@ public:
 private:
 	Campaign* campaign; // A pointer to the campaign used in the curretn game
 	bool isGameOver(Map&); // Checks if the game has finished
-	bool run(Map&); // Is executed while that game hasn't finished running
+	bool run(Map&, MapElementsToggler&); // Is executed while that game hasn't finished running
 	void perfomEndGame(Character**, Map&); // Is executed at the end of the game
 	bool gameContinues(bool wantToquit, int nextMapName, vector<string>& mapNames); //Determines if the player wants to continue the game
 

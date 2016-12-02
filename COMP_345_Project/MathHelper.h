@@ -6,3 +6,4 @@
 std::vector<std::pair<int, int>> bresenhamRightDirection(int x1, int y1, int x2, int y2); // Bresenham algorith, that may be used to calculate the path between two points
 
 bool isTileNextTo(int x1, int y1, int x2, int y2); // Checks if two tiles are next to eachother
+bool isTileNextToOrDiagonal(int x1, int y1, int x2, int y2); // Checks if two tiles are next to eachother including diagonals

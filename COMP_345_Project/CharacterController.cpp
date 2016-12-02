@@ -26,7 +26,6 @@ CharacterController::CharacterController(Character *currentCharacter){
 //! Destructor
 CharacterController::~CharacterController()
 {
-	delete currentCharacter; //! Deletes the character object
 }
 
 //! Getter to obtain the current Character
