@@ -30,7 +30,7 @@ void editItem() {
 
 		cin >> userChoice;
 		
-		while (cin.fail() || userChoice < -1 || userChoice > ItemFileNames.size() -1) {
+		while (cin.fail() || userChoice < -1 || userChoice > (int)ItemFileNames.size() -1) {
 			cout << "Incorrect Input. Please enter a correct number: ";
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -185,17 +185,19 @@ void createItem() {
 	vector<Buff> vecBuff(0); //! Vector for buff
 
 	//! Ask for weapon or item
-	cout << "\nDo you want to create an Item - 0 or a Weapon - 1? ";
+	cout << "\nDo you want to create an Item - 0 or a Weapon - 1? (-1 to exit) ";
 	cin >> choiceItem;
 
 	//! check choice
-	while (cin.fail() || choiceItem<0 || choiceItem>1) { //!  ask to continue enter if incorrect
+	while (cin.fail() || choiceItem<-1 || choiceItem>1) { //!  ask to continue enter if incorrect
 		cout << "Incorrect choice. Please choose only 0 or 1: ";
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cin >> choiceItem;
 	}
-
+	if (choiceItem == -1){
+		return;
+	}
 	if (choiceItem == 0) { //! If item or weapon
 
 		cout << "\nLet's create a new Item!!!";
@@ -211,12 +213,12 @@ void createItem() {
 			<< (int)ItemType::SHIELD << " - " << ItemType::SHIELD << "\n"
 			<< (int)ItemType::RING << " - " << ItemType::RING << "\n"
 			<< (int)ItemType::BELT << " - " << ItemType::BELT << "\n"
-			<< (int)ItemType::BOOTS << " - " << ItemType::BOOTS << "\n"
-			<< (int)ItemType::WEAPON << " - " << ItemType::WEAPON << "\n";
+			<< (int)ItemType::BOOTS << " - " << ItemType::BOOTS << "\n";
+			//<< (int)ItemType::WEAPON << " - " << ItemType::WEAPON << "\n";
 		cout << "Enter choice: ";
 		cin >> itemType;
 		//! Continue to ask if choice is incorrectly entered
-		while (cin.fail() || itemType<0 || itemType>6) {
+		while (cin.fail() || itemType<0 || itemType>5) {
 			cout << "Incorrect choice. Please enter again: ";
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -234,14 +236,14 @@ void createItem() {
 				<< (int)BuffType::CHARISMA << " - " << BuffType::CHARISMA << "\n"
 				<< (int)BuffType::CONSTITUTION << " - " << BuffType::CONSTITUTION << "\n"
 				<< (int)BuffType::DEXTERITY << " - " << BuffType::DEXTERITY << "\n"
-				<< (int)BuffType::ATTACK_BONUS << " - " << BuffType::ATTACK_BONUS << "\n"
-				<< (int)BuffType::DAMAGE_BONUS << " - " << BuffType::DAMAGE_BONUS << "\n"
+				//<< (int)BuffType::ATTACK_BONUS << " - " << BuffType::ATTACK_BONUS << "\n"
+				//<< (int)BuffType::DAMAGE_BONUS << " - " << BuffType::DAMAGE_BONUS << "\n"
 				<< "-1 to stop\n";
 			cout << "Enter choice: ";
 			cin >> choiceBuff; //! Enter buff choice
 
 							   //! Check for buff choice. Ask again if incorrectly entered
-			while (cin.fail() || choiceBuff != -1 && (choiceBuff<0 || choiceBuff>8)) {
+			while (cin.fail() || choiceBuff != -1 && (choiceBuff<0 || choiceBuff>6)) {
 				cout << "Incorrect Input. Please enter a correct number: ";
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -372,6 +374,7 @@ void createItem() {
 		else {
 			newWeapon.saveItem();
 		}
+		system("PAUSE");
 	}
 
 }

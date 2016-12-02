@@ -207,8 +207,13 @@ ostream& operator<<(ostream& stream, const Item& item){
 //! method that takes the string representation of an Item object and saves to a text file
 void Item::saveItem(){
 	ofstream outItem;
-	outItem.open("saveFiles/Items/" + itemName + ".txt");
-	outItem << serializeItem();
-	outItem.close();
-	cout << "Item was saved!" << endl;
+	if (validateItem()){
+		outItem.open("saveFiles/Items/" + itemName + ".txt");
+		outItem << serializeItem();
+		outItem.close();
+		cout << "Item was saved!" << endl;
+	}
+	else{
+		cout << "This item is not valid, changes will be discarded." << endl;
+	}
 }

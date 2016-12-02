@@ -80,10 +80,15 @@ string Weapon::serializeItem() {
 //! method that takes the string representation of an Item object and saves to a text file
 void Weapon::saveItem(){
 	ofstream outItem;
-	outItem.open("saveFiles/Items/" + getItemName() + ".txt");
-	outItem << serializeItem();
-	outItem.close();
-	cout << "Weapon was saved!" << endl;
+	if (validateWeapon() && validateItem()){
+		outItem.open("saveFiles/Items/" + getItemName() + ".txt");
+		outItem << serializeItem();
+		outItem.close();
+		cout << "Weapon was saved!" << endl;
+	}
+	else{
+		cout << "This is not a valid weapon, changes will be discarded." << endl;
+	}
 }
 
 //! Overrides the output stream operator << to print the all the information about the weapon
