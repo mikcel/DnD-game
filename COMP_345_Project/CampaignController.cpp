@@ -384,4 +384,5 @@ void CampaignController::saveCampaign()
 		outputCampaign << m << endl;
 	}
 	cout << "Campaign has been saved!" << endl;
+	system("PAUSE");
 }
