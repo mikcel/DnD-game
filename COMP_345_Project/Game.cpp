@@ -70,6 +70,7 @@ void Game::play(Character* player)
 			return;
 		}
 
+		GameLogger::instance().detachLogType(LogType::CHARACTERS);
 		GameLogger::instance().detachLogType(LogType::MAP);
 
 	}
