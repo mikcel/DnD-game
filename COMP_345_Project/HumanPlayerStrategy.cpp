@@ -285,7 +285,9 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 }
 
 
-//! lets player loot a chest or dead enemy
+//! method that lets player loot a chest or dead enemy
+//! @param map: reference to map object
+//! @param meo: reference to MapElementsToggler, used to notify views.
 void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 
 	if (system("CLS")) system("clear");
