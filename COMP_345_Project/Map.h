@@ -48,7 +48,7 @@ public:
 	bool isFree(int x, int y) const; //! Returns true is the tile at the given address contains an element
 	bool isTraversible(int x, int y) const; //! Returns true is the tile type allows a character to cross it
 
-	CharacterElement & getPlayer() const;
+	CharacterElement & getPlayer() const; //! Obtains a reference to the player that is on the map
 	const std::list<Element*> & getElements() const; //! Returns a the reference of the characters list
 
 	CharacterElement* placePlayer(CharacterElement& newPlayer); //! Places the player at the start point
@@ -62,9 +62,9 @@ public:
 	std::string getName() const; //! Gets the name of the map
 	void setName(std::string name); //! Sets the name of the map
 
-	string serializeMapToString();
+	string serializeMapToString(); //! Obtains the map in the format of a string
 
-	CharacterElement* getPlayerPointer();
+	CharacterElement* getPlayerPointer(); //! Obtains a pointer to the player that is on the map
 
 	virtual std::string provider(); //! Returns the Loggable provider.
 private:
@@ -73,8 +73,8 @@ private:
 	int height; //! Height of the map
 	int width; //! Width of the map
 
-	bool isStartSet;
-	bool isEndSet;
+	bool isStartSet; //! Determines if the start point has been set on the map
+	bool isEndSet; //! Determines if the end point has been set on the map
 	Position startPoint; //! Position of the start point of the map
 	Position endPoint; //! Position of the end point of the map
 

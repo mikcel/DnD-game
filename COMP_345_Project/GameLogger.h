@@ -44,7 +44,7 @@ private:
 	Dice* _dice; //Pointer to the dice logged
 	std::list<LogType> _autoLoggedTypes; //List of the auto logged types (types of Loggables we want to attach ourself to on record.
 
-	bool isLogging(LogType);
+	bool isLogging(LogType); //Determines if the specified LogType must actually be logged 
 
 public:
 	static GameLogger& instance(); //Static instance getter

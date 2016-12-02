@@ -19,5 +19,5 @@ public:
 	Position getPosition();
 protected:
 	Position position; //! Position of the element
-	friend class Map;
+	friend class Map; //! Allow the map to acces the private data of the Element
 };

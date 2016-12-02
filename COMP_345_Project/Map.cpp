@@ -46,6 +46,10 @@ Map::Map(int newWidth, int newHeight, string newName) : name(newName), width(new
 	player = nullptr;
 }
 
+/**
+* Copy constructor of the map
+* @param map a reference of the map from which the new map would be created
+*/
 Map::Map(const Map& map) :Map(width = map.width, height = map.height, name = map.getName())
 {
 	if (map.isStartSet) {
@@ -192,6 +196,13 @@ bool Map::setTileType(int x, int y, TileType type)
 	return true;
 }
 
+/**
+* Sets the element on a certain tile to nullptr and changes the type of the tile
+* @param x X coordinate
+* @param y Y coordinate
+* @param type the tile to be set at that position instead
+* @return true if the element was succesfully modified, false if the position is out of bounds
+*/
 bool Map::setTileTypeNull(int x, int y, TileType type)
 {
 	if (isOob(x, y)) return false;
@@ -577,6 +588,10 @@ void Map::setName(string newName)
 	name = newName;
 }
 
+/**
+* Serializes the map into a string
+* @return the map serialized into the form of a string
+*/
 string Map::serializeMapToString()
 {
 	string serialMap = "";
@@ -648,11 +663,18 @@ string Map::serializeMapToString()
 	return serialMap;
 }
 
-
+/**
+* Obtains the player of the map as a reference
+* @return reference to the player
+*/
 CharacterElement & Map::getPlayer() const {
 	return *player;
 }
 
+/**
+* Obtains the player of the map as a pointer
+* @return pointer to the player
+*/
 CharacterElement* Map::getPlayerPointer(){
 	return player;
 }

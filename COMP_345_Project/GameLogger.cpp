@@ -335,6 +335,11 @@ string GameLogger::currentLogTypes()
 	return s;
 }
 
+/**
+* Determines if the specified log type should actually be logged
+* @param lt the LogType on which the verification should be made
+* @return true if the LogType should actually be logged, fals otherwise
+*/
 bool GameLogger::isLogging(LogType lt)
 {
 	return find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), lt) != _autoLoggedTypes.end();

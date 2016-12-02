@@ -47,6 +47,10 @@ const string Element::print() const
 	return "E";
 }
 
+/**
+* Obtains the position of the element on the map
+* @return
+*/
 Position Element::getPosition()
 {
 	return position;

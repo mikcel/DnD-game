@@ -21,10 +21,12 @@ public:
 	//! Destructor
 	~Chest();
 
+	//! Creates a copy of the chest with its data
 	virtual Chest* Chest::clone();
 
 	virtual const std::string print() const; //! Print the map representation of the chest
 private:
+	// Allowing the operator << of the ostream to acces the private data of the Chest
 	friend ostream& operator<<(ostream& stream, const Chest& chst);
 };
 
