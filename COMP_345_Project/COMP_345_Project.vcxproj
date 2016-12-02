@@ -136,6 +136,7 @@
     <ClCompile Include="CharacterElement.cpp" />
     <ClCompile Include="CharacterStrategy.cpp" />
     <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="ConsoleLogger.cpp" />
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="Enums.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="NimbleBuilder.cpp" />
     <ClCompile Include="MathHelper.cpp" />
     <ClCompile Include="Observable.cpp" />
+    <ClCompile Include="PlayerConsoleSingleton.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="TankBuilder.cpp" />
     <ClCompile Include="StrategyTest.cpp" />
@@ -184,6 +186,7 @@
     <ClInclude Include="CharacterElement.h" />
     <ClInclude Include="CharacterStrategy.h" />
     <ClInclude Include="Chest.h" />
+    <ClInclude Include="ConsoleLogger.h" />
     <ClInclude Include="Dice.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="Enums.h" />
@@ -210,6 +213,7 @@
     <ClInclude Include="MathHelper.h" />
     <ClInclude Include="Observable.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="PlayerConsoleSingleton.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="TankBuilder.h" />
     <ClInclude Include="StrategyTest.h" />

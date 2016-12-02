@@ -39,7 +39,7 @@ Character* CharacterController::getCurrentCharacter(){
 //! @param Character pointer to an object
 //! @return -
 void CharacterController::setCurrentCharacter(Character *character){
-	currentCharacter = new Character(*character);
+	currentCharacter = character->clone();
 }
 
 //! Method to create a Character
@@ -767,9 +767,7 @@ Character* readCharacterFile(string charName){
 	}
 
 	//! If character create a character object else create a fighter object
-	if (chrType == "character")
-		tempCharacter = new Character(name, abilityScr, level, (CharacterSize)stoi(strSize));
-	else{
+	if (chrType == "fighter"){
 		tempCharacter = new Fighter(name, abilityScr, (FightStyle)fightStyle, level, (CharacterSize)stoi(strSize));
 		dynamic_cast<Fighter*>(tempCharacter)->setType((FighterType)fightType);
 	}

@@ -8,6 +8,8 @@
 #include "CharacterController.h"
 #include "Game.h"
 #include "CampaignController.h"
+#include "GameLogger.h"
+#include "Time_Utils.h"
 
 using namespace std;
 
@@ -25,14 +27,11 @@ void GameController::play()
 
 	//We are ready to launch the game
 	launchGame();
+
+
 	if (campaign != nullptr) {
 		delete campaign;
 		campaign = nullptr;
-	}
-
-	if (map != nullptr) {
-		delete map;
-		map = nullptr;
 	}
 
 	if (character != nullptr)
@@ -129,54 +128,24 @@ void GameController::selectCampaign()
 	}
 
 	cout << "The campaign " << campaignName << " was succefully loaded." << endl << endl;
-
-
-
 }
 
 //! Creates a new instance of the Game class an launches it
 void GameController::launchGame()
 {
-	//Game g();
-	//Map* currentMap;
-	vector<string> mapNames = *campaign->getCampaignMapNames();
+	Game g(campaign);
 
-	for (int i = 0; i < mapNames.size(); i++)
-	{
-		string userChoice = "";
-		bool wantToquit = false;
-		map = readMapFile("SaveFiles/Maps/" + mapNames[i] + ".txt", mapNames[i]);
+	//Writes the log file
+	string currentTime = TimeUtils::getCurrentTime("%Y%m%d%H%M%S");
 
-		wantToquit = Game(map).play(character);
-		if (wantToquit){
-			cout << "Exiting to main menu." << endl;
+	GameLogger::instance().setOutputStream("Log\\" + currentTime + "_log.txt");
+	GameLogger::instance().recordGame(&g); //The game was created and ready to be recorded.
+	GameLogger::instance().recordDice(&Dice::instance()); //The dice is ready to be recorded.
 
-			return;
-		}
+	g.play(character);
 
-		if (i + 1 >= mapNames.size()){
-			cout << "Congratulations! You have beaten the " << campaign->getCampaignName() << " campaign!\nEnjoy the spoils of a bountiful victory" << endl;
+	GameLogger::instance().detachLogType(LogType::DICE);
+	GameLogger::instance().detachLogType(LogType::GAME);
 
-			system("pause");
-		}
-
-		else{
-			while (userChoice != "Y" && userChoice != "N")
-			{
-				cout << endl << "Do you want to play the next map: " + mapNames[i + 1] + " ?(Y/N)" << endl;
-				cin >> userChoice;
-				if (userChoice == "Y" || userChoice == "y"){
-				}
-				else if (userChoice == "N" || userChoice == "n"){
-					cout << "Exiting to main menu." << endl;
-
-					return;
-				}
-				else{
-					cout << "Invalid input.";
-				}
-			}
-		}
-	}
-	//g.play(character);
+	GameLogger::instance().flush();
 }
