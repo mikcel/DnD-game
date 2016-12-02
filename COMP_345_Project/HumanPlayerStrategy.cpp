@@ -341,8 +341,8 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 			for (auto i : tmpItem){
 				if (i->getItemName() != "UNSPECIFIED"){
 					allLootableNames.push_back(i->getItemName());
-				}
-			}
+		}
+	}
 		}
 	}
 	bool doNotLoot = false;
@@ -361,7 +361,7 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 		//! printing name
 		int k = 0;
 		for (auto i : allLootableNames){
-			cout << k << ": " << i << endl;		
+			cout << k << ": " << i << endl;
 			k++;
 		}
 		cout << "Enter the index of the item you want to take, enter -1 to not take anything" << endl;
@@ -436,24 +436,24 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 					tmpItem = tmpChara->getCharacter().getCurrentWornItems()->getContents();
 					for (auto i : tmpItem){
 						if (i->getItemName() == allLootableNames[userInput]){
-							Weapon* tmpWea = dynamic_cast<Weapon*>(i);
-							if (tmpWea != nullptr){
-								cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
-								p->getCharacter().storeItem(new Weapon(*tmpWea));
-							}
-							else{
-								cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
-								p->getCharacter().storeItem(new Item(i));
-							}
-							tmpChara->getCharacter().takeOffItem(i);
-							tmpChara->getCharacter().removeItemBack(i);
-							foundInContainer = true;
-							break;
+						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
+						if (tmpWea != nullptr){
+							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
+							p->getCharacter().storeItem(new Weapon(*tmpWea));
 						}
+						else{
+							cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
+							p->getCharacter().storeItem(new Item(i));
+						}
+							tmpChara->getCharacter().takeOffItem(i);
+						tmpChara->getCharacter().removeItemBack(i);
+						foundInContainer = true;
+						break;
 					}
+				}
 					meo.showPrevious();
 
-				}
+			}
 
 
 
@@ -511,7 +511,11 @@ void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 }
 
 
-
+/**
+* Prompts the user to either equip an item or to take it off
+* @param map the map in which the current game is played
+* @param meo the map elements toggler
+*/
 void  HumanPlayerStrategy::manageEquipment(Map& map,MapElementsToggler& meo)
 {
 	CharacterElement* player = map.getPlayerPointer();
@@ -550,7 +554,14 @@ void  HumanPlayerStrategy::manageEquipment(Map& map,MapElementsToggler& meo)
 	}
 	
 }
-
+/**
+* Manages the equipment of the character by mvoing the items between the backpack and the owrn items
+* @param userChoice the choise of the current action to be performed between the worn and the stored items
+* @param player the player on which the action is performed
+* @param worn the list of the items taht the user is wearing
+* @param stored the list of the items that the user has in his backpack
+* @param meo the map elements toggler
+*/
 void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterElement* player, vector<Item*> worn, vector<Item*> stored , MapElementsToggler& meo){
 	if (userChoice == 1){
 		string itemindexSTR;
@@ -646,6 +657,12 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 	}
 }
 
+/**
+* Determines if the player can reach a certain enemy with his weapon
+* @param characterPosition the position of the player
+* @param currentCharacterPosition the position of the second character that could be reached
+* @return true if the second character is within a reachable range, false otherwise
+*/
 bool HumanPlayerStrategy::canReach(Position& characterPosition, Position& currentCharacterPosition, Map& map){
 
 	if (characterElement->getCharacter().getCurrentWornItems()->getContents()[(int)ItemType::WEAPON]->getItemTypes() != ItemType::UNSPECIFIED){

@@ -76,11 +76,13 @@ public:
 	//! return: boolean whether the method is succesfull
 	bool unequipItem(string itemName, ItemContainer* playerBackpack);
 
+	//! Obtains a serialized representation of the item container
 	string serializeItemContainer();
 private:
-	ContainerType containerType;
-	vector<Item*> contents;
+	ContainerType containerType; // The type of the container
+	vector<Item*> contents; // The items that are inside the container
 
+	//! Friend declaration allowing the item info to be outputed inside a stream
 	friend ostream& operator<<(ostream& stream, const ItemContainer& cont);
 };
 

@@ -42,38 +42,9 @@ void CharacterController::setCurrentCharacter(Character *character){
 }
 
 //! Method to create a Character
-//! @return -
 void CharacterController::createCharacter(){
 	
 	cout << "==== FIGHTER CREATION ====" << endl << endl;
-	//bool choiceCorrect = false; //Flag for correct choice between character and fighter creation 
-	//int choice = 0; //! Choice of user
-
-	/*cout << "Please choose between creating a simple Character(1) or a Fighter(2) \nEnter the respective number: ";
-
-	//! Keep asking if choice is not correct
-	while (!choiceCorrect){
-
-		while (!(cin >> choice)){
-			cout << "\nIncorrect choice. Please enter only 1 or 2 depending on the character type you want to create.\n";
-			cout << "1 - Character OR 2 - Fighter. Please choose correctly: ";
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		}
-
-		if (choice == 1){ //! If choice is Character
-			cout << "\nTime to create a new Character!" << "\nLet's gets started.";
-			choiceCorrect = true;
-		}
-		else if (choice == 2){ //! If choice is Fighter
-			cout << "\nTime to create a new Fighter!" << "\nLet's gets started.";
-			choiceCorrect = true;
-		}
-		else{ //! Asks again if incorrect choice
-			cout << "\nIncorrect choice. Please enter only 1 or 2 depending on the character type you want to create.\n";
-			cout << "1 - Character OR 2 - Fighter. Please choose correctly: ";
-		}
-	}*/
 
 	cout << "Let's create your fighter !!!" << endl;
 
@@ -182,72 +153,6 @@ void CharacterController::createCharacter(){
 		}
 
 	}
-
-	//! Generates the ability score
-	/*cout << "\n\nTime to generate the ability scores...";
-
-	srand(time(0)); //! Give a starting point to the random function
-
-	int arrRand[Character::NO_ABILITY]; //Create an array with the no of abilities a character should have
-	int *ptr = arrRand; //! Pointer that points to newly created array
-
-	int arrAbilityScores[Character::NO_ABILITY];//! Creates a second array of ability scores that will be used to passed to the Character constructor
-
-	//! For loop to generate random numbers between 3 and 18 and but them in the first created array
-	cout << "\n\nThe random scores are: ";
-	for (int i = 0; i < Character::NO_ABILITY; i++){
-		arrRand[i] = rand() % 16 + 3;
-		cout << arrRand[i] << " ";
-	}
-
-	//! Variable use for input
-	int chosenScr = 0;
-
-	//! Make user chooses which number generated he wants to assign to each score.
-	cout << "\nPlease choose a score from the numbers obtained for the following: \n";
-	for (int i = 0; i < Character::NO_ABILITY - 1; i++){
-
-		//! Outputs the number that are left ot be chosen
-		cout << "The numbers left are: ";
-		for (int i = 0; i < Character::NO_ABILITY; i++){
-			if (arrRand[i] != 0)
-				cout << arrRand[i] << " ";
-		}
-
-		//! For each ability, (using the enumrated type), choose score
-		cout << "\n" << CharacterAbility(i) << ": ";
-
-		while (!(cin >> chosenScr)){
-			cout << "Please choose a correct no.: ";
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		}
-
-		//! Check if number entered is in random generated array. if not ask user to enter again until number is valid
-		while (!checkScr(ptr, chosenScr)){
-			cout << "Please choose a correct no.: ";
-			cin >> chosenScr;
-
-			while (cin.fail()) {
-				cout << "Incorrect Input. Please enter a valid number:";
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				cin >> chosenScr;
-			}
-		}
-
-		//! Initialise the number chosen to the respective ability score
-		arrAbilityScores[i] = chosenScr;
-		cout << "\n";
-	}
-
-	//! Add remaining ability score
-	for (int i = 0; i < Character::NO_ABILITY; i++){
-		if (arrRand[i] != 0){
-			arrAbilityScores[Character::NO_ABILITY - 1] = arrRand[i];
-			break;
-		}
-	}*/
 
 	CharacterDirector chrDirect;
 	switch (fighterType)
@@ -910,25 +815,3 @@ bool CharacterController::addItem(){
 	}
 
 }
-
-//! function to check if a number is in an array
-//! @param array pointer - array to check
-//! @param number - number to check if in array
-//! @return true - if number is in array, false - if not
-/*bool CharacterController::checkScr(int *arr, int scr){
-
-	//! If number is 0 return false (no. already used in array/element does not exist)
-	if (scr == 0)
-		return false;
-
-	//! for loop to check for number in each element
-	for (int i = 0; i < Character::NO_ABILITY; i++){
-		if (*(arr + i) == scr) //! Use pointer to look through array
-		{
-			*(arr + i) = NULL; //! Fag that number has been used
-			return true; //! Return true if found
-		}
-	}
-	return false; //! Return false if not found
-
-}*/

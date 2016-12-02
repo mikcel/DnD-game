@@ -169,6 +169,9 @@ int main(int argc, char* argv[])
 	delete c1;
 }
 
+/**
+* Clears the console
+*/
 void flushConsole()
 {
 	if (system("CLS"))

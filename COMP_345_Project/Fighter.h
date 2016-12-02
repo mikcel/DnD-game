@@ -24,6 +24,7 @@ public:
 	//! Default constructor
 	Fighter(); 
 
+	//! Constructor with a concrete name
 	Fighter(string chrName);
 
 	//! A parametrized constructor getting name, an array containing the ability scores, the fighting style, the level and the size
@@ -33,23 +34,23 @@ public:
 	//! data members both in the Fighter and Character class
 	Fighter(string chrName, int str, int dex, int cons, int intel, int wisd, int cha, FightStyle chrStyle, int chrLevel = 1, CharacterSize chrSize = CharacterSize::TINY);
 	
-	Fighter(Fighter& copyFight);
+	Fighter(Fighter& copyFight); //! Copy constructor
 
 	~Fighter(); //! Destructor
 
 	FightStyle getStyle(); //! Accessor for fighting style
-	FighterType getType();
-	void setType(FighterType type);
+	FighterType getType(); //! Obtains the type of the fighter 
+	void setType(FighterType type); //! Sets the type of the fighter
 	void setStyle(FightStyle chrstyle); //! Mutator for the Fighter's fighting style
 	virtual bool attack(Character &chr); //! Method for attacking another player
 	virtual Fighter* clone(); // Copies the current CharacterElement
 
-	void saveCharacter();
+	void saveCharacter(); //! Saves the fighter into a file
 
 private:
 
 	FightStyle style = FightStyle::ARCHERY; //! Fighting style. default to archery
-	FighterType type = FighterType::BULLY;
+	FighterType type = FighterType::BULLY; //! Fight type. default to bully
 
 	//! Method to overload output stream operator for a Fighter
 	friend ostream& operator<<(ostream& stream, const Fighter& fighter);

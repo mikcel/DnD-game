@@ -15,6 +15,7 @@ public:
 	void closestLootable(Map& map,MapElementsToggler& meo);//! lets player loot a chest or dead enemy
 	void manageEquipment(Map& map, MapElementsToggler& meo); //! let the player manage their equipment.
 private:
+	//! Manages the equipment of the player between his worn items and his backpack
 	void manageEquipmentChoiceHelper(int userChoice, CharacterElement* player, vector<Item*> worn, vector<Item*> stored, MapElementsToggler& meo);
-	bool canReach(Position& characterPosition, Position& currentCharacterPosition, Map& map);
+	bool canReach(Position& characterPosition, Position& currentCharacterPosition, Map& map); //! Determines if the player can reach the enemy with his weapon
 };

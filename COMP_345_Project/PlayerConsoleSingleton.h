@@ -5,14 +5,14 @@
 
 class PlayerConsoleSingleton
 {
-	PlayerConsoleSingleton();
-	CConsoleLoggerEx consoleLogger;
-	std::stringstream* stringStream;
+	PlayerConsoleSingleton(); //! The private contructor of the singleton
+	CConsoleLoggerEx consoleLogger; //! The reference to the console
+	std::stringstream* stringStream; //! A pointer to teh current instace of the string stream
 
-	static PlayerConsoleSingleton & instance();
+	static PlayerConsoleSingleton & instance(); //! Method to obtain the instance of the singleton
 public:	
-	static CConsoleLoggerEx & console();	
-	static std::stringstream & stream();
-	static void printStream();
-	static void clearConsole();
+	static CConsoleLoggerEx & console(); //! Obtains a reference to the second console object
+	static std::stringstream & stream(); //! Obtains the reference to the current string stream
+	static void printStream(); // Prints everything inside the string stream to the second console
+	static void clearConsole(); // Clears the second console
 };

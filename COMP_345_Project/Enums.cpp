@@ -115,6 +115,10 @@ ostream& operator<<(ostream& stream, FighterType type){
 	return stream << strType; //! Return the assigned string variable to the stream.
 }
 
+//! Overrides the output stream operator << to print the type of the item
+//! @param stream the stream into which everything would be written
+//! @param type the type of the item to be written into the stream
+//! @return a reference to the current stream allowing chaning this operator
 ostream& operator<<(ostream& stream, ItemType type){
 
 	string strType; //! Variable to hold the contents to output for each item type
@@ -152,6 +156,10 @@ ostream& operator<<(ostream& stream, ItemType type){
 
 }
 
+//! Overrides the output stream operator << to print the type of the buff
+//! @param stream the stream into which everything would be written
+//! @param buffType the type of the buff to be written into the stream
+//! @return a reference to the current stream allowing chaning this operator
 ostream& operator <<(ostream& stream, BuffType buffType){
 
 	string strType; //! Variable to hold the contents to output for each item type

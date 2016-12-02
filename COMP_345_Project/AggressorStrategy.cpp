@@ -40,7 +40,7 @@ bool AggressorStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTogg
 		{
 			switch (c)
 			{
-			case ' ':
+			case ' ': // The aggressor (enemy) tries to attack the player if possible
 			{
 				Position thisCharacterPosition = characterElement->getPosition();
 				Position humanPlayerCharacterPosition = map.getPlayer().getPosition();
