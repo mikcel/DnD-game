@@ -93,10 +93,12 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 				break;
 			case 'z':// tries to loot
 				closestLootable(map);
+				meo.showPrevious();
 				isPlaying = false;
 				break;
 			case 'i': //manage items
 				manageEquipment(map);
+				meo.showPrevious();
 				isPlaying = false;
 				break;
 
