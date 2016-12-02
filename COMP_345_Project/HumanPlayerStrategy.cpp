@@ -92,12 +92,12 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 				meo.showChests();
 				break;
 			case 'z':// tries to loot
-				closestLootable(map);
+				closestLootable(map, meo);
 				meo.showPrevious();
 				isPlaying = false;
 				break;
 			case 'i': //manage items
-				manageEquipment(map);
+				manageEquipment(map, meo);
 				meo.showPrevious();
 				isPlaying = false;
 				break;
@@ -171,12 +171,14 @@ bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTo
 				meo.showChests();
 				break;
 			case 'z':// tries to loot
-				closestLootable(map);
+				closestLootable(map,meo);
 				isPlaying = false;
+				meo.showPrevious();
 				break;
 			case 'i': //manage items
-				manageEquipment(map);
+				manageEquipment(map, meo);
 				isPlaying = false;
+				meo.showPrevious();
 				break;
 			case KEY_ENTER:
 				return true;
@@ -284,7 +286,7 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 
 
 //! lets player loot a chest or dead enemy
-void HumanPlayerStrategy::closestLootable(Map& map){
+void HumanPlayerStrategy::closestLootable(Map& map, MapElementsToggler& meo){
 
 	if (system("CLS")) system("clear");
 	Position pos = Position(map.getPlayer().getPosition());//! player's position
@@ -403,6 +405,8 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 						break;
 					}
 				}
+				meo.showPrevious();
+
 			}
 			else if (tmpChara != nullptr && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//only dead foes
 				bool foundInBackPack = false;
@@ -424,6 +428,8 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 						break;
 					}
 				}
+				meo.showPrevious();
+
 				if (!foundInBackPack){
 					tmpItem = tmpChara->getCharacter().getCurrentWornItems()->getContents();
 					for (auto i : tmpItem){
@@ -443,6 +449,8 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 							break;
 						}
 					}
+					meo.showPrevious();
+
 				}
 
 
@@ -502,7 +510,7 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 
 
 
-void  HumanPlayerStrategy::manageEquipment(Map& map)
+void  HumanPlayerStrategy::manageEquipment(Map& map,MapElementsToggler& meo)
 {
 	CharacterElement* player = map.getPlayerPointer();
 	//these are copies
@@ -536,12 +544,12 @@ void  HumanPlayerStrategy::manageEquipment(Map& map)
 		cout << "Invalid input" << endl;
 	}
 	else{
-		manageEquipmentChoiceHelper(userChoice, player, worn, stored);
+		manageEquipmentChoiceHelper(userChoice, player, worn, stored, meo);
 	}
 	
 }
 
-void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterElement* player, vector<Item*> worn, vector<Item*> stored){
+void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterElement* player, vector<Item*> worn, vector<Item*> stored , MapElementsToggler& meo){
 	if (userChoice == 1){
 		string itemindexSTR;
 		int itemindex;
@@ -589,8 +597,9 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 			}
 		}
 		cout << "Unequipping: " << worn[itemindex]->getItemName() << endl;
-
 		player->getCharacter().takeOffItem(worn[itemindex]);
+		meo.showPrevious();
+
 		cout << "Press any button to return to the game." << endl;
 
 	}
@@ -629,6 +638,7 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 		}
 		cout << "Equipping: " << stored[itemindex]->getItemName() << endl;
 		player->getCharacter().wearItem(stored[itemindex]);
+		meo.showPrevious();
 		cout << "Press any button to return to the game." << endl;
 
 	}
