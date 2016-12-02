@@ -237,7 +237,7 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 		while (true)
 		{
 			cout << endl << "Here is a list of all possible characters to attack." << endl;
-			cout << "Please enter the ID of the character that you want to attack:" << endl;
+			cout << "Please enter the ID of the character that you want to attack: " << endl;
 			for (int i = 0; i < attackableChracters.size(); i++)
 			{
 				cout << i + 1 << ") " << attackableChracters[i]->getCharacterStrategy()->getStrategyName() 
@@ -689,7 +689,7 @@ bool HumanPlayerStrategy::canReach(Position& characterPosition, Position& curren
 			//! Check range and melee weapon
 
 			if (weapon->getRange() == 1)
-				return isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
+				return isTileNextToOrDiagonal(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
 			else{
 
 				vector<pair<int,int>> betPairs = bresenhamRightDirection(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
@@ -713,6 +713,6 @@ bool HumanPlayerStrategy::canReach(Position& characterPosition, Position& curren
 		}
 	}
 		
-	return isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
+	return isTileNextToOrDiagonal(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
 
 }
