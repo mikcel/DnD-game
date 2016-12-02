@@ -219,7 +219,7 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 		{
 			Position characterPosition = characterElement->getPosition();
 			Position currentCharacterPosition = currentCharacter->getPosition();
-			if (currentCharacter->getCharacter().getCurrentHitPoints()!=0 && (isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y)))
+			if (currentCharacter->getCharacter().getCurrentHitPoints()!=0 && canReach(characterPosition, currentCharacterPosition, map))
 			{
 				attackableChracters.push_back(currentCharacter);
 			}			
@@ -608,7 +608,7 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 	}
 }
 
-bool HumanPlayerStrategy::canReach(Position& characterPosition, Position& currentCharacterPosition){
+bool HumanPlayerStrategy::canReach(Position& characterPosition, Position& currentCharacterPosition, Map& map){
 
 	if (characterElement->getCharacter().getCurrentWornItems()->getContents()[(int)ItemType::WEAPON]->getItemTypes() != ItemType::UNSPECIFIED){
 
@@ -623,12 +623,14 @@ bool HumanPlayerStrategy::canReach(Position& characterPosition, Position& curren
 				vector<pair<int,int>> betPairs = bresenhamRightDirection(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
 				int countInBetween = 0;
 				for (auto i : betPairs){
-					if (i.first != characterPosition.x && i.first != currentCharacterPosition.x && i.second != characterPosition.y && i.second != currentCharacterPosition.y){
+					if (map.getTileAt(i.first, i.second).getType() == TileType::WALL)
+						return false;
+					else
 						countInBetween++;
-					}
 				}
 					
-				if (weapon->getRange() == countInBetween){
+				countInBetween -= 1;
+				if (countInBetween!=0 && weapon->getRange() >= countInBetween){
 					return true;
 				}
 				else{
@@ -637,10 +639,8 @@ bool HumanPlayerStrategy::canReach(Position& characterPosition, Position& curren
 
 			}
 		}
-		else{
-			return isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
-		}
-
 	}
+		
+	return isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
 
 }

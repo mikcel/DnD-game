@@ -130,7 +130,7 @@ bool Fighter::attack(Character &chr){
 		cout << "\nTrying to attack." << endl;
 		log(getName() + " Trying to attack " + chr.getName());
 
-		log("Calculating attack roll for " + getName() + " ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (" + to_string(calcAttackBonus()) + " + " + to_string(calcLevel) + " + " + to_string(d20Roll) + " + " + to_string(additionalAttack) + ") - " + to_string(chr.getArmorClass()) + "");
+		log("Calculating attack roll for " + getName() + " ((Attack Bonus + Level + d20Roll + Fighter's additional attack) - Opponent's AC) : (" + to_string(calcAttackBonus()) + " + " + to_string(calcLevel) + " + " + to_string(d20Roll) + " + " + to_string(additionalAttack) + ") - " + to_string(chr.getArmorClass()) + " = " + to_string(totalAttackBonus));
 		
 		cout << "Attack roll: " << totalAttackBonus << endl;
 		if (totalAttackBonus > 0){
@@ -141,7 +141,7 @@ bool Fighter::attack(Character &chr){
 			cout << chr.getName() << " can be attacked." << endl;
 			log("Opponent " + chr.getName() + " can be attacked.");
 
-			log("Calculating damage roll for " + getName() + " (Damage Bonus + d8Roll + Fighter's additional damage): " + to_string(calcDamageBonus()) + " + " + to_string(d8Roll) + " + "+ to_string(additionalDamage) );
+			log("Calculating damage roll for " + getName() + " (Damage Bonus + d8Roll + Fighter's additional damage): " + to_string(calcDamageBonus()) + " + " + to_string(d8Roll) + " + "+ to_string(additionalDamage) + " = " + to_string(totalDmgBonus) );
 
 			cout << "Hitting and causing a damage of " << totalDmgBonus << endl;
 			log(getName() +" is hitting and causing a damage of " + to_string(totalDmgBonus) + " to opponent " + chr.getName());

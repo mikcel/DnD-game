@@ -16,5 +16,5 @@ public:
 	void manageEquipment(Map& map); //! let the player manage their equipment.
 private:
 	void manageEquipmentChoiceHelper(int userChoice, CharacterElement* player, vector<Item*> worn, vector<Item*> stored);
-	bool canReach(Position& characterPosition, Position& currentCharacterPosition);
+	bool canReach(Position& characterPosition, Position& currentCharacterPosition, Map& map);
 };

@@ -6,8 +6,7 @@ start
 end
 5
 5
-ally
-fightest
+wall
 0
 2
 enemy
@@ -18,6 +17,9 @@ ally
 fightest
 1
 1
+wall
+2
+0
 enemy
 mom
 5

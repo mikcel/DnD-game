@@ -1,6 +1,6 @@
 fighter
 fightest
-54
+55
 0
 0
 0
