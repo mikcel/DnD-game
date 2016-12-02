@@ -9,11 +9,28 @@
 
 using namespace std;
 
+Dice* Dice::dice_instance = 0;
+
 // Regex to test the validity of the string
 const std::regex Dice::dice_regex("^([1-9][0-9]*)d(4|6|8|10|12|20|100)(\\+(0|([1-9][0-9]*)+))?$");
 
 // Variable to remember if the seed for the random generation is already set
-bool Dice::is_already_initialized = false;
+
+Dice::Dice() : is_already_initialized(false){};
+
+/*
+*	Initializes an instance of the Dice if it isn't already and returns it.
+*	@return Reference to the singleton dice.
+*/
+Dice& Dice::instance()
+{
+	if (dice_instance == nullptr)
+	{
+		dice_instance = new Dice();
+	}
+	return *dice_instance;
+}
+
 
 //! Implementation of the rolling dice
 //! @param string : a string of the form "xdy[+z]".
@@ -61,12 +78,21 @@ int Dice::roll(string expression)
 	for (size_t i = 0; i < number_of_dice; i++)
 	{
 		int current_random = abs(rand()); // Obtain a positive random variable
-		total += (current_random % dice_type) + 1; // Calculate the result of the current toss and add it to the total
+		int dice_toss = (current_random % dice_type) + 1;
+		log("Dice tossed. Value: " + to_string(dice_toss));
+		total += dice_toss;// Calculate the result of the current toss and add it to the total
 	}
 
 	// Add the bonus (z) to the total
 	total += additional_add;
 
+	log("All dices tossed. Total: " + to_string(total));
+
 	return total;
 }
 
+//!Return the provider string "Dice"
+string Dice::provider()
+{
+	return "Dice";
+}

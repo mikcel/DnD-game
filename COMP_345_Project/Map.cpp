@@ -263,6 +263,14 @@ bool Map::moveElement(int xOffset, int yOffset, Element & element)
 	element.position.y = endY;
 
 	notify();
+
+	CharacterElement* ce = dynamic_cast<CharacterElement*>(&element);
+	if (ce != nullptr)
+	{
+		Character& c = ce->getCharacter();
+		log("Movement on map " + name + ". Moved character " + c.getName() + " from (" + to_string(startX) + "," + to_string(startY) + ") to (" + to_string(endX) + "," + to_string(endY) + ").");
+	}
+
 	return true;
 }
 
@@ -626,4 +634,10 @@ CharacterElement & Map::getPlayer() const {
 
 CharacterElement* Map::getPlayerPointer(){
 	return player;
+}
+
+//Return the provider string "Map"
+string Map::provider()
+{
+	return "Map";
 }

@@ -25,8 +25,10 @@ using namespace std;
 #include "ItemContainer.h" //! Include the itemcontainer class
 #include "Observable.h" //! Include the subject class for the observer pattern
 #include "Element.h"
+#include "Loggable.h"
+
 //! Class that implements the Character
-class Character {
+class Character : public Loggable {
 public:
 	
 	//! Constant for the No. of abilities (scores & modifiers) (mainly use for array size)
@@ -60,6 +62,7 @@ public:
 	int getOneAbilityModifier(CharacterAbility ability) const; //! Getter one ability modifier
 	int* getAllAbilityModifiers() const; //! Function to return a pointer to a copy of the ability modifiers array.
 	int getCurrentHitPoints() const; //! Getter to get Character's HP
+	int getMaxHP() const; //! Accessor for the max hit points
 	int getArmorClass() const; //! Function that return Armor Class
 
 	void setName(string chrName); //! Setter for the Character's name
@@ -87,8 +90,12 @@ public:
 	ItemContainer* getBackpackContents() const; //! Get all items that are currently in the Character's backpack
 	ItemContainer* getCurrentWornItems() const; //! Get all the items that the Character is currently wearing
 	int getWeaponRange(); //! Melee or Range weapon being worn
+	bool isAlive();
 
 	virtual void saveCharacter(); // Save teh character to a txt file
+
+	virtual std::string provider(); //! Returns the Loggable provider.
+	virtual Character* clone() = 0; // Copies the current CharacterElement
 
 private:
 
@@ -101,6 +108,7 @@ private:
 	int abilityScores[NO_ABILITY]; //! Array for the ability scores with 6 elements 
 	int abilityModifiers[NO_ABILITY]; //! Array for the ability modifiers containg 6 numbers
 	int currentHitPoints = DEFAULT_HP; //! Character's Hp set to default HP (10)
+	int maxHP = DEFAULT_HP; //! Max hp for the character
 	int armorClass=0; //! Character's AC. 0 by default
 	ItemContainer *backpack; //! Character's backpack
 	ItemContainer *currentWornItems; //! Character's currently worn items container

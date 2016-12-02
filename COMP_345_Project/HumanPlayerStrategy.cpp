@@ -335,7 +335,7 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 				allLootableNames.push_back(i->getItemName());
 			}
 		}
-		else if (tmpChara && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//! only dead foes
+		else if (tmpChara && !tmpChara->getCharacter().isAlive()){//! only dead foes
 			tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
 			for (auto i : tmpItem){
 				allLootableNames.push_back(i->getItemName());

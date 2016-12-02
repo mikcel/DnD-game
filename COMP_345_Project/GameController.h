@@ -15,7 +15,6 @@ private:
 	void selectCharacter(); //! Prompts the user to select a character
 	void selectCampaign(); //! Prompts the user to select his campaign
 	void launchGame(); //! Launches the game
-	Map * map = nullptr; //! Pointer to the map that is currently played
 	Campaign* campaign = nullptr;// pointer to the campaign to hold the list of maps the player will play
 	Character * character = nullptr; //! The Character that the user will control on the map
 };

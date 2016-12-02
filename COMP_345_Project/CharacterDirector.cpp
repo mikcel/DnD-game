@@ -71,7 +71,7 @@ int CharacterDirector::rollDice(){
 	int diceScore = 0;
 	int lowest = 24;
 	for (int i = 0; i < 4; i++){
-		int roll = Dice::roll("1d6");
+		int roll = Dice::instance().roll("1d6");
 		diceScore += roll;
 		if (roll < lowest)
 			lowest = roll;

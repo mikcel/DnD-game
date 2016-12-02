@@ -42,6 +42,7 @@ public:
 	void setType(FighterType type);
 	void setStyle(FightStyle chrstyle); //! Mutator for the Fighter's fighting style
 	virtual bool attack(Character &chr); //! Method for attacking another player
+	virtual Fighter* clone(); // Copies the current CharacterElement
 
 	void saveCharacter();
 
