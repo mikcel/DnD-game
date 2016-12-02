@@ -26,7 +26,6 @@ CharacterController::CharacterController(Character *currentCharacter){
 //! Destructor
 CharacterController::~CharacterController()
 {
-	delete currentCharacter; //! Deletes the character object
 }
 
 //! Getter to obtain the current Character
@@ -339,6 +338,7 @@ void CharacterController::editCharacter(){
 
 	int menuChoice = 0;
 	string menuChoiceStr;
+	bool charChanged = false;
 
 	//! While do not want to exit
 	while (menuChoice != 10){
@@ -380,8 +380,8 @@ void CharacterController::editCharacter(){
 				{
 					system("clear");
 				}
-					cout << *(dynamic_cast<Fighter*>(currentCharacter)) << endl;
-			break;
+				cout << *(dynamic_cast<Fighter*>(currentCharacter)) << endl;
+				break;
 			case 1: //! Save Character
 				saveCharacter();
 				break;
@@ -394,6 +394,7 @@ void CharacterController::editCharacter(){
 				currentCharacter->setName(newName); 
 				cout << "Name set.\n";
 				cout << *currentCharacter;
+				charChanged = true;
 				break;
 			}
 			case 3: //! Edit the character's level
@@ -418,6 +419,7 @@ void CharacterController::editCharacter(){
 				if (level != -1){
 					currentCharacter->setLevel(level);
 					cout << "Level changed.";
+					charChanged = true;
 				}
 				else{
 					cout << "Level not changed.";
@@ -446,6 +448,7 @@ void CharacterController::editCharacter(){
 				if (size != -1){
 					currentCharacter->setSize((CharacterSize)size); //! Set the size if correct
 					cout << "Size changed.";
+					charChanged = true;
 				}
 				else{
 					cout << "Size not changed.";
@@ -454,7 +457,7 @@ void CharacterController::editCharacter(){
 				break;
 			}
 			case 5:{ //! Add a new item to backpack
-				addItem();
+				charChanged = addItem();
 				break;
 			}
 			case 6:{ //! Remove an item from backpack
@@ -494,6 +497,7 @@ void CharacterController::editCharacter(){
 								else{
 									cout << "Item Removed\n";
 									flagCorrect = true;
+									charChanged = true;
 								}
 
 						}
@@ -545,10 +549,11 @@ void CharacterController::editCharacter(){
 							else{
 								cout << "Item Equiped\n";
 								flagCorrect = true;
+								charChanged = true;
 							}
 
 						}
-						else{
+						else if (itemID!=-1){
 							//! Asks id for item again since incorrectly entered
 							cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
 
@@ -590,14 +595,14 @@ void CharacterController::editCharacter(){
 					//! ask user to enter id
 					while (itemID != -1 && !flagCorrect){
 
-					while (!(cin >> itemID)){
+						while (!(cin >> itemID)){
 							cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
 							cin.clear();
 							cin.ignore(numeric_limits<streamsize>::max(), '\n');
 						}
 
 						//! Check id
-					if (itemID != -1 && holdItem[itemID]->getItemTypes() != ItemType::UNSPECIFIED){
+						if (itemID != -1 && holdItem[itemID]->getItemTypes() != ItemType::UNSPECIFIED){
 
 								//! Take off item
 								if (!currentCharacter->takeOffItem(holdItem[itemID])){
@@ -606,10 +611,11 @@ void CharacterController::editCharacter(){
 								else{
 									cout << "Item Unequiped \n";
 									flagCorrect = true;
+									charChanged = true;
 								}
 
 						}
-						else{
+						else if (itemID != -1){
 							//! Ask to reenter id if incorretly entered
 							cout << "\nIncorrect Item Id entered. Try Again or else enter -1 to exit: ";
 
@@ -650,6 +656,7 @@ void CharacterController::editCharacter(){
 
 					dynamic_cast<Fighter*>(currentCharacter)->setStyle((FightStyle)style);
 					cout << "Style changed.";
+					charChanged = true;
 				}
 				else{
 					cout << "Style not changed.";
@@ -666,7 +673,7 @@ void CharacterController::editCharacter(){
 		}
 
 		if (menuChoice != 0 && menuChoice != 10){ //! if not exiting save the character if all is valid
-			if (menuChoice != 1 && styleChangeCorrect)
+			if (menuChoice != 1 && styleChangeCorrect && charChanged)
 				saveCharacter();
 			system("pause"); //! Pause to show output and clear the console
 			if (system("CLS"))
@@ -684,7 +691,7 @@ void CharacterController::editCharacter(){
 //! @return -
 void CharacterController::saveCharacter(){
 
-	cout << "Saving the character...\n";
+	cout << "Saving the character..." << endl;;
 
 	//! get all saved files from the Characters folders
 	vector<string> chrFiles = getFilesInsideFolderNoExtension("SaveFiles/Characters/");
@@ -832,8 +839,8 @@ void CharacterController::displayFighterType(){
 }
 
 //! Method to add an item to the character's backpack
-//! @return - 
-void CharacterController::addItem(){
+//! @return - true if item(s) added, false otherwise
+bool CharacterController::addItem(){
 
 	//! Get all item files avialable in the respective folder
 	vector<string> filesInFolder = getFilesInsideFolderNoExtension("SaveFiles/Items");
@@ -842,9 +849,11 @@ void CharacterController::addItem(){
 		cout << "There are no items files available. Please create items and then edit the character to add the items.\n";
 		cin.ignore();
 		system("pause");
+		return false;
 	}
 	else{ 
 		//! If there are saved items, ask user to input item file name.
+		bool itemAdded = false;
 		Item* itmPoint = nullptr;
 		int itemID = 0;
 
@@ -883,6 +892,7 @@ void CharacterController::addItem(){
 					currentCharacter->storeItem(itmPoint); 
 					cout << "Item Added.\n";
 					filesInFolder.erase(filesInFolder.begin() + itemID);
+					itemAdded = true;
 				}
 				else{ //! If item in backpack erase from the available list and ask again
 					cout << "Item already in backpack. Cannot add again.\n";
@@ -896,7 +906,7 @@ void CharacterController::addItem(){
 		}
 
 		delete itmPoint;
-
+		return itemAdded;
 	}
 
 }

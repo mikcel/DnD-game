@@ -90,6 +90,7 @@ public:
 	ItemContainer* getBackpackContents() const; //! Get all items that are currently in the Character's backpack
 	ItemContainer* getCurrentWornItems() const; //! Get all the items that the Character is currently wearing
 	int getWeaponRange(); //! Melee or Range weapon being worn
+	bool isAlive();
 
 	virtual void saveCharacter(); // Save teh character to a txt file
 

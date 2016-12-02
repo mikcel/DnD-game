@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include <Windows.h>
 
 using namespace std;
 
@@ -28,6 +29,8 @@ GameLogger::GameLogger()
 	_autoLoggedTypes.push_back(LogType::MAP);
 	_autoLoggedTypes.push_back(LogType::CHARACTERS);
 	_autoLoggedTypes.push_back(LogType::DICE);
+
+	CreateDirectory("Log", NULL);
 }
 
 /**
@@ -67,7 +70,7 @@ void GameLogger::flush()
 void GameLogger::recordGame(Game* game)
 {
 	_game = game;
-	if (find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), LogType::GAME) != _autoLoggedTypes.end())
+	if (isLogging(LogType::GAME))
 	{
 		attachLogType(LogType::GAME);
 	}
@@ -80,7 +83,7 @@ void GameLogger::recordGame(Game* game)
 void GameLogger::recordMap(Map* map)
 {
 	_map = map;
-	if (find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), LogType::MAP) != _autoLoggedTypes.end())
+	if (isLogging(LogType::MAP))
 	{
 		attachLogType(LogType::MAP);
 	}
@@ -93,7 +96,7 @@ void GameLogger::recordMap(Map* map)
 void GameLogger::recordDice(Dice* dice)
 {
 	_dice = dice;
-	if (find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), LogType::DICE) != _autoLoggedTypes.end())
+	if (isLogging(LogType::DICE))
 	{
 		attachLogType(LogType::DICE);
 	}
@@ -104,7 +107,7 @@ void GameLogger::recordDice(Dice* dice)
 */
 void GameLogger::recordCharacters()
 {
-	if (find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), LogType::CHARACTERS) != _autoLoggedTypes.end())
+	if (isLogging(LogType::CHARACTERS))
 	{
 		attachLogType(LogType::CHARACTERS);
 	}
@@ -125,7 +128,10 @@ bool GameLogger::attachLogType(LogType lt)
 		if (_game != nullptr)
 		{
 			_game->attach(*this);
-			log("Game", "Start logging.");
+			if (isLogging(LogType::GAME))
+			{
+				log("Game", "Start logging.");
+			}
 			hasBeenAttached = true;
 		}
 		break;
@@ -133,13 +139,18 @@ bool GameLogger::attachLogType(LogType lt)
 		if (_map != nullptr)
 		{
 			_map->Loggable::attach(*this);
-			log("Map", "Start logging.");
+			if (isLogging(LogType::MAP))
+			{
+				log("Map", "Start logging.");
+			}
 			hasBeenAttached = true;
 		}
 		break;
 	case LogType::CHARACTERS:
 		if (_map != nullptr)
 		{
+			_map->getPlayer().getCharacter().attach(*this);
+
 			for (Element* che : _map->getElements())
 			{
 				CharacterElement* ce = dynamic_cast<CharacterElement*>(che);
@@ -148,7 +159,10 @@ bool GameLogger::attachLogType(LogType lt)
 					ce->getCharacter().attach(*this);
 				}
 			}
-			log("Character", "Start logging.");
+			if (isLogging(LogType::CHARACTERS))
+			{
+				log("Character", "Start logging.");
+			}
 			hasBeenAttached = true;
 		}
 		break;
@@ -156,7 +170,10 @@ bool GameLogger::attachLogType(LogType lt)
 		if (_dice != nullptr)
 		{
 			_dice->Loggable::attach(*this);
-			log("Dice", "Start logging.");
+			if (isLogging(LogType::DICE))
+			{
+				log("Dice", "Start logging.");
+			}
 			hasBeenAttached = true;
 		}
 		break;
@@ -179,7 +196,11 @@ bool GameLogger::detachLogType(LogType lt)
 		if (_game != nullptr)
 		{
 			_game->detach(*this);
-			log("Game", "Stop logging.");
+
+			if (isLogging(LogType::GAME))
+			{
+				log("Game", "Stop logging.");
+			}
 			hasBeenDetached = true;
 		}
 		break;
@@ -187,13 +208,19 @@ bool GameLogger::detachLogType(LogType lt)
 		if (_map != nullptr)
 		{
 			_map->Loggable::detach(*this);
-			log("Map", "Stop logging.");
+
+			if (isLogging(LogType::MAP))
+			{
+				log("Map", "Stop logging.");
+			}
 			hasBeenDetached = true;
 		}
 		break;
 	case LogType::CHARACTERS:
 		if (_map != nullptr)
 		{
+			_map->getPlayer().getCharacter().detach(*this);
+
 			for (Element* che : _map->getElements())
 			{
 				CharacterElement* ce = dynamic_cast<CharacterElement*>(che);
@@ -202,7 +229,10 @@ bool GameLogger::detachLogType(LogType lt)
 					ce->getCharacter().detach(*this);
 				}
 			}
-			log("Character", "Stop logging.");
+			if (isLogging(LogType::CHARACTERS))
+			{
+				log("Character", "Stop logging.");
+			}
 			hasBeenDetached = true;
 		}
 		break;
@@ -210,7 +240,10 @@ bool GameLogger::detachLogType(LogType lt)
 		if (_dice != nullptr)
 		{
 			_dice->Loggable::detach(*this);
-			log("Dice", "Stop logging.");
+			if (isLogging(LogType::DICE))
+			{
+				log("Dice", "Stop logging.");
+			}
 			hasBeenDetached = true;
 		}
 		break;
@@ -300,4 +333,9 @@ string GameLogger::currentLogTypes()
 		s += " ";
 	}
 	return s;
+}
+
+bool GameLogger::isLogging(LogType lt)
+{
+	return find(_autoLoggedTypes.begin(), _autoLoggedTypes.end(), lt) != _autoLoggedTypes.end();
 }

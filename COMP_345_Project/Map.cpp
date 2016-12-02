@@ -192,6 +192,27 @@ bool Map::setTileType(int x, int y, TileType type)
 	return true;
 }
 
+bool Map::setTileTypeNull(int x, int y, TileType type)
+{
+	if (isOob(x, y)) return false;
+
+	Tile * t = &mapArr[x][y];
+	Element * elementRemoved = nullptr;
+
+	if (t->getElement() != nullptr)
+	{
+		t->setElement(nullptr);
+	}
+
+	t->setType(type);
+
+	if (isStartPoint(x, y) && !isTraversible(x, y)) unsetStartPoint();
+	if (isEndPoint(x, y) && !isTraversible(x, y)) unsetEndPoint();
+
+	notify();
+	return true;
+}
+
 /**
 * Get a pointer to the element contained by the tile at a given position
 * @param x X coordinate
@@ -263,6 +284,14 @@ bool Map::moveElement(int xOffset, int yOffset, Element & element)
 	element.position.y = endY;
 
 	notify();
+
+	CharacterElement* ce = dynamic_cast<CharacterElement*>(&element);
+	if (ce != nullptr)
+	{
+		Character& c = ce->getCharacter();
+		log("Movement on map " + name + ". Moved character " + c.getName() + " from (" + to_string(startX) + "," + to_string(startY) + ") to (" + to_string(endX) + "," + to_string(endY) + ").");
+	}
+
 	return true;
 }
 

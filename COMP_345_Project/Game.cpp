@@ -61,11 +61,20 @@ void Game::play(Character* player)
 
 		if (!gameContinues(!finishedMap, i + 1, mapNames))
 		{
+       		if (!p->getCharacter().isAlive()){
+				log("Player died.");
+			}
+			else{
 			log("Player quit.");
+			}
+
 			cout << "Exiting to main menu." << endl;
 			system("pause");
 			return;
 		}
+
+		GameLogger::instance().detachLogType(LogType::CHARACTERS);
+		GameLogger::instance().detachLogType(LogType::MAP);
 
 	}
 
@@ -143,9 +152,14 @@ bool Game::run(Map& map, MapElementsToggler& meo)
 	for (int i = 0;; i++)
 	{
 		int chrIdx = i % characterElementsHavingTurn.size();
+		if (characterElementsHavingTurn[chrIdx] != nullptr){
 		if (characterElementsHavingTurn[chrIdx]->getCharacter().getCurrentHitPoints() != 0){
 
-			bool wantsToContinuePlaying = characterElementsHavingTurn[chrIdx]->getCharacterStrategy()->executeTurn(map, mo, meo);
+			CharacterElement* currentChar = characterElementsHavingTurn[chrIdx];
+			log("Character " + currentChar->getCharacter().getName() + " turn starts.");
+			bool wantsToContinuePlaying = currentChar->getCharacterStrategy()->executeTurn(map, mo, meo);
+			log("Character " + currentChar->getCharacter().getName() + " turn ends.");
+
 			if (!wantsToContinuePlaying)
 			{
 				return false;
@@ -155,6 +169,8 @@ bool Game::run(Map& map, MapElementsToggler& meo)
 					break;
 				}
 			}
+			}
+
 		}
 
 	return true;
@@ -173,7 +189,7 @@ void Game::perfomEndGame(Character** p, Map& map)
 
 
 	currentChar->incrementLevel();
-	log("Player " + currentChar->getName() + " level increased to " + to_string(currentChar->getLevel()) + ".");
+	log("Player's character " + currentChar->getName() + " level increased to " + to_string(currentChar->getLevel()) + ".");
 
 	cout << *currentChar;
 

@@ -283,6 +283,7 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 
 //! lets player loot a chest or dead enemy
 void HumanPlayerStrategy::closestLootable(Map& map){
+
 	if (system("CLS")) system("clear");
 	Position pos = Position(map.getPlayer().getPosition());//! player's position
 	vector<Element*> vecPos = vector<Element*>(0);
@@ -311,8 +312,6 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 		vecPos.push_back(map.getElementAt(pos.x, pos.y + 1));
 	}
 
-
-
 	vector<Item*> tmpItem;
 	
 	Chest* tmpChest;
@@ -328,20 +327,23 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 				allLootableNames.push_back(i->getItemName());
 			}
 		}
-		else if (tmpChara && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//! only dead foes
+		else if (tmpChara && !tmpChara->getCharacter().isAlive()){//! only dead foes
 			tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
 			for (auto i : tmpItem){
 				allLootableNames.push_back(i->getItemName());
 			}
 		}
 	}
+	bool doNotLoot = false;
 	if (allLootableNames.size() == 0){
 		cout << "Nothing to loot." << endl;
-		return;
+		doNotLoot=true;
 	}
 	string userInputSTR;
 	int userInput;
 	CharacterElement* p = map.getPlayerPointer();
+	if (!doNotLoot){
+
 	while (true){
 
 		cout << "Lootable Items: " << endl;
@@ -422,7 +424,48 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 
 		}
 
+			if (allLootableNames.size() == 0){
+				cout << "Nothing to loot anymore." << endl;
+				break;
+			}
+
+		}
 	}
+
+	bool deadEnemies = false;
+	vector<CharacterElement*> chrDiedEnemies;
+	for (auto i : vecPos){
+		CharacterElement* chr = dynamic_cast<CharacterElement*>(i);
+		if (chr && chr->getCharacter().getCurrentHitPoints()==0){
+			deadEnemies = true;
+			chrDiedEnemies.push_back(chr);
+		}
+	}
+
+	if (deadEnemies){
+		string burnEnemy = "";
+		bool correctBurn = false;
+		cout << "\nDo you want to burn ALL the dead enemies surrounding you? (Y/N) ";
+		while (!correctBurn){
+			cin >> burnEnemy;
+			if (burnEnemy == "Y" || burnEnemy == "y" || burnEnemy == "N" || burnEnemy == "n")
+				correctBurn = true;
+			else{
+				cout << "Incorrect entry. Please enter Y or N: ";
+			}
+		}
+
+		if (burnEnemy == "Y" || burnEnemy == "y"){
+			
+			cout << "BURNING ALL ENEMIES !!!" << endl;
+			for(auto chr : chrDiedEnemies){
+				map.setTileTypeNull(chr->getPosition().x, chr->getPosition().y, TileType::FLOOR);
+			}
+
+		}
+
+	}
+
 }
 
 

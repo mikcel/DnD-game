@@ -38,6 +38,7 @@ public:
 
 	const Tile& getTileAt(int x, int y) const; //! Gets the tile at the given address
 	bool setTileType(int x, int y, TileType type); //! Changes the type of the tile at the given address
+	bool setTileTypeNull(int x, int y, TileType type); 
 
 	Element* getElementAt(int x, int y) const; //! Gets a pointer to the element held by a tile
 	Element* setElementAt(int x, int y, Element& element); //! Set the element of the tile at the given address
