@@ -280,7 +280,10 @@ bool ItemContainer::unequipItem(string itemName, ItemContainer* playerBackpack) 
 
 }
 
-//! Overloading output stream operator for the Item container
+//! Overrides the output stream operator << to print the contents of the item container
+//! @param stream the stream into which everything would be written
+//! @param cont the item container to be written into the stream
+//! @return a reference to the current stream allowing chaning this operator
 ostream& operator<<(ostream& stream, const ItemContainer& cont){
 
 	if (cont.contents.size() == 0)
@@ -310,6 +313,10 @@ ostream& operator<<(ostream& stream, const ItemContainer& cont){
 
 }
 
+//! Overrides the output stream operator << to print the type of the item
+//! @param stream the stream into which everything would be written
+//! @param type the type of the item to be written into the stream
+//! @return a reference to the current stream allowing chaning this operator
 string ItemContainer::serializeItemContainer() {
 	string contstr="";
 	for (auto i : this->contents) {

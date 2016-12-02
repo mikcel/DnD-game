@@ -44,6 +44,8 @@ public:
 	virtual void saveItem();
 private:
 	int range;
+
+	//! Operator allowing writting the contents of the weapon to a stream
 	friend ostream& operator<<(ostream& stream, const Weapon& weapon);
 };
 

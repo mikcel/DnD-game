@@ -161,6 +161,7 @@ bool Fighter::attack(Character &chr){
 
 }
 
+//! Saves the character as well as into a txt file
 void Fighter::saveCharacter(){
 
 	ofstream outStream("SaveFiles/Characters/" + getName() + ".txt", ios::out);
@@ -228,6 +229,8 @@ ostream& operator<<(ostream& stream, const Fighter& fighter){
 	return stream;
 }
 
+//! Creates a copy of the current Fighter containing teh same data
+//! @return a copy of the current Fighter
 Fighter* Fighter::clone()
 {
 	return new Fighter(*this);

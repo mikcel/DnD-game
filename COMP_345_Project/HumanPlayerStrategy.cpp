@@ -471,7 +471,10 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 }
 
 
-
+/**
+* Prompts the user to either equip an item or to take it off 
+* @param map the map in hwich the current game is played
+*/
 void  HumanPlayerStrategy::manageEquipment(Map& map)
 {
 	CharacterElement* player = map.getPlayerPointer();
@@ -511,6 +514,13 @@ void  HumanPlayerStrategy::manageEquipment(Map& map)
 	
 }
 
+/**
+* Manages the equipment of the character by mvoing the items between the backpack and the owrn items
+* @param userChoice the choise of the current action to be performed between the worn and the stored items
+* @param player the player on which the action is performed
+* @param worn the list of the items taht the user is wearing
+* @param stored the list of the items that the user has in his backpack
+*/
 void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterElement* player, vector<Item*> worn, vector<Item*> stored){
 	if (userChoice == 1){
 		string itemindexSTR;
@@ -604,6 +614,12 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 	}
 }
 
+/**
+* Determines if the player can reach a certain enemy with his weapon
+* @param characterPosition the position of the player
+* @param currentCharacterPosition the position of the second character that could be reached
+* @return true if the second character is within a reachable range, false otherwise
+*/
 bool HumanPlayerStrategy::canReach(Position& characterPosition, Position& currentCharacterPosition, Map& map){
 
 	if (characterElement->getCharacter().getCurrentWornItems()->getContents()[(int)ItemType::WEAPON]->getItemTypes() != ItemType::UNSPECIFIED){

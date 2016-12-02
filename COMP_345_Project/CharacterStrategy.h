@@ -17,6 +17,8 @@ class MapObserver;
 class Map;
 class MapElementsToggler;
 
+// Defining the IDs of the buttons returned by _getch() 
+// when pressing the arrow keys or the enter button
 #define KEY_UP 72
 #define KEY_DOWN 80
 #define KEY_LEFT 75

@@ -99,18 +99,6 @@ void GameController::selectCampaign()
 
 		cout << endl << "Enter the name of the campaign you want to play: ";
 		cin >> campaignName;
-		/*bool validCampaign = false;
-		for (string& file : allFiles)
-		{
-		if (campaignName == file){
-		validCampaign = true;
-		}
-		}
-		if (!validCampaign){
-		cout << "The campaigns " << campaignName << " does not exist. Please enter a valid campaign name." << endl << endl;
-
-		continue;
-		}*/
 
 		while (cin.fail())
 		{

@@ -85,6 +85,11 @@ void Weapon::saveItem(){
 	outItem.close();
 	cout << "Weapon was saved!" << endl;
 }
+
+//! Overrides the output stream operator << to print the all the information about the weapon
+//! @param stream the stream into which everything would be written
+//! @param wpn the weapon to be written into the stream
+//! @return a reference to the current stream allowing chaning this operator
 ostream& operator<<(ostream& stream, const Weapon& wpn){
 	const Item &itm = wpn;
 	return stream << itm << "\nRange: " << wpn.range << endl;
