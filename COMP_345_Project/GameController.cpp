@@ -144,5 +144,8 @@ void GameController::launchGame()
 
 	g.play(character);
 
+	GameLogger::instance().detachLogType(LogType::DICE);
+	GameLogger::instance().detachLogType(LogType::GAME);
+
 	GameLogger::instance().flush();
 }
