@@ -72,18 +72,21 @@ bool Game::run(CharacterElement* p)
 	for (int i = 0;; i++)
 	{
 		int chrIdx = i % characterElementsHavingTurn.size();
-		if (characterElementsHavingTurn[chrIdx]->getCharacter().getCurrentHitPoints() != 0){
+		if (characterElementsHavingTurn[chrIdx] != nullptr){
+			if (characterElementsHavingTurn[chrIdx]->getCharacter().getCurrentHitPoints() != 0){
 
-			bool wantsToContinuePlaying = characterElementsHavingTurn[chrIdx]->getCharacterStrategy()->executeTurn(*map, mo, meo);
-			if (!wantsToContinuePlaying)
-			{
-				return false;
-			}
-			if (isGameOver())
-			{
-					break;
+				bool wantsToContinuePlaying = characterElementsHavingTurn[chrIdx]->getCharacterStrategy()->executeTurn(*map, mo, meo);
+				if (!wantsToContinuePlaying)
+				{
+					return false;
+				}
+				if (isGameOver())
+				{
+						break;
+					}
 				}
 			}
+
 		}
 
 	return true;

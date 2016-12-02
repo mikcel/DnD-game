@@ -290,6 +290,7 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 
 //! lets player loot a chest or dead enemy
 void HumanPlayerStrategy::closestLootable(Map& map){
+
 	if (system("CLS")) system("clear");
 	Position pos = Position(map.getPlayer().getPosition());//! player's position
 	vector<Element*> vecPos = vector<Element*>(0);
@@ -318,8 +319,6 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 		vecPos.push_back(map.getElementAt(pos.x, pos.y + 1));
 	}
 
-
-
 	vector<Item*> tmpItem;
 	
 	Chest* tmpChest;
@@ -335,101 +334,145 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 				allLootableNames.push_back(i->getItemName());
 			}
 		}
-		else if (tmpChara && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//! only dead foes
+		else if (tmpChara && tmpChara->getCharacter().getCurrentHitPoints() == 0){//! only dead foes
 			tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
 			for (auto i : tmpItem){
 				allLootableNames.push_back(i->getItemName());
 			}
 		}
 	}
+	bool doNotLoot = false;
 	if (allLootableNames.size() == 0){
 		cout << "Nothing to loot." << endl;
-		return;
+		doNotLoot=true;
 	}
 	string userInputSTR;
 	int userInput;
 	CharacterElement* p = map.getPlayerPointer();
-	while (true){
+	if (!doNotLoot){
 
-		cout << "Lootable Items: " << endl;
-		//! printing name
-		int k = 0;
-		for (auto i : allLootableNames){
-			cout << k << ": " << i << endl;
-			k++;
-		}
-		cout << "Enter the index of the item you want to take, enter -1 to not take anything" << endl;
-		cin >> userInputSTR;
-		try{
-			userInput = stoi(userInputSTR);
-		}
-		catch (...){
-			cout << "Invalid input, enter a valid input.\n" << endl;
-			continue;
-		}
+		while (true){
 
-		if (userInput <= -1){
-			cout << "Press any button to return to the game." << endl;
-			break;
-		}
-		if (userInput >= allLootableNames.size()){
-			cout << "Invalid input, enter a valid input.\n" << endl;
-			continue;
-		}
-		bool foundInContainer = false;
-
-		//transfer to backpack
-		for (auto e : vecPos){
-			tmpChest = dynamic_cast<Chest*>(e);
-			tmpChara = dynamic_cast<CharacterElement*>(e);
-			if (tmpChest != nullptr){
-				tmpItem = tmpChest->getContents();
-				for (auto i : tmpItem){
-					if (i->getItemName() == allLootableNames[userInput]){
-						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
-						if (tmpWea != nullptr){
-							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
-							p->getCharacter().storeItem(new Weapon(*tmpWea));
-						}
-						else{
-							cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
-
-							p->getCharacter().storeItem(new Item(i));
-						}
-						tmpChest->removeItem(allLootableNames[userInput]);
-						foundInContainer = true;
-						break;
-					}
-				}
+			cout << "Lootable Items: " << endl;
+			//! printing name
+			int k = 0;
+			for (auto i : allLootableNames){
+				cout << k << ": " << i << endl;
+				k++;
 			}
-			else if (tmpChara != nullptr && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//only dead foes
-				tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
-				for (auto i : tmpItem){
-					if (i->getItemName() == allLootableNames[userInput]){
-						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
-						if (tmpWea != nullptr){
-							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
-							p->getCharacter().storeItem(new Weapon(*tmpWea));
-						}
-						else{
-							cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
-							p->getCharacter().storeItem(new Item(i));
-						}
-						tmpChara->getCharacter().removeItemBack(i);
-						foundInContainer = true;
-						break;
-					}
-				}
+			cout << "Enter the index of the item you want to take, enter -1 to not take anything" << endl;
+			cin >> userInputSTR;
+			try{
+				userInput = stoi(userInputSTR);
 			}
-			if (foundInContainer = true)
-			{
-				allLootableNames.erase(allLootableNames.begin() + userInput);
+			catch (...){
+				cout << "Invalid input, enter a valid input.\n" << endl;
+				continue;
+			}
+
+			if (userInput <= -1){
+				cout << "Press any button to return to the game." << endl;
 				break;
+			}
+			if (userInput >= allLootableNames.size()){
+				cout << "Invalid input, enter a valid input.\n" << endl;
+				continue;
+			}
+			bool foundInContainer = false;
+
+			//transfer to backpack
+			for (auto e : vecPos){
+				tmpChest = dynamic_cast<Chest*>(e);
+				tmpChara = dynamic_cast<CharacterElement*>(e);
+				if (tmpChest != nullptr){
+					tmpItem = tmpChest->getContents();
+					for (auto i : tmpItem){
+						if (i->getItemName() == allLootableNames[userInput]){
+							Weapon* tmpWea = dynamic_cast<Weapon*>(i);
+							if (tmpWea != nullptr){
+								cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
+								p->getCharacter().storeItem(new Weapon(*tmpWea));
+							}
+							else{
+								cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
+
+								p->getCharacter().storeItem(new Item(i));
+							}
+							tmpChest->removeItem(allLootableNames[userInput]);
+							foundInContainer = true;
+							break;
+						}
+					}
+				}
+				else if (tmpChara != nullptr && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//only dead foes
+					tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
+					for (auto i : tmpItem){
+						if (i->getItemName() == allLootableNames[userInput]){
+							Weapon* tmpWea = dynamic_cast<Weapon*>(i);
+							if (tmpWea != nullptr){
+								cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
+								p->getCharacter().storeItem(new Weapon(*tmpWea));
+							}
+							else{
+								cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
+								p->getCharacter().storeItem(new Item(i));
+							}
+							tmpChara->getCharacter().removeItemBack(i);
+							foundInContainer = true;
+							break;
+						}
+					}
+				}
+				if (foundInContainer = true)
+				{
+					allLootableNames.erase(allLootableNames.begin() + userInput);
+					break;
+				}
+
+			}
+
+			if (allLootableNames.size() == 0){
+				cout << "Nothing to loot anymore." << endl;
+				break;
+			}
+
+		}
+	}
+
+	bool deadEnemies = false;
+	vector<CharacterElement*> chrDiedEnemies;
+	for (auto i : vecPos){
+		CharacterElement* chr = dynamic_cast<CharacterElement*>(i);
+		if (chr && chr->getCharacter().getCurrentHitPoints()==0){
+			deadEnemies = true;
+			chrDiedEnemies.push_back(chr);
+		}
+	}
+
+	if (deadEnemies){
+		string burnEnemy = "";
+		bool correctBurn = false;
+		cout << "\nDo you want to burn ALL the dead enemies surrounding you? (Y/N) ";
+		while (!correctBurn){
+			cin >> burnEnemy;
+			if (burnEnemy == "Y" || burnEnemy == "y" || burnEnemy == "N" || burnEnemy == "n")
+				correctBurn = true;
+			else{
+				cout << "Incorrect entry. Please enter Y or N: ";
+			}
+		}
+
+		if (burnEnemy == "Y" || burnEnemy == "y"){
+			
+			cout << "BURNING ALL ENEMIES !!!" << endl;
+			for(auto chr : chrDiedEnemies){
+				map.setTileTypeNull(chr->getPosition().x, chr->getPosition().y, TileType::FLOOR);
 			}
 
 		}
 
 	}
+
 }
 
 
