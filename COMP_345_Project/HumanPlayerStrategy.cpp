@@ -320,7 +320,6 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 	}
 
 	vector<Item*> tmpItem;
-	
 	Chest* tmpChest;
 	CharacterElement* tmpChara;
 	vector<string> allLootableNames = vector<string>(0);
@@ -338,6 +337,12 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 			tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
 			for (auto i : tmpItem){
 				allLootableNames.push_back(i->getItemName());
+			}
+			tmpItem = tmpChara->getCharacter().getCurrentWornItems()->getContents();
+			for (auto i : tmpItem){
+				if (i->getItemName() != "UNSPECIFIED"){
+					allLootableNames.push_back(i->getItemName());
+				}
 			}
 		}
 	}
@@ -357,7 +362,7 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 		//! printing name
 		int k = 0;
 		for (auto i : allLootableNames){
-			cout << k << ": " << i << endl;
+			cout << k << ": " << i << endl;		
 			k++;
 		}
 		cout << "Enter the index of the item you want to take, enter -1 to not take anything" << endl;
@@ -405,9 +410,11 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 				}
 			}
 			else if (tmpChara != nullptr && tmpChara->getCharacter().getCurrentHitPoints() <= 0){//only dead foes
+				bool foundInBackPack = false;
 				tmpItem = tmpChara->getCharacter().getBackpackContents()->getContents();
 				for (auto i : tmpItem){
 					if (i->getItemName() == allLootableNames[userInput]){
+						foundInBackPack = true;
 						Weapon* tmpWea = dynamic_cast<Weapon*>(i);
 						if (tmpWea != nullptr){
 							cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
@@ -422,6 +429,30 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 						break;
 					}
 				}
+				if (!foundInBackPack){
+					tmpItem = tmpChara->getCharacter().getCurrentWornItems()->getContents();
+					for (auto i : tmpItem){
+						if (i->getItemName() == allLootableNames[userInput]){
+							Weapon* tmpWea = dynamic_cast<Weapon*>(i);
+							if (tmpWea != nullptr){
+								cout << "The weapon: " << allLootableNames[userInput] << " has been looted." << endl;
+								p->getCharacter().storeItem(new Weapon(*tmpWea));
+							}
+							else{
+								cout << "The Item: " << allLootableNames[userInput] << " has been looted." << endl;
+								p->getCharacter().storeItem(new Item(i));
+							}
+							tmpChara->getCharacter().takeOffItem(i);
+							tmpChara->getCharacter().removeItemBack(i);
+							foundInContainer = true;
+							break;
+						}
+					}
+				}
+
+
+
+
 			}
 			if (foundInContainer = true)
 			{
@@ -452,7 +483,7 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 	if (deadEnemies){
 		string burnEnemy = "";
 		bool correctBurn = false;
-		cout << "\nDo you want to burn ALL the dead enemies surrounding you? (Y/N) ";
+		cout << "\nDo you want to burn ALL the dead enemies surrounding you?\n(Burning the bodies will remove the enemy from the game and let you pass over their ashes, you will also not be able to loot them anymore.)\n(Y/N) "<<endl;
 		while (!correctBurn){
 			cin >> burnEnemy;
 			if (burnEnemy == "Y" || burnEnemy == "y" || burnEnemy == "N" || burnEnemy == "n")
@@ -468,7 +499,6 @@ void HumanPlayerStrategy::closestLootable(Map& map){
 			for(auto chr : chrDiedEnemies){
 				map.setTileTypeNull(chr->getPosition().x, chr->getPosition().y, TileType::FLOOR);
 			}
-
 		}
 
 	}
@@ -526,7 +556,7 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 			cout << "Currently wearing:" << endl;
 			for (auto i : worn){
 				if (i->getItemName() != "UNSPECIFIED"){
-					cout << "	" << to_string(itemCount) << i->getItemTypes() << ": " << i->getItemName() << endl;
+					cout << "	" << to_string(itemCount)<<": " << i->getItemTypes() << ": " << i->getItemName() << endl;
 				}
 				else{
 					unspecifiedCount++;
