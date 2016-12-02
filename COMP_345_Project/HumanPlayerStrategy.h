@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Header file for the HumanPlayerStrategy class
+//! 
+
 #pragma once
 
 #include "CharacterStrategy.h"

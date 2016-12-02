@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Implementation file for the AIPLayerStrategy class
+//! 
+
 #include "AIPLayerStrategy.h"
 
 /**

@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Header file for the FolderUtils
+//! 
+
 #pragma once
 
 #include <vector>

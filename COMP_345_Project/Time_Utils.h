@@ -1,11 +1,23 @@
+//! 
+//! @file 
+//! @brief Header and Implementation file for the TimeUtils class
+//! 
+
 #include <string>
 #include <chrono>
 #include <time.h>
 #include <iomanip>
 #include <sstream>
 
-class TimeUtils{
+//! Heper class for managing the time
+class TimeUtils
+{
 	public:
+	/**
+	* Obtains the current time in a specified format
+	* @param format the fromat of teh date
+	* @return the current time in the specified format
+	*/
 	static std::string getCurrentTime(std::string format = "%Y-%m-%d %X"){
 		time_t rawtime;
 		struct tm timeinfo;

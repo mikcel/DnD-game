@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Implementation file for the CharacterElement
+//!
+
 #pragma once
 
 #include "Character.h"

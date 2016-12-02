@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Header file for the PlayerConsoleSingleton Class.  
+//! 
+
 #pragma once
 
 #include "ConsoleLogger.h"

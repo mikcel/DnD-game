@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Implementation file for the GameController Class.
+//! 
+
 #include "GameController.h"
 #include <iostream>
 #include <fstream>

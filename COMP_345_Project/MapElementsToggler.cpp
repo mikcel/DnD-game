@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Implementation file for the MapElementsToggler Class.  
+//! 
+
 #include "MapElementsToggler.h"
 #include "Chest.h"
 #include "Fighter.h"
@@ -142,6 +147,7 @@ void MapElementsToggler::showChests()
 	showChestsDirect();
 }
 
+//! Shows the same type information as before
 void MapElementsToggler::showPrevious()
 {
 	PlayerConsoleSingleton::clearConsole();
@@ -165,6 +171,7 @@ void MapElementsToggler::showPrevious()
 	}
 }
 
+//! Shows the information about the the player, enemies and chest directly without any checking
 void MapElementsToggler::showDirect()
 {
 	currentShowType = MapElementsTogglerShowType::ALL;
@@ -175,6 +182,7 @@ void MapElementsToggler::showDirect()
 	showChestsDirect();
 }
 
+//! Sets the pointer to the map from which the infromation is taken
 void MapElementsToggler::setMap(Map* map)
 {
 	this->map = map;

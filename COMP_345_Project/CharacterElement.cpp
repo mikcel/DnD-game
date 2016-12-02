@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Header file for the CharacterElement
+//!
+
 #include "CharacterElement.h"
 #include "Character.h"
 #include "AggressorStrategy.h"

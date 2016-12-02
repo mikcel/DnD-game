@@ -1,6 +1,7 @@
+//! 
 //! @file 
-//! @brief Header file the CharacterStrategy class
-//!
+//! @brief Header file for the CharacterStrategy class
+//! 
 
 #pragma once
 

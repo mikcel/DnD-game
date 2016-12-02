@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Header file for MathHelper
+//! 
+
 #include "MathHelper.h"
 #include <iostream>
 #include <stdio.h>

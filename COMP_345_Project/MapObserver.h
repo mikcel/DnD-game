@@ -26,9 +26,9 @@ public:
 	MapObserver(const Map&); //! Map Observer constructor
 	virtual void update(); //! Called when an observed  object send a notification
 	void printMap(); //! Amount of times the update() function was called
-	void setPrintCharacterInfo(std::string typeOfcharacter, std::string characterName);
-	void setPrintTurnInfo(TurnType turnType);
-	void setPrintMovementInfo(int stepsRemnaining);
+	void setPrintCharacterInfo(std::string typeOfcharacter, std::string characterName); //! Sets the info about the character that currently has teh turn
+	void setPrintTurnInfo(TurnType turnType); //! Sets the current type of turn
+	void setPrintMovementInfo(int stepsRemnaining); //! Sets the remaining number of steps for teh character
 private:
 	const Map& map; //! Reference to the observed map
 	long long timesUpdated; //! Amount of times the update() function was called

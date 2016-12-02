@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Implementation file for the HumanPlayerStrategy class
+//! 
+
 #include "HumanPlayerStrategy.h"
 #include "Chest.h"
 #include <vector>
