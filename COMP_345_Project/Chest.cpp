@@ -45,7 +45,7 @@ Chest* Chest::clone()
 //! Overload output stream operator for  achest
 ostream& operator<<(ostream& stream, const Chest& chst){
 
-	cout << "==== CHEST ====\n";
+	stream << "==== CHEST ====\n";
 	const ItemContainer& chr = chst; //! cast the chest to item container reference and output the contents
 	stream << chr;
 	return stream;

@@ -81,26 +81,24 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 			case 'T': //Toggles the view of the map elements
 			case 't': //Toggles the view of the map elements
 				meo.show();
-				isPlaying = false;
 				break;
 			case 'p': //Toggles the view of the map elements
 				meo.showPlayer();
-				isPlaying = false;
 				break;
 			case 'e': //Toggles the view of the map elements
 				meo.showEnemies();
-				isPlaying = false;
 				break;
 			case 'c': //Toggles the view of the map elements
 				meo.showChests();
-				isPlaying = false;
 				break;
 			case 'z':// tries to loot
 				closestLootable(map);
+				meo.showPrevious();
 				isPlaying = false;
 				break;
 			case 'i': //manage items
 				manageEquipment(map);
+				meo.showPrevious();
 				isPlaying = false;
 				break;
 
@@ -148,6 +146,7 @@ bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTo
 				if (characterToAttack != nullptr)
 				{
 					this->characterElement->attack(*characterToAttack);
+					meo.showPrevious();
 				}
 				cout << endl;
 				system("pause");
@@ -161,19 +160,15 @@ bool HumanPlayerStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsTo
 			case 'T': //Toggles the view of the map elements
 			case 't': //Toggles the view of the map elements
 				meo.show();
-				isPlaying = false;
 				break;
 			case 'p': //Toggles the view of the map elements
 				meo.showPlayer();
-				isPlaying = false;
 				break;
 			case 'e': //Toggles the view of the map elements
 				meo.showEnemies();
-				isPlaying = false;
 				break;
 			case 'c': //Toggles the view of the map elements
 				meo.showChests();
-				isPlaying = false;
 				break;
 			case 'z':// tries to loot
 				closestLootable(map);
@@ -546,7 +541,7 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
-			if (itemindex < -1 || itemindex >= worn.size()){
+			if (itemindex < -1 || itemindex >= (int)worn.size()){
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
@@ -589,10 +584,11 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
-			if (itemindex < -1 || itemindex >= stored.size()){
+			if (itemindex < -1 || itemindex >= (int)stored.size()){
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
+
 			if (itemindex == -1){
 				cout << "Press any button to return to the game." << endl;
 				return;
