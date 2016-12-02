@@ -149,6 +149,8 @@ bool GameLogger::attachLogType(LogType lt)
 	case LogType::CHARACTERS:
 		if (_map != nullptr)
 		{
+			_map->getPlayer().getCharacter().attach(*this);
+
 			for (Element* che : _map->getElements())
 			{
 				CharacterElement* ce = dynamic_cast<CharacterElement*>(che);
@@ -217,6 +219,8 @@ bool GameLogger::detachLogType(LogType lt)
 	case LogType::CHARACTERS:
 		if (_map != nullptr)
 		{
+			_map->getPlayer().getCharacter().detach(*this);
+
 			for (Element* che : _map->getElements())
 			{
 				CharacterElement* ce = dynamic_cast<CharacterElement*>(che);
