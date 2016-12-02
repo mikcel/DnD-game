@@ -1,5 +1,5 @@
 //! @file 
-//! @brief Header file the AggressorStrategy class
+//! @brief Header file for the AggressorStrategy class
 //!
 
 #pragma once

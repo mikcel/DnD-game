@@ -1,3 +1,5 @@
+// Taken from https://www.codeproject.com/articles/13368/multiple-consoles-for-a-single-application
+//
 // ConsoleLogger.cpp: implementation of the CConsoleLogger class.
 //
 //////////////////////////////////////////////////////////////////////

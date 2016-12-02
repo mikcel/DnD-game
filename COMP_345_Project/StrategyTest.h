@@ -1,5 +1,9 @@
-#pragma once
+//! 
+//! @file 
+//! @brief Header file for the StrategyTest class
+//! 
 
+#pragma once
 
 //! @file 
 //! @brief Implementation file for the DiceTest class  

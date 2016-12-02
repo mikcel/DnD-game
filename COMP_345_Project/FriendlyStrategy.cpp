@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Implementation file for the FriendlyStrategy class
+//! 
+
 #include "FriendlyStrategy.h"
 
 /**

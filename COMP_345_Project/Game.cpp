@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Implementation file for the Game Class.
+//! 
+
 #include "Game.h"
 #include "Character.h"
 #include "CharacterElement.h"

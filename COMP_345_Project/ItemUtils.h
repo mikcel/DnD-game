@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Header file for the ItemUtils
+//! 
+
 #pragma once
 #include "Item.h"
 

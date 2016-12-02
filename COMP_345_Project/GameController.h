@@ -1,6 +1,8 @@
+//! 
 //! @file 
-//! @brief Header file for the Position class  
-//!
+//! @brief Header file for the GameController Class.
+//! 
+
 #pragma once
 #include "Campaign.h"
 #include "Character.h"

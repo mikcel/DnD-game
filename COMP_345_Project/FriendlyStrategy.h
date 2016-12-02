@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Header file for the FriendlyStrategy class
+//! 
+
 #pragma once
 
 #include "AIPlayerStrategy.h"

@@ -254,6 +254,9 @@ void MapController::editMap(bool creatingNewMap) {
 
 
 }
+
+//! Prompts the user to choose the items that will be added to the chest
+//! @return pointer to newly created Chest
 Chest* MapController::chooseChestItems()
 {
 	vector<string> itemName = getFilesInsideFolderNoExtension("SaveFiles/Items");
@@ -288,6 +291,8 @@ Chest* MapController::chooseChestItems()
 
 }
 
+//! Prompts the user to choose the name of the enemy that will be added to the map
+//! @return the name of the chosen enemy
 string MapController::chooseEnemy()
 {
 	vector<string> characterNames = getFilesInsideFolderNoExtension("SaveFiles/Characters");

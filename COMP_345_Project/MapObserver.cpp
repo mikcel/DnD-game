@@ -23,17 +23,30 @@ void MapObserver::update()
 	printMap();
 }
 
+/**
+* Sets the type of character taht is currently having the turn in the game
+* @param typeOfcharacter type of teh cahracter
+* @param characterName name of teh character
+*/
 void MapObserver::setPrintCharacterInfo(std::string typeOfcharacter, std::string characterName)
 {
 	this->typeOfcharacter = typeOfcharacter;
 	this->characterName = characterName;
 }
 
+/**
+* Sets the current type of turn
+* @param turnType type of the turn
+*/
 void MapObserver::setPrintTurnInfo(TurnType turnType)
 {
 	this->turnType = turnType;
 }
 
+/**
+* Sets the reaming type of steps that the character has
+* @param stepsRemnaining the number of steps remaining
+*/
 void MapObserver::setPrintMovementInfo(int stepsRemnaining)
 {
 	this->stepsRemnaining = stepsRemnaining;

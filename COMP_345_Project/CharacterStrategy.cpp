@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Header file for the CharacterStrategy class
+//! 
+
 #include "CharacterStrategy.h" 
 
 /**

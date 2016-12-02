@@ -1,11 +1,16 @@
+//! 
+//! @file 
+//! @brief Implementation file for the StrategyTest class
+//! 
+
 #include "StrategyTest.h"
 
 //! cppunit test cases registration
 CPPUNIT_TEST_SUITE_REGISTRATION(StrategyTest);
 
-//! test method for the "read as saved" builder
-//! Test Case: check if the map is loaded correctly and contains valid data
-//! This method uses the sample map files Map1.txt, Map2.txt and Map3.txt that are inside the MapFiles folder
+//! test method for checking that the ally actually transforms into an enemy when attacked
+//! the test executes an attack from the human player to the ally and checks if he obtains
+//! the AggressorStrategy 
 void StrategyTest::allyTransformsToEnemy()
 {
 	CharacterElement& player = *new CharacterElement("mom", new HumanPlayerStrategy());
@@ -31,9 +36,9 @@ void StrategyTest::allyTransformsToEnemy()
 }
 
 
-//! test method for the "adjust to level" builder
-//! Test Case: check if the map constructed with the "adjust to level" builder actually adjusts the level of all the items and characters that are on it
-//! This method uses the sample map files Map1.txt and Map2.txt that are inside the MapFiles folder
+//! test method to check that the allies and the enemies are truly advancing towards the human player
+//! Created an instance of the map, places an ally and player on it and checks that after 4 steps that
+//! the distance between the enemy and the player as well as between the ally and the enemy becomes smaller
 void StrategyTest::allyAndEnemyMovement()
 {
 	// Create map and load its components

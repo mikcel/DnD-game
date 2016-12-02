@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Implementation file for the FolderUtils
+//! 
+
 #include "FolderUtils.h"
 #include <Windows.h>
 #include <vector>

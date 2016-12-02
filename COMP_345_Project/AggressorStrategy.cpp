@@ -1,3 +1,7 @@
+//! @file 
+//! @brief Implementation file for the AggressorStrategy class
+//!
+
 #include "AggressorStrategy.h"
 
 /**

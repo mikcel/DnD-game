@@ -1,3 +1,8 @@
+//! 
+//! @file 
+//! @brief Implementation file for MathHelper
+//! 
+
 #pragma once
 
 #include <vector>
