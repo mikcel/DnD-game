@@ -219,7 +219,7 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 		{
 			Position characterPosition = characterElement->getPosition();
 			Position currentCharacterPosition = currentCharacter->getPosition();
-			if (currentCharacter->getCharacter().getCurrentHitPoints()!=0 && isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y))
+			if (currentCharacter->getCharacter().getCurrentHitPoints()!=0 && (isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y)))
 			{
 				attackableChracters.push_back(currentCharacter);
 			}			
@@ -606,4 +606,41 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 		cout << "Press any button to return to the game." << endl;
 
 	}
+}
+
+bool HumanPlayerStrategy::canReach(Position& characterPosition, Position& currentCharacterPosition){
+
+	if (characterElement->getCharacter().getCurrentWornItems()->getContents()[(int)ItemType::WEAPON]->getItemTypes() != ItemType::UNSPECIFIED){
+
+		Weapon* weapon = (Weapon*)(characterElement->getCharacter().getCurrentWornItems()->getItem(characterElement->getCharacter().getCurrentWornItems()->getContents()[(int)ItemType::WEAPON]->getItemName()));
+		if (weapon != NULL){
+			//! Check range and melee weapon
+
+			if (weapon->getRange() == 1)
+				return isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
+			else{
+
+				vector<pair<int,int>> betPairs = bresenhamRightDirection(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
+				int countInBetween = 0;
+				for (auto i : betPairs){
+					if (i.first != characterPosition.x && i.first != currentCharacterPosition.x && i.second != characterPosition.y && i.second != currentCharacterPosition.y){
+						countInBetween++;
+					}
+				}
+					
+				if (weapon->getRange() == countInBetween){
+					return true;
+				}
+				else{
+					return false;
+				}
+
+			}
+		}
+		else{
+			return isTileNextTo(characterPosition.x, characterPosition.y, currentCharacterPosition.x, currentCharacterPosition.y);
+		}
+
+	}
+
 }
