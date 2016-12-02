@@ -10,7 +10,7 @@
 */
 std::string AggressorStrategy::print() const
 {
-	return "X";
+	return characterElement->getCharacter().isAlive() ? "X" : "D";
 }
 
 /**

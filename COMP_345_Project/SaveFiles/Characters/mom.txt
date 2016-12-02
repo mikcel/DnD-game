@@ -1,6 +1,6 @@
 fighter
 mom
-33
+39
 0
 1
 1

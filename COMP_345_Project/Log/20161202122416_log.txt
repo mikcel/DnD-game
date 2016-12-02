@@ -1,0 +1,80 @@
+2016-12-02 12:24:16- Game : Start logging.
+2016-12-02 12:24:16- Dice : Start logging.
+2016-12-02 12:24:16- Game : Loading map : mapchesttest.
+2016-12-02 12:24:16- Game : Map loaded
+2016-12-02 12:24:17- Map : Start logging.
+2016-12-02 12:24:17- Game : Map setup start.
+2016-12-02 12:24:17- Dice : Dice tossed. Value: 5
+2016-12-02 12:24:17- Dice : All dices tossed. Total: 5
+2016-12-02 12:24:17- Dice : Dice tossed. Value: 8
+2016-12-02 12:24:17- Dice : All dices tossed. Total: 8
+2016-12-02 12:24:17- Game : Map setup ended.
+2016-12-02 12:24:17- Character : Start logging.
+2016-12-02 12:24:17- Game : Character mom turn starts.
+2016-12-02 12:24:22- Map : Movement on map mapchesttest. Moved character mom from (3,3) to (4,3).
+2016-12-02 12:24:22- Map : Movement on map mapchesttest. Moved character mom from (4,3) to (5,3).
+2016-12-02 12:24:23- Map : Movement on map mapchesttest. Moved character mom from (5,3) to (5,4).
+2016-12-02 12:24:23- Map : Movement on map mapchesttest. Moved character mom from (5,4) to (5,5).
+2016-12-02 12:24:23- Game : Character mom turn ends.
+2016-12-02 12:24:23- Game : Map ended.
+2016-12-02 12:24:23- Game : Map end phase start.
+2016-12-02 12:24:24- Dice : Dice tossed. Value: 3
+2016-12-02 12:24:24- Dice : All dices tossed. Total: 3
+2016-12-02 12:24:24- Character : Level 34 reached.Adding to HP: 1 + 3
+2016-12-02 12:24:24- Character : New HP: 301
+2016-12-02 12:24:24- Game : Player's character mom level increased to 34.
+2016-12-02 12:24:25- Game : Character mom saved.
+2016-12-02 12:24:25- Dice : Dice tossed. Value: 4
+2016-12-02 12:24:25- Dice : All dices tossed. Total: 4
+2016-12-02 12:24:25- Game : Map end phase finished.
+2016-12-02 12:24:26- Character : Stop logging.
+2016-12-02 12:24:26- Map : Stop logging.
+2016-12-02 12:24:26- Game : Loading map : map5.4.
+2016-12-02 12:24:26- Dice : Dice tossed. Value: 9
+2016-12-02 12:24:26- Dice : All dices tossed. Total: 9
+2016-12-02 12:24:26- Dice : Dice tossed. Value: 9
+2016-12-02 12:24:26- Dice : All dices tossed. Total: 9
+2016-12-02 12:24:26- Dice : Dice tossed. Value: 9
+2016-12-02 12:24:26- Dice : All dices tossed. Total: 9
+2016-12-02 12:24:26- Dice : Dice tossed. Value: 4
+2016-12-02 12:24:26- Dice : All dices tossed. Total: 4
+2016-12-02 12:24:26- Dice : Dice tossed. Value: 3
+2016-12-02 12:24:26- Dice : All dices tossed. Total: 3
+2016-12-02 12:24:26- Dice : Dice tossed. Value: 8
+2016-12-02 12:24:26- Dice : All dices tossed. Total: 8
+2016-12-02 12:24:26- Game : Map loaded
+2016-12-02 12:24:27- Map : Start logging.
+2016-12-02 12:24:27- Game : Map setup start.
+2016-12-02 12:24:27- Dice : Dice tossed. Value: 1
+2016-12-02 12:24:27- Dice : All dices tossed. Total: 1
+2016-12-02 12:24:27- Dice : Dice tossed. Value: 9
+2016-12-02 12:24:27- Dice : All dices tossed. Total: 9
+2016-12-02 12:24:27- Dice : Dice tossed. Value: 2
+2016-12-02 12:24:27- Dice : All dices tossed. Total: 2
+2016-12-02 12:24:27- Dice : Dice tossed. Value: 8
+2016-12-02 12:24:27- Dice : All dices tossed. Total: 8
+2016-12-02 12:24:27- Dice : Dice tossed. Value: 6
+2016-12-02 12:24:27- Dice : All dices tossed. Total: 6
+2016-12-02 12:24:27- Dice : Dice tossed. Value: 6
+2016-12-02 12:24:27- Dice : All dices tossed. Total: 6
+2016-12-02 12:24:27- Dice : Dice tossed. Value: 1
+2016-12-02 12:24:27- Dice : All dices tossed. Total: 1
+2016-12-02 12:24:27- Dice : Dice tossed. Value: 2
+2016-12-02 12:24:27- Dice : All dices tossed. Total: 2
+2016-12-02 12:24:27- Game : Map setup ended.
+2016-12-02 12:24:27- Character : Start logging.
+2016-12-02 12:24:27- Game : Character mom turn starts.
+2016-12-02 12:24:58- Map : Movement on map map5.4. Moved character mom from (0,0) to (1,0).
+2016-12-02 12:25:45- Map : Movement on map map5.4. Moved character mom from (1,0) to (0,0).
+2016-12-02 12:25:46- Map : Movement on map map5.4. Moved character mom from (0,0) to (1,0).
+2016-12-02 12:25:46- Map : Movement on map map5.4. Moved character mom from (1,0) to (0,0).
+2016-12-02 12:25:47- Game : Character mom turn ends.
+2016-12-02 12:25:47- Game : Character mom turn starts.
+2016-12-02 12:25:49- Map : Movement on map map5.4. Moved character mom from (0,5) to (0,4).
+2016-12-02 12:25:50- Map : Movement on map map5.4. Moved character mom from (0,4) to (0,3).
+2016-12-02 12:25:52- Game : Character mom turn ends.
+2016-12-02 12:25:52- Game : Character fightest turn starts.
+2016-12-02 12:25:55- Map : Movement on map map5.4. Moved character fightest from (1,1) to (0,1).
+2016-12-02 12:25:58- Game : Character fightest turn ends.
+2016-12-02 12:25:58- Game : Character mom turn starts.
+2016-12-02 12:25:59- Map : Movement on map map5.4. Moved character mom from (5,0) to (4,0).

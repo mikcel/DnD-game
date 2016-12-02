@@ -41,6 +41,7 @@ bool AIPLayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElement
 					{
 						return true;
 					}
+					meo.showPrevious();
 				}
 				else
 				{

@@ -56,6 +56,7 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 				{
 					mo.setPrintMovementInfo(--remainingSteps);
 					mo.printMap();
+					meo.showPrevious();
 				}
 				break;
 			case KEY_DOWN: //Move the character down
@@ -63,6 +64,7 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 				{
 					mo.setPrintMovementInfo(--remainingSteps);
 					mo.printMap();
+					meo.showPrevious();
 				}
 				break;
 			case KEY_LEFT: //Move the character left
@@ -70,6 +72,7 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 				{
 					mo.setPrintMovementInfo(--remainingSteps);
 					mo.printMap();
+					meo.showPrevious();
 				}
 				break;
 			case KEY_RIGHT: //Move the character right
@@ -77,6 +80,7 @@ bool HumanPlayerStrategy::executeMovementTurn(Map& map, MapObserver& mo, MapElem
 				{
 					mo.setPrintMovementInfo(--remainingSteps);
 					mo.printMap();
+					meo.showPrevious();
 				}
 				break;
 			case 'q': //Quit the application
@@ -265,7 +269,7 @@ CharacterElement* HumanPlayerStrategy::chooseAttackTarget(Map& map, MapObserver&
 	{
 		while (true)
 		{
-			cout << endl << "The only attackable character is" << attackableChracters[0]->getCharacterStrategy()->getStrategyName() 
+			cout << endl << "The only attackable character is an " << attackableChracters[0]->getCharacterStrategy()->getStrategyName() 
 				<< " named \"" << attackableChracters[0]->getCharacter().getName() << "\"" << endl;
 			cout << "Do you want to proceed attacking? (Y/N)" << endl;
 
