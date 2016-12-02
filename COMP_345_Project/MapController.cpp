@@ -26,7 +26,7 @@ using namespace std;
 //! Default Constructor
 MapController::MapController()
 {
-	currentMap = NULL;
+	currentMap = nullptr;
 }
 
 //! Parametrized constructor
@@ -148,7 +148,7 @@ void MapController::editMap(bool creatingNewMap) {
 				cout << "Invalid element!" << endl;
 			}
 
-			cout << "Element (S for start point, L for end point, F for Floor, W for Wall, X for enemy,A for friendly NPC , C for Chest, F for floor): ";
+			cout << "Element (S for start point, L for end point, F for Floor, W for Wall, X for enemy, A for friendly NPC , C for Chest, F for floor): ";
 			cin >> eS;
 			if (eS == "Q")
 			{
@@ -305,7 +305,7 @@ string MapController::chooseEnemy()
 		cin >> userInputStr;
 		try{
 			userChoice = stoi(userInputStr);
-			if (userChoice > characterNames.size() || userChoice < 0){
+			if (userChoice >(int) characterNames.size() || userChoice < 0){
 				cout << "Invalid input. Use listed indices." << endl;
 				continue;
 			}

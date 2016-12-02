@@ -8,9 +8,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(StrategyTest);
 //! This method uses the sample map files Map1.txt, Map2.txt and Map3.txt that are inside the MapFiles folder
 void StrategyTest::allyTransformsToEnemy()
 {
-	CharacterElement& player = *new CharacterElement("Player", new HumanPlayerStrategy());
-	CharacterElement& enemy = *new CharacterElement("Enemy 1", new AggressorStrategy());
-	CharacterElement& ally = *new CharacterElement("Ally 1", new FriendlyStrategy());
+	CharacterElement& player = *new CharacterElement("mom", new HumanPlayerStrategy());
+	CharacterElement& enemy = *new CharacterElement("fightest", new AggressorStrategy());
+	CharacterElement& ally = *new CharacterElement("mom", new FriendlyStrategy());
 
 	// Checks if the character element have the right strategy
 	CPPUNIT_ASSERT(dynamic_cast<HumanPlayerStrategy*>(player.getCharacterStrategy()) != nullptr);
@@ -37,8 +37,8 @@ void StrategyTest::allyTransformsToEnemy()
 void StrategyTest::allyAndEnemyMovement()
 {
 	// Create map and load its components
-	string character_name = "Simon";
-	string map_name = "map5.1";
+	string character_name = "mom";
+	string map_name = "map5.4";
 
 	Character* character = readCharacterFile(character_name);
 	Map* map = readMapFile("SaveFiles/Maps/" + map_name + ".txt", map_name);
@@ -54,6 +54,7 @@ void StrategyTest::allyAndEnemyMovement()
 		CharacterElement* characterElement = dynamic_cast<CharacterElement*>(element);
 		if (characterElement)
 		{
+			
 			AggressorStrategy* aggressorStrategy = dynamic_cast<AggressorStrategy*>(characterElement->getCharacterStrategy());
 			FriendlyStrategy* friendlyStrategy = dynamic_cast<FriendlyStrategy*>(characterElement->getCharacterStrategy());
 			if (aggressorStrategy)
@@ -90,11 +91,11 @@ void StrategyTest::allyAndEnemyMovement()
 	std::list<std::pair<int, int>> pathOfEnemy = aggressorStrategy->calculateShortestPath(*map);
 	std::list<std::pair<int, int>> pathOfFriend = friendlyStrategy->calculateShortestPath(*map);
 
-	for (int i = 0; i < 4; i++)
-	{
+	//for (int i = 0; i < 3; i++)
+	//{
 		aggressorStrategy->performMovementStepAI(*map, pathOfEnemy);
 		friendlyStrategy->performMovementStepAI(*map, pathOfFriend);
-	}
+	//}
 
 	Position enemyEndPosition = enemy->getPosition();
 	Position allyEndPosition = ally->getPosition();

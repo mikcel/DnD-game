@@ -12,10 +12,10 @@ protected:
 public:
 	virtual std::string print() const; //! Obtains the map representation of the CharacterElement
 	virtual std::string getStrategyName(); //! Obtains human-readble the name of the CharacterStrategy
-	void closestLootable(Map& map);//! lets player loot a chest or dead enemy
-	void manageEquipment(Map& map); //! let the player manage their equipment.
+	void closestLootable(Map& map,MapElementsToggler& meo);//! lets player loot a chest or dead enemy
+	void manageEquipment(Map& map, MapElementsToggler& meo); //! let the player manage their equipment.
 private:
 	//! Manages the equipment of the player between his worn items and his backpack
-	void manageEquipmentChoiceHelper(int userChoice, CharacterElement* player, vector<Item*> worn, vector<Item*> stored); 
+	void manageEquipmentChoiceHelper(int userChoice, CharacterElement* player, vector<Item*> worn, vector<Item*> stored, MapElementsToggler& meo);
 	bool canReach(Position& characterPosition, Position& currentCharacterPosition, Map& map); //! Determines if the player can reach the enemy with his weapon
 };

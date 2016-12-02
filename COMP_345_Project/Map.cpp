@@ -504,41 +504,25 @@ CharacterElement* Map::placePlayer(CharacterElement& newPlayer)
 		vector<Item*> allExistingItems;
 		loadAllExistingItems(allExistingItems);
 
-		/*for (Element* element : getElements())
+		for (Element* element : getElements())
 		{
 			Chest* chest = dynamic_cast<Chest*>(element);
 			if (chest)
 			{
-				int nbrOfItems = abs(rand()) % 6;
-				for (int i = 0; i < nbrOfItems; i++) {
-					int itemIndex = abs(rand()) % allExistingItems.size();
-					Item* baseItem = allExistingItems.at(itemIndex);
-					Weapon* baseWeapon = dynamic_cast<Weapon*>(baseItem);
-					Item* curItem;
-
-					if (baseWeapon)
-					{
-						curItem = new Weapon(*baseWeapon);
-					}
-					else {
-						curItem = new Item(*baseItem);
-					}
-
+				for (auto e : chest->getContents()){
+					Item* curItem= e;
 					int characterLevel = player->getCharacter().getLevel();
-					curItem->setItemName(curItem->getItemName() + " " + to_string(characterLevel) + " " + to_string(i));
-
-					int increase = characterLevel / 5;
+					int increase = characterLevel / 7;
 					vector<Buff> buffs = curItem->getBuffs();
 					for (Buff& b : buffs)
 					{
-						b.setBuffAmount(b.getBuffAmount() + increase);
+						b.setBuffAmount(increase);
 					}
-
 					curItem->setBuffs(buffs);
-					chest->addItem(curItem);
 				}
+			
 			}
-		}*/
+		}
 
 		notify();
 		return &copy;

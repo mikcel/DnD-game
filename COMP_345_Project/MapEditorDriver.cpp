@@ -42,7 +42,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	srand(time(0));
-//#define CPPTEST
+//#define CPPTEST //ALL TESTS CAN RUN
 #ifdef CPPTEST
 
 	// Get the top level suite from the registry
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
 	bool wasSucessful = runner.run();
 
 	//getchar();
-
+	system("PAUSE");
 #endif // CPPTEST
 
 	//Driver code
