@@ -26,7 +26,7 @@ using namespace std;
 //! Default Constructor
 MapController::MapController()
 {
-	currentMap = NULL;
+	currentMap = nullptr;
 }
 
 //! Parametrized constructor

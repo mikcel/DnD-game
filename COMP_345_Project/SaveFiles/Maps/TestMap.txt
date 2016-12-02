@@ -6,9 +6,3 @@ start
 end
 5
 5
-chest
-3
-2
-enemy
-4
-2
