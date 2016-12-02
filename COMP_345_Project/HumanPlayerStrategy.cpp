@@ -582,10 +582,11 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
-			if (itemindex < -1 || itemindex >= stored.size()){
+			if (itemindex < -1 || itemindex >= (int)stored.size()){
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
+
 			if (itemindex == -1){
 				cout << "Press any button to return to the game." << endl;
 				return;
