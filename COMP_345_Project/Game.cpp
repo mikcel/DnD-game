@@ -58,7 +58,13 @@ void Game::play(Character* player)
 
 		if (!gameContinues(!finishedMap, i + 1, mapNames))
 		{
-			log("Player quit.");
+       			if (!p->getCharacter().isAlive()){
+				log("Player died.");
+			}
+			else{
+				log("Player quit.");
+			}
+
 			cout << "Exiting to main menu." << endl;
 			system("pause");
 			return;

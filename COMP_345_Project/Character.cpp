@@ -702,3 +702,8 @@ string Character::provider()
 	return "Character";
 }
 
+//! Returns true if the characters HP is greater than 0
+bool Character::isAlive()
+{
+	return currentHitPoints > 0;
+}

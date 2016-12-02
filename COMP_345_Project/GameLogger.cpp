@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include <Windows.h>
 
 using namespace std;
 
@@ -28,6 +29,8 @@ GameLogger::GameLogger()
 	_autoLoggedTypes.push_back(LogType::MAP);
 	_autoLoggedTypes.push_back(LogType::CHARACTERS);
 	_autoLoggedTypes.push_back(LogType::DICE);
+
+	CreateDirectory("Log", NULL);
 }
 
 /**
