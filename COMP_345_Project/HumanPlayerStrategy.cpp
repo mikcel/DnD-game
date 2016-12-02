@@ -541,7 +541,7 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
-			if (itemindex < -1 || itemindex >= worn.size()){
+			if (itemindex < -1 || itemindex >= (int)worn.size()){
 				cout << "\nInvalid input. Try again." << endl;
 				continue;
 			}
