@@ -28,7 +28,7 @@ std::string AggressorStrategy::getStrategyName()
 */
 bool AggressorStrategy::executeAttack(Map& map, MapObserver& mo, MapElementsToggler& meo)
 {
-	mo.setPrintTurnInfo(TurnType::AI_ATTACK);
+ 	mo.setPrintTurnInfo(TurnType::AI_ATTACK);
 	mo.printMap();
 
 	bool isPlaying = true;

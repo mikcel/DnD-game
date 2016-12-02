@@ -37,8 +37,8 @@ void Game::play(Character* player)
 		GameLogger::instance().recordMap(map); //The map was loaded and ready to be recorded.
 
 		log("Map setup start.");
-	CharacterElement tempP(*player, new HumanPlayerStrategy());
-	CharacterElement * p = map->placePlayer(tempP);
+		CharacterElement tempP(*player, new HumanPlayerStrategy());
+		CharacterElement * p = map->placePlayer(tempP);
 		log("Map setup ended.");
 
 		GameLogger::instance().recordCharacters(); //The characters were placed and ready to be recorded.
@@ -48,7 +48,7 @@ void Game::play(Character* player)
 		log("Map ended.");
 
 		if (finishedMap)
-	{
+		{
 			log("Map end phase start.");
 			perfomEndGame(&player, *map);
 			log("Map end phase finished.");
