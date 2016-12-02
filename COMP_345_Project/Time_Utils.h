@@ -15,7 +15,7 @@ class TimeUtils
 	public:
 	/**
 	* Obtains the current time in a specified format
-	* @param format the fromat of teh date
+	* @param format the fromat of the date
 	* @return the current time in the specified format
 	*/
 	static std::string getCurrentTime(std::string format = "%Y-%m-%d %X"){
