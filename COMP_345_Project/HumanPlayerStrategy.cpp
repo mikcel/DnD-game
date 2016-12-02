@@ -604,13 +604,14 @@ void HumanPlayerStrategy::manageEquipmentChoiceHelper(int userChoice, CharacterE
 				continue;
 			}
 
-			if (worn[itemindex]->getItemName() == "UNSPECIFIED"){
-				cout << "You are not wearing anything in that slot.Pick something else." << endl;
-				continue;
-			}
 			if (itemindex == -1){
 				cout << "Press any button to return to the game." << endl;
 				return;
+			}
+
+			if (worn[itemindex]->getItemName() == "UNSPECIFIED"){
+				cout << "You are not wearing anything in that slot.Pick something else." << endl;
+				continue;
 			}
 			else{
 				break;
